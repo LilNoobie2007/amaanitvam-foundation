@@ -106,14 +106,16 @@ export default class Footer {
           <div class="md:col-span-5 flex flex-col items-start gap-4">
             <div class="flex items-center gap-3">
               <img src="/amaanitvam-logo.png" alt="Amaanitvam Foundation Logo" class="h-9 w-auto filter brightness-0 invert select-none">
-              <span class="font-display font-medium text-lg text-white tracking-wide">Amaanitvam Foundation</span>
+              <span class="font-display font-medium text-lg text-white tracking-wide">Amaanitvam</span>
             </div>
             <p class="font-sans text-[12.5px] text-stone-500 font-light max-w-sm mt-2 leading-relaxed">
               A student-led movement inspiring learning, responsibility, and positive change for a stronger society.
             </p>
-            <div class="font-sans text-[12px] text-stone-400 mt-4 space-y-1 font-light">
-              <p>Email: <a href="mailto:contact@amaanitvam.org" class="hover:text-amber-100 transition-colors duration-300">contact@amaanitvam.org</a></p>
-              <p>Registry: <a href="https://www.amaanitvam.org/verify/" target="_blank" class="hover:text-amber-100 transition-colors duration-300">Secure Registry Vault</a></p>
+            <div class="font-sans text-[12px] text-stone-400 mt-4 space-y-2 font-light">
+              <p class="text-stone-500"><strong class="font-semibold text-stone-400">Address:</strong> H. No 269 W.NO2, MEHRAULI, Gadaipur, Mehrauli, South Delhi - 110030</p>
+              <p><strong class="font-semibold text-stone-400">Phone:</strong> +91 98999 23266</p>
+              <p><strong class="font-semibold text-stone-400">Email:</strong> <a href="mailto:amaanitvamfoundation@gmail.com" class="hover:text-amber-100 transition-colors duration-300">amaanitvamfoundation@gmail.com</a></p>
+              <p><strong class="font-semibold text-stone-400">Darpan ID:</strong> DL/2025/0817469</p>
             </div>
           </div>
 
@@ -122,8 +124,8 @@ export default class Footer {
             
             <div class="flex flex-col gap-3">
               <span class="text-[10px] text-stone-600 font-bold uppercase tracking-widest">Foundation</span>
-              <a href="#home" class="hover:text-amber-100 transition-colors duration-300">Home</a>
-              <a href="#about" class="hover:text-amber-100 transition-colors duration-300">Mission</a>
+              <a href="#/" class="hover:text-amber-100 transition-colors duration-300">Home</a>
+              <a href="#/about" class="hover:text-amber-100 transition-colors duration-300">About Us</a>
               <a href="#programs" class="hover:text-amber-100 transition-colors duration-300">Programs</a>
             </div>
 
@@ -145,8 +147,13 @@ export default class Footer {
         </div>
 
         <!-- Copyright -->
-        <div class="max-w-7xl mx-auto text-center md:text-left mt-16 pt-8 border-t border-stone-900/60 text-[11px] text-stone-600 font-light font-sans tracking-wide">
-          <p>© 2026 Amaanitvam Foundation. All rights reserved. Powered by student-led collective action.</p>
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between mt-16 pt-8 border-t border-stone-900/60 text-[11px] text-stone-600 font-light font-sans tracking-wide gap-4">
+          <p>Copyright © 2026 Amaanitvam Foundation. All Rights Reserved.</p>
+          <div class="flex gap-4">
+            <a href="#" class="hover:text-stone-400 transition-colors">Privacy Policy</a>
+            <span>•</span>
+            <a href="#" class="hover:text-stone-400 transition-colors">Terms & Conditions</a>
+          </div>
         </div>
 
       </footer>
@@ -171,7 +178,6 @@ export default class Footer {
         submitBtn.innerHTML = originalText;
         form.reset();
         
-        // Quiet custom alert
         alert('Thank you! Your volunteer application has been securely logged in our program registry.');
       }, 1500);
     });

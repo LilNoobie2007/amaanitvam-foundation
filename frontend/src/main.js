@@ -1,14 +1,51 @@
 import './style.css';
 import HomePage from './pages/HomePage.js';
+import AboutPage from './pages/AboutPage.js';
 
-// Initialize the single page assembler
-const homePage = new HomePage();
-
-// Mount the assembled layout into the root element
 const appElement = document.querySelector('#app');
-if (appElement) {
-  appElement.innerHTML = homePage.render();
+
+const routes = {
+  '#/': HomePage,
+  '#/about': AboutPage,
+};
+
+function router() {
+  const hash = window.location.hash || '#/';
   
-  // Initialize dynamic interaction controllers (scrolling headers, toggles, etc.)
-  homePage.init();
+  let PageClass;
+  let targetAnchor = null;
+  
+  if (hash === '#/about') {
+    PageClass = AboutPage;
+  } else if (hash === '#/' || hash === '') {
+    PageClass = HomePage;
+  } else if (hash.startsWith('#') && !hash.startsWith('#/')) {
+    // Standard homepage scroll anchors (like #programs, #community, #volunteer-form, etc.)
+    PageClass = HomePage;
+    targetAnchor = hash;
+  } else {
+    PageClass = HomePage;
+  }
+  
+  const previousPage = appElement.dataset.currentPage;
+  const newPageName = PageClass === HomePage ? 'home' : 'about';
+  
+  if (previousPage !== newPageName) {
+    window.scrollTo(0, 0);
+    const pageInstance = new PageClass();
+    appElement.innerHTML = pageInstance.render();
+    appElement.dataset.currentPage = newPageName;
+    pageInstance.init();
+  }
+  
+  // If we have an anchor, let's scroll to it after rendering
+  if (targetAnchor) {
+    setTimeout(() => {
+      const el = document.querySelector(targetAnchor);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }, previousPage !== newPageName ? 300 : 50);
+  }
 }
+
+window.addEventListener('hashchange', router);
+window.addEventListener('load', router);

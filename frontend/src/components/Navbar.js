@@ -5,15 +5,15 @@ export default class Navbar {
         <div class="max-w-7xl mx-auto px-6 h-20 md:h-24 flex items-center justify-between">
           
           <!-- Elegant Serif Branding with Lotus Logo -->
-          <a href="#home" class="flex items-center gap-3 group select-none">
+          <a href="#/" class="flex items-center gap-3 group select-none">
             <img src="/amaanitvam-logo.png" alt="Lotus logo" class="h-9 w-auto filter brightness-0 invert transition-all duration-300" id="nav-logo">
             <span class="font-display font-medium tracking-wide text-white text-lg md:text-xl transition-colors duration-300" id="nav-title">Amaanitvam</span>
           </a>
 
           <!-- Horizontal Navigation Links -->
           <nav class="hidden lg:flex items-center gap-7 font-interface font-medium text-[11px] uppercase tracking-widest text-stone-300" id="nav-links">
-            <a href="#home" class="hover:text-white transition-colors duration-300 py-1 active-nav">Home</a>
-            <a href="#about" class="hover:text-white transition-colors duration-300 py-1">Mission</a>
+            <a href="#/" class="hover:text-white transition-colors duration-300 py-1" id="link-home">Home</a>
+            <a href="#/about" class="hover:text-white transition-colors duration-300 py-1" id="link-about">About Us</a>
             <a href="#programs" class="hover:text-white transition-colors duration-300 py-1">Programs</a>
             <a href="#community" class="hover:text-white transition-colors duration-300 py-1">Community</a>
             <a href="#volunteer-form" class="hover:text-white transition-colors duration-300 py-1">Volunteer</a>
@@ -37,8 +37,8 @@ export default class Navbar {
         <!-- Mobile Curtain Menu -->
         <div id="mobile-menu" class="fixed inset-0 bg-stone-950/98 backdrop-blur-xl flex flex-col pt-28 px-8 pb-8 z-40 translate-x-full transition-transform duration-500 lg:hidden shadow-2xl">
           <nav class="flex flex-col gap-6 font-interface font-semibold text-sm uppercase tracking-widest text-stone-300 mt-4">
-            <a href="#home" class="mobile-nav-link hover:text-white transition-colors">Home</a>
-            <a href="#about" class="mobile-nav-link hover:text-white transition-colors">Mission</a>
+            <a href="#/" class="mobile-nav-link hover:text-white transition-colors">Home</a>
+            <a href="#/about" class="mobile-nav-link hover:text-white transition-colors">About Us</a>
             <a href="#programs" class="mobile-nav-link hover:text-white transition-colors">Programs</a>
             <a href="#community" class="mobile-nav-link hover:text-white transition-colors">Community</a>
             <a href="#volunteer-form" class="mobile-nav-link hover:text-white transition-colors">Volunteer</a>
@@ -64,6 +64,16 @@ export default class Navbar {
     const hamburgerLines = document.querySelectorAll('.hamburger-line');
 
     if (!header || !toggleBtn || !mobileMenu) return;
+
+    // Highlight active link based on hash path
+    const hash = window.location.hash || '#/';
+    if (hash === '#/about') {
+      const link = document.getElementById('link-about');
+      if (link) link.classList.add('active-nav');
+    } else if (hash === '#/' || hash === '') {
+      const link = document.getElementById('link-home');
+      if (link) link.classList.add('active-nav');
+    }
 
     // Sticky Scroll Handler (Dual-state design: Light text on Dark Hero, Dark text on Light Content)
     const handleScroll = () => {
