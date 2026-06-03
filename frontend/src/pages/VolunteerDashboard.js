@@ -6,8 +6,8 @@ import ActiveProjects from '../components/volunteer/workspace/ActiveProjects.js'
 import MyTeam from '../components/volunteer/workspace/MyTeam.js';
 import MyTasks from '../components/volunteer/workspace/MyTasks.js';
 import MyApplications from '../components/volunteer/dashboard/MyApplications.js';
-import AttendanceHistory from '../components/volunteer/workspace/AttendanceHistory.js';
-import UpcomingEvents from '../components/volunteer/dashboard/UpcomingEvents.js';
+import EventAttendance from '../components/events/volunteer/EventAttendance.js';
+import MyEvents from '../components/events/volunteer/MyEvents.js';
 import NotificationsCenter from '../components/volunteer/workspace/NotificationsCenter.js';
 import VolunteerCertificates from '../components/certificates/volunteer/VolunteerCertificates.js';
 import ContributionTimeline from '../components/volunteer/workspace/ContributionTimeline.js';
@@ -24,8 +24,8 @@ export default class VolunteerDashboard {
     this.team = new MyTeam();
     this.tasks = new MyTasks();
     this.applications = new MyApplications();
-    this.attendance = new AttendanceHistory();
-    this.events = new UpcomingEvents();
+    this.attendance = new EventAttendance();
+    this.events = new MyEvents();
     this.notifications = new NotificationsCenter();
     this.certificates = new VolunteerCertificates();
     this.timeline = new ContributionTimeline();
@@ -137,6 +137,7 @@ export default class VolunteerDashboard {
     Navbar.init();
     DashboardHero.init();
     MyTasks.init();
+    MyEvents.init();
     VolunteerCertificates.init();
     Footer.init();
 

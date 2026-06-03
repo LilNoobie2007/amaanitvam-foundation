@@ -18,6 +18,7 @@ export default class Navbar {
             <a href="#/about" class="hover:text-white transition-colors duration-300 py-1" id="link-about">About Us</a>
             <a href="#/programs" class="hover:text-white transition-colors duration-300 py-1" id="link-programs">Programs</a>
             <a href="#/impact" class="hover:text-white transition-colors duration-300 py-1" id="link-impact">Impact</a>
+            <a href="#/events" class="hover:text-white transition-colors duration-300 py-1" id="link-events">Events</a>
             <a href="#/volunteer" class="hover:text-white transition-colors duration-300 py-1" id="link-volunteer">Volunteer</a>
             ${isLoggedIn ? `<a href="#/volunteer/dashboard" class="hover:text-white transition-colors duration-300 py-1" id="link-dashboard">Dashboard</a>` : ''}
             <a href="#/verify" class="hover:text-white transition-colors duration-300 py-1" id="link-verify">Verify Certificate</a>
@@ -45,6 +46,7 @@ export default class Navbar {
             <a href="#/about" class="mobile-nav-link hover:text-white transition-colors">About Us</a>
             <a href="#/programs" class="mobile-nav-link hover:text-white transition-colors">Programs</a>
             <a href="#/impact" class="mobile-nav-link hover:text-white transition-colors">Impact</a>
+            <a href="#/events" class="mobile-nav-link hover:text-white transition-colors">Events</a>
             <a href="#/volunteer" class="mobile-nav-link hover:text-white transition-colors">Volunteer</a>
             ${isLoggedIn ? `<a href="#/volunteer/dashboard" class="mobile-nav-link hover:text-white transition-colors">Dashboard</a>` : ''}
             <a href="#/verify" class="mobile-nav-link hover:text-white transition-colors">Verify Certificate</a>
@@ -80,6 +82,9 @@ export default class Navbar {
       if (link) link.classList.add('active-nav');
     } else if (hash === '#/volunteer') {
       const link = document.getElementById('link-volunteer');
+      if (link) link.classList.add('active-nav');
+    } else if (hash.startsWith('#/events')) {
+      const link = document.getElementById('link-events');
       if (link) link.classList.add('active-nav');
     } else if (hash === '#/volunteer/dashboard') {
       const link = document.getElementById('link-dashboard');

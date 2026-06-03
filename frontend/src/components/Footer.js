@@ -126,7 +126,8 @@ export default class Footer {
               <span class="text-[10px] text-stone-600 font-bold uppercase tracking-widest">Foundation</span>
               <a href="#/" class="hover:text-amber-100 transition-colors duration-300">Home</a>
               <a href="#/about" class="hover:text-amber-100 transition-colors duration-300">About Us</a>
-              <a href="#programs" class="hover:text-amber-100 transition-colors duration-300">Programs</a>
+              <a href="#/programs" class="hover:text-amber-100 transition-colors duration-300">Programs</a>
+              <a href="#/events" class="hover:text-amber-100 transition-colors duration-300">Events & Activities</a>
             </div>
 
             <div class="flex flex-col gap-3">

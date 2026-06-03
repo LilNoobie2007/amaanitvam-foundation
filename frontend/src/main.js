@@ -9,6 +9,12 @@ import CertificateVerificationPage from './pages/CertificateVerificationPage.js'
 import AdminCertificatesPage from './pages/AdminCertificatesPage.js';
 import CertificateGeneratorPage from './pages/CertificateGeneratorPage.js';
 import AdminCertificateDetailPage from './pages/AdminCertificateDetailPage.js';
+import EventsPage from './pages/EventsPage.js';
+import EventDetailsPage from './pages/EventDetailsPage.js';
+import EventReportPage from './pages/EventReportPage.js';
+import AdminEventsPage from './pages/AdminEventsPage.js';
+import EventCreatorPage from './pages/EventCreatorPage.js';
+import EventReportPublisherPage from './pages/EventReportPublisherPage.js';
 
 const appElement = document.querySelector('#app');
 
@@ -55,6 +61,18 @@ function router() {
     PageClass = CertificateGeneratorPage;
   } else if (hash.startsWith('#/admin/certificates/view')) {
     PageClass = AdminCertificateDetailPage;
+  } else if (hash === '#/events') {
+    PageClass = EventsPage;
+  } else if (hash.startsWith('#/events/view/')) {
+    PageClass = EventDetailsPage;
+  } else if (hash.startsWith('#/events/')) {
+    PageClass = EventReportPage;
+  } else if (hash === '#/admin/events') {
+    PageClass = AdminEventsPage;
+  } else if (hash === '#/admin/events/new') {
+    PageClass = EventCreatorPage;
+  } else if (hash === '#/admin/events/report') {
+    PageClass = EventReportPublisherPage;
   } else if (hash === '#/' || hash === '') {
     PageClass = HomePage;
   } else if (hash.startsWith('#') && !hash.startsWith('#/')) {
@@ -77,6 +95,12 @@ function router() {
   else if (PageClass === AdminCertificatesPage) newPageName = 'admin-certificates';
   else if (PageClass === CertificateGeneratorPage) newPageName = 'admin-certificates-new';
   else if (PageClass === AdminCertificateDetailPage) newPageName = 'admin-certificates-view';
+  else if (PageClass === EventsPage) newPageName = 'events';
+  else if (PageClass === EventDetailsPage) newPageName = 'event-details';
+  else if (PageClass === EventReportPage) newPageName = 'event-report';
+  else if (PageClass === AdminEventsPage) newPageName = 'admin-events';
+  else if (PageClass === EventCreatorPage) newPageName = 'admin-events-new';
+  else if (PageClass === EventReportPublisherPage) newPageName = 'admin-events-report';
   
   if (previousPage !== newPageName) {
     window.scrollTo(0, 0);
