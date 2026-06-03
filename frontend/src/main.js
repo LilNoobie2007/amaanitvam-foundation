@@ -15,6 +15,14 @@ import EventReportPage from './pages/EventReportPage.js';
 import AdminEventsPage from './pages/AdminEventsPage.js';
 import EventCreatorPage from './pages/EventCreatorPage.js';
 import EventReportPublisherPage from './pages/EventReportPublisherPage.js';
+import InternshipsPage from './pages/InternshipsPage.js';
+import DomainDetailsPage from './pages/DomainDetailsPage.js';
+import InternshipOpportunityPage from './pages/InternshipOpportunityPage.js';
+import InternshipApplicationPage from './pages/InternshipApplicationPage.js';
+import ApplicationStatusPage from './pages/ApplicationStatusPage.js';
+import InternDashboardPage from './pages/InternDashboardPage.js';
+import AdminInternshipsPage from './pages/AdminInternshipsPage.js';
+import ApplicantDetailsPage from './pages/ApplicantDetailsPage.js';
 
 const appElement = document.querySelector('#app');
 
@@ -73,6 +81,22 @@ function router() {
     PageClass = EventCreatorPage;
   } else if (hash === '#/admin/events/report') {
     PageClass = EventReportPublisherPage;
+  } else if (hash === '#/internships') {
+    PageClass = InternshipsPage;
+  } else if (hash.startsWith('#/internships/domain/')) {
+    PageClass = DomainDetailsPage;
+  } else if (hash.startsWith('#/internships/opportunity/')) {
+    PageClass = InternshipOpportunityPage;
+  } else if (hash === '#/internships/apply') {
+    PageClass = InternshipApplicationPage;
+  } else if (hash === '#/internships/status') {
+    PageClass = ApplicationStatusPage;
+  } else if (hash === '#/intern/dashboard') {
+    PageClass = InternDashboardPage;
+  } else if (hash === '#/admin/internships') {
+    PageClass = AdminInternshipsPage;
+  } else if (hash.startsWith('#/admin/internships/applicant/')) {
+    PageClass = ApplicantDetailsPage;
   } else if (hash === '#/' || hash === '') {
     PageClass = HomePage;
   } else if (hash.startsWith('#') && !hash.startsWith('#/')) {
@@ -101,6 +125,14 @@ function router() {
   else if (PageClass === AdminEventsPage) newPageName = 'admin-events';
   else if (PageClass === EventCreatorPage) newPageName = 'admin-events-new';
   else if (PageClass === EventReportPublisherPage) newPageName = 'admin-events-report';
+  else if (PageClass === InternshipsPage) newPageName = 'internships';
+  else if (PageClass === DomainDetailsPage) newPageName = 'internships-domain';
+  else if (PageClass === InternshipOpportunityPage) newPageName = 'internships-opportunity';
+  else if (PageClass === InternshipApplicationPage) newPageName = 'internships-apply';
+  else if (PageClass === ApplicationStatusPage) newPageName = 'internships-status';
+  else if (PageClass === InternDashboardPage) newPageName = 'intern-dashboard';
+  else if (PageClass === AdminInternshipsPage) newPageName = 'admin-internships';
+  else if (PageClass === ApplicantDetailsPage) newPageName = 'admin-internships-applicant';
   
   if (previousPage !== newPageName) {
     window.scrollTo(0, 0);
