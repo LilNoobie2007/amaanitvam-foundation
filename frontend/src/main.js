@@ -23,6 +23,10 @@ import ApplicationStatusPage from './pages/ApplicationStatusPage.js';
 import InternDashboardPage from './pages/InternDashboardPage.js';
 import AdminInternshipsPage from './pages/AdminInternshipsPage.js';
 import ApplicantDetailsPage from './pages/ApplicantDetailsPage.js';
+import ContactPage from './pages/ContactPage.js';
+import DonatePage from './pages/DonatePage.js';
+import AdminInquiriesPage from './pages/AdminInquiriesPage.js';
+import AdminDonationsPage from './pages/AdminDonationsPage.js';
 
 const appElement = document.querySelector('#app');
 
@@ -97,6 +101,14 @@ function router() {
     PageClass = AdminInternshipsPage;
   } else if (hash.startsWith('#/admin/internships/applicant/')) {
     PageClass = ApplicantDetailsPage;
+  } else if (hash === '#/contact') {
+    PageClass = ContactPage;
+  } else if (hash === '#/donate') {
+    PageClass = DonatePage;
+  } else if (hash === '#/admin/inquiries') {
+    PageClass = AdminInquiriesPage;
+  } else if (hash === '#/admin/donations') {
+    PageClass = AdminDonationsPage;
   } else if (hash === '#/' || hash === '') {
     PageClass = HomePage;
   } else if (hash.startsWith('#') && !hash.startsWith('#/')) {
@@ -133,6 +145,10 @@ function router() {
   else if (PageClass === InternDashboardPage) newPageName = 'intern-dashboard';
   else if (PageClass === AdminInternshipsPage) newPageName = 'admin-internships';
   else if (PageClass === ApplicantDetailsPage) newPageName = 'admin-internships-applicant';
+  else if (PageClass === ContactPage) newPageName = 'contact';
+  else if (PageClass === DonatePage) newPageName = 'donate';
+  else if (PageClass === AdminInquiriesPage) newPageName = 'admin-inquiries';
+  else if (PageClass === AdminDonationsPage) newPageName = 'admin-donations';
   
   if (previousPage !== newPageName) {
     window.scrollTo(0, 0);

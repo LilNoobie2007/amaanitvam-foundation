@@ -21,14 +21,15 @@ export default class Navbar {
             <a href="#/events" class="hover:text-white transition-colors duration-300 py-1" id="link-events">Events</a>
             <a href="#/internships" class="hover:text-white transition-colors duration-300 py-1" id="link-internships">Internships</a>
             <a href="#/volunteer" class="hover:text-white transition-colors duration-300 py-1" id="link-volunteer">Volunteer</a>
+            <a href="#/contact" class="hover:text-white transition-colors duration-300 py-1" id="link-contact">Contact Us</a>
             ${isLoggedIn ? `<a href="#/volunteer/dashboard" class="hover:text-white transition-colors duration-300 py-1" id="link-dashboard">Dashboard</a>` : ''}
             <a href="#/verify" class="hover:text-white transition-colors duration-300 py-1" id="link-verify">Verify Certificate</a>
             <a href="#/admin/certificates" class="hover:text-white transition-colors duration-300 py-1" id="link-admin">Admin Center</a>
           </nav>
-
+ 
           <!-- CTA & Mobile Toggle -->
           <div class="flex items-center gap-4">
-            <a href="https://www.amaanitvam.org/donate/" target="_blank" class="hidden sm:inline-flex font-interface font-semibold text-[11px] uppercase tracking-widest px-5 py-2.5 rounded bg-pink-ruby text-white hover:bg-pink-ruby/90 shadow-sm transition-all duration-300" id="nav-donate">
+            <a href="#/donate" class="hidden sm:inline-flex font-interface font-semibold text-[11px] uppercase tracking-widest px-5 py-2.5 rounded bg-pink-ruby text-white hover:bg-pink-ruby/90 shadow-sm transition-all duration-300" id="nav-donate">
               Donate
             </a>
             
@@ -50,6 +51,7 @@ export default class Navbar {
             <a href="#/events" class="mobile-nav-link hover:text-white transition-colors">Events</a>
             <a href="#/internships" class="mobile-nav-link hover:text-white transition-colors">Internships</a>
             <a href="#/volunteer" class="mobile-nav-link hover:text-white transition-colors">Volunteer</a>
+            <a href="#/contact" class="mobile-nav-link hover:text-white transition-colors">Contact Us</a>
             ${isLoggedIn ? `<a href="#/volunteer/dashboard" class="mobile-nav-link hover:text-white transition-colors">Dashboard</a>` : ''}
             <a href="#/verify" class="mobile-nav-link hover:text-white transition-colors">Verify Certificate</a>
             <a href="#/admin/certificates" class="mobile-nav-link hover:text-white transition-colors">Admin Center</a>
@@ -90,6 +92,9 @@ export default class Navbar {
       if (link) link.classList.add('active-nav');
     } else if (hash.startsWith('#/internships')) {
       const link = document.getElementById('link-internships');
+      if (link) link.classList.add('active-nav');
+    } else if (hash === '#/contact') {
+      const link = document.getElementById('link-contact');
       if (link) link.classList.add('active-nav');
     } else if (hash === '#/volunteer/dashboard') {
       const link = document.getElementById('link-dashboard');

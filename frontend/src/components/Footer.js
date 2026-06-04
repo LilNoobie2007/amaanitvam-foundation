@@ -129,13 +129,14 @@ export default class Footer {
               <a href="#/programs" class="hover:text-amber-100 transition-colors duration-300">Programs</a>
               <a href="#/events" class="hover:text-amber-100 transition-colors duration-300">Events & Activities</a>
               <a href="#/internships" class="hover:text-amber-100 transition-colors duration-300">Internship Program</a>
+              <a href="#/contact" class="hover:text-amber-100 transition-colors duration-300">Contact Us</a>
             </div>
 
             <div class="flex flex-col gap-3">
               <span class="text-[10px] text-stone-600 font-bold uppercase tracking-widest">Engagement</span>
               <a href="#community" class="hover:text-amber-100 transition-colors duration-300">Community</a>
               <a href="#volunteer-form" class="hover:text-amber-100 transition-colors duration-300">Volunteer</a>
-              <a href="https://www.amaanitvam.org/donate/" target="_blank" class="hover:text-amber-100 transition-colors duration-300">Donate</a>
+              <a href="#/donate" class="hover:text-amber-100 transition-colors duration-300">Donate</a>
             </div>
 
             <div class="flex flex-col gap-3 col-span-2 sm:col-span-1">
