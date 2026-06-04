@@ -1,5 +1,4 @@
-import Navbar from '../components/Navbar.js';
-import Footer from '../components/Footer.js';
+import AdminLayout from '../components/admin/AdminLayout.js';
 import InternshipOverview from '../components/internships/admin/InternshipOverview.js';
 import OpportunityManager from '../components/internships/admin/OpportunityManager.js';
 import ApplicationsPipeline from '../components/internships/admin/ApplicationsPipeline.js';
@@ -8,97 +7,80 @@ import ProgressMonitoring from '../components/internships/admin/ProgressMonitori
 
 export default class AdminInternshipsPage {
   constructor() {
-    this.navbar = new Navbar();
     this.overview = new InternshipOverview();
     this.oppManager = new OpportunityManager();
     this.pipeline = new ApplicationsPipeline();
     this.mentors = new MentorAssignment();
     this.progress = new ProgressMonitoring();
-    this.footer = new Footer();
+    this.currentActiveTab = "tab-overview";
   }
 
   render() {
-    return `
-      <div class="flex flex-col min-h-screen bg-stone-50 select-none">
-        ${this.navbar.render()}
+    const isTabActive = (tabId) => this.currentActiveTab === tabId ? "" : "hidden";
+    const tabClass = (tabId) => this.currentActiveTab === tabId
+      ? "border-pink-ruby text-pink-ruby font-bold"
+      : "border-transparent text-text-light hover:text-text-dark";
 
-        <main class="flex-grow py-10 px-6">
-          <div class="max-w-6xl mx-auto space-y-8">
-            
-            <!-- Admin Roster Header -->
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 text-left border-b border-stone-200 pb-5">
-              <div>
-                <span class="font-interface font-semibold text-[11px] uppercase tracking-widest text-pink-ruby">Executive Console</span>
-                <h2 class="font-display font-semibold text-3xl text-text-dark mt-1 tracking-tight">Internship Management System</h2>
-              </div>
-              
-              <div class="flex items-center gap-2">
-                <span class="h-2 w-2 rounded-full bg-pink-ruby"></span>
-                <span class="font-interface text-[11px] font-bold uppercase tracking-widest text-text-light">Administrator Workspace</span>
-              </div>
-            </div>
+    const internshipsHTML = `
+      <div class="space-y-6 select-none text-left">
+        <!-- Page Header -->
+        <div>
+          <h2 class="font-display font-bold text-2xl text-text-dark">Internship Operations Platform</h2>
+          <p class="text-[12.5px] text-text-light font-sans mt-0.5">Control recruitment pipelines, manage active domains, and oversee cohort milestones.</p>
+        </div>
 
-            <!-- Tab Buttons Row -->
-            <div class="flex flex-wrap border-b border-stone-200 gap-1.5 select-none font-interface text-[12px] font-bold uppercase tracking-wider">
-              <button data-tab="tab-overview" class="admin-tab-btn py-3 px-4.5 border-b-2 border-pink-ruby text-pink-ruby">
-                Overview
-              </button>
-              <button data-tab="tab-openings" class="admin-tab-btn py-3 px-4.5 border-b-2 border-transparent text-text-light hover:text-text-dark">
-                Job Openings
-              </button>
-              <button data-tab="tab-pipeline" class="admin-tab-btn py-3 px-4.5 border-b-2 border-transparent text-text-light hover:text-text-dark">
-                Recruitment Board
-              </button>
-              <button data-tab="tab-mentors" class="admin-tab-btn py-3 px-4.5 border-b-2 border-transparent text-text-light hover:text-text-dark">
-                Mentor Assignments
-              </button>
-              <button data-tab="tab-progress" class="admin-tab-btn py-3 px-4.5 border-b-2 border-transparent text-text-light hover:text-text-dark">
-                Progress Logs
-              </button>
-            </div>
+        <!-- Tab Buttons Row -->
+        <div class="flex flex-wrap border-b border-stone-200 gap-1.5 font-interface text-[11.5px] font-semibold uppercase tracking-wider">
+          <button data-tab="tab-overview" class="admin-tab-btn py-3 px-4.5 border-b-2 transition-colors ${tabClass("tab-overview")}">
+            Overview
+          </button>
+          <button data-tab="tab-openings" class="admin-tab-btn py-3 px-4.5 border-b-2 transition-colors ${tabClass("tab-openings")}">
+            Job Openings
+          </button>
+          <button data-tab="tab-pipeline" class="admin-tab-btn py-3 px-4.5 border-b-2 transition-colors ${tabClass("tab-pipeline")}">
+            Recruitment Board
+          </button>
+          <button data-tab="tab-mentors" class="admin-tab-btn py-3 px-4.5 border-b-2 transition-colors ${tabClass("tab-mentors")}">
+            Mentor Assignments
+          </button>
+          <button data-tab="tab-progress" class="admin-tab-btn py-3 px-4.5 border-b-2 transition-colors ${tabClass("tab-progress")}">
+            Progress Logs
+          </button>
+        </div>
 
-            <!-- Tab Contents Container -->
-            <div class="py-4">
-              
-              <!-- Tab 1: Overview -->
-              <section id="tab-overview" class="admin-tab-content">
-                ${this.overview.render()}
-              </section>
+        <!-- Tab Contents Container -->
+        <div class="py-2">
+          
+          <section id="tab-overview" class="admin-tab-content ${isTabActive("tab-overview")}">
+            ${this.overview.render()}
+          </section>
 
-              <!-- Tab 2: Job Openings Form -->
-              <section id="tab-openings" class="admin-tab-content hidden">
-                ${this.oppManager.render()}
-              </section>
+          <section id="tab-openings" class="admin-tab-content ${isTabActive("tab-openings")}">
+            ${this.oppManager.render()}
+          </section>
 
-              <!-- Tab 3: Pipeline Kanban Board -->
-              <section id="tab-pipeline" class="admin-tab-content hidden">
-                ${this.pipeline.render()}
-              </section>
+          <section id="tab-pipeline" class="admin-tab-content ${isTabActive("tab-pipeline")}">
+            ${this.pipeline.render()}
+          </section>
 
-              <!-- Tab 4: Mentor Assignment Grid -->
-              <section id="tab-mentors" class="admin-tab-content hidden">
-                ${this.mentors.render()}
-              </section>
+          <section id="tab-mentors" class="admin-tab-content ${isTabActive("tab-mentors")}">
+            ${this.mentors.render()}
+          </section>
 
-              <!-- Tab 5: Progress Monitoring Weekly logs -->
-              <section id="tab-progress" class="admin-tab-content hidden">
-                ${this.progress.render()}
-              </section>
+          <section id="tab-progress" class="admin-tab-content ${isTabActive("tab-progress")}">
+            ${this.progress.render()}
+          </section>
 
-            </div>
-
-          </div>
-        </main>
-
-        ${this.footer.render()}
+        </div>
       </div>
     `;
+
+    return AdminLayout.render(internshipsHTML, "internships");
   }
 
   init() {
-    Navbar.init();
-    Footer.init();
-
+    AdminLayout.init();
+    
     // Call sub-component initializations
     OpportunityManager.init();
     ApplicationsPipeline.init();
@@ -107,28 +89,16 @@ export default class AdminInternshipsPage {
 
     // Tab controller logic
     const tabs = document.querySelectorAll('.admin-tab-btn');
-    const contents = document.querySelectorAll('.admin-tab-content');
-
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
-        const targetTab = tab.dataset.tab;
-
-        // Toggle buttons class
-        tabs.forEach(t => {
-          t.classList.remove('border-pink-ruby', 'text-pink-ruby');
-          t.classList.add('border-transparent', 'text-text-light');
-        });
-        tab.classList.add('border-pink-ruby', 'text-pink-ruby');
-        tab.classList.remove('border-transparent', 'text-text-light');
-
-        // Toggle contents class
-        contents.forEach(c => {
-          if (c.id === targetTab) {
-            c.classList.remove('hidden');
-          } else {
-            c.classList.add('hidden');
-          }
-        });
+        this.currentActiveTab = tab.dataset.tab;
+        
+        // Repaint the tabs container without full router change
+        const appElement = document.querySelector('#app');
+        if (appElement) {
+          appElement.innerHTML = this.render();
+          this.init();
+        }
       });
     });
   }

@@ -1,18 +1,18 @@
 import AdminLayout from '../components/admin/AdminLayout.js';
-import CertificateQueue from '../components/admin/CertificateQueue.js';
+import ProjectsManager from '../components/admin/ProjectsManager.js';
 
-export default class AdminCertificatesPage {
+export default class AdminProjectsPage {
   constructor() {
-    this.queue = new CertificateQueue();
+    this.projectsManager = new ProjectsManager();
   }
 
   render() {
-    return AdminLayout.render(this.queue.render(), "certificates");
+    return AdminLayout.render(this.projectsManager.render(), "projects");
   }
 
   init() {
     AdminLayout.init();
-    this.queue.init(() => {
+    this.projectsManager.init(() => {
       const appElement = document.querySelector('#app');
       if (appElement) {
         appElement.innerHTML = this.render();

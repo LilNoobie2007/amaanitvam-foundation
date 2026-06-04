@@ -1,22 +1,18 @@
-import Navbar from '../components/Navbar.js';
+import AdminLayout from '../components/admin/AdminLayout.js';
 import EventOverview from '../components/events/admin/EventOverview.js';
 import EventTable from '../components/events/admin/EventTable.js';
 import RegistrationManager from '../components/events/admin/RegistrationManager.js';
 import AttendanceTracker from '../components/events/admin/AttendanceTracker.js';
-import Footer from '../components/Footer.js';
 
 export default class AdminEventsPage {
   constructor() {
-    this.navbar = new Navbar();
     this.overview = new EventOverview();
     this.table = new EventTable();
     this.roster = new RegistrationManager();
     this.ledger = new AttendanceTracker();
-    this.footer = new Footer();
   }
 
   render() {
-    // Parse query options e.g. #/admin/events?manage=evt-1
     const hash = window.location.hash;
     const queryPart = hash.includes('?') ? hash.substring(hash.indexOf('?')) : '';
     const params = new URLSearchParams(queryPart);
@@ -32,52 +28,36 @@ export default class AdminEventsPage {
       subViewHTML = this.table.render();
     }
 
-    return `
-      <div class="flex flex-col min-h-screen bg-stone-50 select-none text-left">
-        ${this.navbar.render()}
+    const eventsHTML = `
+      <div class="space-y-6 select-none text-left">
+        <!-- Page Header -->
+        <div class="flex justify-between items-center pb-2">
+          <div>
+            <h2 class="font-display font-bold text-2xl text-text-dark">Events Operations Center</h2>
+            <p class="text-[12.5px] text-text-light font-sans mt-0.5">Control regional drives, coordinate volunteer check-ins, and publish event reports.</p>
+          </div>
+          <div class="flex gap-2">
+            <a href="#/admin/events/new" class="px-4 py-2 bg-pink-ruby text-white hover:bg-pink-ruby/90 rounded-lg font-interface font-bold text-[11px] uppercase tracking-wider flex items-center gap-1 transition-all">
+              Create Event
+            </a>
+          </div>
+        </div>
 
-        <main class="flex-grow pt-20 md:pt-24">
-          <!-- Page Header Console Banner -->
-          <section class="bg-stone-900 text-white py-12 px-6">
-            <div class="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center justify-between gap-6">
-              <div>
-                <span class="inline-block font-interface font-semibold text-[10px] uppercase tracking-widest text-gold-satin mb-2">
-                  Console Space
-                </span>
-                <h1 class="font-display font-bold text-3xl sm:text-4xl text-white">
-                  Events & Activities Management
-                </h1>
-              </div>
-              <div class="flex flex-wrap gap-3">
-                <a href="#/admin/events/new" class="inline-flex items-center justify-center font-interface font-semibold text-[10.5px] uppercase tracking-widest px-5 py-2.5 rounded bg-pink-ruby text-white hover:bg-pink-ruby/90 shadow transition-colors">
-                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                  Create Event
-                </a>
-                <a href="#/admin/certificates" class="inline-flex items-center justify-center font-interface font-semibold text-[10.5px] uppercase tracking-widest px-5 py-2.5 rounded border border-white/20 text-stone-300 hover:text-white hover:bg-white/10 transition-colors">
-                  Certificate Console
-                </a>
-              </div>
-            </div>
-          </section>
+        <!-- Overview stats -->
+        ${this.overview.render()}
 
-          <!-- Core stats section -->
-          <section class="py-8 px-6 max-w-7xl mx-auto space-y-8">
-            ${this.overview.render()}
-            
-            <div class="pt-4">
-              ${subViewHTML}
-            </div>
-          </section>
-        </main>
-
-        ${this.footer.render()}
+        <!-- Dynamic Subview -->
+        <div class="pt-2">
+          ${subViewHTML}
+        </div>
       </div>
     `;
+
+    return AdminLayout.render(eventsHTML, "events");
   }
 
   init() {
-    Navbar.init();
-    Footer.init();
+    AdminLayout.init();
 
     const hash = window.location.hash;
     const queryPart = hash.includes('?') ? hash.substring(hash.indexOf('?')) : '';
@@ -92,17 +72,5 @@ export default class AdminEventsPage {
     } else {
       EventTable.init();
     }
-
-    // Scroll reveal observer
-    const reveals = document.querySelectorAll('.scroll-reveal');
-    const revealObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('revealed');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.05 });
-    reveals.forEach(el => revealObserver.observe(el));
   }
 }
