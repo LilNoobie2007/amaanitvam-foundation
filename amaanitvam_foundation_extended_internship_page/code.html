@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Internship - Amaanitvam Foundation</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-low": "#f3f3f4",
+                        "on-primary-container": "#572800",
+                        "on-secondary-fixed-variant": "#394951",
+                        "surface-bright": "#f9f9f9",
+                        "on-tertiary-fixed": "#1e1b17",
+                        "primary-fixed-dim": "#ffb786",
+                        "outline": "#8b7263",
+                        "on-secondary": "#ffffff",
+                        "on-surface": "#1a1c1c",
+                        "tertiary-container": "#a29d97",
+                        "secondary-fixed": "#d4e5ef",
+                        "on-primary": "#ffffff",
+                        "inverse-surface": "#2f3131",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed-dim": "#cbc5bf",
+                        "surface-container-lowest": "#ffffff",
+                        "on-background": "#1a1c1c",
+                        "primary": "#964900",
+                        "tertiary": "#625e59",
+                        "on-error-container": "#93000a",
+                        "on-secondary-container": "#55656d",
+                        "inverse-on-surface": "#f0f1f1",
+                        "inverse-primary": "#ffb786",
+                        "on-primary-fixed": "#311300",
+                        "surface-dim": "#dadada",
+                        "tertiary-fixed": "#e8e1db",
+                        "surface-variant": "#e2e2e2",
+                        "on-secondary-fixed": "#0d1e25",
+                        "error-container": "#ffdad6",
+                        "background": "#f9f9f9",
+                        "surface-tint": "#964900",
+                        "on-surface-variant": "#574235",
+                        "on-primary-fixed-variant": "#723600",
+                        "surface-container": "#eeeeee",
+                        "surface-container-highest": "#e2e2e2",
+                        "secondary-fixed-dim": "#b8c9d3",
+                        "primary-container": "#f57c00",
+                        "on-error": "#ffffff",
+                        "surface-container-high": "#e8e8e8",
+                        "surface": "#f9f9f9",
+                        "secondary": "#506169",
+                        "secondary-container": "#d1e2ec",
+                        "primary-fixed": "#ffdcc6",
+                        "outline-variant": "#dec1af",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#4a4641",
+                        "on-tertiary-container": "#383530"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "section-gap": "96px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "48px",
+                        "container-max": "1280px",
+                        "gutter": "24px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-xl-mobile": ["Plus Jakarta Sans"],
+                        "headline-xl": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-lg": ["Inter"],
+                        "label-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-xl-mobile": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .ambient-shadow {
+            box-shadow: 0 4px 24px rgba(55, 71, 79, 0.08);
+        }
+        .ambient-shadow-hover:hover {
+            box-shadow: 0 12px 32px rgba(55, 71, 79, 0.12);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md text-body-md antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- Navigation -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-md shadow-sm bg-surface dark:bg-surface-dim border-b border-transparent">
+<div class="flex justify-between items-center px-gutter py-4 max-w-container-max mx-auto">
+<a class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed" href="#">Amaanitvam Foundation</a>
+<nav class="hidden md:flex items-center gap-8">
+<a class="font-label-md text-label-md text-secondary dark:text-secondary-fixed-dim font-medium hover:text-primary transition-colors hover:text-primary dark:hover:text-primary-fixed transition-all duration-200" href="#">Our Work</a>
+<a class="font-label-md text-label-md text-secondary dark:text-secondary-fixed-dim font-medium hover:text-primary transition-colors hover:text-primary dark:hover:text-primary-fixed transition-all duration-200" href="#">Impact</a>
+<a class="font-label-md text-label-md text-secondary dark:text-secondary-fixed-dim font-medium hover:text-primary transition-colors hover:text-primary dark:hover:text-primary-fixed transition-all duration-200" href="#">About Us</a>
+<a class="font-label-md text-label-md text-secondary dark:text-secondary-fixed-dim font-medium hover:text-primary transition-colors hover:text-primary dark:hover:text-primary-fixed transition-all duration-200" href="#">Stories</a>
+<a class="font-label-md text-label-md text-secondary dark:text-secondary-fixed-dim font-medium hover:text-primary transition-colors hover:text-primary dark:hover:text-primary-fixed transition-all duration-200" href="#">Volunteer</a>
+<a class="font-label-md text-label-md text-primary dark:text-primary-fixed font-bold border-b-2 border-primary pb-1" href="#">Internship</a>
+</nav>
+<button class="hidden md:flex h-[56px] px-8 items-center justify-center bg-primary-container text-white font-label-md text-label-md rounded-full hover:bg-primary transition-colors">
+            Donate
+        </button>
+<!-- Mobile Menu Button (Placeholder) -->
+<button class="md:hidden p-2 text-primary">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</header>
+<main class="pt-[88px]"> <!-- Offset for fixed header -->
+<!-- Hero Section -->
+<section class="relative w-full overflow-hidden bg-surface-container-lowest pt-16 pb-section-gap px-gutter">
+<div class="max-w-container-max mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+<div class="space-y-8 z-10">
+<h1 class="font-headline-xl-mobile md:font-headline-xl text-headline-xl-mobile md:text-headline-xl text-on-surface">Learn. Contribute. <span class="text-primary-container">Grow With Us.</span></h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-lg">
+                    Gain practical experience while making a meaningful social impact. Our internship program is designed to develop your skills, build your professional network, and empower you to drive positive change in communities.
+                </p>
+<div class="flex flex-col sm:flex-row gap-4 pt-4">
+<button class="h-[56px] px-8 items-center justify-center bg-primary-container text-white font-label-md text-label-md rounded-full hover:bg-primary transition-colors">
+                        Apply For Internship
+                    </button>
+<button class="h-[56px] px-8 items-center justify-center bg-transparent border-2 border-primary text-primary font-label-md text-label-md rounded-full hover:bg-primary/5 transition-colors">
+                        Explore Roles
+                    </button>
+</div>
+</div>
+<div class="relative z-10 w-full h-[400px] lg:h-[600px] rounded-xl overflow-hidden ambient-shadow">
+<img alt="Interns and professionals collaborating" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCySSpAA93SYSAjtSXyQ6de_UzlmaCY00QC6YX3Uf5nPPs9gr-aA5g4TwKu5v5qq_f7Iiuo3mCV6XAG9G7ph0sFqhzOpZyBOrlBm6G4ne8e71r4hB87RDIcRVzAxv-rUZYLmwTpVCUO4fzoJOsNNhrRRLKiIMjU3ys5HYWOdt4wlN6OQI5FZbBZj64SXMXnqtJ_5AGqC4Un6PkHUOD01-q-1pdjx3GB0M1aeuykUJwxWt9xavVXKBfFnC5uGsmV0US3F8fXEmRBM9o"/>
+</div>
+</div>
+</section>
+<!-- Stats Section -->
+<section class="w-full bg-primary text-white py-16 px-gutter">
+<div class="max-w-container-max mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+<div class="space-y-2">
+<div class="font-headline-xl text-headline-xl text-primary-fixed">100+</div>
+<div class="font-label-md text-label-md text-primary-fixed-dim">Interns Trained</div>
+</div>
+<div class="space-y-2">
+<div class="font-headline-xl text-headline-xl text-primary-fixed">25+</div>
+<div class="font-label-md text-label-md text-primary-fixed-dim">Active Projects</div>
+</div>
+<div class="space-y-2">
+<div class="font-headline-xl text-headline-xl text-primary-fixed">90%</div>
+<div class="font-label-md text-label-md text-primary-fixed-dim">Completion Rate</div>
+</div>
+<div class="space-y-2">
+<div class="font-headline-xl text-headline-xl text-primary-fixed">4-12</div>
+<div class="font-label-md text-label-md text-primary-fixed-dim">Week Programs</div>
+</div>
+</div>
+</section>
+<!-- Why Join Our Internship Program -->
+<section class="w-full py-section-gap px-gutter bg-surface-container-lowest">
+<div class="max-w-container-max mx-auto">
+<h2 class="font-headline-lg text-headline-lg text-on-surface text-center mb-12">Why Join Our Internship Program</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<div class="bg-surface p-8 rounded-xl border border-outline-variant ambient-shadow-hover transition-all duration-300">
+<div class="w-12 h-12 rounded-full bg-primary-container/10 flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-primary-container">work</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-4">Real-World Experience</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Work on actual projects that impact communities, not just theoretical assignments.</p>
+</div>
+<div class="bg-surface p-8 rounded-xl border border-outline-variant ambient-shadow-hover transition-all duration-300">
+<div class="w-12 h-12 rounded-full bg-primary-container/10 flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-primary-container">groups</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-4">Mentorship &amp; Guidance</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Learn directly from experienced professionals and domain experts.</p>
+</div>
+<div class="bg-surface p-8 rounded-xl border border-outline-variant ambient-shadow-hover transition-all duration-300">
+<div class="w-12 h-12 rounded-full bg-primary-container/10 flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-primary-container">trending_up</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-4">Skill Development</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Acquire new technical and soft skills essential for your career growth.</p>
+</div>
+<div class="bg-surface p-8 rounded-xl border border-outline-variant ambient-shadow-hover transition-all duration-300">
+<div class="w-12 h-12 rounded-full bg-primary-container/10 flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-primary-container">folder_special</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-4">Portfolio Building</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Build a strong portfolio with tangible outcomes from your internship projects.</p>
+</div>
+<div class="bg-surface p-8 rounded-xl border border-outline-variant ambient-shadow-hover transition-all duration-300">
+<div class="w-12 h-12 rounded-full bg-primary-container/10 flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-primary-container">hub</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-4">Professional Networking</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Connect with industry professionals, fellow interns, and organizational leaders.</p>
+</div>
+<div class="bg-surface p-8 rounded-xl border border-outline-variant ambient-shadow-hover transition-all duration-300">
+<div class="w-12 h-12 rounded-full bg-primary-container/10 flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-primary-container">volunteer_activism</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-4">Social Impact Exposure</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Gain a deep understanding of social issues and how to address them effectively.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Internship Tracks & Roles -->
+<section class="w-full py-section-gap px-gutter bg-surface-container-low">
+<div class="max-w-container-max mx-auto">
+<h2 class="font-headline-lg text-headline-lg text-on-surface text-center mb-12">Internship Tracks &amp; Roles</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<div class="bg-surface-container-lowest p-8 rounded-xl border border-outline-variant ambient-shadow">
+<h3 class="font-headline-md text-headline-md text-primary mb-2">Project Management</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">Assist in planning, executing, and monitoring community initiatives.</p>
+<div class="bg-surface-variant h-px w-full my-4"></div>
+<h4 class="font-label-md text-label-md text-on-surface mb-2">Key Responsibilities:</h4>
+<ul class="list-disc list-inside font-body-md text-body-md text-on-surface-variant space-y-1">
+<li>Project tracking</li>
+<li>Resource coordination</li>
+<li>Impact measurement</li>
+</ul>
+</div>
+<div class="bg-surface-container-lowest p-8 rounded-xl border border-outline-variant ambient-shadow">
+<h3 class="font-headline-md text-headline-md text-primary mb-2">Community Development</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">Engage directly with communities to implement grassroots programs.</p>
+<div class="bg-surface-variant h-px w-full my-4"></div>
+<h4 class="font-label-md text-label-md text-on-surface mb-2">Key Responsibilities:</h4>
+<ul class="list-disc list-inside font-body-md text-body-md text-on-surface-variant space-y-1">
+<li>Community outreach</li>
+<li>Needs assessment</li>
+<li>Program facilitation</li>
+</ul>
+</div>
+<div class="bg-surface-container-lowest p-8 rounded-xl border border-outline-variant ambient-shadow">
+<h3 class="font-headline-md text-headline-md text-primary mb-2">Research &amp; Documentation</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">Conduct studies and document best practices in social development.</p>
+<div class="bg-surface-variant h-px w-full my-4"></div>
+<h4 class="font-label-md text-label-md text-on-surface mb-2">Key Responsibilities:</h4>
+<ul class="list-disc list-inside font-body-md text-body-md text-on-surface-variant space-y-1">
+<li>Data collection</li>
+<li>Case study creation</li>
+<li>Report writing</li>
+</ul>
+</div>
+<div class="bg-surface-container-lowest p-8 rounded-xl border border-outline-variant ambient-shadow">
+<h3 class="font-headline-md text-headline-md text-primary mb-2">Marketing &amp; Outreach</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">Help expand our reach and engage potential donors and volunteers.</p>
+<div class="bg-surface-variant h-px w-full my-4"></div>
+<h4 class="font-label-md text-label-md text-on-surface mb-2">Key Responsibilities:</h4>
+<ul class="list-disc list-inside font-body-md text-body-md text-on-surface-variant space-y-1">
+<li>Campaign design</li>
+<li>Stakeholder engagement</li>
+<li>Event promotion</li>
+</ul>
+</div>
+<div class="bg-surface-container-lowest p-8 rounded-xl border border-outline-variant ambient-shadow">
+<h3 class="font-headline-md text-headline-md text-primary mb-2">Content &amp; Communications</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">Create compelling narratives to share our impact stories.</p>
+<div class="bg-surface-variant h-px w-full my-4"></div>
+<h4 class="font-label-md text-label-md text-on-surface mb-2">Key Responsibilities:</h4>
+<ul class="list-disc list-inside font-body-md text-body-md text-on-surface-variant space-y-1">
+<li>Social media management</li>
+<li>Blog writing</li>
+<li>Newsletter creation</li>
+</ul>
+</div>
+<div class="bg-surface-container-lowest p-8 rounded-xl border border-outline-variant ambient-shadow">
+<h3 class="font-headline-md text-headline-md text-primary mb-2">Technology &amp; Digital Support</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">Leverage digital tools to enhance organizational efficiency.</p>
+<div class="bg-surface-variant h-px w-full my-4"></div>
+<h4 class="font-label-md text-label-md text-on-surface mb-2">Key Responsibilities:</h4>
+<ul class="list-disc list-inside font-body-md text-body-md text-on-surface-variant space-y-1">
+<li>Website maintenance</li>
+<li>Database management</li>
+<li>IT support</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<!-- Internship Journey Timeline -->
+<section class="w-full py-section-gap px-gutter bg-surface-container-lowest">
+<div class="max-w-container-max mx-auto">
+<h2 class="font-headline-lg text-headline-lg text-on-surface text-center mb-16">Internship Journey</h2>
+<div class="relative max-w-4xl mx-auto">
+<!-- Vertical Timeline Line -->
+<div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-1 bg-surface-variant transform md:-translate-x-1/2"></div>
+<div class="space-y-12">
+<!-- Step 1 -->
+<div class="relative flex flex-col md:flex-row items-start md:items-center w-full">
+<div class="md:w-1/2 md:pr-12 md:text-right ml-12 md:ml-0 mb-4 md:mb-0">
+<h3 class="font-headline-md text-headline-md text-on-surface">Application</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Submit your resume and cover letter through our online portal.</p>
+</div>
+<div class="absolute left-0 md:left-1/2 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center transform md:-translate-x-1/2 border-4 border-surface-container-lowest shadow-sm z-10">1</div>
+<div class="md:w-1/2 md:pl-12 hidden md:block"></div>
+</div>
+<!-- Step 2 -->
+<div class="relative flex flex-col md:flex-row items-start md:items-center w-full">
+<div class="md:w-1/2 md:pr-12 hidden md:block"></div>
+<div class="absolute left-0 md:left-1/2 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center transform md:-translate-x-1/2 border-4 border-surface-container-lowest shadow-sm z-10">2</div>
+<div class="md:w-1/2 md:pl-12 ml-12 md:ml-0">
+<h3 class="font-headline-md text-headline-md text-on-surface">Review &amp; Shortlisting</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Our team reviews applications and shortlists candidates.</p>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="relative flex flex-col md:flex-row items-start md:items-center w-full">
+<div class="md:w-1/2 md:pr-12 md:text-right ml-12 md:ml-0 mb-4 md:mb-0">
+<h3 class="font-headline-md text-headline-md text-on-surface">Interview / Assessment</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Shortlisted candidates participate in an interview or complete a brief task.</p>
+</div>
+<div class="absolute left-0 md:left-1/2 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center transform md:-translate-x-1/2 border-4 border-surface-container-lowest shadow-sm z-10">3</div>
+<div class="md:w-1/2 md:pl-12 hidden md:block"></div>
+</div>
+<!-- Step 4 -->
+<div class="relative flex flex-col md:flex-row items-start md:items-center w-full">
+<div class="md:w-1/2 md:pr-12 hidden md:block"></div>
+<div class="absolute left-0 md:left-1/2 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center transform md:-translate-x-1/2 border-4 border-surface-container-lowest shadow-sm z-10">4</div>
+<div class="md:w-1/2 md:pl-12 ml-12 md:ml-0">
+<h3 class="font-headline-md text-headline-md text-on-surface">Selection Confirmation</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Successful candidates receive their internship offer and track details.</p>
+</div>
+</div>
+<!-- Step 5 -->
+<div class="relative flex flex-col md:flex-row items-start md:items-center w-full">
+<div class="md:w-1/2 md:pr-12 md:text-right ml-12 md:ml-0 mb-4 md:mb-0">
+<h3 class="font-headline-md text-headline-md text-on-surface">Onboarding</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Welcome session, orientation, and introduction to mentors and projects.</p>
+</div>
+<div class="absolute left-0 md:left-1/2 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center transform md:-translate-x-1/2 border-4 border-surface-container-lowest shadow-sm z-10">5</div>
+<div class="md:w-1/2 md:pl-12 hidden md:block"></div>
+</div>
+<!-- Step 6 -->
+<div class="relative flex flex-col md:flex-row items-start md:items-center w-full">
+<div class="md:w-1/2 md:pr-12 hidden md:block"></div>
+<div class="absolute left-0 md:left-1/2 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center transform md:-translate-x-1/2 border-4 border-surface-container-lowest shadow-sm z-10">6</div>
+<div class="md:w-1/2 md:pl-12 ml-12 md:ml-0">
+<h3 class="font-headline-md text-headline-md text-on-surface">Project Work</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Active participation in assigned projects with regular mentorship check-ins.</p>
+</div>
+</div>
+<!-- Step 7 -->
+<div class="relative flex flex-col md:flex-row items-start md:items-center w-full">
+<div class="md:w-1/2 md:pr-12 md:text-right ml-12 md:ml-0 mb-4 md:mb-0">
+<h3 class="font-headline-md text-headline-md text-on-surface">Completion &amp; Certification</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Final presentation, feedback session, and awarding of verified certificates.</p>
+</div>
+<div class="absolute left-0 md:left-1/2 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center transform md:-translate-x-1/2 border-4 border-surface-container-lowest shadow-sm z-10">7</div>
+<div class="md:w-1/2 md:pl-12 hidden md:block"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Eligibility & Benefits -->
+<section class="w-full py-section-gap px-gutter bg-surface-container-low">
+<div class="max-w-container-max mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16">
+<!-- Eligibility -->
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-8">Eligibility Requirements</h2>
+<div class="space-y-4">
+<div class="flex items-start gap-4 bg-surface-container-lowest p-6 rounded-xl border border-outline-variant">
+<span class="material-symbols-outlined text-primary mt-1">school</span>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface text-lg">Students/Recent Graduates</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Currently enrolled or recently graduated from a recognized institution.</p>
+</div>
+</div>
+<div class="flex items-start gap-4 bg-surface-container-lowest p-6 rounded-xl border border-outline-variant">
+<span class="material-symbols-outlined text-primary mt-1">forum</span>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface text-lg">Communication Skills</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Good verbal and written communication abilities.</p>
+</div>
+</div>
+<div class="flex items-start gap-4 bg-surface-container-lowest p-6 rounded-xl border border-outline-variant">
+<span class="material-symbols-outlined text-primary mt-1">favorite</span>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface text-lg">Interest in Social Impact</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">A genuine passion for community development and social change.</p>
+</div>
+</div>
+<div class="flex items-start gap-4 bg-surface-container-lowest p-6 rounded-xl border border-outline-variant">
+<span class="material-symbols-outlined text-primary mt-1">handshake</span>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface text-lg">Commitment &amp; Professionalism</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Dedication to completing tasks and upholding organizational values.</p>
+</div>
+</div>
+<div class="flex items-start gap-4 bg-surface-container-lowest p-6 rounded-xl border border-outline-variant">
+<span class="material-symbols-outlined text-primary mt-1">diversity_3</span>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface text-lg">Team Collaboration</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Ability to work effectively in diverse, cross-functional teams.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Benefits -->
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-8">Internship Benefits</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant ambient-shadow">
+<span class="material-symbols-outlined text-primary-container mb-3 text-3xl">workspace_premium</span>
+<h3 class="font-headline-md text-headline-md text-on-surface text-lg mb-2">Experience Certificate</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Verified certificate upon successful completion.</p>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant ambient-shadow">
+<span class="material-symbols-outlined text-primary-container mb-3 text-3xl">psychology</span>
+<h3 class="font-headline-md text-headline-md text-on-surface text-lg mb-2">Mentorship Support</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Ongoing guidance from experienced leaders.</p>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant ambient-shadow">
+<span class="material-symbols-outlined text-primary-container mb-3 text-3xl">engineering</span>
+<h3 class="font-headline-md text-headline-md text-on-surface text-lg mb-2">Practical Experience</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Hands-on involvement in impactful projects.</p>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant ambient-shadow">
+<span class="material-symbols-outlined text-primary-container mb-3 text-3xl">assignment_turned_in</span>
+<h3 class="font-headline-md text-headline-md text-on-surface text-lg mb-2">Recommendations</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Letters of recommendation for outstanding performers.</p>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant ambient-shadow">
+<span class="material-symbols-outlined text-primary-container mb-3 text-3xl">trending_up</span>
+<h3 class="font-headline-md text-headline-md text-on-surface text-lg mb-2">Professional Growth</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Skill development and portfolio enhancement.</p>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant ambient-shadow">
+<span class="material-symbols-outlined text-primary-container mb-3 text-3xl">connect_without_contact</span>
+<h3 class="font-headline-md text-headline-md text-on-surface text-lg mb-2">Networking</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Access to a wide network of professionals and peers.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Success Stories -->
+<section class="w-full py-section-gap px-gutter bg-surface-container-lowest">
+<div class="max-w-container-max mx-auto">
+<h2 class="font-headline-lg text-headline-lg text-on-surface text-center mb-12">Intern Success Stories</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Testimonial 1 -->
+<div class="bg-surface p-8 rounded-xl border border-outline-variant ambient-shadow">
+<div class="flex items-center gap-4 mb-6">
+<img alt="Sarah Johnson" class="w-16 h-16 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWEC14LXCRDnUzAM4hnD4PDBxwhDShKaXsQBoEzk_LWevVCFMYLYwc5BW9OuUqDnD4tv_Kag8SpBQ5gQCDNyvY_Iw-hmGXgJOTsqTAHsCeLWYKHdGMT98Id6D5EgCYmnFagqtR6xU976CUUDqERJIXRvXNWJILCYIjHRasHv-gGOI-_JN51llt-ytmotr8-PoCy2Devy-MS75ObGkN5AgyXK-K4XwN47BqaZIo1-AaVLokmaDy1WUbvLAkOCAKkATgIwhRDYDY0uk"/>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface text-lg">Priya Patel</h3>
+<p class="font-label-md text-label-md text-primary">Community Development Intern</p>
+</div>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant italic">"My time here gave me real insights into grassroots challenges. The mentorship was invaluable, and I feel much more prepared for a career in social work."</p>
+</div>
+<!-- Testimonial 2 -->
+<div class="bg-surface p-8 rounded-xl border border-outline-variant ambient-shadow">
+<div class="flex items-center gap-4 mb-6">
+<img alt="Rahul Kumar" class="w-16 h-16 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCF_JhBelvrN2wOreOfC0__KgEoP1WOK24nHPn3fXq8YWWzlI-iPSAVc6KkJYwJB_nEZepwal1NBlyaYL8T1LIfyhMTBK5qsmkBabT9-3RoraqS0x5ckdxwxkTGRtDITmyob_ePwjkxDAxpXx75i7IEoxBxqZOfuY2Sz_bx5Ff5eYofB8aCiAhlCQ70Gn00huQQf5RmgEkbcTDvIafu9dwsHsVHe-JttP6Ag02vNwTs0XOJGHb59W0ccxG8fj59NqAmRK5SanVixRQ"/>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface text-lg">Rahul Kumar</h3>
+<p class="font-label-md text-label-md text-primary">Content &amp; Comms Intern</p>
+</div>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant italic">"Creating narratives that actually drove donations was a huge confidence boost. I built a portfolio I'm proud of while supporting a great cause."</p>
+</div>
+<!-- Testimonial 3 -->
+<div class="bg-surface p-8 rounded-xl border border-outline-variant ambient-shadow">
+<div class="flex items-center gap-4 mb-6">
+<img alt="Ayesha Khan" class="w-16 h-16 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNjez0fFVwMSN0GfNrQFSiJIUO48bBlYMtpUGRpg60kX_ks7byCj-ubA2V_q7LanqQaSQL-mjLEHe2WxOBWaihbMnxVCh5y6tJtvZYysbwqIyoH1vcZeP5U77So_IWf2kZRUFQzT64mIf9h7kog1jOXKczwwnBm65HXfqLQ5qj7QR7v8D4B-0XNZTdex2pNuBA6K4I45jrae5Tr6X1QQxh7nT-6p2hsvU3qtXuvGShAZmC2XnBiOYK_kCSEstW3jAcoCBc1pofkp4"/>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface text-lg">Ayesha Khan</h3>
+<p class="font-label-md text-label-md text-primary">Project Management Intern</p>
+</div>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant italic">"Learning to manage resources for NGO projects taught me more than any textbook. The team was incredibly supportive throughout the journey."</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Internship Certificates -->
+<section class="w-full py-section-gap px-gutter bg-surface-container-low">
+<div class="max-w-container-max mx-auto text-center">
+<span class="material-symbols-outlined text-primary-container text-6xl mb-6">verified</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-6">Verified Digital Certificates</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto mb-8">
+                Upon successful completion of the internship, participants receive a digital certificate with a unique ID. Our verification system allows future employers or institutions to instantly validate your credentials and project contributions.
+            </p>
+<button class="h-[56px] px-8 inline-flex items-center justify-center bg-surface-container-lowest border-2 border-primary text-primary font-label-md text-label-md rounded-full hover:bg-primary/5 transition-colors gap-2">
+<span class="material-symbols-outlined">search</span>
+                Verify Certificate
+            </button>
+</div>
+</section>
+<!-- Final CTA -->
+<section class="w-full py-section-gap px-gutter bg-primary relative overflow-hidden">
+<!-- Abstract background elements -->
+<div class="absolute top-0 right-0 w-64 h-64 bg-primary-container/20 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
+<div class="absolute bottom-0 left-0 w-80 h-80 bg-primary-container/20 rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2"></div>
+<div class="max-w-container-max mx-auto text-center relative z-10">
+<h2 class="font-headline-xl text-headline-xl text-white mb-6">Start Your Learning Journey With Us</h2>
+<p class="font-body-lg text-body-lg text-primary-fixed-dim max-w-2xl mx-auto mb-10">
+                Take the first step towards a rewarding career while making a tangible difference. Apply now and become part of our mission.
+            </p>
+<div class="flex flex-col sm:flex-row justify-center gap-4">
+<button class="h-[56px] px-8 items-center justify-center bg-white text-primary font-label-md text-label-md rounded-full hover:bg-surface-variant transition-colors shadow-lg">
+                    Apply For Internship
+                </button>
+<button class="h-[56px] px-8 items-center justify-center bg-transparent border-2 border-white text-white font-label-md text-label-md rounded-full hover:bg-white/10 transition-colors">
+                    Contact Us
+                </button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full bg-tertiary-fixed dark:bg-on-tertiary-fixed-variant">
+<div class="flex flex-col md:flex-row justify-between items-start px-gutter py-section-gap max-w-container-max mx-auto">
+<div class="mb-8 md:mb-0">
+<div class="font-headline-md text-headline-md font-bold text-on-tertiary-fixed mb-4">Amaanitvam Foundation</div>
+<p class="font-body-md text-body-md text-on-tertiary-fixed-variant dark:text-tertiary-container max-w-xs mb-4">
+                © 2024 Amaanitvam Foundation. All rights reserved.
+            </p>
+</div>
+<div class="flex flex-col md:flex-row gap-8 md:gap-16">
+<nav class="flex flex-col gap-4">
+<a class="font-body-md text-body-md text-on-tertiary-fixed-variant dark:text-tertiary-container hover:text-primary hover:text-primary-container dark:hover:text-primary-fixed transition-colors focus:underline" href="#">Privacy Policy</a>
+<a class="font-body-md text-body-md text-on-tertiary-fixed-variant dark:text-tertiary-container hover:text-primary hover:text-primary-container dark:hover:text-primary-fixed transition-colors focus:underline" href="#">Terms of Service</a>
+</nav>
+<nav class="flex flex-col gap-4">
+<a class="font-body-md text-body-md text-on-tertiary-fixed-variant dark:text-tertiary-container hover:text-primary hover:text-primary-container dark:hover:text-primary-fixed transition-colors focus:underline" href="#">Annual Report</a>
+<a class="font-body-md text-body-md text-on-tertiary-fixed-variant dark:text-tertiary-container hover:text-primary hover:text-primary-container dark:hover:text-primary-fixed transition-colors focus:underline" href="#">Tax Exemption</a>
+<a class="font-body-md text-body-md text-on-tertiary-fixed-variant dark:text-tertiary-container hover:text-primary hover:text-primary-container dark:hover:text-primary-fixed transition-colors focus:underline" href="#">Contact Us</a>
+</nav>
+</div>
+</div>
+</footer>
+</body></html>

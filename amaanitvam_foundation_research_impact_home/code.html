@@ -1,0 +1,527 @@
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Amaanitvam Foundation</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface-variant": "#574235",
+                        "primary-container": "#f57c00",
+                        "tertiary": "#625e59",
+                        "on-primary-fixed-variant": "#723600",
+                        "primary-fixed": "#ffdcc6",
+                        "on-error-container": "#93000a",
+                        "outline-variant": "#dec1af",
+                        "on-secondary-container": "#55656d",
+                        "surface": "#f9f9f9",
+                        "inverse-primary": "#ffb786",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed": "#0d1e25",
+                        "on-tertiary-fixed-variant": "#4a4641",
+                        "outline": "#8b7263",
+                        "primary": "#964900",
+                        "background": "#f9f9f9",
+                        "secondary-fixed-dim": "#b8c9d3",
+                        "on-primary": "#ffffff",
+                        "surface-variant": "#e2e2e2",
+                        "on-primary-fixed": "#311300",
+                        "primary-fixed-dim": "#ffb786",
+                        "on-error": "#ffffff",
+                        "secondary-container": "#d1e2ec",
+                        "secondary-fixed": "#d4e5ef",
+                        "tertiary-container": "#a29d97",
+                        "surface-container-high": "#e8e8e8",
+                        "on-tertiary-fixed": "#1e1b17",
+                        "surface-dim": "#dadada",
+                        "surface-bright": "#f9f9f9",
+                        "on-secondary": "#ffffff",
+                        "surface-tint": "#964900",
+                        "surface-container": "#eeeeee",
+                        "on-surface": "#1a1c1c",
+                        "on-primary-container": "#572800",
+                        "inverse-on-surface": "#f0f1f1",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed": "#e8e1db",
+                        "on-background": "#1a1c1c",
+                        "secondary": "#506169",
+                        "surface-container-low": "#f3f3f4",
+                        "surface-container-highest": "#e2e2e2",
+                        "on-tertiary-container": "#383530",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed-variant": "#394951",
+                        "error": "#ba1a1a",
+                        "inverse-surface": "#2f3131",
+                        "tertiary-fixed-dim": "#cbc5bf"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "section-gap": "96px",
+                        "container-max": "1280px",
+                        "base": "8px",
+                        "margin-desktop": "48px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Inter"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "headline-xl-mobile": ["Plus Jakarta Sans"],
+                        "label-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-xl": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                        "headline-xl-mobile": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-fill {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head><body class="bg-background text-on-surface font-body-md antialiased pt-24">
+<!-- Section 1: Header Navigation -->
+<nav class="fixed top-0 w-full z-50 bg-surface/90 backdrop-blur-lg shadow-sm transition-all duration-300">
+<div class="flex justify-between items-center px-margin-desktop py-5 max-w-container-max mx-auto">
+<!-- Brand Logo -->
+<a class="font-headline-lg text-[28px] leading-tight tracking-tight font-bold text-primary flex items-center gap-3" href="#">
+<span class="material-symbols-outlined icon-fill text-[36px]">diversity_1</span>
+<span class="flex flex-col">
+<span class="leading-none">Amaanitvam</span>
+<span class="text-[18px] text-on-surface-variant leading-none mt-1">Foundation</span>
+</span>
+</a>
+<!-- Navigation Links (Hidden on Mobile) -->
+<div class="hidden md:flex items-center gap-8">
+<a class="font-label-md text-label-md text-primary border-b-2 border-primary pb-1" href="#">Home</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">About Us</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Our Work</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Impact</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Volunteer</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Internships</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Events</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Certificate</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Contact</a>
+</div>
+<!-- Trailing Action -->
+<div class="flex items-center gap-4">
+<button class="bg-primary-container text-on-tertiary font-label-md text-label-md px-8 py-3.5 rounded-full hover:bg-primary-container/90 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 font-bold hidden md:block">
+                    Donate Now
+                </button>
+<button class="md:hidden text-on-surface-variant p-2">
+<span class="material-symbols-outlined text-[28px]">menu</span>
+</button>
+</div>
+</div>
+</nav>
+<!-- Section 2: Hero Section -->
+<header class="relative overflow-hidden pt-16 lg:pt-24 pb-20 lg:pb-32">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop flex flex-col lg:flex-row items-center gap-12 lg:gap-24 relative z-10">
+<div class="w-full lg:w-5/12 flex flex-col items-start space-y-8 z-10 shrink-0 lg:py-12">
+<div class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary-fixed/30 text-primary font-label-sm text-label-sm tracking-wide uppercase border border-primary/20 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">campaign</span>
+<span class="font-bold">Empowering the Future</span>
+</div>
+<h1 class="font-headline-xl-mobile md:font-headline-xl text-[44px] md:text-[56px] lg:text-[72px] leading-[1.1] font-extrabold text-on-surface text-balance tracking-tight">
+                Creating Opportunities.<br/><span class="text-primary">Building Stronger Communities.</span>
+</h1>
+<p class="font-body-lg text-[20px] leading-[32px] text-on-surface-variant max-w-xl text-balance">
+                Amaanitvam Foundation empowers communities through education, volunteerism, internships, outreach programs, and transparent impact-driven initiatives. Join us in making a tangible difference today.
+            </p>
+<div class="flex flex-wrap items-center gap-6 pt-6">
+<button class="h-[60px] px-8 bg-primary-container text-on-tertiary font-label-md text-[16px] rounded-full font-bold hover:bg-primary-container/90 hover:shadow-[0_12px_24px_rgba(245,124,0,0.4)] hover:-translate-y-1 transition-all duration-300 flex items-center gap-3">
+                    Volunteer Now
+                    <span class="material-symbols-outlined text-[24px]">arrow_forward</span>
+</button>
+<button class="h-[60px] px-8 border-2 border-outline-variant text-primary font-label-md text-[16px] rounded-full font-bold hover:border-primary hover:bg-primary/5 hover:-translate-y-1 transition-all duration-300 flex items-center gap-2">
+                    Apply For Internship
+                </button>
+<a class="h-[60px] px-4 text-on-surface-variant font-label-md text-[16px] font-bold hover:text-primary hover:underline flex items-center gap-2 transition-colors" href="#">
+                    Verify Certificate
+                    <span class="material-symbols-outlined text-[20px]">verified</span>
+</a>
+</div>
+</div>
+<div class="w-full lg:w-7/12 relative aspect-[4/3] lg:aspect-auto lg:h-[760px] lg:absolute lg:top-0 lg:right-0 lg:w-[55vw] rounded-3xl lg:rounded-l-[64px] lg:rounded-r-none overflow-hidden shadow-[0_24px_60px_rgba(55,71,79,0.15)] mt-8 lg:mt-0">
+<img alt="Authentic community impact photography showing diverse volunteers and students" class="absolute inset-0 w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4tPjIIpU9vKgjHh11fHjzdYlVg7Pgpf15Jpt7jDtbGumSC2oq-Dhcno7Ie9WdrEcH3fAa_UIF3v5BDmu3UVe9OPTVnlOs7O_llrC2UeAVS3-DVJk1SqmxslmRTNnlFkbRCfMwF5aMUKVPJHPaJS1WS3W2BArBTwcpMfACQzlj8JjMDiVGOMU9uoThwfbo1vvP84g6z5Mfbm5VLZMjxY-1Cp2iIi11zX23Cj1b7IeZS7hc8VsOEqXByEEMLU1V6jxokLqBG2cYysg"/>
+<div class="absolute inset-0 bg-gradient-to-r from-background/20 to-transparent pointer-events-none lg:hidden"></div>
+</div>
+</div>
+</header>
+<!-- Section 3: Trust Indicators -->
+<section class="bg-surface-container-low border-y border-surface-variant/50 relative overflow-hidden">
+<!-- Subtle background pattern -->
+<div class="absolute inset-0 opacity-20 pointer-events-none" style="background-image: radial-gradient(#8b7263 1px, transparent 1px); background-size: 24px 24px;"></div>
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-16 relative z-10">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-gutter divide-x divide-surface-variant/50">
+<div class="flex flex-col items-center text-center px-4">
+<span class="material-symbols-outlined text-[40px] text-primary mb-4 icon-fill">favorite</span>
+<h3 class="font-headline-lg text-headline-lg text-on-surface">15,000+</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">Lives Impacted</p>
+</div>
+<div class="flex flex-col items-center text-center px-4">
+<span class="material-symbols-outlined text-[40px] text-primary mb-4 icon-fill">group</span>
+<h3 class="font-headline-lg text-headline-lg text-on-surface">500+</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">Active Volunteers</p>
+</div>
+<div class="flex flex-col items-center text-center px-4">
+<span class="material-symbols-outlined text-[40px] text-primary mb-4 icon-fill">handshake</span>
+<h3 class="font-headline-lg text-headline-lg text-on-surface">120+</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">Community Programs</p>
+</div>
+<div class="flex flex-col items-center text-center px-4">
+<span class="material-symbols-outlined text-[40px] text-primary mb-4 icon-fill">verified</span>
+<h3 class="font-headline-lg text-headline-lg text-on-surface">1000+</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">Certificates Verified</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 4: Quick Action Hub -->
+<section class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-section-gap">
+<div class="text-center mb-16">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-4">How You Can Engage</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto">Explore the different ways you can contribute to our mission or access our resources.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+<!-- Card 1 -->
+<a class="group bg-surface rounded-xl p-8 border border-outline-variant shadow-[0_4px_20px_rgba(55,71,79,0.04)] hover:shadow-[0_12px_30px_rgba(55,71,79,0.12)] hover:-translate-y-1 transition-all duration-300 flex flex-col h-full relative overflow-hidden" href="#">
+<div class="absolute top-0 right-0 w-24 h-24 bg-primary-fixed/20 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+<span class="material-symbols-outlined text-[36px] text-primary mb-6">volunteer_activism</span>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-3">Volunteer</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6 flex-grow">Join our network of dedicated individuals making a real difference on the ground.</p>
+<div class="flex items-center gap-2 text-primary font-label-md text-label-md font-bold mt-auto group-hover:gap-3 transition-all">
+                    Get Involved <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</div>
+</a>
+<!-- Card 2 -->
+<a class="group bg-surface rounded-xl p-8 border border-outline-variant shadow-[0_4px_20px_rgba(55,71,79,0.04)] hover:shadow-[0_12px_30px_rgba(55,71,79,0.12)] hover:-translate-y-1 transition-all duration-300 flex flex-col h-full relative overflow-hidden" href="#">
+<div class="absolute top-0 right-0 w-24 h-24 bg-primary-fixed/20 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+<span class="material-symbols-outlined text-[36px] text-primary mb-6">school</span>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-3">Internships</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6 flex-grow">Gain valuable experience while contributing to meaningful social impact projects.</p>
+<div class="flex items-center gap-2 text-primary font-label-md text-label-md font-bold mt-auto group-hover:gap-3 transition-all">
+                    Apply Now <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</div>
+</a>
+<!-- Card 3 -->
+<a class="group bg-surface rounded-xl p-8 border border-outline-variant shadow-[0_4px_20px_rgba(55,71,79,0.04)] hover:shadow-[0_12px_30px_rgba(55,71,79,0.12)] hover:-translate-y-1 transition-all duration-300 flex flex-col h-full relative overflow-hidden" href="#">
+<div class="absolute top-0 right-0 w-24 h-24 bg-primary-fixed/20 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+<span class="material-symbols-outlined text-[36px] text-primary mb-6">workspace_premium</span>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-3">Certificate Verification</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6 flex-grow">Quickly and securely verify credentials issued by Amaanitvam Foundation.</p>
+<div class="flex items-center gap-2 text-primary font-label-md text-label-md font-bold mt-auto group-hover:gap-3 transition-all">
+                    Verify Now <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</div>
+</a>
+<!-- Card 4 -->
+<a class="group bg-surface rounded-xl p-8 border border-outline-variant shadow-[0_4px_20px_rgba(55,71,79,0.04)] hover:shadow-[0_12px_30px_rgba(55,71,79,0.12)] hover:-translate-y-1 transition-all duration-300 flex flex-col h-full relative overflow-hidden" href="#">
+<div class="absolute top-0 right-0 w-24 h-24 bg-primary-fixed/20 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+<span class="material-symbols-outlined text-[36px] text-primary mb-6">calendar_month</span>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-3">Events</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6 flex-grow">Participate in our upcoming community events, fundraisers, and workshops.</p>
+<div class="flex items-center gap-2 text-primary font-label-md text-label-md font-bold mt-auto group-hover:gap-3 transition-all">
+                    View Calendar <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</div>
+</a>
+<!-- Card 5 -->
+<a class="group bg-surface rounded-xl p-8 border border-outline-variant shadow-[0_4px_20px_rgba(55,71,79,0.04)] hover:shadow-[0_12px_30px_rgba(55,71,79,0.12)] hover:-translate-y-1 transition-all duration-300 flex flex-col h-full relative overflow-hidden" href="#">
+<div class="absolute top-0 right-0 w-24 h-24 bg-primary-fixed/20 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+<span class="material-symbols-outlined text-[36px] text-primary mb-6">diversity_3</span>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-3">Programs</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6 flex-grow">Discover our ongoing initiatives focused on education, health, and empowerment.</p>
+<div class="flex items-center gap-2 text-primary font-label-md text-label-md font-bold mt-auto group-hover:gap-3 transition-all">
+                    Explore Programs <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</div>
+</a>
+<!-- Card 6 -->
+<a class="group bg-surface rounded-xl p-8 border border-outline-variant shadow-[0_4px_20px_rgba(55,71,79,0.04)] hover:shadow-[0_12px_30px_rgba(55,71,79,0.12)] hover:-translate-y-1 transition-all duration-300 flex flex-col h-full relative overflow-hidden" href="#">
+<div class="absolute top-0 right-0 w-24 h-24 bg-primary-fixed/20 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+<span class="material-symbols-outlined text-[36px] text-primary mb-6">support_agent</span>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-3">Contact</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6 flex-grow">Reach out to us for partnerships, queries, or to learn more about our work.</p>
+<div class="flex items-center gap-2 text-primary font-label-md text-label-md font-bold mt-auto group-hover:gap-3 transition-all">
+                    Get in Touch <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</div>
+</a>
+</div>
+</section>
+<!-- Section 5: About Amaanitvam Foundation -->
+<section class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-section-gap">
+<div class="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center">
+<div class="space-y-8">
+<div>
+<h2 class="font-headline-lg text-[40px] leading-tight text-on-surface mb-6 font-bold tracking-tight">Driving Change,<br/>One Community at a Time</h2>
+<p class="font-body-lg text-[18px] leading-relaxed text-on-surface-variant">Amaanitvam Foundation was born from a simple belief: every individual deserves the opportunity to thrive. Our journey began with grassroots education initiatives and has grown into a comprehensive community development network.</p>
+</div>
+<div class="grid sm:grid-cols-2 gap-8 pt-4">
+<div>
+<div class="w-12 h-12 bg-primary-container/10 rounded-full flex items-center justify-center mb-4 text-primary">
+<span class="material-symbols-outlined icon-fill">visibility</span>
+</div>
+<h3 class="font-headline-md text-xl text-on-surface mb-2">Our Vision</h3>
+<p class="font-body-md text-on-surface-variant">A world where equitable opportunities are accessible to all, fostering self-reliant and resilient communities.</p>
+</div>
+<div>
+<div class="w-12 h-12 bg-primary-container/10 rounded-full flex items-center justify-center mb-4 text-primary">
+<span class="material-symbols-outlined icon-fill">rocket_launch</span>
+</div>
+<h3 class="font-headline-md text-xl text-on-surface mb-2">Our Mission</h3>
+<p class="font-body-md text-on-surface-variant">To empower marginalized groups through education, skill development, and sustainable grassroots interventions.</p>
+</div>
+</div>
+</div>
+<div class="relative">
+<div class="aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl relative z-10">
+<img alt="Community education initiative" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1p6pcLE0uIgTj6JoGEElMLzJDV05kcEtde7ph0VEelmR3e__94VPjnRzl2QQg43gMSvmKajR6QgVDMhAy-RPzf3gqmiyuZs4eVvNQqWtJ5heWUvmcY2uF_Px9HN9Ah3ya-e2KdNheNfgRcQ2REIH5b8alAcgYjrh59Rh5OBZytudZ9e6WsCCgzdr8gtVmBy2l11DAhg1V4ThDYTwA80Ye7U9Gz-jvJpaRajvXGga_U9ESBWILW3D1p6sNFIO6NgbFZi3bZIz8S8Y"/>
+</div>
+<div class="absolute -bottom-8 -left-8 w-48 h-48 bg-primary-fixed rounded-full -z-10 blur-3xl opacity-50"></div>
+<div class="absolute top-1/4 -right-12 bg-surface p-6 rounded-xl shadow-xl z-20 max-w-[240px] border border-outline-variant hidden md:block">
+<p class="font-headline-md text-3xl text-primary font-bold mb-1">10+ Years</p>
+<p class="font-label-md text-on-surface-variant">Of dedicated community service and grassroots impact</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 6: Core Work Areas -->
+<section class="bg-surface-container-low py-section-gap border-y border-surface-variant/50">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+<div class="text-center mb-16 max-w-3xl mx-auto">
+<span class="text-primary font-label-md tracking-wider uppercase mb-2 block">Our Initiatives</span>
+<h2 class="font-headline-lg text-4xl text-on-surface mb-6 font-bold">Core Areas of Impact</h2>
+<p class="font-body-lg text-on-surface-variant">We take a holistic approach to community development, focusing our efforts where they can create the most significant, sustainable change.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Card 1 -->
+<div class="group bg-surface rounded-xl p-8 border border-outline-variant shadow-sm hover:shadow-[0_12px_30px_rgba(55,71,79,0.12)] hover:-translate-y-1 transition-all duration-300 relative overflow-hidden flex flex-col">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary-fixed/20 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+<span class="material-symbols-outlined text-[40px] text-primary mb-6 relative z-10 icon-fill">menu_book</span>
+<h3 class="font-headline-md text-2xl text-on-surface mb-4 relative z-10">Education Programs</h3>
+<p class="font-body-md text-on-surface-variant flex-grow relative z-10">Providing quality supplementary education, mentorship, and resources to underprivileged students to bridge learning gaps and foster academic excellence.</p>
+</div>
+<!-- Card 2 -->
+<div class="group bg-surface rounded-xl p-8 border border-outline-variant shadow-sm hover:shadow-[0_12px_30px_rgba(55,71,79,0.12)] hover:-translate-y-1 transition-all duration-300 relative overflow-hidden flex flex-col">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary-fixed/20 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+<span class="material-symbols-outlined text-[40px] text-primary mb-6 relative z-10 icon-fill">diversity_2</span>
+<h3 class="font-headline-md text-2xl text-on-surface mb-4 relative z-10">Community Development</h3>
+<p class="font-body-md text-on-surface-variant flex-grow relative z-10">Implementing sustainable grassroots projects focusing on health, hygiene, and local infrastructure to elevate the overall quality of life in marginalized neighborhoods.</p>
+</div>
+<!-- Card 3 -->
+<div class="group bg-surface rounded-xl p-8 border border-outline-variant shadow-sm hover:shadow-[0_12px_30px_rgba(55,71,79,0.12)] hover:-translate-y-1 transition-all duration-300 relative overflow-hidden flex flex-col">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary-fixed/20 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+<span class="material-symbols-outlined text-[40px] text-primary mb-6 relative z-10 icon-fill">group_add</span>
+<h3 class="font-headline-md text-2xl text-on-surface mb-4 relative z-10">Volunteer Network</h3>
+<p class="font-body-md text-on-surface-variant flex-grow relative z-10">Cultivating a robust network of passionate individuals who dedicate their time and skills to drive our initiatives and amplify our impact across regions.</p>
+</div>
+<!-- Card 4 -->
+<div class="group bg-surface rounded-xl p-8 border border-outline-variant shadow-sm hover:shadow-[0_12px_30px_rgba(55,71,79,0.12)] hover:-translate-y-1 transition-all duration-300 relative overflow-hidden flex flex-col">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary-fixed/20 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+<span class="material-symbols-outlined text-[40px] text-primary mb-6 relative z-10 icon-fill">work</span>
+<h3 class="font-headline-md text-2xl text-on-surface mb-4 relative z-10">Internship Opportunities</h3>
+<p class="font-body-md text-on-surface-variant flex-grow relative z-10">Offering structured, hands-on learning experiences for students and young professionals to develop crucial skills while contributing to meaningful social causes.</p>
+</div>
+<!-- Card 5 -->
+<div class="group bg-surface rounded-xl p-8 border border-outline-variant shadow-sm hover:shadow-[0_12px_30px_rgba(55,71,79,0.12)] hover:-translate-y-1 transition-all duration-300 relative overflow-hidden flex flex-col">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary-fixed/20 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+<span class="material-symbols-outlined text-[40px] text-primary mb-6 relative z-10 icon-fill">celebration</span>
+<h3 class="font-headline-md text-2xl text-on-surface mb-4 relative z-10">Events &amp; Outreach</h3>
+<p class="font-body-md text-on-surface-variant flex-grow relative z-10">Organizing impactful campaigns, awareness drives, and community gatherings to advocate for crucial social issues and mobilize public support.</p>
+</div>
+<!-- Card 6 -->
+<div class="group bg-surface rounded-xl p-8 border border-outline-variant shadow-sm hover:shadow-[0_12px_30px_rgba(55,71,79,0.12)] hover:-translate-y-1 transition-all duration-300 relative overflow-hidden flex flex-col">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary-fixed/20 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+<span class="material-symbols-outlined text-[40px] text-primary mb-6 relative z-10 icon-fill">verified_user</span>
+<h3 class="font-headline-md text-2xl text-on-surface mb-4 relative z-10">Certificate Verification</h3>
+<p class="font-body-md text-on-surface-variant flex-grow relative z-10">Maintaining a transparent, accessible system to validate the contributions and achievements of our volunteers, interns, and program participants.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 7: Impact Snapshot -->
+<section class="py-section-gap max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop border-b border-surface-variant/50">
+<div class="grid lg:grid-cols-12 gap-12 items-center">
+<div class="lg:col-span-5 space-y-6">
+<h2 class="font-headline-lg text-4xl text-on-surface font-bold">Measurable Impact,<br/>Meaningful Change</h2>
+<p class="font-body-lg text-on-surface-variant text-balance">Beyond the numbers, these metrics represent lives touched, communities strengthened, and futures transformed. Our commitment to transparency ensures every effort is tracked and optimized for maximum social return.</p>
+<button class="text-primary font-label-md font-bold flex items-center gap-2 hover:underline mt-4">
+        Download Annual Report <span class="material-symbols-outlined text-[20px]">download</span>
+</button>
+</div>
+<div class="lg:col-span-7 grid sm:grid-cols-2 gap-6">
+<div class="bg-surface p-6 rounded-2xl border-l-4 border-primary shadow-[0_4px_20px_rgba(55,71,79,0.04)] hover:shadow-md transition-shadow">
+<div class="flex items-center gap-4 mb-3">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined icon-fill">favorite</span>
+</div>
+<span class="font-headline-md text-2xl font-bold text-on-surface">15,000+</span>
+</div>
+<h4 class="font-label-md text-on-surface-variant mb-1">Lives Impacted</h4>
+<p class="font-body-md text-sm text-on-surface-variant/80">Direct beneficiaries across our educational and health interventions.</p>
+</div>
+<div class="bg-surface p-6 rounded-2xl border-l-4 border-primary shadow-[0_4px_20px_rgba(55,71,79,0.04)] hover:shadow-md transition-shadow">
+<div class="flex items-center gap-4 mb-3">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined icon-fill">group</span>
+</div>
+<span class="font-headline-md text-2xl font-bold text-on-surface">500+</span>
+</div>
+<h4 class="font-label-md text-on-surface-variant mb-1">Active Volunteers</h4>
+<p class="font-body-md text-sm text-on-surface-variant/80">Dedicated changemakers mobilizing resources on the ground.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 8: Research, Stories & Community Impact -->
+<section class="bg-surface-bright py-section-gap">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop space-y-24">
+<!-- Header -->
+<div class="text-center max-w-4xl mx-auto mb-16">
+<h2 class="font-headline-xl text-5xl md:text-6xl text-on-surface font-extrabold tracking-tight mb-6 text-balance">Research, Stories &amp; Community Impact</h2>
+<p class="font-body-lg text-xl text-on-surface-variant text-balance">Explore the real-world transformations and the rigorous methodology that guides our foundation's work.</p>
+</div>
+<!-- 1. Community Voices (Asymmetrical Grid) -->
+<div>
+<div class="mb-12 border-l-4 border-primary pl-6">
+<h3 class="font-headline-lg text-3xl text-on-surface font-bold">Community Voices</h3>
+<p class="font-body-md text-on-surface-variant mt-2 max-w-2xl">Real stories from the individuals who inspire and drive our mission forward.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12">
+<!-- Large Featured Story -->
+<article class="md:col-span-12 lg:col-span-8 group relative overflow-hidden rounded-3xl shadow-xl aspect-[16/9] lg:aspect-[4/3]">
+<img alt="Student Success Story" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAynmvHABNeervOK7aTGjjRUhxAbyf35DlhiTX_TeZX1HfBiUIu0rwq3ED5c1IDnT3x8TuCC3fypUs6pHNxA3glA8158lixDsLjJ6MbXQxYd1LTVJycsg8yTD_3A5XwuPlwaoZPoI9J2iu81e31B2Wu8AoqSf-Vckbnvkk2oz-QzhiXZ6Oowk6GOrdgApCt4ICHpNHb-VpdxCzYCMSg2kpjgG87uEYpR7xMkjAgxRwERqIbwuzto2o5kNHsegEbX_BIWUdyKHpGuLc"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-8 lg:p-12 text-white">
+<span class="inline-block px-4 py-1.5 bg-primary/90 rounded-full font-label-sm text-sm font-bold tracking-wide uppercase mb-4">Student Success</span>
+<h4 class="font-headline-lg text-3xl lg:text-4xl font-bold mb-4 leading-tight text-balance">"Education didn't just change my life; it changed my family's trajectory."</h4>
+<p class="font-body-md text-white/80 max-w-2xl line-clamp-2 lg:line-clamp-none">From an underprivileged neighborhood to a top-tier university, Priya's journey exemplifies the profound impact of sustained educational support and mentorship.</p>
+</div>
+</article>
+<!-- Two Smaller Stories -->
+<div class="md:col-span-12 lg:col-span-4 flex flex-col gap-8 lg:gap-12">
+<article class="group bg-surface rounded-3xl shadow-lg border border-outline-variant overflow-hidden flex flex-col h-full hover:shadow-xl transition-shadow">
+<div class="aspect-[16/10] overflow-hidden relative">
+<img alt="Volunteer Story" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXHTlD19ZcWUr7l3LfFmZNDI5DbcNnQYltZ98IIgBPUPrl1-3aPG48VXWrQDwM8bVCE-0f2I4JlH6VtjBEDEPAxE9GUzYGEMqC1pPQ6_WegpR4IcjGIr5lfZfqRCzXfQqDj3t7qsGqnPfJrWHDwsm_SVl6ISg90VuWaGUuvEDtp8VBn2KyOXOxHHN1UtXLz1dpwtwowzJRF9GZk_E6vbh-0AzhDjNop5z3WM3JfRllJr0IWtyNhLLw0ENv4nhhZJalkXj2sRgkNGw"/>
+</div>
+<div class="p-8 flex-grow flex flex-col">
+<span class="text-primary font-label-sm text-sm font-bold uppercase tracking-wider mb-3">Volunteer Spotlight</span>
+<blockquote class="font-headline-md text-xl font-semibold text-on-surface mb-4 leading-snug">"The most rewarding work I've ever done."</blockquote>
+<p class="font-body-md text-on-surface-variant flex-grow">Rahul, a corporate professional, dedicates his weekends to teaching digital literacy, bridging the gap for marginalized youth.</p>
+</div>
+</article>
+<article class="group bg-surface rounded-3xl shadow-lg border border-outline-variant overflow-hidden flex flex-col h-full hover:shadow-xl transition-shadow">
+<div class="aspect-[16/10] overflow-hidden relative">
+<img alt="Community Leader Story" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvrxp-nCId-akL0eRlT2nUBOvOhnhoTcmvz1KKABD72Dqs_Dc4098y-l-bhEoGSyvXq7tmVR0P8TNg1FyTY9iIvt4OcYZfFcTmoqonj-mHDgYbrDF5d7KEqOk118a0o4pRnxWXnTol_kfSMWL24q0bPCgU6F4slwz98Kf1xGCPLfWogyAZm7MPqjxARLUddaZxSeoohACQoeOSAskxP6WNzdC_toe2xKWrF-0F5GvQTVWfFKZWTOaE3sPbHIcvcGUZMJNnas7u-fQ"/>
+</div>
+<div class="p-8 flex-grow flex flex-col">
+<span class="text-primary font-label-sm text-sm font-bold uppercase tracking-wider mb-3">Community Leader</span>
+<blockquote class="font-headline-md text-xl font-semibold text-on-surface mb-4 leading-snug">"Empowerment starts from within the community."</blockquote>
+<p class="font-body-md text-on-surface-variant flex-grow">Aisha spearheaded a local health initiative that dramatically reduced preventable illnesses in her district, backed by foundation resources.</p>
+</div>
+</article>
+</div>
+</div>
+</div>
+<!-- 3. Evidence-Based Impact & Stories of Change -->
+<div class="grid lg:grid-cols-2 gap-16 items-center bg-surface-container-low p-8 lg:p-16 rounded-[40px] border border-surface-variant/50">
+<div class="space-y-8">
+<h3 class="font-headline-lg text-4xl text-on-surface font-bold leading-tight">Evidence-Based Impact:<br/>Measuring What Matters</h3>
+<p class="font-body-lg text-on-surface-variant leading-relaxed">
+                    We believe that good intentions must be backed by rigorous methodology. Our approach to community development relies on continuous data collection, outcome tracking, and adaptive strategies. We don't just count the number of programs run; we measure the tangible improvements in learning outcomes, health metrics, and economic self-sufficiency.
+                </p>
+<div class="border-l-4 border-primary pl-6 py-2">
+<p class="font-headline-md text-xl text-on-surface italic text-balance">
+                        "Transforming communities isn't a short-term project; it's a generational commitment measured by lasting change."
+                    </p>
+</div>
+</div>
+<div class="relative">
+<div class="aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl relative z-10 group">
+<img alt="Before and After community transformation" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDi6oqigIDu9rynjWAMWgkwzOrqxwh9e3CK-5kFLmdXFbJiWfz0LIalBketJiafsu0VHBmM18qbJ6Yr9BeXXIqxg5W571Bd21W3y6TDIxFHfZ3kfhwnJpKVwKq2ip9_yAzktsgmm5D1FWjHFUzozk59lVaL37AC0Cs5fJ6eNU3bwYvhFFv80uXilwkXe6N5RlO8asvuisYMCvS7ZDYBnyVaXm-N1lfn_RX646e-i9XXwu6jzXZSLPkKKQh7BT8jLZKc0IOY2WhbZ1A"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+<div class="absolute bottom-6 left-6 right-6">
+<span class="bg-white text-primary font-label-sm px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-2 inline-block">Story of Change</span>
+<h4 class="font-headline-md text-white text-2xl font-bold mb-2">From Vacant Lot to Thriving Learning Hub</h4>
+<p class="font-body-md text-white/90 text-sm">A 2-year revitalization project in District 4 that created safe spaces for after-school education.</p>
+</div>
+</div>
+<div class="absolute -bottom-8 -right-8 w-48 h-48 bg-primary-fixed rounded-full -z-10 blur-3xl opacity-60"></div>
+</div>
+</div>
+<!-- 2. Research & Publications (Executive Style) -->
+<div>
+<div class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-surface-variant pb-6">
+<div>
+<h3 class="font-headline-lg text-3xl text-on-surface font-bold">Thought Leadership &amp; Transparency</h3>
+<p class="font-body-md text-on-surface-variant mt-2 max-w-2xl">Access our latest research, annual reports, and methodology documents.</p>
+</div>
+<a class="text-primary font-label-md font-bold flex items-center gap-2 hover:underline whitespace-nowrap" href="#">
+                    View All Publications <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Highlighted Report Card -->
+<div class="lg:col-span-1 bg-surface border-2 border-primary/20 rounded-3xl p-8 flex flex-col relative overflow-hidden shadow-lg hover:border-primary/50 transition-colors">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary-fixed/20 rounded-bl-full -mr-4 -mt-4"></div>
+<div class="w-16 h-16 bg-primary-container/10 rounded-2xl flex items-center justify-center text-primary mb-8 relative z-10">
+<span class="material-symbols-outlined text-[32px] icon-fill">description</span>
+</div>
+<h4 class="font-headline-md text-2xl text-on-surface font-bold mb-3 relative z-10">Annual Report 2023-24</h4>
+<p class="font-body-md text-on-surface-variant mb-8 flex-grow relative z-10">A comprehensive review of our initiatives, financial transparency, and measured outcomes over the past fiscal year.</p>
+<button class="w-full py-4 bg-primary text-on-primary font-label-md rounded-xl font-bold hover:bg-primary/90 transition-colors flex justify-center items-center gap-2 relative z-10">
+                        Download Report <span class="material-symbols-outlined">download</span>
+</button>
+</div>
+<!-- Secondary Reports -->
+<div class="lg:col-span-2 grid sm:grid-cols-2 gap-8">
+<a class="group bg-surface rounded-3xl p-8 border border-outline-variant shadow-sm hover:shadow-md transition-all flex flex-col h-full" href="#">
+<div class="w-12 h-12 bg-secondary-container/30 rounded-full flex items-center justify-center text-secondary mb-6">
+<span class="material-symbols-outlined">analytics</span>
+</div>
+<h4 class="font-headline-md text-xl text-on-surface font-bold mb-3 group-hover:text-primary transition-colors">Impact Assessment Methodology</h4>
+<p class="font-body-md text-on-surface-variant text-sm mb-6 flex-grow">Detailed insights into how we collect, analyze, and act on data from our grassroots interventions.</p>
+<div class="text-primary font-label-sm font-bold flex items-center gap-2 mt-auto">
+                            Read Executive Summary <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</div>
+</a>
+<a class="group bg-surface rounded-3xl p-8 border border-outline-variant shadow-sm hover:shadow-md transition-all flex flex-col h-full" href="#">
+<div class="w-12 h-12 bg-secondary-container/30 rounded-full flex items-center justify-center text-secondary mb-6">
+<span class="material-symbols-outlined">public</span>
+</div>
+<h4 class="font-headline-md text-xl text-on-surface font-bold mb-3 group-hover:text-primary transition-colors">Community Development Research</h4>
+<p class="font-body-md text-on-surface-variant text-sm mb-6 flex-grow">Whitepaper exploring effective strategies for scaling educational support in marginalized urban areas.</p>
+<div class="text-primary font-label-sm font-bold flex items-center gap-2 mt-auto">
+                            Read Executive Summary <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</div>
+</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+</body></html>

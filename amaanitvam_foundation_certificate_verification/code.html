@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Certificate Verification - Amaanitvam Foundation</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-low": "#f3f3f4",
+                        "surface-dim": "#dadada",
+                        "outline-variant": "#dec1af",
+                        "inverse-on-surface": "#f0f1f1",
+                        "on-surface": "#1a1c1c",
+                        "surface-tint": "#964900",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#cbc5bf",
+                        "on-surface-variant": "#574235",
+                        "on-secondary-container": "#55656d",
+                        "tertiary": "#625e59",
+                        "surface-container-high": "#e8e8e8",
+                        "on-tertiary-container": "#383530",
+                        "secondary-fixed": "#d4e5ef",
+                        "inverse-primary": "#ffb786",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed-variant": "#723600",
+                        "primary-container": "#f57c00",
+                        "on-secondary-fixed": "#0d1e25",
+                        "on-background": "#1a1c1c",
+                        "primary-fixed-dim": "#ffb786",
+                        "on-tertiary-fixed-variant": "#4a4641",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed-variant": "#394951",
+                        "error": "#ba1a1a",
+                        "on-primary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-container": "#a29d97",
+                        "on-primary-container": "#572800",
+                        "primary": "#964900",
+                        "tertiary-fixed": "#e8e1db",
+                        "secondary-container": "#d1e2ec",
+                        "surface": "#f9f9f9",
+                        "on-primary-fixed": "#311300",
+                        "surface-bright": "#f9f9f9",
+                        "outline": "#8b7263",
+                        "on-tertiary-fixed": "#1e1b17",
+                        "inverse-surface": "#2f3131",
+                        "secondary-fixed-dim": "#b8c9d3",
+                        "secondary": "#506169",
+                        "surface-container": "#eeeeee",
+                        "surface-container-highest": "#e2e2e2",
+                        "primary-fixed": "#ffdcc6",
+                        "surface-variant": "#e2e2e2",
+                        "on-error": "#ffffff",
+                        "background": "#f9f9f9",
+                        "error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "section-gap": "96px",
+                        "container-max": "1280px",
+                        "base": "8px",
+                        "gutter": "24px",
+                        "margin-desktop": "48px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Inter"],
+                        "label-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "headline-xl-mobile": ["Plus Jakarta Sans"],
+                        "headline-xl": ["Plus Jakarta Sans"],
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-xl-mobile": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-xl": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .shadow-ambient {
+            box-shadow: 0 4px 20px -2px rgba(80, 97, 105, 0.08);
+        }
+        .shadow-hover {
+            box-shadow: 0 8px 30px -4px rgba(80, 97, 105, 0.12);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased overflow-x-hidden">
+<!-- Top Navigation (Shared Component) -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface-container-lowest/80 backdrop-blur-md shadow-sm dark:shadow-none transition-all duration-300">
+<div class="max-w-container-max mx-auto px-gutter flex justify-between items-center h-20">
+<!-- Brand Logo -->
+<a class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed" href="#">
+                Amaanitvam Foundation
+            </a>
+<!-- Desktop Navigation -->
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-on-surface-variant dark:text-on-surface hover:text-primary transition-colors font-label-md text-label-md" href="#">Our Work</a>
+<a class="text-on-surface-variant dark:text-on-surface hover:text-primary transition-colors font-label-md text-label-md" href="#">Impact</a>
+<a class="text-on-surface-variant dark:text-on-surface hover:text-primary transition-colors font-label-md text-label-md" href="#">About Us</a>
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-label-md text-label-md" href="#">Verify</a>
+<a class="text-on-surface-variant dark:text-on-surface hover:text-primary transition-colors font-label-md text-label-md" href="#">Volunteer</a>
+<a class="text-on-surface-variant dark:text-on-surface hover:text-primary transition-colors font-label-md text-label-md" href="#">Internships</a>
+</nav>
+<!-- Trailing Action -->
+<div class="flex items-center gap-4">
+<button class="bg-primary-container text-on-primary-container font-label-md text-label-md px-6 py-3 rounded-full hover:opacity-90 transition-opacity active:scale-95 duration-200 hidden md:block">
+                    Donate
+                </button>
+<!-- Mobile Menu Toggle (Decorative) -->
+<button class="md:hidden text-on-surface">
+<span class="material-symbols-outlined text-2xl">menu</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-20">
+<!-- Section 1: Hero Verification Area -->
+<section class="relative pt-16 pb-24 px-gutter lg:px-margin-desktop max-w-container-max mx-auto">
+<div class="absolute inset-0 bg-surface-container-lowest -z-10 rounded-b-3xl"></div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+<div class="space-y-8">
+<div>
+<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary-container text-on-secondary-container mb-6">
+<span class="material-symbols-outlined text-sm">verified_user</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Official Portal</span>
+</div>
+<h1 class="font-headline-xl text-headline-xl-mobile md:text-headline-xl text-on-surface mb-6">
+                            Verify Certificates <br/><span class="text-primary">With Confidence</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+                            Instantly authenticate official certificates for internships, volunteering, and training programs issued by the Amaanitvam Foundation. Ensure credibility in seconds.
+                        </p>
+</div>
+<!-- Search Interface -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-ambient border border-surface-variant relative z-10">
+<label class="block font-label-md text-label-md text-on-surface mb-2" for="cert-id">Certificate ID</label>
+<div class="relative flex flex-col sm:flex-row gap-4">
+<div class="relative flex-grow">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full pl-12 pr-4 py-4 bg-surface-container-low border-0 border-b-2 border-surface-variant focus:border-primary-container focus:ring-0 rounded-t-lg transition-colors font-body-md text-body-md text-on-surface placeholder-on-surface-variant/50" id="cert-id" placeholder="e.g. AMV-2024-892X" type="text"/>
+</div>
+<button class="bg-primary-container text-on-tertiary font-label-md text-label-md px-8 py-4 rounded-lg hover:opacity-90 transition-opacity active:scale-95 duration-200 flex-shrink-0 flex items-center justify-center gap-2 whitespace-nowrap h-[56px]">
+                                Verify Certificate
+                            </button>
+</div>
+<div class="mt-6 flex items-center gap-4 text-center sm:text-left justify-center sm:justify-start">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wide">Or</span>
+<button class="flex items-center gap-2 text-primary hover:text-primary-container transition-colors font-label-md text-label-md">
+<span class="material-symbols-outlined">qr_code_scanner</span>
+                                Scan QR Code
+                            </button>
+</div>
+</div>
+</div>
+<!-- Hero Visual (Abstract Trust Representation) -->
+<div class="hidden lg:flex justify-end relative">
+<div class="w-[500px] h-[500px] bg-tertiary-fixed rounded-full absolute -right-20 top-0 opacity-20 blur-3xl"></div>
+<img alt="Person holding a tablet reviewing official documents in a modern, bright office setting." class="w-full max-w-[480px] h-auto object-cover rounded-2xl shadow-ambient z-10 relative" data-alt="A modern, high-key office scene showing a professional holding a tablet, reviewing official documents. The lighting is bright and soft, creating a clean light-mode aesthetic. A subtle overlay of digital verification icons and a soft orange accent color (#f57c00) integrates the image with the Amaanitvam Foundation brand. The mood is secure, trustworthy, and professional." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAsvnYrvH0w3lgpqpbVHHldXbL3Dji1a7rs9PTSbbywqO7kSWm_nOi_jgXigMTWpnTrpuTXpCVCe9Ad5ggf6-2pZKCNTj6cascO9ClWsu8aO6bKuvfJvpHktl1SNHG_BTd2a8SwmZ8-qV1BzFejMr8zPMQo_aBuTv60oAQNQ5czW1gFyF7l5j8hhw6b2Wr0dNs1ljPpExvUWoxC6zbNSHya7bdl3-UVfhvMSvQJwrjHm3xRhQn2ahOtmVQi0zK2N51YjTTrEmx8aBU"/>
+<!-- Floating Badge -->
+<div class="absolute bottom-10 -left-10 bg-surface-container-lowest p-4 rounded-xl shadow-ambient flex items-center gap-4 z-20 border border-surface-variant animate-[bounce_3s_ease-in-out_infinite]">
+<div class="w-12 h-12 bg-primary-container/10 rounded-full flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined">verified</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Secure Validation</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Real-time database sync</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 7: Sample Verification Result (Placed high for demo purposes, usually shown after search) -->
+<section class="py-section-gap px-gutter max-w-container-max mx-auto bg-surface">
+<div class="max-w-3xl mx-auto">
+<h2 class="font-headline-lg text-headline-lg text-on-surface text-center mb-12">Verification Result Example</h2>
+<div class="bg-surface-container-lowest rounded-xl shadow-ambient overflow-hidden border border-surface-variant">
+<!-- Result Header -->
+<div class="bg-[#d4e5ef] p-6 border-b border-surface-variant flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary text-3xl">task_alt</span>
+<div>
+<p class="font-headline-md text-headline-md text-secondary">Verified Certificate</p>
+<p class="font-label-sm text-label-sm text-on-secondary-container">Authentic Amaanitvam Foundation Document</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest px-4 py-2 rounded-full border border-surface-variant flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-emerald-500"></div>
+<span class="font-label-sm text-label-sm text-on-surface uppercase tracking-wide">Valid</span>
+</div>
+</div>
+<!-- Result Body -->
+<div class="p-8">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="space-y-6">
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Holder Name</p>
+<p class="font-body-lg text-body-lg text-on-surface font-medium">Aarav Sharma</p>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Program</p>
+<p class="font-body-md text-body-md text-on-surface">Rural Education Volunteer Initiative</p>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Duration</p>
+<p class="font-body-md text-body-md text-on-surface">Jan 2024 - Jun 2024 (6 Months)</p>
+</div>
+</div>
+<div class="space-y-6 md:border-l border-surface-variant md:pl-8">
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Certificate ID</p>
+<p class="font-body-md text-body-md text-on-surface font-mono bg-surface-container-low px-2 py-1 rounded inline-block">AMV-2024-892X</p>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Issue Date</p>
+<p class="font-body-md text-body-md text-on-surface">July 15, 2024</p>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Verification Timestamp</p>
+<p class="font-body-md text-body-md text-on-surface text-sm">Oct 26, 2024 14:32 IST</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer (Shared Component) -->
+<footer class="bg-surface-container-lowest dark:bg-inverse-surface w-full py-section-gap border-t border-surface-variant mt-24">
+<div class="max-w-container-max mx-auto px-gutter grid grid-cols-1 md:grid-cols-4 gap-gutter">
+<div class="col-span-1 md:col-span-2">
+<h3 class="font-headline-md text-headline-md font-bold text-on-surface dark:text-inverse-on-surface mb-4">Amaanitvam Foundation</h3>
+<p class="font-body-md text-body-md text-on-surface-variant dark:text-surface-variant max-w-sm mb-6">
+                        Empowering communities through education, healthcare, and sustainable development.
+                    </p>
+<p class="font-label-sm text-label-sm text-on-surface-variant dark:text-surface-variant">
+                        © 2024 Amaanitvam Foundation. All rights reserved. Registered NGO.
+                    </p>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface dark:text-inverse-on-surface mb-4">Legal</h4>
+<ul class="space-y-3">
+<li><a class="font-body-md text-body-md text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors" href="#">Privacy Policy</a></li>
+<li><a class="font-body-md text-body-md text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors" href="#">Terms of Service</a></li>
+<li><a class="font-body-md text-body-md text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors" href="#">Annual Reports</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface dark:text-inverse-on-surface mb-4">Support</h4>
+<ul class="space-y-3">
+<li><a class="font-body-md text-body-md text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors" href="#">Contact Us</a></li>
+<li><a class="font-body-md text-body-md text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors" href="#">FAQ</a></li>
+</ul>
+</div>
+</div>
+</footer>
+</main>
+</body></html>

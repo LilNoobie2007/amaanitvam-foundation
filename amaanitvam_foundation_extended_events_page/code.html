@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Events - Amaanitvam Foundation</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-secondary-fixed": "#0d1e25",
+                        "surface-variant": "#e2e2e2",
+                        "on-secondary-fixed-variant": "#394951",
+                        "on-primary-container": "#572800",
+                        "on-tertiary-container": "#383530",
+                        "surface-container-low": "#f3f3f4",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#4a4641",
+                        "on-primary-fixed": "#311300",
+                        "primary": "#964900",
+                        "surface-container-high": "#e8e8e8",
+                        "tertiary-fixed": "#e8e1db",
+                        "secondary-fixed": "#d4e5ef",
+                        "primary-fixed-dim": "#ffb786",
+                        "error-container": "#ffdad6",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed-variant": "#723600",
+                        "on-background": "#1a1c1c",
+                        "inverse-on-surface": "#f0f1f1",
+                        "on-surface": "#1a1c1c",
+                        "primary-fixed": "#ffdcc6",
+                        "inverse-primary": "#ffb786",
+                        "background": "#f9f9f9",
+                        "tertiary-fixed-dim": "#cbc5bf",
+                        "on-secondary": "#ffffff",
+                        "on-surface-variant": "#574235",
+                        "on-primary": "#ffffff",
+                        "secondary-fixed-dim": "#b8c9d3",
+                        "on-secondary-container": "#55656d",
+                        "surface-container": "#eeeeee",
+                        "primary-container": "#f57c00",
+                        "outline": "#8b7263",
+                        "surface-bright": "#f9f9f9",
+                        "surface-dim": "#dadada",
+                        "outline-variant": "#dec1af",
+                        "error": "#ba1a1a",
+                        "on-error": "#ffffff",
+                        "secondary": "#506169",
+                        "inverse-surface": "#2f3131",
+                        "secondary-container": "#d1e2ec",
+                        "surface": "#f9f9f9",
+                        "on-tertiary-fixed": "#1e1b17",
+                        "tertiary": "#625e59",
+                        "tertiary-container": "#a29d97",
+                        "on-error-container": "#93000a",
+                        "surface-tint": "#964900",
+                        "surface-container-highest": "#e2e2e2"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "margin-desktop": "48px",
+                        "gutter": "24px",
+                        "base": "8px",
+                        "margin-mobile": "16px",
+                        "section-gap": "96px",
+                        "container-max": "1280px"
+                    },
+                    fontFamily: {
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "label-md": ["Inter"],
+                        "headline-xl-mobile": ["Plus Jakarta Sans"],
+                        "headline-xl": ["Plus Jakarta Sans"],
+                        "body-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Plus Jakarta Sans"]
+                    },
+                    fontSize: {
+                        "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }],
+                        "label-md": ["14px", { lineHeight: "20px", letterSpacing: "0.01em", fontWeight: "600" }],
+                        "headline-xl-mobile": ["36px", { lineHeight: "44px", letterSpacing: "-0.02em", fontWeight: "700" }],
+                        "headline-xl": ["48px", { lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "700" }],
+                        "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+                        "label-sm": ["12px", { lineHeight: "16px", fontWeight: "500" }],
+                        "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                        "headline-lg": ["32px", { lineHeight: "40px", fontWeight: "600" }]
+                    },
+                    boxShadow: {
+                        'ambient': '0 4px 24px -4px rgba(55, 71, 79, 0.08), 0 2px 8px -2px rgba(55, 71, 79, 0.04)',
+                        'ambient-hover': '0 12px 32px -4px rgba(55, 71, 79, 0.12), 0 4px 12px -2px rgba(55, 71, 79, 0.06)',
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.filled {
+            font-variation-settings: 'FILL' 1;
+        }
+        .text-balance {
+            text-wrap: balance;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased overflow-x-hidden">
+<!-- TopNavBar -->
+<nav class="bg-surface/80 backdrop-blur-md dark:bg-surface-dim/80 text-primary dark:text-primary-fixed-dim font-label-md text-label-md docked full-width top-0 sticky z-50 border-b border-outline-variant/30 shadow-sm transition-all duration-300 ease-in-out">
+<div class="flex justify-between items-center max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop h-20">
+<div class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim tracking-tight">
+                Amaanitvam
+            </div>
+<!-- Desktop Nav -->
+<div class="hidden md:flex items-center space-x-8">
+<a class="text-on-surface-variant hover:text-primary transition-colors hover:bg-primary-container/10 px-3 py-2 rounded-md" href="#">Our Work</a>
+<a class="text-primary font-bold border-b-2 border-primary pb-1 hover:bg-primary-container/10 px-3 py-2 rounded-md" href="#">Events</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors hover:bg-primary-container/10 px-3 py-2 rounded-md" href="#">Impact</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors hover:bg-primary-container/10 px-3 py-2 rounded-md" href="#">Get Involved</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors hover:bg-primary-container/10 px-3 py-2 rounded-md" href="#">About</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="bg-primary-container text-on-primary h-14 px-8 rounded-full font-label-md text-label-md hover:bg-primary transition-colors shadow-ambient">
+                    Donate
+                </button>
+<button class="md:hidden text-primary">
+<span class="material-symbols-outlined text-[28px]">menu</span>
+</button>
+</div>
+</div>
+</nav>
+<main>
+<!-- Section 1: Hero -->
+<section class="relative pt-24 pb-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-gutter items-center">
+<div class="space-y-8 z-10">
+<div class="inline-flex items-center gap-2 bg-secondary-container/50 px-4 py-2 rounded-full border border-secondary/20">
+<span class="material-symbols-outlined text-secondary text-sm">calendar_today</span>
+<span class="font-label-md text-label-md text-secondary">Join The Movement</span>
+</div>
+<h1 class="font-headline-xl-mobile md:font-headline-xl text-headline-xl-mobile md:text-headline-xl text-on-surface text-balance">
+                        Creating Change Through <span class="text-primary">Community Action</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl text-balance">
+                        Discover upcoming events, campaigns, and workshops. Join our community of change-makers and be part of initiatives that drive meaningful impact.
+                    </p>
+<div class="flex flex-col sm:flex-row gap-4 pt-4">
+<button class="bg-primary-container text-on-primary h-14 px-8 rounded-full font-label-md text-label-md hover:bg-primary transition-colors shadow-ambient flex items-center justify-center gap-2">
+                            Upcoming Events
+                            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+<button class="bg-surface text-primary border border-outline-variant h-14 px-8 rounded-full font-label-md text-label-md hover:bg-surface-container-low transition-colors flex items-center justify-center">
+                            Become A Volunteer
+                        </button>
+</div>
+</div>
+<div class="relative h-[400px] lg:h-[600px] w-full rounded-2xl overflow-hidden shadow-ambient">
+<img alt="Community event" class="absolute inset-0 w-full h-full object-cover" data-alt="A diverse group of volunteers in a bright, modern community hall, smiling and organizing care packages. Natural sunlight streams through large windows, highlighting the high-quality, professional photography style. The scene is uplifting, embodying empathetic professionalism with warm, light-mode tones and a focus on collective action." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKGUVgsIKTbkT0i-nSmfmgNprBfoaImfvSeOJRpMUWtebdKV91XfGUT_n4MSW6OWrIdCiyTazw7WB39IlwTD7P3UsH8JFjC5oMY6nrSRVHlhngXKyZaxQfU8zVDZyqZFYmmvSxC65irfvOq3Auxlrpg8-Ltgl9Nex0eeVvff67Tpp0m70nhQxguMIMt4yb74fwQI-Z82EkLz3ywkjpCsPS35kjsI-KTmI8gjW1zRm_1J6ooiVnSYwheeeWUE7X_XX2juT4L3AcCs4"/>
+<div class="absolute inset-0 bg-gradient-to-t from-on-background/60 to-transparent"></div>
+</div>
+</div>
+</section>
+<!-- Section 2: Event Categories -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface-container-lowest border-y border-outline-variant/20">
+<div class="max-w-container-max mx-auto">
+<div class="text-center mb-16 space-y-4">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Ways to Get Involved</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">Explore different avenues to contribute your time and skills.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+<!-- Category Card 1 -->
+<div class="bg-surface rounded-xl p-6 border border-outline-variant/30 hover:shadow-ambient-hover transition-all duration-300 group cursor-pointer">
+<div class="w-12 h-12 rounded-full bg-primary-container/10 flex items-center justify-center mb-4 text-primary group-hover:bg-primary-container group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined">volunteer_activism</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Volunteer Drives</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Join on-ground efforts ranging from clean-ups to distribution campaigns.</p>
+</div>
+<!-- Category Card 2 -->
+<div class="bg-surface rounded-xl p-6 border border-outline-variant/30 hover:shadow-ambient-hover transition-all duration-300 group cursor-pointer">
+<div class="w-12 h-12 rounded-full bg-primary-container/10 flex items-center justify-center mb-4 text-primary group-hover:bg-primary-container group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined">diversity_3</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Community Outreach</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Engage directly with communities to understand needs and provide support.</p>
+</div>
+<!-- Category Card 3 -->
+<div class="bg-surface rounded-xl p-6 border border-outline-variant/30 hover:shadow-ambient-hover transition-all duration-300 group cursor-pointer">
+<div class="w-12 h-12 rounded-full bg-primary-container/10 flex items-center justify-center mb-4 text-primary group-hover:bg-primary-container group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined">school</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Education Workshops</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Facilitate learning sessions for underserved students and youth.</p>
+</div>
+<!-- Category Card 4 -->
+<div class="bg-surface rounded-xl p-6 border border-outline-variant/30 hover:shadow-ambient-hover transition-all duration-300 group cursor-pointer">
+<div class="w-12 h-12 rounded-full bg-primary-container/10 flex items-center justify-center mb-4 text-primary group-hover:bg-primary-container group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined">campaign</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Awareness Campaigns</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Help spread the word on critical social and environmental issues.</p>
+</div>
+<!-- Category Card 5 -->
+<div class="bg-surface rounded-xl p-6 border border-outline-variant/30 hover:shadow-ambient-hover transition-all duration-300 group cursor-pointer">
+<div class="w-12 h-12 rounded-full bg-primary-container/10 flex items-center justify-center mb-4 text-primary group-hover:bg-primary-container group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined">workspace_premium</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Internship Programs</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Structured, long-term engagements for skill-building and deep impact.</p>
+</div>
+<!-- Category Card 6 -->
+<div class="bg-surface rounded-xl p-6 border border-outline-variant/30 hover:shadow-ambient-hover transition-all duration-300 group cursor-pointer">
+<div class="w-12 h-12 rounded-full bg-primary-container/10 flex items-center justify-center mb-4 text-primary group-hover:bg-primary-container group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined">model_training</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Training Sessions</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Capacity building for our volunteers to enhance their effectiveness.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 3: Featured Upcoming Events -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface">
+<div class="max-w-container-max mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+<div class="space-y-4">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Upcoming Events</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Register for our next initiatives.</p>
+</div>
+<button class="text-primary font-label-md text-label-md flex items-center gap-1 hover:gap-2 transition-all">
+                        View Calendar <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+<!-- Event Card 1 -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-ambient hover:shadow-ambient-hover transition-shadow duration-300 flex flex-col">
+<div class="h-48 relative overflow-hidden">
+<img alt="Rural Education Drive" class="w-full h-full object-cover" data-alt="A brightly lit classroom setting where an NGO volunteer is teaching young students. The atmosphere is professional, warm, and hopeful. Soft, diffused lighting highlights the interaction, adhering to a clean, modern aesthetic with a focus on education." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-HadcWPGmoi8JAK-cGdiQMlKuB7qCNjkWv4Mwzw2_xuwVYm0ETZLNeEQxbY0BGmQA6aWIhOhN_Mg6wZao5zlhUU57vqFQpj5EKKBwXOKApqsMz1C3SfTtXj74Vq3Dck-16uZTo1-aQCSUlH1Etwchb2CUydRRB0rC4jcpf-EbGkF43qz_NeSmgTSx1w35Y5jKjr6Iy4UAeH9xK0cE7tkUiKTxupJGoe4P88vzLzB4tQ-dMkJyh6zXRLqIacjdkhNkhsP830mcZw4"/>
+<div class="absolute top-4 right-4 bg-surface/90 backdrop-blur-sm px-3 py-1 rounded-full font-label-sm text-label-sm text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">school</span> Education
+                             </div>
+</div>
+<div class="p-6 flex flex-col flex-grow">
+<div class="flex items-center gap-4 text-on-surface-variant font-label-sm text-label-sm mb-3">
+<div class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">calendar_month</span> Oct 15, 2024</div>
+<div class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">location_on</span> Community Center</div>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-3 line-clamp-2">Rural Education Drive Kickoff</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6 line-clamp-3 flex-grow">
+                                Join us as we launch our new curriculum aimed at empowering youth in underserved rural districts. Volunteers needed for setup and mentoring.
+                            </p>
+<button class="w-full bg-surface text-primary border border-primary h-12 rounded-lg font-label-md text-label-md hover:bg-primary hover:text-on-primary transition-colors">
+                                Register
+                            </button>
+</div>
+</div>
+<!-- Event Card 2 -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-ambient hover:shadow-ambient-hover transition-shadow duration-300 flex flex-col">
+<div class="h-48 relative overflow-hidden">
+<img alt="Community Health Workshop" class="w-full h-full object-cover" data-alt="A medical professional in a clean, brightly lit community hall, conducting a health check-up. The setting is sterile yet warm, conveying a professional NGO health initiative. High-quality lighting and a minimalist composition." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZfIb1O2t_79hsIR88DCXBeR2R7jO_BhI7YKKXOR-XdbcN2u2jI5OU1tMg0MLbIUHe-5j3DdoPEIRTsl87Yueo7Cj1GgBxpNhDiuQBo44KwY-2wx_lAOalvff0f-qOn17OJygVIO0kRFAvdnwrHWwQkg6CCbRSpFP7hmSB71T62RjWFTxtCbmXVa9SzG-VLp0QR0qg_PSRjWdP1REnBupjz8Pzhuavc4WWrH8j8G0EMzPUXcndjk5DQpqa6dgRb0iQLEi7I-vzcyY"/>
+<div class="absolute top-4 right-4 bg-surface/90 backdrop-blur-sm px-3 py-1 rounded-full font-label-sm text-label-sm text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">health_and_safety</span> Health
+                             </div>
+</div>
+<div class="p-6 flex flex-col flex-grow">
+<div class="flex items-center gap-4 text-on-surface-variant font-label-sm text-label-sm mb-3">
+<div class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">calendar_month</span> Oct 22, 2024</div>
+<div class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">location_on</span> City Square</div>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-3 line-clamp-2">Community Health Workshop</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6 line-clamp-3 flex-grow">
+                                A day dedicated to basic health screenings, hygiene awareness, and mental health resources for local families.
+                            </p>
+<button class="w-full bg-surface text-primary border border-primary h-12 rounded-lg font-label-md text-label-md hover:bg-primary hover:text-on-primary transition-colors">
+                                Register
+                            </button>
+</div>
+</div>
+<!-- Event Card 3 -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-ambient hover:shadow-ambient-hover transition-shadow duration-300 flex flex-col">
+<div class="h-48 relative overflow-hidden">
+<img alt="Tree Plantation Drive" class="w-full h-full object-cover" data-alt="Volunteers planting trees in an urban park on a sunny day. The image is vibrant and crisp, with natural green and earthy tones. It reflects an optimistic, active community environment consistent with a high-end corporate social responsibility aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJUD1wRhG3mRQECVDX7ERleHw1zMllLN--QDqcDCiFqCZv-ReFA1qHGoT9L__3Y34B2T2XZrDXADYVuxVQRBP2JyW89aUzlUdm9-g6CtJT7BGUDXwHBOWzr59rdn6uaxoz2rVRNxdmmWyA3z0YB2xxZ9rNmb6c0K19xrCJGztIsmSjaQ62aPsu4KJMNJu6yAPKxWVS3eYgr_87Nz1y4oBmMmX0i5Yu7I3eGba7JLbKMQuIp5eOrI7-l-T87EkoC-0WqtcIS2rmsU0"/>
+<div class="absolute top-4 right-4 bg-surface/90 backdrop-blur-sm px-3 py-1 rounded-full font-label-sm text-label-sm text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">eco</span> Environment
+                             </div>
+</div>
+<div class="p-6 flex flex-col flex-grow">
+<div class="flex items-center gap-4 text-on-surface-variant font-label-sm text-label-sm mb-3">
+<div class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">calendar_month</span> Nov 05, 2024</div>
+<div class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">location_on</span> Metro Park</div>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-3 line-clamp-2">Urban Tree Plantation Drive</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6 line-clamp-3 flex-grow">
+                                Help us restore green cover in urban areas. We aim to plant 500 saplings in one day. Tools provided.
+                            </p>
+<button class="w-full bg-surface text-primary border border-primary h-12 rounded-lg font-label-md text-label-md hover:bg-primary hover:text-on-primary transition-colors">
+                                Register
+                            </button>
+</div>
+</div>
+<!-- Event Card 4 -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-ambient hover:shadow-ambient-hover transition-shadow duration-300 flex flex-col">
+<div class="h-48 relative overflow-hidden bg-surface-container-low flex items-center justify-center">
+<span class="material-symbols-outlined text-6xl text-outline-variant">groups</span>
+<div class="absolute top-4 right-4 bg-surface/90 backdrop-blur-sm px-3 py-1 rounded-full font-label-sm text-label-sm text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">forum</span> Awareness
+                             </div>
+</div>
+<div class="p-6 flex flex-col flex-grow">
+<div class="flex items-center gap-4 text-on-surface-variant font-label-sm text-label-sm mb-3">
+<div class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">calendar_month</span> Nov 12, 2024</div>
+<div class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">videocam</span> Online</div>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-3 line-clamp-2">Civic Rights Awareness Webinar</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6 line-clamp-3 flex-grow">
+                                An online panel discussion with legal experts on understanding and advocating for basic civic rights in marginalized communities.
+                            </p>
+<button class="w-full bg-surface text-primary border border-primary h-12 rounded-lg font-label-md text-label-md hover:bg-primary hover:text-on-primary transition-colors">
+                                Register
+                            </button>
+</div>
+</div>
+<!-- Event Card 5 -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-ambient hover:shadow-ambient-hover transition-shadow duration-300 flex flex-col">
+<div class="h-48 relative overflow-hidden bg-surface-container-low flex items-center justify-center">
+<span class="material-symbols-outlined text-6xl text-outline-variant">inventory_2</span>
+<div class="absolute top-4 right-4 bg-surface/90 backdrop-blur-sm px-3 py-1 rounded-full font-label-sm text-label-sm text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">volunteer_activism</span> Relief
+                             </div>
+</div>
+<div class="p-6 flex flex-col flex-grow">
+<div class="flex items-center gap-4 text-on-surface-variant font-label-sm text-label-sm mb-3">
+<div class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">calendar_month</span> Nov 18, 2024</div>
+<div class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">location_on</span> HQ Office</div>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-3 line-clamp-2">Winter Blanket Distribution Prep</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6 line-clamp-3 flex-grow">
+                                Volunteer at our HQ to sort, pack, and prepare winter supplies for the upcoming distribution drive for the homeless.
+                            </p>
+<button class="w-full bg-surface text-primary border border-primary h-12 rounded-lg font-label-md text-label-md hover:bg-primary hover:text-on-primary transition-colors">
+                                Register
+                            </button>
+</div>
+</div>
+<!-- Event Card 6 -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-ambient hover:shadow-ambient-hover transition-shadow duration-300 flex flex-col">
+<div class="h-48 relative overflow-hidden bg-surface-container-low flex items-center justify-center">
+<span class="material-symbols-outlined text-6xl text-outline-variant">draw</span>
+<div class="absolute top-4 right-4 bg-surface/90 backdrop-blur-sm px-3 py-1 rounded-full font-label-sm text-label-sm text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">child_care</span> Youth
+                             </div>
+</div>
+<div class="p-6 flex flex-col flex-grow">
+<div class="flex items-center gap-4 text-on-surface-variant font-label-sm text-label-sm mb-3">
+<div class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">calendar_month</span> Dec 02, 2024</div>
+<div class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">location_on</span> Youth Center</div>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-3 line-clamp-2">Art &amp; Expression Workshop</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6 line-clamp-3 flex-grow">
+                                Facilitate an art therapy and creative expression session for teenagers. Materials provided, just bring your creativity.
+                            </p>
+<button class="w-full bg-surface text-primary border border-primary h-12 rounded-lg font-label-md text-label-md hover:bg-primary hover:text-on-primary transition-colors">
+                                Register
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 6: Event Statistics -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop bg-tertiary-fixed border-y border-outline-variant/30">
+<div class="max-w-container-max mx-auto">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 divide-x divide-outline-variant/40">
+<div class="text-center px-4">
+<div class="font-headline-xl text-headline-xl text-primary mb-2">50+</div>
+<div class="font-label-md text-label-md text-on-tertiary-fixed-variant uppercase tracking-wider">Events Conducted</div>
+</div>
+<div class="text-center px-4">
+<div class="font-headline-xl text-headline-xl text-primary mb-2">5K+</div>
+<div class="font-label-md text-label-md text-on-tertiary-fixed-variant uppercase tracking-wider">Participants</div>
+</div>
+<div class="text-center px-4">
+<div class="font-headline-xl text-headline-xl text-primary mb-2">120+</div>
+<div class="font-label-md text-label-md text-on-tertiary-fixed-variant uppercase tracking-wider">Programs</div>
+</div>
+<div class="text-center px-4">
+<div class="font-headline-xl text-headline-xl text-primary mb-2">25+</div>
+<div class="font-label-md text-label-md text-on-tertiary-fixed-variant uppercase tracking-wider">Partners</div>
+</div>
+</div>
+</div>
+</section><!-- Section 7: Event Calendar Timeline -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface">
+<div class="max-w-container-max mx-auto">
+<div class="text-center mb-16">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-4">Event Calendar 2024</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Our roadmap of upcoming social impact activities.</p>
+</div>
+<div class="relative">
+<div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-outline-variant/50"></div>
+<div class="space-y-12">
+<div class="relative flex flex-col md:flex-row items-center">
+<div class="md:w-1/2 md:pr-12 md:text-right">
+<h4 class="font-headline-md text-primary">June</h4>
+<p class="font-body-md text-on-surface-variant">Youth Empowerment Workshop &amp; Summer Mentorship Launch</p>
+</div>
+<div class="absolute left-4 md:left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-primary-container border-4 border-surface z-10"></div>
+<div class="md:w-1/2 md:pl-12 mt-4 md:mt-0"></div>
+</div>
+<div class="relative flex flex-col md:flex-row items-center">
+<div class="md:w-1/2 md:pr-12 md:text-right mt-4 md:mt-0"></div>
+<div class="absolute left-4 md:left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-primary-container border-4 border-surface z-10"></div>
+<div class="md:w-1/2 md:pl-12">
+<h4 class="font-headline-md text-primary">July</h4>
+<p class="font-body-md text-on-surface-variant">Community Hygiene Awareness Drive in Urban Clusters</p>
+</div>
+</div>
+<div class="relative flex flex-col md:flex-row items-center">
+<div class="md:w-1/2 md:pr-12 md:text-right">
+<h4 class="font-headline-md text-primary">August</h4>
+<p class="font-body-md text-on-surface-variant">Independence Day Special: Education Support Fair</p>
+</div>
+<div class="absolute left-4 md:left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-primary-container border-4 border-surface z-10"></div>
+<div class="md:w-1/2 md:pl-12 mt-4 md:mt-0"></div>
+</div>
+<div class="relative flex flex-col md:flex-row items-center">
+<div class="md:w-1/2 md:pr-12 md:text-right mt-4 md:mt-0"></div>
+<div class="absolute left-4 md:left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-primary-container border-4 border-surface z-10"></div>
+<div class="md:w-1/2 md:pl-12">
+<h4 class="font-headline-md text-primary">September</h4>
+<p class="font-body-md text-on-surface-variant">Global Climate Action: Clean-up Drive &amp; Tree Planting</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 8: Past Event Highlights -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface-container-low">
+<div class="max-w-container-max mx-auto">
+<div class="mb-12">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Past Event Highlights</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Celebrating the milestones we've achieved together.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+<div class="bg-surface rounded-xl overflow-hidden shadow-ambient">
+<div class="h-48 bg-surface-container-highest relative">
+<img class="w-full h-full object-cover opacity-60 grayscale" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZfIb1O2t_79hsIR88DCXBeR2R7jO_BhI7YKKXOR-XdbcN2u2jI5OU1tMg0MLbIUHe-5j3DdoPEIRTsl87Yueo7Cj1GgBxpNhDiuQBo44KwY-2wx_lAOalvff0f-qOn17OJygVIO0kRFAvdnwrHWwQkg6CCbRSpFP7hmSB71T62RjWFTxtCbmXVa9SzG-VLp0QR0qg_PSRjWdP1REnBupjz8Pzhuavc4WWrH8j8G0EMzPUXcndjk5DQpqa6dgRb0iQLEi7I-vzcyY"/>
+<div class="absolute top-4 left-4 bg-secondary text-on-secondary px-3 py-1 rounded-full text-label-sm font-label-sm uppercase">Completed</div>
+</div>
+<div class="p-6">
+<h3 class="font-headline-md text-on-surface mb-2">Community Health Camp</h3>
+<p class="font-body-md text-primary font-bold mb-3">200+ Beneficiaries reached</p>
+<p class="font-body-md text-on-surface-variant">Successfully provided free screenings and primary care kits to marginalized families.</p>
+</div>
+</div>
+<div class="bg-surface rounded-xl overflow-hidden shadow-ambient">
+<div class="h-48 bg-surface-container-highest relative">
+<img class="w-full h-full object-cover opacity-60 grayscale" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJUD1wRhG3mRQECVDX7ERleHw1zMllLN--QDqcDCiFqCZv-ReFA1qHGoT9L__3Y34B2T2XZrDXADYVuxVQRBP2JyW89aUzlUdm9-g6CtJT7BGUDXwHBOWzr59rdn6uaxoz2rVRNxdmmWyA3z0YB2xxZ9rNmb6c0K19xrCJGztIsmSjaQ62aPsu4KJMNJu6yAPKxWVS3eYgr_87Nz1y4oBmMmX0i5Yu7I3eGba7JLbKMQuIp5eOrI7-l-T87EkoC-0WqtcIS2rmsU0"/>
+<div class="absolute top-4 left-4 bg-secondary text-on-secondary px-3 py-1 rounded-full text-label-sm font-label-sm uppercase">Completed</div>
+</div>
+<div class="p-6">
+<h3 class="font-headline-md text-on-surface mb-2">Winter Relief Drive</h3>
+<p class="font-body-md text-primary font-bold mb-3">1,200 Blankets distributed</p>
+<p class="font-body-md text-on-surface-variant">Ensuring warmth for the homeless during peak winter across three districts.</p>
+</div>
+</div>
+<div class="bg-surface rounded-xl overflow-hidden shadow-ambient">
+<div class="h-48 bg-surface-container-highest relative">
+<img class="w-full h-full object-cover opacity-60 grayscale" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-HadcWPGmoi8JAK-cGdiQMlKuB7qCNjkWv4Mwzw2_xuwVYm0ETZLNeEQxbY0BGmQA6aWIhOhN_Mg6wZao5zlhUU57vqFQpj5EKKBwXOKApqsMz1C3SfTtXj74Vq3Dck-16uZTo1-aQCSUlH1Etwchb2CUydRRB0rC4jcpf-EbGkF43qz_NeSmgTSx1w35Y5jKjr6Iy4UAeH9xK0cE7tkUiKTxupJGoe4P88vzLzB4tQ-dMkJyh6zXRLqIacjdkhNkhsP830mcZw4"/>
+<div class="absolute top-4 left-4 bg-secondary text-on-secondary px-3 py-1 rounded-full text-label-sm font-label-sm uppercase">Completed</div>
+</div>
+<div class="p-6">
+<h3 class="font-headline-md text-on-surface mb-2">Edu-Kit Donation</h3>
+<p class="font-body-md text-primary font-bold mb-3">500 Students supported</p>
+<p class="font-body-md text-on-surface-variant">Distributed essential school supplies to enable children to return to school after the break.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 9: Community Event Gallery -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop">
+<div class="max-w-container-max mx-auto">
+<div class="text-center mb-16">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Community Moments</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Glimpses of action, empathy, and collective impact.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<img class="w-full h-64 object-cover rounded-xl shadow-sm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKGUVgsIKTbkT0i-nSmfmgNprBfoaImfvSeOJRpMUWtebdKV91XfGUT_n4MSW6OWrIdCiyTazw7WB39IlwTD7P3UsH8JFjC5oMY6nrSRVHlhngXKyZaxQfU8zVDZyqZFYmmvSxC65irfvOq3Auxlrpg8-Ltgl9Nex0eeVvff67Tpp0m70nhQxguMIMt4yb74fwQI-Z82EkLz3ywkjpCsPS35kjsI-KTmI8gjW1zRm_1J6ooiVnSYwheeeWUE7X_XX2juT4L3AcCs4"/>
+<img class="w-full h-64 object-cover rounded-xl shadow-sm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZfIb1O2t_79hsIR88DCXBeR2R7jO_BhI7YKKXOR-XdbcN2u2jI5OU1tMg0MLbIUHe-5j3DdoPEIRTsl87Yueo7Cj1GgBxpNhDiuQBo44KwY-2wx_lAOalvff0f-qOn17OJygVIO0kRFAvdnwrHWwQkg6CCbRSpFP7hmSB71T62RjWFTxtCbmXVa9SzG-VLp0QR0qg_PSRjWdP1REnBupjz8Pzhuavc4WWrH8j8G0EMzPUXcndjk5DQpqa6dgRb0iQLEi7I-vzcyY"/>
+<img class="w-full h-64 object-cover rounded-xl shadow-sm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-HadcWPGmoi8JAK-cGdiQMlKuB7qCNjkWv4Mwzw2_xuwVYm0ETZLNeEQxbY0BGmQA6aWIhOhN_Mg6wZao5zlhUU57vqFQpj5EKKBwXOKApqsMz1C3SfTtXj74Vq3Dck-16uZTo1-aQCSUlH1Etwchb2CUydRRB0rC4jcpf-EbGkF43qz_NeSmgTSx1w35Y5jKjr6Iy4UAeH9xK0cE7tkUiKTxupJGoe4P88vzLzB4tQ-dMkJyh6zXRLqIacjdkhNkhsP830mcZw4"/>
+<img class="w-full h-64 object-cover rounded-xl shadow-sm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJUD1wRhG3mRQECVDX7ERleHw1zMllLN--QDqcDCiFqCZv-ReFA1qHGoT9L__3Y34B2T2XZrDXADYVuxVQRBP2JyW89aUzlUdm9-g6CtJT7BGUDXwHBOWzr59rdn6uaxoz2rVRNxdmmWyA3z0YB2xxZ9rNmb6c0K19xrCJGztIsmSjaQ62aPsu4KJMNJu6yAPKxWVS3eYgr_87Nz1y4oBmMmX0i5Yu7I3eGba7JLbKMQuIp5eOrI7-l-T87EkoC-0WqtcIS2rmsU0"/>
+</div>
+</div>
+</section>
+<!-- Section 10: Organize An Event With Us -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface-container-lowest">
+<div class="max-w-container-max mx-auto">
+<div class="text-center mb-16">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-4">Partner With Us</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Create meaningful impact through tailored collaboration.</p>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="p-8 bg-surface border border-outline-variant/30 rounded-2xl flex flex-col items-center text-center hover:border-primary transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-4xl text-primary mb-4 group-hover:scale-110 transition-transform">handshake</span>
+<h4 class="font-headline-md text-on-surface mb-2">NGO Collaboration</h4>
+<p class="font-body-md text-on-surface-variant">Joint initiatives to scale social reach.</p>
+</div>
+<div class="p-8 bg-surface border border-outline-variant/30 rounded-2xl flex flex-col items-center text-center hover:border-primary transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-4xl text-primary mb-4 group-hover:scale-110 transition-transform">school</span>
+<h4 class="font-headline-md text-on-surface mb-2">School Partnership</h4>
+<p class="font-body-md text-on-surface-variant">Engaging students in social service.</p>
+</div>
+<div class="p-8 bg-surface border border-outline-variant/30 rounded-2xl flex flex-col items-center text-center hover:border-primary transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-4xl text-primary mb-4 group-hover:scale-110 transition-transform">business</span>
+<h4 class="font-headline-md text-on-surface mb-2">Corporate CSR</h4>
+<p class="font-body-md text-on-surface-variant">Structured employee engagement programs.</p>
+</div>
+<div class="p-8 bg-surface border border-outline-variant/30 rounded-2xl flex flex-col items-center text-center hover:border-primary transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-4xl text-primary mb-4 group-hover:scale-110 transition-transform">groups</span>
+<h4 class="font-headline-md text-on-surface mb-2">Community Initiatives</h4>
+<p class="font-body-md text-on-surface-variant">Local events driven by citizen action.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 11: Participant Testimonials -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface">
+<div class="max-w-container-max mx-auto">
+<div class="text-center mb-16">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-4">Voices from the Ground</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">The impact of our events through the eyes of those involved.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<div class="bg-surface-container-low p-8 rounded-2xl border border-outline-variant/20 relative">
+<span class="material-symbols-outlined absolute top-8 right-8 text-primary/20 text-6xl">format_quote</span>
+<div class="flex items-center gap-4 mb-6">
+<div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">AM</div>
+<div>
+<h4 class="font-headline-md text-on-surface">Anita Mehra</h4>
+<p class="text-label-md text-primary">Volunteer</p>
+</div>
+</div>
+<p class="font-body-lg italic text-on-surface-variant">"Organizing the Health Camp was an eye-opening experience. Seeing the direct impact on families who otherwise lack access to basic care is what keeps me motivated."</p>
+</div>
+<div class="bg-surface-container-low p-8 rounded-2xl border border-outline-variant/20 relative">
+<span class="material-symbols-outlined absolute top-8 right-8 text-primary/20 text-6xl">format_quote</span>
+<div class="flex items-center gap-4 mb-6">
+<div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">RK</div>
+<div>
+<h4 class="font-headline-md text-on-surface">Rahul Kapoor</h4>
+<p class="text-label-md text-primary">Student Participant</p>
+</div>
+</div>
+<p class="font-body-lg italic text-on-surface-variant">"The education workshop taught me skills beyond textbooks. I feel more confident and connected to my community now."</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 12: Registration Process -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface-container-lowest">
+<div class="max-w-container-max mx-auto">
+<div class="text-center mb-16">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-4">How To Participate</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Getting involved is simple and rewarding.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-5 gap-8">
+<div class="flex flex-col items-center text-center">
+<div class="w-16 h-16 rounded-full bg-primary-container/10 text-primary flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-3xl">search</span>
+</div>
+<h5 class="font-label-md text-on-surface mb-2">Browse Events</h5>
+<p class="text-sm text-on-surface-variant">Explore upcoming activities</p>
+</div>
+<div class="hidden md:flex items-center justify-center pt-8 text-outline-variant"><span class="material-symbols-outlined">arrow_forward</span></div>
+<div class="flex flex-col items-center text-center">
+<div class="w-16 h-16 rounded-full bg-primary-container/10 text-primary flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-3xl">how_to_reg</span>
+</div>
+<h5 class="font-label-md text-on-surface mb-2">Register Online</h5>
+<p class="text-sm text-on-surface-variant">Fill out the quick form</p>
+</div>
+<div class="hidden md:flex items-center justify-center pt-8 text-outline-variant"><span class="material-symbols-outlined">arrow_forward</span></div>
+<div class="flex flex-col items-center text-center">
+<div class="w-16 h-16 rounded-full bg-primary-container/10 text-primary flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-3xl">task_alt</span>
+</div>
+<h5 class="font-label-md text-on-surface mb-2">Confirmation</h5>
+<p class="text-sm text-on-surface-variant">Receive details via email</p>
+</div>
+<div class="hidden md:flex items-center justify-center pt-8 text-outline-variant"><span class="material-symbols-outlined">arrow_forward</span></div>
+<div class="flex flex-col items-center text-center">
+<div class="w-16 h-16 rounded-full bg-primary-container/10 text-primary flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-3xl">diversity_3</span>
+</div>
+<h5 class="font-label-md text-on-surface mb-2">Attend Event</h5>
+<p class="text-sm text-on-surface-variant">Join the community effort</p>
+</div>
+<div class="hidden md:flex items-center justify-center pt-8 text-outline-variant"><span class="material-symbols-outlined">arrow_forward</span></div>
+<div class="flex flex-col items-center text-center">
+<div class="w-16 h-16 rounded-full bg-primary-container/10 text-primary flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-3xl">military_tech</span>
+</div>
+<h5 class="font-label-md text-on-surface mb-2">Recognition</h5>
+<p class="text-sm text-on-surface-variant">Get certified for your effort</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 11: Final CTA -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface">
+<div class="max-w-container-max mx-auto bg-primary-container rounded-3xl overflow-hidden relative shadow-ambient">
+<div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMiIgZmlsbD0iI2ZmZmZmZiIgZmlsbC1vcGFjaXR5PSIwLjEiLz48L3N2Zz4=')]"></div>
+<div class="relative z-10 px-8 py-16 md:py-24 text-center flex flex-col items-center">
+<h2 class="font-headline-xl-mobile md:font-headline-xl text-headline-xl-mobile md:text-headline-xl text-on-primary mb-6 max-w-2xl text-balance">
+                        Join Our Next Community Event
+                    </h2>
+<p class="font-body-lg text-body-lg text-on-primary/90 mb-10 max-w-xl text-balance">
+                        Your time and effort can create a ripple effect of positive change. Step forward and be the difference.
+                    </p>
+<div class="flex flex-col sm:flex-row gap-4">
+<button class="bg-surface text-primary h-14 px-8 rounded-full font-label-md text-label-md hover:bg-surface-container-low transition-colors shadow-sm">
+                            Register For Events
+                        </button>
+<button class="bg-transparent text-on-primary border border-on-primary h-14 px-8 rounded-full font-label-md text-label-md hover:bg-on-primary/10 transition-colors">
+                            Become A Volunteer
+                        </button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest dark:bg-surface-dim text-primary dark:text-primary-fixed-dim font-body-md text-body-md full-width py-section-gap bg-surface-container-low flat no shadows opacity-100 hover:opacity-80 transition-opacity">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+<div class="col-span-1 md:col-span-1 space-y-4">
+<div class="font-headline-md text-headline-md font-bold text-primary">Amaanitvam</div>
+<p class="text-on-surface-variant text-sm">Empowering communities through collective action and dedicated volunteering.</p>
+</div>
+<div class="col-span-1 md:col-span-2 flex flex-wrap gap-x-8 gap-y-4">
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Annual Reports</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Contact Us</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Careers</a>
+</div>
+<div class="col-span-1 md:col-span-1 md:text-right">
+<p class="text-on-surface-variant text-sm">© 2024 Amaanitvam Foundation. Dignity in Progress.</p>
+</div>
+</div>
+</footer>
+</body></html>

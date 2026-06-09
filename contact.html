@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us — Amaanitvam Foundation</title>
+  <meta name="description" content="Get in touch with Amaanitvam Foundation for partnerships, volunteering, donations, and general inquiries.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  <link rel="icon" href="assets/images/logo.png" type="image/png">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-page="contact">
+
+  <nav id="site-nav" class="site-nav is-transparent" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="brand" aria-label="Amaanitvam Foundation — Home">
+        <img src="assets/images/logo.png" alt="Amaanitvam Foundation" class="brand-logo" width="200" height="48">
+      </a>
+      <div class="nav-links" role="menubar" aria-label="Primary">
+        <a href="index.html" class="nav-link" data-nav="home" role="menuitem">Home</a>
+        <a href="about.html" class="nav-link" data-nav="about" role="menuitem">About</a>
+        <a href="programs.html" class="nav-link" data-nav="programs" role="menuitem">Programs</a>
+        <a href="impact.html" class="nav-link" data-nav="impact" role="menuitem">Impact</a>
+        <a href="events.html" class="nav-link" data-nav="events" role="menuitem">Events</a>
+        <a href="gallery.html" class="nav-link" data-nav="gallery" role="menuitem">Gallery</a>
+        <a href="updates.html" class="nav-link" data-nav="updates" role="menuitem">Updates</a>
+        <a href="volunteer.html" class="nav-link" data-nav="volunteer" role="menuitem">Volunteer</a>
+        <a href="internship.html" class="nav-link" data-nav="internship" role="menuitem">Internship</a>
+        <a href="verify.html" class="nav-link" data-nav="verify" role="menuitem">Verify</a>
+        <a href="contact.html" class="nav-link" data-nav="contact" role="menuitem">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <a href="contact.html#donate" class="btn-donate">Donate</a>
+        <button id="menu-toggle" class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span class="material-symbols-outlined" aria-hidden="true">menu</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div id="mobile-menu" class="mobile-menu" role="navigation" aria-label="Mobile navigation">
+    <a href="index.html" class="nav-link" data-nav="home">Home</a>
+    <a href="about.html" class="nav-link" data-nav="about">About</a>
+    <a href="programs.html" class="nav-link" data-nav="programs">Programs</a>
+    <a href="impact.html" class="nav-link" data-nav="impact">Impact</a>
+    <a href="events.html" class="nav-link" data-nav="events">Events</a>
+    <a href="gallery.html" class="nav-link" data-nav="gallery">Gallery</a>
+    <a href="updates.html" class="nav-link" data-nav="updates">Updates</a>
+    <a href="volunteer.html" class="nav-link" data-nav="volunteer">Volunteer</a>
+    <a href="internship.html" class="nav-link" data-nav="internship">Internship</a>
+    <a href="verify.html" class="nav-link" data-nav="verify">Verify</a>
+    <a href="contact.html" class="nav-link" data-nav="contact">Contact</a>
+    <a href="contact.html#donate" class="btn-donate">Donate</a>
+  </div>
+
+  <main id="main-content">
+    <header class="page-hero has-image" data-hero>
+      <div class="container">
+        <span class="section-label">Contact Us</span>
+        <h1 class="section-title" style="font-size: clamp(2rem, 5vw, 3rem);">Let's Create Impact Together</h1>
+        <p class="section-desc" style="max-width: 640px; margin: 0;">Whether you are a volunteer, student, intern, donor, organization, or community member — we would love to hear from you.</p>
+      </div>
+    </header>
+
+    <section class="section section-white" aria-labelledby="contact-form-heading">
+      <div class="container">
+        <div class="split-2">
+          <div>
+            <div class="section-header" style="text-align: left; margin: 0 0 2rem;">
+              <span class="section-label">Send a Message</span>
+              <h2 id="contact-form-heading" class="section-title">Contact Form</h2>
+            </div>
+            <form action="mailto:amaanitvamfoundation@gmail.com" method="post" enctype="text/plain" aria-label="Contact inquiry form">
+              <div style="margin-bottom: 1.25rem;">
+                <label class="form-label" for="contact-name">Full Name <span aria-hidden="true">*</span></label>
+                <input class="form-input" type="text" id="contact-name" name="name" required autocomplete="name" placeholder="Jane Doe">
+              </div>
+              <div style="margin-bottom: 1.25rem;">
+                <label class="form-label" for="contact-email">Email Address <span aria-hidden="true">*</span></label>
+                <input class="form-input" type="email" id="contact-email" name="email" required autocomplete="email" placeholder="jane@example.com">
+              </div>
+              <div style="margin-bottom: 1.25rem;">
+                <label class="form-label" for="contact-subject">Subject <span aria-hidden="true">*</span></label>
+                <input class="form-input" type="text" id="contact-subject" name="subject" required placeholder="Brief subject of your message">
+              </div>
+              <div style="margin-bottom: 1.5rem;">
+                <label class="form-label" for="contact-message">Message <span aria-hidden="true">*</span></label>
+                <textarea class="form-textarea" id="contact-message" name="message" rows="5" required placeholder="How can we collaborate?"></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">
+                <span class="material-symbols-outlined" aria-hidden="true">send</span> Send Message
+              </button>
+            </form>
+          </div>
+          <aside aria-label="Contact information">
+            <h2 class="sr-only">Contact Information</h2>
+            <div class="grid-2" style="grid-template-columns: 1fr;">
+              <div class="card">
+                <div class="card-icon card-icon-pink" aria-hidden="true"><span class="material-symbols-outlined">mail</span></div>
+                <h3 style="font-weight: 600; color: var(--navy); margin-bottom: 0.5rem;">Email Us</h3>
+                <p class="text-muted" style="font-size: 0.9rem; margin-bottom: 0.5rem;">For general inquiries:</p>
+                <a href="mailto:amaanitvamfoundation@gmail.com" class="text-primary" style="font-weight: 600;">amaanitvamfoundation@gmail.com</a>
+              </div>
+              <div class="card">
+                <div class="card-icon card-icon-purple" aria-hidden="true"><span class="material-symbols-outlined">call</span></div>
+                <h3 style="font-weight: 600; color: var(--navy); margin-bottom: 0.5rem;">Call Us</h3>
+                <p class="text-muted" style="font-size: 0.9rem; margin-bottom: 0.5rem;">Mon–Fri, 9am–6pm:</p>
+                <a href="tel:+919899923266" class="text-primary" style="font-weight: 600;">+91 98999 23266</a>
+              </div>
+              <div class="card">
+                <div class="card-icon card-icon-gold" aria-hidden="true"><span class="material-symbols-outlined">location_on</span></div>
+                <h3 style="font-weight: 600; color: var(--navy); margin-bottom: 0.5rem;">Office Address</h3>
+                <p class="text-muted" style="font-size: 0.9rem;">H.No. 269, W.No. 2, Mehrauli, Gadaipur<br>South West Delhi, New Delhi<br>Delhi, India — 110030</p>
+              </div>
+              <div class="card">
+                <div class="card-icon card-icon-navy" aria-hidden="true"><span class="material-symbols-outlined">schedule</span></div>
+                <h3 style="font-weight: 600; color: var(--navy); margin-bottom: 0.5rem;">Working Hours</h3>
+                <p class="text-muted" style="font-size: 0.9rem;">Monday – Friday: 9:00 AM – 6:00 PM<br>Saturday – Sunday: Closed</p>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" aria-labelledby="faq-heading">
+      <div class="container" style="max-width: 800px;">
+        <div class="section-header">
+          <span class="section-label">FAQ</span>
+          <h2 id="faq-heading" class="section-title">Frequently Asked Questions</h2>
+        </div>
+        <div role="region" aria-label="Frequently asked questions">
+          <div class="faq-item">
+            <button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-1">
+              How quickly do you respond to inquiries?
+              <span class="material-symbols-outlined faq-icon" aria-hidden="true">expand_more</span>
+            </button>
+            <div class="faq-answer" id="faq-1" role="region">We typically respond within 24–48 business hours. Urgent partnership matters are prioritized.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-2">
+              How can I volunteer with the foundation?
+              <span class="material-symbols-outlined faq-icon" aria-hidden="true">expand_more</span>
+            </button>
+            <div class="faq-answer" id="faq-2" role="region">Visit our <a href="volunteer.html">Volunteer page</a> to explore roles, or submit an inquiry through the contact form above.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-3">
+              How do I apply for an internship?
+              <span class="material-symbols-outlined faq-icon" aria-hidden="true">expand_more</span>
+            </button>
+            <div class="faq-answer" id="faq-3" role="region">Review available tracks on our <a href="internship.html">Internship page</a> and send your resume with a cover letter via the contact form.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-4">
+              How can I verify a certificate?
+              <span class="material-symbols-outlined faq-icon" aria-hidden="true">expand_more</span>
+            </button>
+            <div class="faq-answer" id="faq-4" role="region">Use our <a href="verify.html">Certificate Verification portal</a> to instantly authenticate credentials issued by Amaanitvam Foundation.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-5">
+              How can my organization partner with you?
+              <span class="material-symbols-outlined faq-icon" aria-hidden="true">expand_more</span>
+            </button>
+            <div class="faq-answer" id="faq-5" role="region">Explore partnership options below and reach out with your organization details. Our partnerships team will follow up promptly.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-white" aria-labelledby="regions-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">Where We Work</span>
+          <h2 id="regions-heading" class="section-title">Regional Presence</h2>
+        </div>
+        <div class="grid-4">
+          <div class="card">
+            <div class="card-icon card-icon-pink" aria-hidden="true"><span class="material-symbols-outlined">apartment</span></div>
+            <h3 style="font-weight: 600; color: var(--navy); margin-bottom: 0.5rem;">Registered Office</h3>
+            <p class="text-muted" style="font-size: 0.9rem;">Mehrauli, Gadaipur, South West Delhi, New Delhi — 110030. Central operations led by Directors Kartik Sharma and Roshan.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon card-icon-purple" aria-hidden="true"><span class="material-symbols-outlined">school</span></div>
+            <h3 style="font-weight: 600; color: var(--navy); margin-bottom: 0.5rem;">Delhi Programs</h3>
+            <p class="text-muted" style="font-size: 0.9rem;"><strong>Project Manthan</strong> — Okhla (60+ children). <strong>Project Shiksha</strong> — Hauz Khas (45 students).</p>
+          </div>
+          <div class="card">
+            <div class="card-icon card-icon-gold" aria-hidden="true"><span class="material-symbols-outlined">groups</span></div>
+            <h3 style="font-weight: 600; color: var(--navy); margin-bottom: 0.5rem;">University Partners</h3>
+            <p class="text-muted" style="font-size: 0.9rem;">Shyam Lal College and Ramjas College, Delhi University — clothes drives and handcrafted fundraising.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon card-icon-navy" aria-hidden="true"><span class="material-symbols-outlined">public</span></div>
+            <h3 style="font-weight: 600; color: var(--navy); margin-bottom: 0.5rem;">Haryana — Project Pravah</h3>
+            <p class="text-muted" style="font-size: 0.9rem;">Youth empowerment and sustainable education in Hisar, Haryana.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" aria-labelledby="partnerships-heading">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">Collaborate</span>
+          <h2 id="partnerships-heading" class="section-title">Partnership Inquiries</h2>
+          <p class="section-desc">Join us in creating lasting social impact through structured collaboration.</p>
+        </div>
+        <div class="grid-4">
+          <div class="card" style="display: flex; flex-direction: column;">
+            <div class="card-icon card-icon-pink" aria-hidden="true"><span class="material-symbols-outlined">handshake</span></div>
+            <h3 style="font-weight: 600; color: var(--navy); margin-bottom: 0.75rem;">NGO Partnerships</h3>
+            <p class="text-muted" style="font-size: 0.9rem; flex: 1; margin-bottom: 1.25rem;">Collaborate on large-scale social impact projects and community development initiatives.</p>
+            <a href="mailto:amaanitvamfoundation@gmail.com?subject=NGO%20Partnership%20Inquiry" class="text-primary" style="font-weight: 600; font-size: 0.9rem; text-decoration: none;">Inquire now →</a>
+          </div>
+          <div class="card" style="display: flex; flex-direction: column;">
+            <div class="card-icon card-icon-purple" aria-hidden="true"><span class="material-symbols-outlined">school</span></div>
+            <h3 style="font-weight: 600; color: var(--navy); margin-bottom: 0.75rem;">Education</h3>
+            <p class="text-muted" style="font-size: 0.9rem; flex: 1; margin-bottom: 1.25rem;">Bring social awareness and volunteering opportunities to your students and faculty.</p>
+            <a href="mailto:amaanitvamfoundation@gmail.com?subject=Education%20Partnership%20Inquiry" class="text-primary" style="font-weight: 600; font-size: 0.9rem; text-decoration: none;">Inquire now →</a>
+          </div>
+          <div class="card" style="display: flex; flex-direction: column;">
+            <div class="card-icon card-icon-gold" aria-hidden="true"><span class="material-symbols-outlined">business</span></div>
+            <h3 style="font-weight: 600; color: var(--navy); margin-bottom: 0.75rem;">Corporate</h3>
+            <p class="text-muted" style="font-size: 0.9rem; flex: 1; margin-bottom: 1.25rem;">Create meaningful impact through structured corporate social responsibility programs.</p>
+            <a href="mailto:amaanitvamfoundation@gmail.com?subject=Corporate%20CSR%20Inquiry" class="text-primary" style="font-weight: 600; font-size: 0.9rem; text-decoration: none;">Inquire now →</a>
+          </div>
+          <div class="card" style="display: flex; flex-direction: column;">
+            <div class="card-icon card-icon-navy" aria-hidden="true"><span class="material-symbols-outlined">diversity_3</span></div>
+            <h3 style="font-weight: 600; color: var(--navy); margin-bottom: 0.75rem;">Community</h3>
+            <p class="text-muted" style="font-size: 0.9rem; flex: 1; margin-bottom: 1.25rem;">Partner with local groups to empower and support regional community growth.</p>
+            <a href="mailto:amaanitvamfoundation@gmail.com?subject=Community%20Partnership%20Inquiry" class="text-primary" style="font-weight: 600; font-size: 0.9rem; text-decoration: none;">Inquire now →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="donate" class="section section-navy" aria-labelledby="donate-heading">
+      <div class="container" style="text-align: center; max-width: 720px;">
+        <span class="section-label" style="color: var(--gold);">Support Our Mission</span>
+        <h2 id="donate-heading" class="section-title" style="color: #fff;">Make a Donation</h2>
+        <p style="color: rgba(255,255,255,0.85); margin-bottom: 1rem; font-size: 1.05rem;">Your contribution directly funds Project Manthan, Project Shiksha, Project Pravah, and community welfare drives across Delhi and Haryana.</p>
+        <p style="color: var(--gold); font-size: 0.9rem; font-weight: 600; margin-bottom: 2rem;">Registered under 12A &amp; 80G — donations are tax-deductible for Indian donors. CIN: U88900DL2025NPL455183</p>
+        <div class="grid-3" style="margin-bottom: 2.5rem; text-align: left;">
+          <div style="background: rgba(255,255,255,0.08); border-radius: var(--radius-lg); padding: 1.5rem;">
+            <div class="stat-value" style="color: var(--gold); font-size: 1.5rem;">₹500</div>
+            <p style="color: rgba(255,255,255,0.7); font-size: 0.85rem; margin-top: 0.5rem;">School supplies for one child in Project Manthan or Shiksha.</p>
+          </div>
+          <div style="background: rgba(255,255,255,0.08); border-radius: var(--radius-lg); padding: 1.5rem;">
+            <div class="stat-value" style="color: var(--gold); font-size: 1.5rem;">₹2,000</div>
+            <p style="color: rgba(255,255,255,0.7); font-size: 0.85rem; margin-top: 0.5rem;">Supports a week of after-school mentorship for a student.</p>
+          </div>
+          <div style="background: rgba(255,255,255,0.08); border-radius: var(--radius-lg); padding: 1.5rem;">
+            <div class="stat-value" style="color: var(--gold); font-size: 1.5rem;">₹10,000</div>
+            <p style="color: rgba(255,255,255,0.7); font-size: 0.85rem; margin-top: 0.5rem;">Funds community welfare drives with Delhi University partners.</p>
+          </div>
+        </div>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+          <a href="mailto:amaanitvamfoundation@gmail.com?subject=Donation%20Inquiry" class="btn btn-gold">Donate Now</a>
+          <a href="impact.html" class="btn btn-outline" style="color: #fff; border-color: rgba(255,255,255,0.4);">See Our Impact</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="brand" style="margin-bottom: 1rem;">
+            <img src="assets/images/logo.png" alt="Amaanitvam Foundation" class="brand-logo brand-logo-footer" width="220" height="72">
+          </a>
+          <p style="margin-top: 1rem; font-size: 0.9rem; line-height: 1.7;">Empowering communities through education, volunteerism, and sustainable development programs across the globe.</p>
+          <div class="social-links" aria-label="Social media">
+            <a href="https://facebook.com" class="social-link" aria-label="Facebook" rel="noopener noreferrer" target="_blank"><span class="material-symbols-outlined" aria-hidden="true">facebook</span></a>
+            <a href="https://twitter.com" class="social-link" aria-label="Twitter" rel="noopener noreferrer" target="_blank"><span class="material-symbols-outlined" aria-hidden="true">tag</span></a>
+            <a href="https://linkedin.com" class="social-link" aria-label="LinkedIn" rel="noopener noreferrer" target="_blank"><span class="material-symbols-outlined" aria-hidden="true">work</span></a>
+            <a href="https://instagram.com" class="social-link" aria-label="Instagram" rel="noopener noreferrer" target="_blank"><span class="material-symbols-outlined" aria-hidden="true">photo_camera</span></a>
+          </div>
+        </div>
+        <div>
+          <h3 class="footer-heading">Quick Links</h3>
+          <a href="index.html" class="footer-link">Home</a>
+          <a href="about.html" class="footer-link">About Us</a>
+          <a href="programs.html" class="footer-link">Programs</a>
+          <a href="impact.html" class="footer-link">Impact</a>
+          <a href="events.html" class="footer-link">Events</a>
+          <a href="gallery.html" class="footer-link">Gallery</a>
+          <a href="updates.html" class="footer-link">Updates</a>
+        </div>
+        <div>
+          <h3 class="footer-heading">Get Involved</h3>
+          <a href="volunteer.html" class="footer-link">Volunteer</a>
+          <a href="internship.html" class="footer-link">Internship</a>
+          <a href="verify.html" class="footer-link">Verify Certificate</a>
+          <a href="contact.html" class="footer-link">Contact Us</a>
+          <a href="contact.html#donate" class="footer-link">Donate</a>
+        </div>
+        <div>
+          <h3 class="footer-heading">Contact</h3>
+          <a href="mailto:amaanitvamfoundation@gmail.com" class="footer-link">amaanitvamfoundation@gmail.com</a>
+          <a href="tel:+919899923266" class="footer-link">+91 98999 23266</a>
+          <p style="font-size: 0.85rem; margin-top: 1rem; color: rgba(255,255,255,0.5);">Subscribe for updates:</p>
+          <form class="newsletter-input" action="contact.html" method="get" aria-label="Footer newsletter">
+            <label for="footer-email-contact" class="sr-only">Email</label>
+            <input type="email" id="footer-email-contact" name="newsletter" placeholder="Email" required>
+            <button type="submit" aria-label="Subscribe"><span class="material-symbols-outlined" aria-hidden="true">send</span></button>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 Amaanitvam Foundation. All rights reserved.</p>
+        <p>Registered Non-Profit Organization</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

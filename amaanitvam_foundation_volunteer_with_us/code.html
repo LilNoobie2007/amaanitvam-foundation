@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Volunteer - Amaanitvam Foundation</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error-container": "#ffdad6",
+                        "on-background": "#1a1c1c",
+                        "surface-variant": "#e2e2e2",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed-variant": "#394951",
+                        "primary-container": "#f57c00",
+                        "inverse-primary": "#ffb786",
+                        "outline": "#8b7263",
+                        "primary": "#964900",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-high": "#e8e8e8",
+                        "on-tertiary-fixed-variant": "#4a4641",
+                        "surface-dim": "#dadada",
+                        "secondary-fixed": "#d4e5ef",
+                        "tertiary": "#625e59",
+                        "inverse-on-surface": "#f0f1f1",
+                        "tertiary-fixed": "#e8e1db",
+                        "on-secondary-fixed": "#0d1e25",
+                        "surface-container": "#eeeeee",
+                        "tertiary-container": "#a29d97",
+                        "primary-fixed": "#ffdcc6",
+                        "on-primary-fixed": "#311300",
+                        "surface": "#f9f9f9",
+                        "on-error-container": "#93000a",
+                        "on-primary-container": "#572800",
+                        "secondary-container": "#d1e2ec",
+                        "surface-container-low": "#f3f3f4",
+                        "surface-bright": "#f9f9f9",
+                        "inverse-surface": "#2f3131",
+                        "surface-container-highest": "#e2e2e2",
+                        "error": "#ba1a1a",
+                        "secondary-fixed-dim": "#b8c9d3",
+                        "secondary": "#506169",
+                        "primary-fixed-dim": "#ffb786",
+                        "on-primary-fixed-variant": "#723600",
+                        "on-tertiary-container": "#383530",
+                        "on-surface": "#1a1c1c",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-container": "#55656d",
+                        "surface-tint": "#964900",
+                        "outline-variant": "#dec1af",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed": "#1e1b17",
+                        "background": "#f9f9f9",
+                        "on-surface-variant": "#574235",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed-dim": "#cbc5bf"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "48px",
+                        "margin-mobile": "16px",
+                        "gutter": "24px",
+                        "section-gap": "96px",
+                        "container-max": "1280px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-xl": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "headline-xl-mobile": ["Plus Jakarta Sans"],
+                        "label-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                        "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-xl-mobile": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-nav {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .ambient-shadow {
+            box-shadow: 0 10px 40px -10px rgba(55, 71, 79, 0.08);
+        }
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -10px rgba(55, 71, 79, 0.12);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased overflow-x-hidden">
+<!-- TopNavBar Component -->
+<nav class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-md border-b border-outline-variant/30 shadow-sm transition-all duration-300 ease-in-out">
+<div class="flex justify-between items-center h-20 px-margin-desktop max-w-container-max mx-auto md:px-margin-mobile">
+<!-- Brand -->
+<a class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed flex items-center gap-2" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">volunteer_activism</span>
+                Global Impact NGO
+            </a>
+<!-- Navigation Links (Desktop) -->
+<div class="hidden md:flex items-center gap-8">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md hover:bg-primary-container/10 px-3 py-2 rounded-md" href="#">Home</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md hover:bg-primary-container/10 px-3 py-2 rounded-md" href="#">About</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md hover:bg-primary-container/10 px-3 py-2 rounded-md" href="#">Impact</a>
+<a aria-current="page" class="text-primary font-bold border-b-2 border-primary pb-1 font-body-md text-body-md hover:bg-primary-container/10 px-3 py-2 rounded-md" href="#">Volunteer</a>
+</div>
+<!-- Trailing Action -->
+<div class="flex items-center gap-4">
+<button class="hidden md:flex items-center justify-center bg-primary-container text-on-primary-container font-label-md text-label-md px-6 h-12 rounded-full hover:bg-primary hover:text-on-primary transition-colors duration-300 shadow-sm">
+                    Donate
+                </button>
+<button class="md:hidden text-on-surface p-2">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+</nav>
+<main class="pt-20">
+<!-- Section 1: Hero -->
+<section class="relative min-h-[80vh] flex items-center justify-center overflow-hidden bg-surface-container-highest">
+<div class="absolute inset-0 z-0">
+<img alt="Volunteers working together in a rural community setting, golden hour lighting, smiling and engaged, authentic NGO field work photography." class="w-full h-full object-cover opacity-90 mix-blend-multiply" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHDHLfGcVIfkNe4o18JCaVPA3kwrqG8AOaIOqNPF_ZnwUr3sKPvDWGkh1IzyxD8ZAroj7v-xevGK_rDA8K0pHBSUDZcJCRgha1CYQk6qC8TM1Bzd2WvpqYZ8lTyAVuDQ7jeT2lC4whC-LzX4eKhnZIDoZtVzQGKPtsD7yRu6iORf9MOViGokY51FI5pUsFd66-P9n_ZXzf_DlJGvd2IbYFX-NoFiLuQhaBkEpErWoOqe-iUQVJHW5tVjULilTzP0_L5fR9rXKkdx4"/>
+<div class="absolute inset-0 bg-gradient-to-t from-on-background/90 via-on-background/60 to-on-background/30"></div>
+</div>
+<div class="relative z-10 max-w-container-max mx-auto px-margin-desktop md:px-margin-mobile text-center pt-20">
+<h1 class="font-headline-xl text-headline-xl md:font-headline-xl-mobile md:text-headline-xl-mobile text-on-primary mb-6 max-w-4xl mx-auto drop-shadow-md">
+                    Be The Change Your Community Needs
+                </h1>
+<p class="font-body-lg text-body-lg text-surface-container mb-10 max-w-2xl mx-auto">
+                    Join a global network of changemakers dedicated to empowering communities through education, development, and meaningful action.
+                </p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+<button class="bg-primary-container text-on-primary-container hover:bg-primary hover:text-on-primary font-label-md text-label-md px-8 h-[56px] rounded-full transition-all duration-300 shadow-lg hover:shadow-xl w-full sm:w-auto flex items-center justify-center gap-2">
+                        Apply as Volunteer
+                        <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+<button class="bg-surface-container-lowest/10 backdrop-blur-sm border border-surface-container-lowest/30 text-on-primary hover:bg-surface-container-lowest/20 font-label-md text-label-md px-8 h-[56px] rounded-full transition-all duration-300 w-full sm:w-auto">
+                        Explore Opportunities
+                    </button>
+</div>
+</div>
+</section>
+<!-- Section 2: Why Volunteer -->
+<section class="py-section-gap px-margin-desktop md:px-margin-mobile max-w-container-max mx-auto">
+<div class="text-center mb-16">
+<h2 class="font-headline-lg text-headline-lg text-on-background mb-4">Why Volunteer With Us</h2>
+<div class="w-24 h-1 bg-primary-container mx-auto rounded-full"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+<!-- Card 1 -->
+<div class="bg-surface-container-lowest p-8 rounded-xl ambient-shadow hover-lift border border-outline-variant/20 relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-24 h-24 bg-primary-container/10 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+<div class="w-14 h-14 bg-surface-container rounded-lg flex items-center justify-center text-primary-container mb-6">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">public</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-background mb-3">Create Real Impact</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">See the direct results of your efforts in transforming lives and building sustainable communities.</p>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-lowest p-8 rounded-xl ambient-shadow hover-lift border border-outline-variant/20 relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-24 h-24 bg-primary-container/10 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+<div class="w-14 h-14 bg-surface-container rounded-lg flex items-center justify-center text-primary-container mb-6">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">psychology</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-background mb-3">Build Leadership Skills</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Take charge of initiatives and develop crucial project management and leadership abilities.</p>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-lowest p-8 rounded-xl ambient-shadow hover-lift border border-outline-variant/20 relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-24 h-24 bg-primary-container/10 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+<div class="w-14 h-14 bg-surface-container rounded-lg flex items-center justify-center text-primary-container mb-6">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">hub</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-background mb-3">Expand Network</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Connect with like-minded individuals, professionals, and community leaders globally.</p>
+</div>
+</div>
+</section>
+<!-- Section 6: Volunteer Impact (Statistics) -->
+<section class="bg-surface-container-low py-section-gap">
+<div class="max-w-container-max mx-auto px-margin-desktop md:px-margin-mobile">
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+<div class="p-6">
+<div class="font-headline-xl text-headline-xl text-primary-container mb-2 font-bold">500+</div>
+<div class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Active Volunteers</div>
+</div>
+<div class="p-6">
+<div class="font-headline-xl text-headline-xl text-primary-container mb-2 font-bold">50+</div>
+<div class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Events Conducted</div>
+</div>
+<div class="p-6">
+<div class="font-headline-xl text-headline-xl text-primary-container mb-2 font-bold">120+</div>
+<div class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Community Programs</div>
+</div>
+<div class="p-6">
+<div class="font-headline-xl text-headline-xl text-primary-container mb-2 font-bold">15K+</div>
+<div class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Lives Impacted</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer Component -->
+<footer class="bg-inverse-surface dark:bg-surface-container-lowest w-full py-section-gap flat no shadows transition-opacity duration-200">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-desktop max-w-container-max mx-auto">
+<!-- Brand & Copyright -->
+<div class="col-span-1 md:col-span-2 space-y-4">
+<div class="font-headline-md text-headline-md font-bold text-primary-fixed flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">volunteer_activism</span>
+                    Global Impact NGO
+                </div>
+<p class="font-body-md text-body-md text-primary-fixed-dim max-w-md">
+                    © 2024 Global Impact NGO. All rights reserved. Registered Charity No. 1234567
+                </p>
+</div>
+<!-- Links -->
+<div class="col-span-1 md:col-span-2 flex flex-wrap gap-x-8 gap-y-4 md:justify-end items-start mt-8 md:mt-0">
+<a class="font-body-md text-body-md text-surface-variant hover:text-primary-fixed transition-colors hover:underline" href="#">Privacy Policy</a>
+<a class="font-body-md text-body-md text-surface-variant hover:text-primary-fixed transition-colors hover:underline" href="#">Terms of Service</a>
+<a class="font-body-md text-body-md text-surface-variant hover:text-primary-fixed transition-colors hover:underline" href="#">Annual Report</a>
+<a class="font-body-md text-body-md text-surface-variant hover:text-primary-fixed transition-colors hover:underline" href="#">Contact Us</a>
+</div>
+</div>
+</footer>
+</body></html>

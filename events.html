@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Join Amaanitvam Foundation events — volunteer drives, workshops, and community action initiatives creating meaningful change.">
+  <title>Events | Amaanitvam Foundation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet">
+  <link rel="icon" href="assets/images/logo.png" type="image/png">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .hero-grid { display: grid; gap: 3rem; align-items: center; }
+    @media (min-width: 992px) { .hero-grid { grid-template-columns: 1fr 1fr; } }
+    .hero-img-wrap { border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-lg); position: relative; aspect-ratio: 4/3; }
+    .hero-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .hero-img-wrap::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(31,41,55,0.5), transparent 50%); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem; }
+    .events-grid { display: grid; gap: 1.5rem; }
+    @media (min-width: 768px) { .events-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1100px) { .events-grid { grid-template-columns: repeat(2, 1fr); } }
+    .event-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow); display: flex; flex-direction: column; transition: transform 0.25s, box-shadow 0.25s; }
+    .event-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    .event-card-img { position: relative; height: 200px; overflow: hidden; }
+    .event-card-img img { width: 100%; height: 100%; object-fit: cover; }
+    .event-badge { position: absolute; top: 1rem; right: 1rem; background: rgba(255,255,255,0.95); color: var(--primary); font-size: 0.75rem; font-weight: 600; padding: 0.35rem 0.75rem; border-radius: 999px; display: flex; align-items: center; gap: 0.25rem; }
+    .event-body { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; }
+    .event-meta { display: flex; flex-wrap: wrap; gap: 1rem; font-size: 0.85rem; color: var(--muted); margin-bottom: 0.75rem; }
+    .event-meta span { display: flex; align-items: center; gap: 0.25rem; }
+    .past-grid { display: grid; gap: 1.5rem; }
+    @media (min-width: 768px) { .past-grid { grid-template-columns: repeat(3, 1fr); } }
+    .past-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow); }
+    .past-card-img { position: relative; height: 180px; }
+    .past-card-img img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(40%); opacity: 0.85; }
+    .past-badge { position: absolute; top: 1rem; left: 1rem; background: var(--navy); color: #fff; font-size: 0.7rem; font-weight: 700; padding: 0.3rem 0.75rem; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .past-body { padding: 1.25rem; }
+    .past-metric { color: var(--primary); font-weight: 700; font-size: 0.9rem; margin: 0.5rem 0; }
+    .register-cta { background: linear-gradient(135deg, var(--primary), var(--purple)); border-radius: var(--radius-lg); padding: 3rem 2rem; text-align: center; color: #fff; }
+    .register-cta h2 { color: #fff; margin-bottom: 1rem; }
+    .register-cta p { color: rgba(255,255,255,0.9); max-width: 520px; margin: 0 auto 1.75rem; }
+    .register-actions { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
+    .event-card .btn { width: 100%; justify-content: center; margin-top: auto; }
+  </style>
+</head>
+<body data-page="events">
+
+<header>
+  <nav id="site-nav" class="site-nav is-transparent" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="brand" aria-label="Amaanitvam Foundation — Home">
+        <img src="assets/images/logo.png" alt="Amaanitvam Foundation" class="brand-logo" width="200" height="48">
+      </a>
+      <div class="nav-links" role="menubar">
+        <a href="index.html" class="nav-link" data-nav="home" role="menuitem">Home</a>
+        <a href="about.html" class="nav-link" data-nav="about" role="menuitem">About</a>
+        <a href="programs.html" class="nav-link" data-nav="programs" role="menuitem">Programs</a>
+        <a href="impact.html" class="nav-link" data-nav="impact" role="menuitem">Impact</a>
+        <a href="events.html" class="nav-link" data-nav="events" role="menuitem">Events</a>
+        <a href="gallery.html" class="nav-link" data-nav="gallery" role="menuitem">Gallery</a>
+        <a href="updates.html" class="nav-link" data-nav="updates" role="menuitem">Updates</a>
+        <a href="volunteer.html" class="nav-link" data-nav="volunteer" role="menuitem">Volunteer</a>
+        <a href="internship.html" class="nav-link" data-nav="internship" role="menuitem">Internship</a>
+        <a href="verify.html" class="nav-link" data-nav="verify" role="menuitem">Verify</a>
+        <a href="contact.html" class="nav-link" data-nav="contact" role="menuitem">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <a href="contact.html#donate" class="btn-donate">Donate</a>
+        <button id="menu-toggle" class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span class="material-symbols-outlined" aria-hidden="true">menu</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div id="mobile-menu" class="mobile-menu" aria-label="Mobile navigation">
+    <a href="index.html" class="nav-link" data-nav="home">Home</a>
+    <a href="about.html" class="nav-link" data-nav="about">About</a>
+    <a href="programs.html" class="nav-link" data-nav="programs">Programs</a>
+    <a href="impact.html" class="nav-link" data-nav="impact">Impact</a>
+    <a href="events.html" class="nav-link" data-nav="events">Events</a>
+    <a href="gallery.html" class="nav-link" data-nav="gallery">Gallery</a>
+    <a href="updates.html" class="nav-link" data-nav="updates">Updates</a>
+    <a href="volunteer.html" class="nav-link" data-nav="volunteer">Volunteer</a>
+    <a href="internship.html" class="nav-link" data-nav="internship">Internship</a>
+    <a href="verify.html" class="nav-link" data-nav="verify">Verify</a>
+    <a href="contact.html" class="nav-link" data-nav="contact">Contact</a>
+    <a href="contact.html#donate" class="btn-donate">Donate</a>
+  </div>
+</header>
+
+<main>
+  <section class="page-hero has-image section" data-hero aria-labelledby="events-hero-title">
+    <div class="container hero-grid">
+      <div>
+        <span class="section-label">Join The Movement</span>
+        <h1 id="events-hero-title" class="section-title" style="color:#fff;font-size:clamp(2rem,5vw,3rem);">Creating Change Through <span class="text-gold">Community Action</span></h1>
+        <p class="section-desc">Discover upcoming events, campaigns, and workshops. Join our community of change-makers and be part of initiatives that drive meaningful impact.</p>
+        <div class="hero-actions">
+          <a href="volunteer.html" class="btn btn-primary">Become a Volunteer</a>
+          <a href="contact.html" class="btn btn-outline" style="border-color:rgba(255,255,255,0.4);color:#fff;">Contact Us</a>
+        </div>
+      </div>
+      <div class="hero-img-wrap">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKGUVgsIKTbkT0i-nSmfmgNprBfoaImfvSeOJRpMUWtebdKV91XfGUT_n4MSW6OWrIdCiyTazw7WB39IlwTD7P3UsH8JFjC5oMY6nrSRVHlhngXKyZaxQfU8zVDZyqZFYmmvSxC65irfvOq3Auxlrpg8-Ltgl9Nex0eeVvff67Tpp0m70nhQxguMIMt4yb74fwQI-Z82EkLz3ywkjpCsPS35kjsI-KTmI8gjW1zRm_1J6ooiVnSYwheeeWUE7X_XX2juT4L3AcCs4" alt="Diverse group of volunteers organizing a community event" width="640" height="480" loading="eager">
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="upcoming-events" aria-labelledby="upcoming-title">
+    <div class="container">
+      <header class="section-header">
+        <span class="section-label">Upcoming Events</span>
+        <h2 id="upcoming-title" class="section-title">Register for Our Next Initiatives</h2>
+        <p class="section-desc">From education drives to health camps — find an event that matches your passion and availability.</p>
+      </header>
+      <div class="events-grid">
+        <article class="event-card">
+          <div class="event-card-img">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-HadcWPGmoi8JAK-cGdiQMlKuB7qCNjkWv4Mwzw2_xuwVYm0ETZLNeEQxbY0BGmQA6aWIhOhN_Mg6wZao5zlhUU57vqFQpj5EKKBwXOKApqsMz1C3SfTtXj74Vq3Dck-16uZTo1-aQCSUlH1Etwchb2CUydRRB0rC4jcpf-EbGkF43qz_NeSmgTSx1w35Y5jKjr6Iy4UAeH9xK0cE7tkUiKTxupJGoe4P88vzLzB4tQ-dMkJyh6zXRLqIacjdkhNkhsP830mcZw4" alt="Volunteer teaching students in a classroom" width="400" height="200" loading="lazy">
+            <span class="event-badge"><span class="material-symbols-outlined" style="font-size:1rem;" aria-hidden="true">school</span> Education</span>
+          </div>
+          <div class="event-body">
+            <div class="event-meta">
+              <span><span class="material-symbols-outlined" style="font-size:1rem;" aria-hidden="true">calendar_month</span> Mar 15, 2025</span>
+              <span><span class="material-symbols-outlined" style="font-size:1rem;" aria-hidden="true">location_on</span> Community Center</span>
+            </div>
+            <h3>Rural Education Drive Kickoff</h3>
+            <p class="text-muted" style="flex:1;font-size:0.95rem;">Launch our new curriculum empowering youth in underserved rural districts. Volunteers needed for setup and mentoring.</p>
+            <a href="contact.html" class="btn btn-outline">Register</a>
+          </div>
+        </article>
+        <article class="event-card">
+          <div class="event-card-img">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZfIb1O2t_79hsIR88DCXBeR2R7jO_BhI7YKKXOR-XdbcN2u2jI5OU1tMg0MLbIUHe-5j3DdoPEIRTsl87Yueo7Cj1GgBxpNhDiuQBo44KwY-2wx_lAOalvff0f-qOn17OJygVIO0kRFAvdnwrHWwQkg6CCbRSpFP7hmSB71T62RjWFTxtCbmXVa9SzG-VLp0QR0qg_PSRjWdP1REnBupjz8Pzhuavc4WWrH8j8G0EMzPUXcndjk5DQpqa6dgRb0iQLEi7I-vzcyY" alt="Health professional conducting a community health screening" width="400" height="200" loading="lazy">
+            <span class="event-badge"><span class="material-symbols-outlined" style="font-size:1rem;" aria-hidden="true">health_and_safety</span> Health</span>
+          </div>
+          <div class="event-body">
+            <div class="event-meta">
+              <span><span class="material-symbols-outlined" style="font-size:1rem;" aria-hidden="true">calendar_month</span> Mar 22, 2025</span>
+              <span><span class="material-symbols-outlined" style="font-size:1rem;" aria-hidden="true">location_on</span> City Square</span>
+            </div>
+            <h3>Community Health Workshop</h3>
+            <p class="text-muted" style="flex:1;font-size:0.95rem;">A day dedicated to basic health screenings, hygiene awareness, and mental health resources for local families.</p>
+            <a href="contact.html" class="btn btn-outline">Register</a>
+          </div>
+        </article>
+        <article class="event-card">
+          <div class="event-card-img">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJUD1wRhG3mRQECVDX7ERleHw1zMllLN--QDqcDCiFqCZv-ReFA1qHGoT9L__3Y34B2T2XZrDXADYVuxVQRBP2JyW89aUzlUdm9-g6CtJT7BGUDXwHBOWzr59rdn6uaxoz2rVRNxdmmWyA3z0YB2xxZ9rNmb6c0K19xrCJGztIsmSjaQ62aPsu4KJMNJu6yAPKxWVS3eYgr_87Nz1y4oBmMmX0i5Yu7I3eGba7JLbKMQuIp5eOrI7-l-T87EkoC-0WqtcIS2rmsU0" alt="Volunteers planting trees in an urban park" width="400" height="200" loading="lazy">
+            <span class="event-badge"><span class="material-symbols-outlined" style="font-size:1rem;" aria-hidden="true">eco</span> Environment</span>
+          </div>
+          <div class="event-body">
+            <div class="event-meta">
+              <span><span class="material-symbols-outlined" style="font-size:1rem;" aria-hidden="true">calendar_month</span> Apr 5, 2025</span>
+              <span><span class="material-symbols-outlined" style="font-size:1rem;" aria-hidden="true">location_on</span> Metro Park</span>
+            </div>
+            <h3>Urban Tree Plantation Drive</h3>
+            <p class="text-muted" style="flex:1;font-size:0.95rem;">Help restore green cover in urban areas. We aim to plant 500 saplings in one day — tools and refreshments provided.</p>
+            <a href="contact.html" class="btn btn-outline">Register</a>
+          </div>
+        </article>
+        <article class="event-card">
+          <div class="event-card-img" style="background:var(--border);display:flex;align-items:center;justify-content:center;">
+            <span class="material-symbols-outlined" style="font-size:4rem;color:var(--muted);" aria-hidden="true">forum</span>
+            <span class="event-badge"><span class="material-symbols-outlined" style="font-size:1rem;" aria-hidden="true">videocam</span> Online</span>
+          </div>
+          <div class="event-body">
+            <div class="event-meta">
+              <span><span class="material-symbols-outlined" style="font-size:1rem;" aria-hidden="true">calendar_month</span> Apr 12, 2025</span>
+              <span><span class="material-symbols-outlined" style="font-size:1rem;" aria-hidden="true">videocam</span> Virtual Event</span>
+            </div>
+            <h3>Civic Rights Awareness Webinar</h3>
+            <p class="text-muted" style="flex:1;font-size:0.95rem;">An online panel with legal experts on understanding and advocating for basic civic rights in marginalized communities.</p>
+            <a href="contact.html" class="btn btn-outline">Register</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-white" aria-labelledby="past-title">
+    <div class="container">
+      <header class="section-header">
+        <span class="section-label">Past Events</span>
+        <h2 id="past-title" class="section-title">Celebrating Milestones Together</h2>
+        <p class="section-desc">Highlights from events that brought our community together and created lasting impact.</p>
+      </header>
+      <div class="past-grid">
+        <article class="past-card">
+          <div class="past-card-img">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZfIb1O2t_79hsIR88DCXBeR2R7jO_BhI7YKKXOR-XdbcN2u2jI5OU1tMg0MLbIUHe-5j3DdoPEIRTsl87Yueo7Cj1GgBxpNhDiuQBo44KwY-2wx_lAOalvff0f-qOn17OJygVIO0kRFAvdnwrHWwQkg6CCbRSpFP7hmSB71T62RjWFTxtCbmXVa9SzG-VLp0QR0qg_PSRjWdP1REnBupjz8Pzhuavc4WWrH8j8G0EMzPUXcndjk5DQpqa6dgRb0iQLEi7I-vzcyY" alt="Community health camp in session" width="400" height="180" loading="lazy">
+            <span class="past-badge">Completed</span>
+          </div>
+          <div class="past-body">
+            <h3>Community Health Camp</h3>
+            <p class="past-metric">200+ Beneficiaries Reached</p>
+            <p class="text-muted" style="font-size:0.9rem;">Free screenings and primary care kits provided to marginalized families across three neighborhoods.</p>
+          </div>
+        </article>
+        <article class="past-card">
+          <div class="past-card-img">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJUD1wRhG3mRQECVDX7ERleHw1zMllLN--QDqcDCiFqCZv-ReFA1qHGoT9L__3Y34B2T2XZrDXADYVuxVQRBP2JyW89aUzlUdm9-g6CtJT7BGUDXwHBOWzr59rdn6uaxoz2rVRNxdmmWyA3z0YB2xxZ9rNmb6c0K19xrCJGztIsmSjaQ62aPsu4KJMNJu6yAPKxWVS3eYgr_87Nz1y4oBmMmX0i5Yu7I3eGba7JLbKMQuIp5eOrI7-l-T87EkoC-0WqtcIS2rmsU0" alt="Winter relief blanket distribution event" width="400" height="180" loading="lazy">
+            <span class="past-badge">Completed</span>
+          </div>
+          <div class="past-body">
+            <h3>Winter Relief Drive</h3>
+            <p class="past-metric">1,200 Blankets Distributed</p>
+            <p class="text-muted" style="font-size:0.9rem;">Ensuring warmth for the homeless during peak winter across three districts with volunteer support.</p>
+          </div>
+        </article>
+        <article class="past-card">
+          <div class="past-card-img">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-HadcWPGmoi8JAK-cGdiQMlKuB7qCNjkWv4Mwzw2_xuwVYm0ETZLNeEQxbY0BGmQA6aWIhOhN_Mg6wZao5zlhUU57vqFQpj5EKKBwXOKApqsMz1C3SfTtXj74Vq3Dck-16uZTo1-aQCSUlH1Etwchb2CUydRRB0rC4jcpf-EbGkF43qz_NeSmgTSx1w35Y5jKjr6Iy4UAeH9xK0cE7tkUiKTxupJGoe4P88vzLzB4tQ-dMkJyh6zXRLqIacjdkhNkhsP830mcZw4" alt="Students receiving educational supply kits" width="400" height="180" loading="lazy">
+            <span class="past-badge">Completed</span>
+          </div>
+          <div class="past-body">
+            <h3>Edu-Kit Donation Drive</h3>
+            <p class="past-metric">500 Students Supported</p>
+            <p class="text-muted" style="font-size:0.9rem;">Essential school supplies distributed to enable children to return to school after the break.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt" aria-labelledby="register-cta-title">
+    <div class="container">
+      <div class="register-cta">
+        <h2 id="register-cta-title">Ready to Make a Difference?</h2>
+        <p>Register for an upcoming event or reach out to organize a community initiative with Amaanitvam Foundation.</p>
+        <div class="register-actions">
+          <a href="contact.html" class="btn btn-gold">
+            <span class="material-symbols-outlined" aria-hidden="true">how_to_reg</span>
+            Register for an Event
+          </a>
+          <a href="volunteer.html" class="btn btn-outline" style="border-color:rgba(255,255,255,0.5);color:#fff;">
+            <span class="material-symbols-outlined" aria-hidden="true">volunteer_activism</span>
+            Join as Volunteer
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="brand" style="margin-bottom: 1rem;">
+            <img src="assets/images/logo.png" alt="Amaanitvam Foundation" class="brand-logo brand-logo-footer" width="220" height="72">
+          </a>
+        <p style="margin-top:1rem;font-size:0.9rem;line-height:1.7;">Empowering communities through education, volunteer action, and transparent social impact programs across India.</p>
+        <div class="social-links" aria-label="Social media links">
+          <a href="https://facebook.com" class="social-link" aria-label="Facebook"><span class="material-symbols-outlined" aria-hidden="true">public</span></a>
+          <a href="https://instagram.com" class="social-link" aria-label="Instagram"><span class="material-symbols-outlined" aria-hidden="true">photo_camera</span></a>
+          <a href="https://linkedin.com" class="social-link" aria-label="LinkedIn"><span class="material-symbols-outlined" aria-hidden="true">work</span></a>
+          <a href="https://youtube.com" class="social-link" aria-label="YouTube"><span class="material-symbols-outlined" aria-hidden="true">play_circle</span></a>
+        </div>
+      </div>
+      <div>
+        <h3 class="footer-heading">Quick Links</h3>
+        <a href="index.html" class="footer-link">Home</a>
+        <a href="about.html" class="footer-link">About Us</a>
+        <a href="programs.html" class="footer-link">Programs</a>
+        <a href="impact.html" class="footer-link">Impact</a>
+        <a href="events.html" class="footer-link">Events</a>
+        <a href="gallery.html" class="footer-link">Gallery</a>
+        <a href="updates.html" class="footer-link">Updates</a>
+        <a href="contact.html" class="footer-link">Contact</a>
+      </div>
+      <div>
+        <h3 class="footer-heading">Programs</h3>
+        <a href="programs.html" class="footer-link">Education Initiatives</a>
+        <a href="programs.html" class="footer-link">Community Development</a>
+        <a href="volunteer.html" class="footer-link">Volunteer Network</a>
+        <a href="internship.html" class="footer-link">Internship Programs</a>
+        <a href="events.html" class="footer-link">Events &amp; Outreach</a>
+        <a href="verify.html" class="footer-link">Certificate Verification</a>
+      </div>
+      <div>
+        <h3 class="footer-heading">Contact</h3>
+        <p style="font-size:0.9rem;margin-bottom:0.5rem;"><span class="material-symbols-outlined" style="font-size:1rem;vertical-align:middle;" aria-hidden="true">mail</span> amaanitvamfoundation@gmail.com</p>
+        <p style="font-size:0.9rem;margin-bottom:0.5rem;"><span class="material-symbols-outlined" style="font-size:1rem;vertical-align:middle;" aria-hidden="true">call</span> +91 98765 43210</p>
+        <p style="font-size:0.9rem;margin-bottom:1rem;"><span class="material-symbols-outlined" style="font-size:1rem;vertical-align:middle;" aria-hidden="true">location_on</span> Hyderabad, Telangana, India</p>
+        <p style="font-size:0.85rem;font-weight:600;color:#fff;margin-bottom:0.25rem;">Newsletter</p>
+        <form class="newsletter-input" aria-label="Newsletter signup">
+          <label for="events-newsletter" class="sr-only">Email address</label>
+          <input type="email" id="events-newsletter" placeholder="Your email" required>
+          <button type="submit">Join</button>
+        </form>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2024 Amaanitvam Foundation. All rights reserved.</span>
+      <span>Registered NGO &middot; Transparent Impact</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Amaanitvam Foundation empowers communities through education, volunteerism, internships, and transparent impact-driven initiatives.">
+  <title>Amaanitvam Foundation — Creating Opportunities, Building Stronger Communities</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <link rel="icon" href="assets/images/logo.png" type="image/png">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .home-hero {
+      min-height: 92vh;
+      display: flex; align-items: center;
+      padding-top: var(--nav-h);
+      background: linear-gradient(135deg, var(--navy) 0%, #2d3748 50%, rgba(108,99,255,0.25) 100%);
+      color: #fff;
+      position: relative; overflow: hidden;
+    }
+    .home-hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 70% 50%, rgba(233,30,99,0.15) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: center; position: relative; z-index: 1; }
+    @media (min-width: 1024px) { .hero-grid { grid-template-columns: 1fr 1fr; gap: 4rem; } }
+    .hero-img-wrap {
+      border-radius: 20px; overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      aspect-ratio: 4/3;
+    }
+    .hero-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.5rem 1rem; border-radius: 999px;
+      background: rgba(255,183,3,0.2); color: var(--gold);
+      font-size: 0.8rem; font-weight: 700; letter-spacing: 0.06em;
+      text-transform: uppercase; margin-bottom: 1.5rem;
+      border: 1px solid rgba(255,183,3,0.3);
+    }
+    .hero-title { font-size: clamp(2.25rem, 5.5vw, 3.5rem); font-weight: 800; line-height: 1.1; margin-bottom: 1.25rem; }
+    .hero-title span { color: var(--primary); }
+    .hero-desc { font-size: 1.1rem; color: rgba(255,255,255,0.85); max-width: 520px; margin-bottom: 2rem; line-height: 1.7; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 1rem; }
+    .stats-bar {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem; text-align: center;
+    }
+    @media (min-width: 768px) { .stats-bar { grid-template-columns: repeat(4, 1fr); } }
+    .stat-block { padding: 1.5rem 1rem; }
+    .stat-block .stat-value { color: var(--gold); }
+    .stat-block .stat-label { color: rgba(255,255,255,0.7); }
+    .testimonial-card { position: relative; }
+    .testimonial-card::before {
+      content: '\201C'; font-size: 4rem; line-height: 1;
+      color: rgba(233,30,99,0.15); font-family: Georgia, serif;
+      position: absolute; top: 0.5rem; left: 1rem;
+    }
+    .update-card { text-decoration: none; color: inherit; display: block; }
+    .update-card img { width: 100%; height: 180px; object-fit: cover; border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
+    .donate-section {
+      background: linear-gradient(135deg, var(--navy), #374151);
+      color: #fff; border-radius: var(--radius-lg);
+      padding: 3rem; text-align: center;
+    }
+    .site-nav.is-transparent .brand-name,
+    .site-nav.is-transparent .brand-sub { color: #fff; }
+    .site-nav.is-transparent .nav-link { color: rgba(255,255,255,0.85); }
+    .site-nav.is-transparent .nav-link:hover,
+    .site-nav.is-transparent .nav-link.is-active { color: #fff; }
+    .site-nav.is-transparent .menu-toggle { border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: #fff; }
+  </style>
+</head>
+<body data-page="home">
+
+  <nav id="site-nav" class="site-nav is-transparent" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="brand" aria-label="Amaanitvam Foundation — Home">
+        <img src="assets/images/logo.png" alt="Amaanitvam Foundation" class="brand-logo" width="200" height="48">
+      </a>
+      <div class="nav-links" role="menubar">
+        <a href="index.html" class="nav-link" data-nav="home" role="menuitem">Home</a>
+        <a href="about.html" class="nav-link" data-nav="about" role="menuitem">About</a>
+        <a href="programs.html" class="nav-link" data-nav="programs" role="menuitem">Programs</a>
+        <a href="impact.html" class="nav-link" data-nav="impact" role="menuitem">Impact</a>
+        <a href="events.html" class="nav-link" data-nav="events" role="menuitem">Events</a>
+        <a href="gallery.html" class="nav-link" data-nav="gallery" role="menuitem">Gallery</a>
+        <a href="updates.html" class="nav-link" data-nav="updates" role="menuitem">Updates</a>
+        <a href="volunteer.html" class="nav-link" data-nav="volunteer" role="menuitem">Volunteer</a>
+        <a href="internship.html" class="nav-link" data-nav="internship" role="menuitem">Internship</a>
+        <a href="verify.html" class="nav-link" data-nav="verify" role="menuitem">Verify</a>
+        <a href="contact.html" class="nav-link" data-nav="contact" role="menuitem">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <a href="contact.html#donate" class="btn-donate">Donate</a>
+        <button id="menu-toggle" class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open navigation menu">
+          <span class="material-symbols-outlined" aria-hidden="true">menu</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div id="mobile-menu" class="mobile-menu" aria-label="Mobile navigation">
+    <a href="index.html" class="nav-link" data-nav="home">Home</a>
+    <a href="about.html" class="nav-link" data-nav="about">About</a>
+    <a href="programs.html" class="nav-link" data-nav="programs">Programs</a>
+    <a href="impact.html" class="nav-link" data-nav="impact">Impact</a>
+    <a href="events.html" class="nav-link" data-nav="events">Events</a>
+    <a href="gallery.html" class="nav-link" data-nav="gallery">Gallery</a>
+    <a href="updates.html" class="nav-link" data-nav="updates">Updates</a>
+    <a href="volunteer.html" class="nav-link" data-nav="volunteer">Volunteer</a>
+    <a href="internship.html" class="nav-link" data-nav="internship">Internship</a>
+    <a href="verify.html" class="nav-link" data-nav="verify">Verify</a>
+    <a href="contact.html" class="nav-link" data-nav="contact">Contact</a>
+    <a href="contact.html#donate" class="btn-donate">Donate</a>
+  </div>
+
+  <main id="main-content">
+
+    <!-- Hero -->
+    <section class="home-hero" data-hero aria-labelledby="hero-title">
+      <div class="container hero-grid">
+        <div>
+          <div class="hero-badge">
+            <span class="material-symbols-outlined" style="font-size:1rem" aria-hidden="true">campaign</span>
+            Empowering the Future
+          </div>
+          <h1 id="hero-title" class="hero-title">
+            Creating Opportunities.<br><span>Building Stronger Communities.</span>
+          </h1>
+          <p class="hero-desc">
+            Amaanitvam Foundation empowers communities through education, volunteerism, internships, outreach programs, and transparent impact-driven initiatives.
+          </p>
+          <div class="hero-actions">
+            <a href="volunteer.html" class="btn btn-primary">Volunteer Now <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span></a>
+            <a href="internship.html" class="btn btn-secondary">Apply for Internship</a>
+            <a href="verify.html" class="btn btn-outline" style="border-color:rgba(255,255,255,0.3);color:#fff;">Verify Certificate</a>
+          </div>
+        </div>
+        <div class="hero-img-wrap">
+          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4tPjIIpU9vKgjHh11fHjzdYlVg7Pgpf15Jpt7jDtbGumSC2oq-Dhcno7Ie9WdrEcH3fAa_UIF3v5BDmu3UVe9OPTVnlOs7O_llrC2UeAVS3-DVJk1SqmxslmRTNnlFkbRCfMwF5aMUKVPJHPaJS1WS3W2BArBTwcpMfACQzlj8JjMDiVGOMU9uoThwfbo1vvP84g6z5Mfbm5VLZMjxY-1Cp2iIi11zX23Cj1b7IeZS7hc8VsOEqXByEEMLU1V6jxokLqBG2cYysg" alt="Diverse volunteers and students collaborating in a community program">
+        </div>
+      </div>
+    </section>
+
+    <!-- Impact Statistics -->
+    <section class="section-navy section" aria-labelledby="stats-title">
+      <div class="container">
+        <h2 id="stats-title" class="sr-only">Impact Statistics</h2>
+        <div class="stats-bar">
+          <div class="stat-block">
+            <div class="stat-value">105+</div>
+            <div class="stat-label">Children Supported</div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-value">4</div>
+            <div class="stat-label">Core Projects</div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-value">3</div>
+            <div class="stat-label">Program Locations</div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-value">80G</div>
+            <div class="stat-label">Tax-Deductible Donations</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mission & Vision -->
+    <section class="section section-white" aria-labelledby="mission-title">
+      <div class="container split-2">
+        <div>
+          <span class="section-label">Who We Are</span>
+          <h2 id="mission-title" class="section-title" style="text-align:left;">Driving Change, One Community at a Time</h2>
+          <p class="text-muted" style="margin-bottom:2rem;font-size:1.05rem;">
+            Amaanitvam Foundation was born from a simple belief: every individual deserves the opportunity to thrive. We empower marginalized groups through education, skill development, and sustainable grassroots interventions.
+          </p>
+          <div class="grid-2" style="gap:1.5rem;">
+            <div class="card" style="padding:1.5rem;">
+              <div class="card-icon card-icon-purple"><span class="material-symbols-outlined icon-fill">visibility</span></div>
+              <h3 style="font-size:1.1rem;margin-bottom:0.5rem;">Our Vision</h3>
+              <p class="text-muted" style="font-size:0.9rem;">A world where equitable opportunities are accessible to all, fostering self-reliant and resilient communities.</p>
+            </div>
+            <div class="card" style="padding:1.5rem;">
+              <div class="card-icon card-icon-pink"><span class="material-symbols-outlined icon-fill">rocket_launch</span></div>
+              <h3 style="font-size:1.1rem;margin-bottom:0.5rem;">Our Mission</h3>
+              <p class="text-muted" style="font-size:0.9rem;">To empower marginalized groups through education, skill development, and sustainable grassroots interventions.</p>
+            </div>
+          </div>
+          <a href="about.html" class="btn btn-outline" style="margin-top:2rem;">Learn Our Story</a>
+        </div>
+        <div style="border-radius:20px;overflow:hidden;box-shadow:var(--shadow-lg);">
+          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1p6pcLE0uIgTj6JoGEElMLzJDV05kcEtde7ph0VEelmR3e__94VPjnRzl2QQg43gMSvmKajR6QgVDMhAy-RPzf3gqmiyuZs4eVvNQqWtJ5heWUvmcY2uF_Px9HN9Ah3ya-e2KdNheNfgRcQ2REIH5b8alAcgYjrh59Rh5OBZytudZ9e6WsCCgzdr8gtVmBy2l11DAhg1V4ThDYTwA80Ye7U9Gz-jvJpaRajvXGga_U9ESBWILW3D1p6sNFIO6NgbFZi3bZIz8S8Y" alt="Community education initiative" style="width:100%;display:block;aspect-ratio:4/5;object-fit:cover;">
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Programs -->
+    <section class="section section-alt section-divider" aria-labelledby="programs-title">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">Our Initiatives</span>
+          <h2 id="programs-title" class="section-title">Featured Programs</h2>
+          <p class="section-desc">Holistic community development focused where it creates the most significant, sustainable change.</p>
+        </div>
+        <div class="grid-3">
+          <a href="programs.html#manthan" class="card" style="text-decoration:none;color:inherit;padding:0;overflow:hidden;">
+            <img src="assets/images/project-manthan.png" alt="Project Manthan poster" style="width:100%;height:160px;object-fit:cover;display:block;" loading="lazy">
+            <div style="padding:1.5rem;">
+            <h3 style="margin-bottom:0.5rem;">Project Manthan</h3>
+            <p class="text-muted" style="font-size:0.9rem;">Free personalized teaching &amp; literacy for 60+ children in Okhla, Delhi.</p>
+            </div>
+          </a>
+          <a href="programs.html#shiksha" class="card" style="text-decoration:none;color:inherit;">
+            <div class="card-icon card-icon-purple"><span class="material-symbols-outlined icon-fill">school</span></div>
+            <h3 style="margin-bottom:0.5rem;">Project Shiksha</h3>
+            <p class="text-muted" style="font-size:0.9rem;">After-school support for 45 students in Hauz Khas, Delhi.</p>
+          </a>
+          <a href="programs.html#pravah" class="card" style="text-decoration:none;color:inherit;padding:0;overflow:hidden;">
+            <img src="assets/images/project-pravah.png" alt="Project Pravah poster" style="width:100%;height:160px;object-fit:cover;display:block;" loading="lazy">
+            <div style="padding:1.5rem;">
+            <h3 style="margin-bottom:0.5rem;">Project Pravah</h3>
+            <p class="text-muted" style="font-size:0.9rem;">Youth empowerment through education in Hisar, Haryana.</p>
+            </div>
+          </a>
+        </div>
+        <div style="text-align:center;margin-top:2.5rem;">
+          <a href="programs.html" class="btn btn-primary">Explore All Programs</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Community Initiatives & Engagement Hub -->
+    <section class="section section-white" aria-labelledby="engage-title">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">Get Involved</span>
+          <h2 id="engage-title" class="section-title">How You Can Engage</h2>
+        </div>
+        <div class="grid-3">
+          <a href="volunteer.html" class="card" style="text-decoration:none;color:inherit;">
+            <span class="material-symbols-outlined text-primary" style="font-size:2rem;margin-bottom:1rem;display:block;">volunteer_activism</span>
+            <h3>Volunteer</h3>
+            <p class="text-muted" style="font-size:0.9rem;margin:0.5rem 0 1rem;">Join our network making a real difference on the ground.</p>
+            <span class="text-primary" style="font-weight:600;font-size:0.9rem;">Get Involved →</span>
+          </a>
+          <a href="internship.html" class="card" style="text-decoration:none;color:inherit;">
+            <span class="material-symbols-outlined text-purple" style="font-size:2rem;margin-bottom:1rem;display:block;">school</span>
+            <h3>Internships</h3>
+            <p class="text-muted" style="font-size:0.9rem;margin:0.5rem 0 1rem;">Gain experience while contributing to meaningful social impact.</p>
+            <span class="text-purple" style="font-weight:600;font-size:0.9rem;">Apply Now →</span>
+          </a>
+          <a href="events.html" class="card" style="text-decoration:none;color:inherit;">
+            <span class="material-symbols-outlined text-gold" style="font-size:2rem;margin-bottom:1rem;display:block;">calendar_month</span>
+            <h3>Events</h3>
+            <p class="text-muted" style="font-size:0.9rem;margin:0.5rem 0 1rem;">Participate in community events, fundraisers, and workshops.</p>
+            <span class="text-gold" style="font-weight:600;font-size:0.9rem;">View Calendar →</span>
+          </a>
+          <a href="verify.html" class="card" style="text-decoration:none;color:inherit;">
+            <span class="material-symbols-outlined text-primary" style="font-size:2rem;margin-bottom:1rem;display:block;">workspace_premium</span>
+            <h3>Verify Certificate</h3>
+            <p class="text-muted" style="font-size:0.9rem;margin:0.5rem 0 1rem;">Securely verify credentials issued by Amaanitvam Foundation.</p>
+            <span class="text-primary" style="font-weight:600;font-size:0.9rem;">Verify Now →</span>
+          </a>
+          <a href="programs.html" class="card" style="text-decoration:none;color:inherit;">
+            <span class="material-symbols-outlined text-purple" style="font-size:2rem;margin-bottom:1rem;display:block;">diversity_3</span>
+            <h3>Programs</h3>
+            <p class="text-muted" style="font-size:0.9rem;margin:0.5rem 0 1rem;">Discover initiatives focused on education, health, and empowerment.</p>
+            <span class="text-purple" style="font-weight:600;font-size:0.9rem;">Explore →</span>
+          </a>
+          <a href="contact.html" class="card" style="text-decoration:none;color:inherit;">
+            <span class="material-symbols-outlined text-gold" style="font-size:2rem;margin-bottom:1rem;display:block;">support_agent</span>
+            <h3>Contact</h3>
+            <p class="text-muted" style="font-size:0.9rem;margin:0.5rem 0 1rem;">Reach out for partnerships, queries, or to learn more.</p>
+            <span class="text-gold" style="font-weight:600;font-size:0.9rem;">Get in Touch →</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Success Stories & Testimonials -->
+    <section class="section section-alt section-divider" aria-labelledby="stories-title">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">Community Voices</span>
+          <h2 id="stories-title" class="section-title">Success Stories &amp; Testimonials</h2>
+        </div>
+        <div class="grid-3">
+          <article class="card testimonial-card" style="padding-top:2.5rem;">
+            <span class="tag" style="margin-bottom:1rem;">Student Success</span>
+            <blockquote style="font-style:italic;color:var(--navy);margin-bottom:1rem;line-height:1.6;">
+              "Education didn't just change my life; it changed my family's trajectory."
+            </blockquote>
+            <p class="text-muted" style="font-size:0.9rem;">— Priya, first-generation university graduate supported by our education program.</p>
+          </article>
+          <article class="card testimonial-card" style="padding-top:2.5rem;">
+            <span class="tag" style="margin-bottom:1rem;background:rgba(108,99,255,0.1);color:var(--purple);">Volunteer Spotlight</span>
+            <blockquote style="font-style:italic;color:var(--navy);margin-bottom:1rem;line-height:1.6;">
+              "The most rewarding work I've ever done."
+            </blockquote>
+            <p class="text-muted" style="font-size:0.9rem;">— Rahul, corporate professional teaching digital literacy on weekends.</p>
+          </article>
+          <article class="card testimonial-card" style="padding-top:2.5rem;">
+            <span class="tag" style="margin-bottom:1rem;background:rgba(255,183,3,0.15);color:var(--gold-dark);">Community Leader</span>
+            <blockquote style="font-style:italic;color:var(--navy);margin-bottom:1rem;line-height:1.6;">
+              "Empowerment starts from within the community."
+            </blockquote>
+            <p class="text-muted" style="font-size:0.9rem;">— Aisha, local health initiative leader in District 4.</p>
+          </article>
+        </div>
+        <div style="text-align:center;margin-top:2rem;">
+          <a href="impact.html" class="btn btn-secondary">See Our Full Impact</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Recent Updates -->
+    <section class="section section-white" aria-labelledby="updates-title">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">Latest News</span>
+          <h2 id="updates-title" class="section-title">Recent Updates</h2>
+        </div>
+        <div class="grid-3">
+          <a href="updates.html" class="card update-card">
+            <img src="assets/images/best-social-worker-award.png" alt="Best Social Worker Award by RSS" style="object-fit:cover;object-position:top;">
+            <div style="padding:1.5rem;">
+              <span class="tag">Achievement</span>
+              <h3 style="margin:0.75rem 0 0.5rem;font-size:1.05rem;">Best Social Worker Award by RSS</h3>
+              <p class="text-muted" style="font-size:0.85rem;">Directors Roshan and Kartik Sharma honored at Shankar Nagar, Shahdara.</p>
+            </div>
+          </a>
+          <a href="programs.html#manthan" class="card update-card">
+            <img src="assets/images/project-manthan.png" alt="Project Manthan" style="object-fit:cover;object-position:top;">
+            <div style="padding:1.5rem;">
+              <span class="tag" style="background:rgba(108,99,255,0.1);color:var(--purple);">Program</span>
+              <h3 style="margin:0.75rem 0 0.5rem;font-size:1.05rem;">Project Manthan — Okhla, Delhi</h3>
+              <p class="text-muted" style="font-size:0.85rem;">Free learning for 60+ children — Education Beyond Boundaries.</p>
+            </div>
+          </a>
+          <a href="programs.html#pravah" class="card update-card">
+            <img src="assets/images/project-pravah.png" alt="Project Pravah" style="object-fit:cover;object-position:top;">
+            <div style="padding:1.5rem;">
+              <span class="tag" style="background:rgba(255,183,3,0.15);color:var(--gold-dark);">Program</span>
+              <h3 style="margin:0.75rem 0 0.5rem;font-size:1.05rem;">Project Pravah — Hisar, Haryana</h3>
+              <p class="text-muted" style="font-size:0.85rem;">Pilot initiative building a brighter future for children and youth.</p>
+            </div>
+          </a>
+        </div>
+        <div style="text-align:center;margin-top:2rem;">
+          <a href="updates.html" class="btn btn-outline">View All Updates</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Donation CTA -->
+    <section class="section section-alt" aria-labelledby="donate-title">
+      <div class="container">
+        <div class="donate-section">
+          <span class="section-label" style="color:var(--gold);">Support Our Mission</span>
+          <h2 id="donate-title" class="section-title" style="color:#fff;margin-bottom:1rem;">Your Contribution Creates Lasting Change</h2>
+          <p style="color:rgba(255,255,255,0.8);max-width:560px;margin:0 auto 1rem;font-size:1.05rem;">
+            Every donation directly funds Project Manthan, Project Shiksha, Project Pravah, and community welfare drives across Delhi and Haryana.
+          </p>
+          <p style="color:var(--gold);font-size:0.9rem;font-weight:600;margin-bottom:2rem;">Registered under 12A &amp; 80G — tax-deductible for Indian donors</p>
+          <div style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;">
+            <a href="contact.html#donate" class="btn btn-primary">Donate Now</a>
+            <a href="impact.html" class="btn btn-outline" style="border-color:rgba(255,255,255,0.4);color:#fff;">See Our Impact</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="section section-white" aria-labelledby="newsletter-title">
+      <div class="container" style="max-width:640px;text-align:center;">
+        <span class="section-label">Stay Connected</span>
+        <h2 id="newsletter-title" class="section-title">Join Our Newsletter</h2>
+        <p class="section-desc" style="margin-bottom:2rem;">Receive updates on programs, events, and impact stories delivered to your inbox.</p>
+        <form class="newsletter-input" style="max-width:480px;margin:0 auto;" aria-label="Newsletter signup">
+          <label for="newsletter-email-home" class="sr-only">Email address</label>
+          <input type="email" id="newsletter-email-home" name="email" placeholder="your@email.com" required style="background:var(--bg);color:var(--text);border-color:var(--border);">
+          <button type="submit" class="btn btn-primary" style="border-radius:8px;padding:0.65rem 1.25rem;">Subscribe</button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="brand" style="margin-bottom: 1rem;">
+            <img src="assets/images/logo.png" alt="Amaanitvam Foundation" class="brand-logo brand-logo-footer" width="220" height="72">
+          </a>
+          <p style="font-size:0.9rem;line-height:1.7;margin-bottom:1rem;">Section 8 non-profit empowering communities through education in Delhi NCR &amp; Haryana. CIN: U88900DL2025NPL455183</p>
+          <div class="social-links" aria-label="Social media">
+            <a href="https://linkedin.com" class="social-link" aria-label="LinkedIn" rel="noopener noreferrer" target="_blank"><span class="material-symbols-outlined" aria-hidden="true">work</span></a>
+            <a href="https://twitter.com" class="social-link" aria-label="Twitter" rel="noopener noreferrer" target="_blank"><span class="material-symbols-outlined" aria-hidden="true">tag</span></a>
+            <a href="https://instagram.com" class="social-link" aria-label="Instagram" rel="noopener noreferrer" target="_blank"><span class="material-symbols-outlined" aria-hidden="true">photo_camera</span></a>
+            <a href="https://facebook.com" class="social-link" aria-label="Facebook" rel="noopener noreferrer" target="_blank"><span class="material-symbols-outlined" aria-hidden="true">groups</span></a>
+          </div>
+        </div>
+        <div>
+          <h3 class="footer-heading">Quick Links</h3>
+          <nav aria-label="Footer quick links">
+            <a href="index.html" class="footer-link">Home</a>
+            <a href="about.html" class="footer-link">About Us</a>
+            <a href="impact.html" class="footer-link">Impact</a>
+            <a href="events.html" class="footer-link">Events</a>
+            <a href="gallery.html" class="footer-link">Gallery</a>
+            <a href="updates.html" class="footer-link">Updates</a>
+            <a href="contact.html" class="footer-link">Contact</a>
+          </nav>
+        </div>
+        <div>
+          <h3 class="footer-heading">Programs</h3>
+          <nav aria-label="Footer program links">
+            <a href="programs.html" class="footer-link">All Programs</a>
+            <a href="volunteer.html" class="footer-link">Volunteer Network</a>
+            <a href="internship.html" class="footer-link">Internships</a>
+            <a href="verify.html" class="footer-link">Certificate Verification</a>
+          </nav>
+        </div>
+        <div>
+          <h3 class="footer-heading">Contact</h3>
+          <p style="font-size:0.9rem;margin-bottom:0.5rem;">
+            <a href="mailto:amaanitvamfoundation@gmail.com" class="footer-link" style="display:inline;">amaanitvamfoundation@gmail.com</a>
+          </p>
+          <p style="font-size:0.9rem;margin-bottom:1rem;">
+            <a href="tel:+919899923266" class="footer-link" style="display:inline;">+91 98999 23266</a>
+          </p>
+          <h3 class="footer-heading" style="margin-top:1.5rem;">Newsletter</h3>
+          <form class="newsletter-input" aria-label="Footer newsletter signup">
+            <label for="newsletter-email-footer" class="sr-only">Email address</label>
+            <input type="email" id="newsletter-email-footer" name="email" placeholder="Your email" required>
+            <button type="submit">Subscribe</button>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 Amaanitvam Foundation. All rights reserved.</p>
+        <nav aria-label="Footer legal links" style="display:flex;gap:1.5rem;flex-wrap:wrap;">
+          <a href="contact.html" class="footer-link" style="display:inline;">Privacy Policy</a>
+          <a href="impact.html" class="footer-link" style="display:inline;">Annual Reports</a>
+          <a href="contact.html" class="footer-link" style="display:inline;">Careers</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
