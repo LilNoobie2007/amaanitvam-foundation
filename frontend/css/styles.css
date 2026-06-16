@@ -1503,3 +1503,284 @@ h1, h2, h3, h4, h5, h6 {
 #donate .gold-text{
     color:#d9a15f !important;
 }
+/* Donation Section */
+.donation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+    margin-top: 3rem;
+}
+
+.donation-card {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(212,165,116,0.4);
+    border-radius: 24px;
+    padding: 2rem;
+    min-height: 220px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(8px);
+}
+
+.donation-card:hover {
+    transform: translateY(-8px);
+    background: rgba(255,255,255,0.18);
+    border-color: var(--gold);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+}
+
+.donation-card h3 {
+    color: var(--gold);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.donation-card p {
+    color: rgba(255,255,255,0.9);
+    line-height: 1.7;
+    font-size: 1rem;
+}
+
+.donation-custom {
+    border: 2px dashed var(--gold);
+    background: rgba(255,255,255,0.08);
+}
+
+.donation-custom h3 {
+    color: var(--gold);
+}
+
+/* Donation Heading */
+#donate-heading {
+    font-size: 4rem;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+}
+
+.section-label {
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    #donate-heading {
+        font-size: 2.4rem;
+    }
+
+    .donation-card {
+        min-height: auto;
+    }
+}
+.donation-section{
+    padding:80px 20px;
+    background:#f8f8f8;
+}
+
+.donation-wrapper{
+    max-width:1300px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:30px;
+}
+
+.donation-form-card,
+.impact-card,
+.tax-card,
+.secure-card{
+    background:white;
+    border-radius:20px;
+    padding:30px;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+
+.donation-form-card h2{
+    margin-bottom:25px;
+}
+
+.donation-form-card label{
+    display:block;
+    margin-top:20px;
+    margin-bottom:8px;
+    font-weight:600;
+}
+
+.donation-form-card input{
+    width:100%;
+    padding:16px;
+    border:1px solid #ddd;
+    border-radius:12px;
+    font-size:16px;
+}
+
+.amount-buttons{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-top:15px;
+}
+
+.amount-btn{
+    padding:12px 22px;
+    border:1px solid #ddd;
+    border-radius:40px;
+    background:white;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.amount-btn:hover,
+.amount-btn.active{
+    background:#7b4d5f;
+    color:white;
+    border-color:#7b4d5f;
+}
+
+.minimum-note{
+    margin-top:10px;
+    color:#666;
+    font-size:14px;
+}
+
+.security-badges{
+    display:flex;
+    flex-wrap:wrap;
+    gap:15px;
+    margin:25px 0;
+    font-size:14px;
+}
+
+.pay-button{
+    width:100%;
+    border:none;
+    background:#d85d72;
+    color:white;
+    padding:18px;
+    border-radius:14px;
+    font-size:18px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.impact-item{
+    background:#f5f5f5;
+    padding:15px;
+    border-radius:12px;
+    margin-top:12px;
+    display:flex;
+    justify-content:space-between;
+}
+
+.tax-card{
+    margin-top:20px;
+    background:#0f1d39;
+    color:white;
+}
+
+.secure-card{
+    margin-top:20px;
+    background:#eef9f0;
+}
+
+.secure-card ul{
+    margin-top:15px;
+    padding-left:20px;
+}
+
+@media(max-width:900px){
+
+    .donation-wrapper{
+        grid-template-columns:1fr;
+    }
+
+}
+.amount-btn.active{
+    background:#7b4d5f;
+    color:#fff;
+    border-color:#7b4d5f;
+}
+.social-link.facebook i{
+    color:#1877F2;
+}
+
+.social-link.instagram i{
+    color:#E4405F;
+}
+
+.social-link.twitter i{
+    color:#000000;
+}
+
+.social-link.linkedin i{
+    color:#0A66C2;
+}
+
+.social-link:hover{
+    transform:translateY(-3px);
+    transition:0.3s ease;
+}
+.social-float{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.social-float i{
+    color:#fff;
+    font-size:24px;
+}
+.social-sidebar{
+    position: fixed;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.social-sidebar a{
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+
+.social-sidebar a:hover{
+    transform: scale(1.1);
+}
+
+.social-sidebar .facebook{
+    background: #1877F2;
+}
+
+.social-sidebar .instagram{
+    background: linear-gradient(
+        45deg,
+        #f09433,
+        #e6683c,
+        #dc2743,
+        #cc2366,
+        #bc1888
+    );
+}
+
+.social-sidebar .twitter{
+    background: #000;
+}
+
+.social-sidebar .linkedin{
+    background: #0A66C2;
+}
+
+.social-sidebar i{
+    color: white;
+    font-size: 20px;
+}

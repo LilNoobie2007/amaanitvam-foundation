@@ -47,6 +47,10 @@
       '      <span class="dropdown-icon"><span class="material-symbols-outlined" aria-hidden="true">event</span></span>',
       '      <span class="dropdown-text"><strong>Events</strong><small>Upcoming &amp; past events</small></span>',
       '    </a>',
+      '    <a href="programs.html" class="dropdown-item" role="menuitem">',
+'      <span class="dropdown-icon"><span class="material-symbols-outlined" aria-hidden="true">school</span></span>',
+'      <span class="dropdown-text"><strong>Programs</strong><small>Our initiatives and projects</small></span>',
+'    </a>',
       '    <a href="gallery.html" class="dropdown-item" role="menuitem">',
       '      <span class="dropdown-icon"><span class="material-symbols-outlined" aria-hidden="true">photo_library</span></span>',
       '      <span class="dropdown-text"><strong>Gallery</strong><small>Photos &amp; moments</small></span>',
@@ -110,6 +114,7 @@
       '      <a href="about.html" class="mobile-link">About Foundation</a>',
       '      <a href="impact.html" class="mobile-link">Impact</a>',
       '      <a href="events.html" class="mobile-link">Events</a>',
+      '      <a href="programs.html" class="mobile-link">Programs</a>',
       '      <a href="gallery.html" class="mobile-link">Gallery</a>',
       '    </div>',
       '  </div>',
@@ -343,3 +348,61 @@
     });
   }
 })();
+/* Donation Section */
+
+let selectedAmount = 10;
+
+const amountButtons = document.querySelectorAll('.amount-btn');
+const customAmount = document.getElementById('customAmount');
+const payButton = document.getElementById('payButton');
+
+if (amountButtons.length) {
+
+  amountButtons.forEach(btn => {
+
+    btn.addEventListener('click', () => {
+
+      amountButtons.forEach(b => b.classList.remove('active'));
+
+      btn.classList.add('active');
+
+      selectedAmount = btn.dataset.amount;
+
+      if (customAmount) {
+        customAmount.value = '';
+      }
+
+    });
+
+  });
+
+}
+
+if (customAmount) {
+
+  customAmount.addEventListener('input', function () {
+
+    amountButtons.forEach(b => b.classList.remove('active'));
+
+    selectedAmount = this.value;
+
+  });
+
+}
+
+if (payButton) {
+
+  payButton.addEventListener('click', () => {
+
+    if (!selectedAmount || selectedAmount < 10) {
+      alert('Minimum donation amount is ₹10');
+      return;
+    }
+
+    alert(
+      `Selected Donation Amount: ₹${selectedAmount}\n\nRazorpay integration will be connected by backend.`
+    );
+
+  });
+
+}
