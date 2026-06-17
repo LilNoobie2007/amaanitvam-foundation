@@ -82,6 +82,32 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
       }
     }
   </style>
+  <style>
+    /* ── Impact page: tighter vertical rhythm & consistent alignment ────────
+       Scoped to [data-page="impact"] only, so it never affects other pages
+       or the shared css/styles.css rules. ─────────────────────────────── */
+
+    /* Hero now matches the about.html background-image treatment */
+    body[data-page="impact"] .page-hero.has-image {
+      padding: 4rem 0 !important;
+      min-height: 380px !important;
+    }
+
+    /* Reduce the gap stacked between every section on this page */
+    body[data-page="impact"] main > section.section {
+      padding: 2.75rem 0 !important;
+    }
+
+    /* Section headers were adding their own large margin on top of section padding */
+    body[data-page="impact"] .section-header {
+      margin-bottom: 1.75rem !important;
+    }
+
+    /* Keep the donation CTA visually consistent with its container padding */
+    body[data-page="impact"] .donate-section {
+      padding-top: 0 !important;
+    }
+  </style>
 </head>
 <body data-page="impact">
 
@@ -230,19 +256,16 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 </header>
 
 <main>
-  <section class="page-hero has-image section" data-hero aria-labelledby="impact-hero-title">
-    <div class="container hero-grid">
-      <div>
-        <span class="section-label">Our Impact</span>
-        <h1 id="impact-hero-title" class="section-title" style="color:#fff;font-size:clamp(2rem,5vw,3rem);">Be the Change You Wish to See.<br><span class="text-gold">Your Support Can Transform Lives.</span></h1>
-        <p class="section-desc">We believe in full transparency. Every initiative is tracked, measured, and shared to ensure our collective efforts create sustainable, long-term empowerment for the communities we serve.</p>
-        <div class="hero-actions">
+  <section class="page-hero has-image section" data-hero aria-labelledby="impact-hero-title" style="position: relative; background-image: linear-gradient(135deg, rgba(86, 5, 26, 0.88), rgba(86, 5, 26, 0.6)), url('assets/images/hero.png'); background-size: cover; background-position: center; background-repeat: no-repeat; padding: 6rem 0; min-height: 480px; display: flex; align-items: center; overflow: hidden;">
+    <div class="container" style="display: flex; justify-content: center; text-align: center; width: 100%;">
+      <div style="max-width: 960px;">
+        <br><br><span class="section-label" style="color: var(--gold);">Our Impact</span>
+        <h1 id="impact-hero-title" class="section-title" style="font-size: clamp(2.5rem, 6vw, 4rem); margin-bottom: 1.25rem; color: #ffffff; opacity: 1;">Our Impact, Their Hope, Our Mission</h1>
+        <p class="section-desc" style="max-width: 960px; margin: 0 auto; color: #ffffff; opacity: 1; font-size: 1.25rem;">Our impact reflects the power of small actions, shared responsibility, and the hope created through community support.</p>
+        <div class="hero-actions" style="justify-content: center;">
           <a href="programs.html" class="btn btn-outline" style="border-color:rgba(255,255,255,0.4);color:#fff;">Explore Our Programs</a>
           <a href="volunteer.html" class="btn btn-primary">Become a Volunteer</a>
         </div>
-      </div>
-      <div>
-        <img class="hero-img" src="assets/images/hero.png" alt="Community volunteers working together on a local initiative" width="640" height="400" loading="eager">
       </div>
     </div>
   </section>
@@ -328,99 +351,24 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
             <a href="programs.html#manthan" class="btn btn-outline" style="margin-top:1rem;padding:0.5rem 1rem;font-size:0.85rem;">Learn More</a>
           </div>
         </article>
-        <article class="story-card">
-          <img src="assets/images/hero.png" alt="Project Pravah — youth empowerment pilot in Hisar, Haryana" width="400" height="200" loading="lazy" style="object-fit:cover;object-position:top;">
-          <div class="story-body">
-            <span class="story-tag">Project Pravah</span>
-            <h3>Youth Empowerment in Hisar, Haryana</h3>
-            <p class="text-muted" style="flex:1;">Project Pravah is our pilot initiative launched in Hisar, Haryana — aimed at creating opportunities, spreading awareness, and building a brighter future for children and youth.</p>
-            <p class="text-muted" style="flex:1;">Initiatives include:</p>
-            <ul class="text-muted" style="flex:1; padding-left: 1.25rem; line-height: 1.7; margin: 0 0 1rem;">
-              <li>Pilot launched at Hisar, Haryana</li>
-              <li>Focus on opportunity creation for rural youth</li>
-              <li>Awareness drives on education &amp; health</li>
-            </ul>
-            <p class="text-muted" style="flex:1;">Through Project Pravah, we are extending our mission beyond Delhi — empowering rural youth with access, awareness, and pathways to a brighter future.</p>
-            <a href="programs.html#pravah" class="btn btn-outline" style="margin-top:1rem;padding:0.5rem 1rem;font-size:0.85rem;">Learn More</a>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section-white" aria-labelledby="impact-cta-title">
-    <div class="container">
-      <div class="cta-banner">
-        <h2 id="impact-cta-title">Help Us Create Greater Impact</h2>
-        <p>Join our volunteer network or support our education and community development programs.</p>
-        <div class="cta-actions">
-          <a href="volunteer.html" class="btn btn-primary">
-            <span class="material-symbols-outlined" aria-hidden="true">volunteer_activism</span>
-            Become a Volunteer
-          </a>
-          <a href="contact.html#donate" class="btn btn-gold">
-            <span class="material-symbols-outlined" aria-hidden="true">favorite</span>
-            Donate Now
-          </a>
-        </div>
       </div>
     </div>
   </section>
 
     <!-- Donation CTA -->
-    <section class="section section-alt" aria-labelledby="donate-cta-title">
+    <section class="section section-alt" aria-labelledby="donate-title">
       <div class="container">
         <div class="donate-section">
-          <span class="section-label" style="color:var(--gold);">Support Our Mission</span>
-          <h2 id="donate-cta-title" class="section-title" style="color:#fff;margin-bottom:1rem;">Be the Change You Wish to See</h2>
+          <br><br><span class="section-label" style=color:#2b1d22 !important;>Support Our Mission</span>
+          <h2 id="donate-title" class="section-title" style="color:#fff;margin-bottom:1rem;">Be the Change You Wish to See </h2>
           <p style="color:rgba(255,255,255,0.8);max-width:560px;margin:0 auto 1rem;font-size:1.05rem;">
             Join our mission to empower lives through education, compassion, and community action.
           </p>
           <p style="color:var(--gold);font-size:0.9rem;font-weight:600;margin-bottom:2rem;">Registered under 12A &amp; 80G — tax-deductible for Indian donors</p>
-          <div class="donation-grid">
-
-    <div class="donation-card">
-        <h3>₹10</h3>
-        <p>Provides basic learning materials for a child.</p>
-    </div>
-
-    <div class="donation-card">
-        <h3>₹50</h3>
-        <p>Supports educational activities and classroom resources.</p>
-    </div>
-
-    <div class="donation-card">
-        <h3>₹100</h3>
-        <p>Helps provide notebooks and study materials.</p>
-    </div>
-
-    <div class="donation-card">
-        <h3>₹500</h3>
-        <p>Supports one child's learning and development program.</p>
-    </div>
-
-    <div class="donation-card">
-        <h3>₹1,000</h3>
-        <p>Contributes towards mentorship and skill-building sessions.</p>
-    </div>
-
-    <div class="donation-card">
-        <h3>₹5,000</h3>
-        <p>Supports community welfare and outreach initiatives.</p>
-    </div>
-
-    <div class="donation-card custom-donation">
-        <h3>Custom Amount</h3>
-        <p>Choose an amount and make a meaningful impact.</p>
-    </div>
-
-</div>
-
-<div style="margin-top:30px;">
-    <a href="contact.html#donate" class="btn btn-primary">
-        Donate Now
-    </a>
-</div>
+          <div style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;">
+            <a href="contact.html#donate" class="btn btn-primary">Donate Now</a>
+            <a href="impact.html" class="btn btn-outline" style="border-color:rgba(255,255,255,0.4);color:#fff;">See Our Impact</a>
+          </div>
         </div>
       </div>
     </section>
