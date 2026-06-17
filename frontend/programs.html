@@ -390,111 +390,20 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 
   </main>
 
-  <footer class="site-footer" role="contentinfo">
-  <div class="container">
-
-<div class="footer-grid">
-
-  <!-- Foundation Info -->
-  <div class="footer-brand">
-    <a href="index.html" class="brand">
-      <img src="assets/images/logo.png"
-           alt="Amaanitvam Foundation"
-           class="brand-logo brand-logo-footer"
-           width="220"
-           height="72">
-    </a>
-
-    <p class="footer-description">
-      Section 8 non-profit empowering communities through education,
-      skill development, and sustainable outreach programs.
-    </p>
-
-    <p class="footer-description">
-      CIN: U88900DL2025NPL455183
-    </p>
-  </div>
-
-  <!-- Quick Links -->
-  <div>
-    <h3 class="footer-heading">Quick Links</h3>
-
-    <nav>
-      <a href="index.html" class="footer-link">Home</a>
-      <a href="about.html" class="footer-link">About Us</a>
-      <a href="impact.html" class="footer-link">Impact</a>
-      <a href="gallery.html" class="footer-link">Gallery</a>
-      <a href="updates.html" class="footer-link">Updates</a>
-      <a href="contact.html" class="footer-link">Contact</a>
-    </nav>
-  </div>
-
-  <!-- Programs -->
-  <div>
-    <h3 class="footer-heading">Programs</h3>
-
-    <nav>
-      <a href="programs.html" class="footer-link">All Programs</a>
-      <a href="volunteer.html" class="footer-link">Volunteer Network</a>
-      <a href="internship.html" class="footer-link">Internships</a>
-      <a href="verify.html" class="footer-link">Certificate Verification</a>
-    </nav>
-  </div>
-
-  <!-- Contact -->
-  <div>
-    <h3 class="footer-heading">Contact Us</h3>
-
-    <p class="footer-contact-item">
-      📍 H.No 269 W.NO2, MEHRAULI,<br>
-           Gadaipur, Mehrauli,<br>
-           South Delhi - 110030
-    </p>
-
-     <span class="contact-icon">📧</span>
-        <a href="mailto:amaanitvamfoundation@gmail.com"
-           class="footer-link-inline">
-           amaanitvamfoundation@gmail.com
-        </a>
-
-    <p class="footer-contact-item">
-      📞
-      <a href="tel:+919899923266" class="footer-link-inline">
-        +91 98999 23266
-      </a>
-    </p>
-
-    
-  </div>
-
-</div>
-
-<hr class="footer-divider">
-
-<!-- Canva -->
-<div class="footer-support">
-  💜 Supported by <strong>Canva for Nonprofits</strong>
-</div>
-
-
-
-<!-- Copyright -->
-<div class="footer-bottom">
-  <p>
-    © 2026 Amaanitvam Foundation. All Rights Reserved.
-  </p>
-</div>
-
-
-  </div>
-</footer>
-
+  <div id="footer"></div>
     <!-- Floating Donate CTA -->
   <a href="contact.html#donate" class="floating-donate" aria-label="Donate to Amaanitvam Foundation">
     <span class="material-symbols-outlined" aria-hidden="true">volunteer_activism</span>
     <span class="floating-donate-text">Donate</span>
   </a>
 <script src="js/main.js"></script>
+<script>
+fetch("footer.html")
+  .then(response => response.text())
+  .then(data => {
+    document.getElementById("footer").innerHTML = data;
+  });
+</script>
 </body>
 </html>
  
