@@ -58,10 +58,14 @@ h1, h2, h3, h4, h5, h6 {
    ═══════════════════════════════════════════════════════ */
 
 /* Header wrapper */
+/* Header wrapper */
 .site-header {
   position: fixed;
-  top: 0; left: 0; right: 0;
+  top: 0;
+  left: 0;
+  right: 0;
   z-index: 1000;
+  background: #ffffff;
 }
 
 /* Nav bar */
@@ -73,11 +77,11 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 1000;
   width: 100%;
   height: var(--nav-h);
-  background: rgba(250, 247, 240, 0.92);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border);
-  box-shadow: 0 2px 16px rgba(62, 52, 48, 0.04);
+
+  background: #ffffff;
+  border-bottom: none;
+  box-shadow: none;
+
   transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -112,49 +116,58 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1;
 }
 
-.brand-name {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 2.3rem;
-  font-weight: 700;
-  color: var(--navy);
-  letter-spacing: -1px;
-  text-transform: uppercase;
+.brand-name{
+    font-family:'Montserrat',sans-serif;
+    font-size:3rem;
+    font-weight:800;
+    letter-spacing:1px;
+    color:#2f2430;
+    text-transform:uppercase;
 }
 
-.brand-subtitle {
-  margin-top: 8px;
-  font-family: 'Poppins', Arial, sans-serif;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--gold-dark);
-  letter-spacing: 1px;
-  text-transform: uppercase;
+.brand-subtitle{
+    font-family:'Montserrat',sans-serif;
+    font-size:1.2rem;
+    font-weight:600;
+    letter-spacing:3px;
+    color:#c69558;
+    text-transform:uppercase;
 }
 /* Scrolled state */
 .site-nav.is-solid {
-  background: rgba(250, 247, 240, 0.98);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  box-shadow: 0 4px 24px rgba(43, 43, 43, 0.08);
+  background: #ffffff;
+  box-shadow: none;
 }
 
 /* Transparent (hero overlay) state */
 .site-nav.is-transparent {
-  background: rgba(250, 247, 240, 0.92);
+  background: #ffffff;
 }
 
 /* ── Logo ── */
-.brand-logo {
-  height: 56px;
-  width: auto;
-  max-width: 200px;
-  object-fit: contain;
-  display: block;
+.brand-logo{
+    height:56px;
+    width:auto;
+    display:block;
+    background:transparent !important;
+    padding:0 !important;
+    margin:0;
+    border:none !important;
+    box-shadow:none !important;
+    border-radius:0 !important;
+}
+
+.brand{
+    background:transparent !important;
+    padding:0 !important;
+    box-shadow:none !important;
+    border:none !important;
 }
 
 .brand-logo-footer {
   height: 72px;
   max-width: 220px;
+  background: transparent;
 }
 
 /* ── Desktop nav links container ── */
@@ -182,14 +195,14 @@ h1, h2, h3, h4, h5, h6 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.6rem 1.05rem;
+  padding: 0.6rem 1.1rem;
   border-radius: 999px;
   text-decoration: none;
   white-space: nowrap;
-  font-family: 'Poppins', system-ui, sans-serif;
-  font-size: 0.875rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
   font-weight: 600;
-  color: var(--navy-light);
+  color: #2f2430;
   transition: color 0.2s ease, background 0.2s ease;
 }
 
