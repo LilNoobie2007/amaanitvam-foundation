@@ -2261,3 +2261,39 @@ h1, h2, h3, h4, h5, h6 {
     grid-template-columns:1fr !important;
   }
 }
+/* =========================
+   LEGAL PAGES
+========================= */
+
+.legal-page{
+    max-width:1000px;
+    margin:120px auto 60px;
+    padding:0 25px;
+    line-height:1.8;
+}
+
+.legal-page h1{
+    color:#16284a;
+    font-size:2.8rem;
+    margin-bottom:20px;
+}
+
+.legal-page h2{
+    color:#6B3E47;
+    margin-top:30px;
+    margin-bottom:10px;
+}
+
+.legal-page p,
+.legal-page li{
+    color:#444;
+    font-size:16px;
+}
+
+.legal-page ul{
+    padding-left:20px;
+}
+
+.legal-page strong{
+    color:#16284a;
+}
