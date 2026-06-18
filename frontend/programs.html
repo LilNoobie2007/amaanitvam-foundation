@@ -45,18 +45,6 @@
       font-size: 1.1rem; 
       margin-right: 0.25rem; 
     }
-    .hero-overlay-img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0.35;
-    }
-    .hero-content { 
-      position: relative; 
-      z-index: 1; 
-    }
     .story-quote {
       border-left: 4px solid var(--primary);
       padding-left: 1.5rem;
@@ -65,6 +53,48 @@
       line-height: 1.7;
       color: var(--navy);
       margin-bottom: 1.5rem;
+    }
+  </style>
+  <style>
+    /* ── Programs page: tighter vertical rhythm & alignment to match about.html ──
+       Scoped to [data-page="programs"] only. ──────────────────────────────────── */
+
+    /* Hero: same compact sizing as about.html */
+    body[data-page="programs"] .page-hero.has-image {
+      padding: 4rem 0 !important;
+      min-height: 380px !important;
+    }
+
+    /* Reduce section padding to match about.html */
+    body[data-page="programs"] main#main-content > section.section {
+      padding: 2.75rem 0 !important;
+    }
+
+    /* Section headers: tighter bottom margin */
+    body[data-page="programs"] .section-header {
+      margin-bottom: 1.75rem !important;
+    }
+
+    /* Grid gaps consistent with about.html two-col rows */
+    body[data-page="programs"] .grid-2 {
+      gap: 2.25rem !important;
+    }
+
+    /* Responsive: 5-col cards drop gracefully on smaller screens */
+    @media (max-width: 1024px) {
+      body[data-page="programs"] .programs-5col {
+        grid-template-columns: repeat(3, 1fr) !important;
+      }
+    }
+    @media (max-width: 640px) {
+      body[data-page="programs"] .programs-5col {
+        grid-template-columns: repeat(2, 1fr) !important;
+      }
+    }
+    @media (max-width: 400px) {
+      body[data-page="programs"] .programs-5col {
+        grid-template-columns: 1fr !important;
+      }
     }
   </style>
   <style>
@@ -297,23 +327,25 @@
   <main id="main-content">
 
     <!-- Hero -->
-    <section class="page-hero has-image section" data-hero aria-labelledby="programs-hero-title" style="min-height: 70vh; display: flex; align-items: center; position: relative;">
-      <img
-        class="hero-overlay-img"
-        src="https://lh3.googleusercontent.com/aida/AP1WRLs9KInHdyLnrrjw7KX4S2gqDrvNx2jaKbsQEzbnBE3YDQDD0DYS5UockbP5BITmVlc3HZ8yq7qHfkKhzOKf2ueDNp83lqlCAdv0T80Rxk3bVjLUaTz_FZk2o-_dhNeTQ1g84Ntii-hrf2HJ_OJX0DwNrHIMW-0S9vRt7pE9VLP_FUXkFi3-Wh0Tm9vzjwkpfXyNYmnGkCmX-XFPrwqCPZX875uPCvPEyrqA4MIGE2V3Nnj2xU-mvrt85Q"
-        alt=""
-        role="presentation"
-        aria-hidden="true"
-        loading="eager"
-      >
-      <div class="container hero-content" style="max-width: 720px;">
-        <span class="section-label" style="color: var(--gold);">Our Programs</span>
-        <h1 id="programs-hero-title" class="section-title" style="font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 1.25rem;">
-          Empowering Lives Through Education, Compassion, and Collective Action
-        </h1>
-        <p class="section-desc">
-          A student-led movement inspiring learning, responsibility, and positive change for a stronger society.
-        </p>
+    <section class="page-hero has-image section" data-hero aria-labelledby="programs-hero-title"
+      style="position: relative;
+      background: linear-gradient(135deg, rgba(86, 5, 26, 0.97) 0%, rgba(58, 10, 35, 0.92) 50%, rgba(26, 34, 56, 0.95) 100%);
+      padding: 6rem 0;
+      min-height: 480px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;">
+      <div class="container" style="display: flex; justify-content: center; text-align: center; width: 100%;">
+        <div style="max-width: 960px;">
+          <span class="section-label" style="color: var(--gold);">Our Programs</span>
+          <h1 id="programs-hero-title" class="section-title" style="font-size: clamp(2.5rem, 6vw, 4rem);
+            margin-bottom: 1.25rem; color: #ffffff !important; opacity: 1;">
+            Programs Creating Pathways To Change
+          </h1>
+          <p class="section-desc" style="max-width: 960px; margin: 0 auto; color: #ffffff; opacity: 1; font-size: 1.25rem;">
+            Explore our initiatives empowering communities through education, awareness, mentorship, and meaningful action.
+          </p>
+        </div>
       </div>
     </section>
 
@@ -325,61 +357,61 @@
           <h2 id="programs-categories-title" class="section-title">Core Program Areas</h2>
           <p class="section-desc">Our holistic approach addresses community needs through structured, sustainable interventions.</p>
         </header>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+        <div class="programs-5col" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem;">
 
-          <article id="education" class="card">
-            <div class="card-icon card-icon-pink">
+          <article id="education" class="card" style="text-align: center; padding: 1.25rem 1rem;">
+            <div class="card-icon card-icon-pink" style="margin: 0 auto 0.75rem;">
               <span class="material-symbols-outlined icon-fill" aria-hidden="true">school</span>
             </div>
-            <h3 style="font-size: 1.2rem; font-weight: 600; color: var(--navy); margin-bottom: 0.75rem;">Education</h3>
-            <p class="text-muted" style="font-size: 0.95rem; margin-bottom: 0;">
-              Empowering children through accessible education, school admission support, and learning guidance for underserved communities.
+            <h3 style="font-size: 0.95rem; font-weight: 600; color: var(--navy); margin-bottom: 0.4rem;">Education</h3>
+            <p class="text-muted" style="font-size: 0.8rem; margin-bottom: 0; line-height: 1.5;">
+              School admissions &amp; learning support for underserved children.
             </p>
-            <a href="impact.html" class="btn btn-outline" style="margin-top: 1.25rem; font-size: 0.85rem; padding: 0.5rem 1rem;">View Impact</a>
+            <a href="impact.html" class="btn btn-outline" style="margin-top: 1rem; font-size: 0.8rem; padding: 0.4rem 0.75rem;">View Impact</a>
           </article>
 
-          <article id="community" class="card">
-            <div class="card-icon card-icon-purple">
+          <article id="community" class="card" style="text-align: center; padding: 1.25rem 1rem;">
+            <div class="card-icon card-icon-purple" style="margin: 0 auto 0.75rem;">
               <span class="material-symbols-outlined icon-fill" aria-hidden="true">groups</span>
             </div>
-            <h3 style="font-size: 1.2rem; font-weight: 600; color: var(--navy); margin-bottom: 0.75rem;">Community Development</h3>
-            <p class="text-muted" style="font-size: 0.95rem; margin-bottom: 0;">
-              Building stronger communities through counselling, awareness sessions, mentorship, and personal development initiatives.
+            <h3 style="font-size: 0.95rem; font-weight: 600; color: var(--navy); margin-bottom: 0.4rem;">Community Development</h3>
+            <p class="text-muted" style="font-size: 0.8rem; margin-bottom: 0; line-height: 1.5;">
+              Counselling, awareness &amp; mentorship for stronger communities.
             </p>
-            <a href="impact.html" class="btn btn-outline" style="margin-top: 1.25rem; font-size: 0.85rem; padding: 0.5rem 1rem;">View Impact</a>
+            <a href="impact.html" class="btn btn-outline" style="margin-top: 1rem; font-size: 0.8rem; padding: 0.4rem 0.75rem;">View Impact</a>
           </article>
 
-          <article id="volunteer" class="card">
-            <div class="card-icon card-icon-gold">
+          <article id="volunteer" class="card" style="text-align: center; padding: 1.25rem 1rem;">
+            <div class="card-icon card-icon-gold" style="margin: 0 auto 0.75rem;">
               <span class="material-symbols-outlined icon-fill" aria-hidden="true">volunteer_activism</span>
             </div>
-            <h3 style="font-size: 1.2rem; font-weight: 600; color: var(--navy); margin-bottom: 0.75rem;">Volunteer Network</h3>
-            <p class="text-muted" style="font-size: 0.95rem; margin-bottom: 0;">
-              Mobilizing passionate individuals to drive on-ground impact through structured volunteering, mentorship, and community outreach.
+            <h3 style="font-size: 0.95rem; font-weight: 600; color: var(--navy); margin-bottom: 0.4rem;">Volunteer Network</h3>
+            <p class="text-muted" style="font-size: 0.8rem; margin-bottom: 0; line-height: 1.5;">
+              Passionate individuals driving on-ground community impact.
             </p>
-            <a href="volunteer.html" class="btn btn-outline" style="margin-top: 1.25rem; font-size: 0.85rem; padding: 0.5rem 1rem;">Join Network</a>
+            <a href="volunteer.html" class="btn btn-outline" style="margin-top: 1rem; font-size: 0.8rem; padding: 0.4rem 0.75rem;">Join Network</a>
           </article>
 
-          <article id="internships" class="card">
-            <div class="card-icon card-icon-navy">
+          <article id="internships" class="card" style="text-align: center; padding: 1.25rem 1rem;">
+            <div class="card-icon card-icon-navy" style="margin: 0 auto 0.75rem;">
               <span class="material-symbols-outlined icon-fill" aria-hidden="true">work</span>
             </div>
-            <h3 style="font-size: 1.2rem; font-weight: 600; color: var(--navy); margin-bottom: 0.75rem;">Internships</h3>
-            <p class="text-muted" style="font-size: 0.95rem; margin-bottom: 0;">
-              Cultivating the next generation of changemakers through mentorship, skill-building workshops, and real-world project experience.
+            <h3 style="font-size: 0.95rem; font-weight: 600; color: var(--navy); margin-bottom: 0.4rem;">Internships</h3>
+            <p class="text-muted" style="font-size: 0.8rem; margin-bottom: 0; line-height: 1.5;">
+              Real-world experience &amp; skill-building for changemakers.
             </p>
-            <a href="internship.html" class="btn btn-outline" style="margin-top: 1.25rem; font-size: 0.85rem; padding: 0.5rem 1rem;">Apply Now</a>
+            <a href="internship.html" class="btn btn-outline" style="margin-top: 1rem; font-size: 0.8rem; padding: 0.4rem 0.75rem;">Apply Now</a>
           </article>
 
-          <article id="certificates" class="card">
-            <div class="card-icon card-icon-purple">
+          <article id="certificates" class="card" style="text-align: center; padding: 1.25rem 1rem;">
+            <div class="card-icon card-icon-purple" style="margin: 0 auto 0.75rem;">
               <span class="material-symbols-outlined icon-fill" aria-hidden="true">verified</span>
             </div>
-            <h3 style="font-size: 1.2rem; font-weight: 600; color: var(--navy); margin-bottom: 0.75rem;">Certificate Programs</h3>
-            <p class="text-muted" style="font-size: 0.95rem; margin-bottom: 0;">
-              Issuing verified certificates for program completion with transparent, publicly verifiable credentials.
+            <h3 style="font-size: 0.95rem; font-weight: 600; color: var(--navy); margin-bottom: 0.4rem;">Certificate Programs</h3>
+            <p class="text-muted" style="font-size: 0.8rem; margin-bottom: 0; line-height: 1.5;">
+              Verified, publicly verifiable credentials for completions.
             </p>
-            <a href="verify.html" class="btn btn-outline" style="margin-top: 1.25rem; font-size: 0.85rem; padding: 0.5rem 1rem;">Verify Certificate</a>
+            <a href="verify.html" class="btn btn-outline" style="margin-top: 1rem; font-size: 0.8rem; padding: 0.4rem 0.75rem;">Verify Certificate</a>
           </article>
 
         </div>
@@ -395,165 +427,54 @@
           <p class="section-desc">Our flagship programs delivering education support, youth empowerment, and personal development for children and adolescents.</p>
         </header>
 
-        <div class="grid-2" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
-          <article id="shiksha" class="card" style="padding: 0; overflow: hidden;">
-            <img src="assets/images/project-shiksha.png" alt="Project Shiksha — school admission support and education for children" class="project-poster" style="border-radius: 0; max-height: 280px; object-fit: cover;" width="600" height="400" loading="lazy">
-            <div style="padding: 1.75rem;">
-            <div class="card-icon card-icon-purple">
-              <span class="material-symbols-outlined icon-fill" aria-hidden="true">school</span>
-            </div>
-            <h3 style="font-size: 1.2rem; font-weight: 600; color: var(--navy); margin-bottom: 0.5rem;">Project Shiksha</h3>
+        <div style="display: flex; flex-direction: column; gap: 3rem;">
+
+          <article id="shiksha">
+            <img src="assets/images/project-shiksha.png" alt="Project Shiksha — school admission support and education for children" class="project-poster" style="width: 100%; max-height: 320px; object-fit: cover; border-radius: 0.5rem; margin-bottom: 1.5rem;" width="600" height="400" loading="lazy">
+            <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--navy); margin-bottom: 0.75rem;">Project Shiksha</h3>
             <p class="text-muted" style="font-size: 0.95rem; line-height: 1.7; margin-bottom: 0.75rem;">
               Amaanitvam Foundation started Project Shiksha with just 2 students. Through continuous efforts, community support, and dedicated volunteers, the project has now impacted more than <strong>50 children</strong>.
             </p>
             <p class="text-muted" style="font-size: 0.95rem; line-height: 1.7; margin-bottom: 0.75rem;">
-              Many children were unable to secure admission in government schools due to a lack of proper documentation and guidance. The foundation supported these children and their families by:
+              Many children were unable to secure admission in government schools due to a lack of proper documentation and guidance. The foundation supported these children and their families by assisting with school admission procedures, preparing and arranging required documents, guiding parents through the admission process, and ensuring children gained access to quality education.
             </p>
-            <ul class="text-muted" style="font-size: 0.95rem; line-height: 1.7; margin-bottom: 0.75rem; padding-left: 1.25rem;">
-              <li>Assisting with school admission procedures</li>
-              <li>Preparing and arranging required documents</li>
-              <li>Guiding parents through the admission process</li>
-              <li>Ensuring children gained access to quality education</li>
-            </ul>
             <p class="text-muted" style="font-size: 0.95rem; line-height: 1.7;">
               Today, these children are continuing their education and moving toward a brighter future.
             </p>
-            </div>
           </article>
-          <article id="manthan" class="card" style="padding: 0; overflow: hidden;">
-            <img src="assets/images/project-manthan.png" alt="Project Manthan — counselling and awareness for children and adolescents" class="project-poster" style="border-radius: 0; max-height: 280px; object-fit: cover;" width="600" height="400" loading="lazy">
-            <div style="padding: 1.75rem;">
-            <div class="card-icon card-icon-pink">
-              <span class="material-symbols-outlined icon-fill" aria-hidden="true">psychology</span>
-            </div>
-            <h3 style="font-size: 1.2rem; font-weight: 600; color: var(--navy); margin-bottom: 0.5rem;">Project Manthan</h3>
+
+          <hr style="border: none; border-top: 1px solid var(--border); margin: 0;">
+
+          <article id="manthan">
+            <img src="assets/images/project-manthan.png" alt="Project Manthan — counselling and awareness for children and adolescents" class="project-poster" style="width: 100%; max-height: 320px; object-fit: cover; border-radius: 0.5rem; margin-bottom: 1.5rem;" width="600" height="400" loading="lazy">
+            <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--navy); margin-bottom: 0.75rem;">Project Manthan</h3>
             <p class="text-muted" style="font-size: 0.95rem; line-height: 1.7; margin-bottom: 0.75rem;">
               Under Project Manthan, Amaanitvam Foundation worked with children and adolescents to address negative habits and personal challenges through awareness sessions and counselling.
             </p>
             <p class="text-muted" style="font-size: 0.95rem; line-height: 1.7; margin-bottom: 0.75rem;">
-              Initiatives included:
+              Initiatives included counselling and mentorship sessions, guidance on positive life choices, awareness regarding harmful habits and their consequences, personality development activities, confidence-building sessions, and encouraging education, discipline, and social responsibility.
             </p>
-            <ul class="text-muted" style="font-size: 0.95rem; line-height: 1.7; margin-bottom: 0.75rem; padding-left: 1.25rem;">
-              <li>Counselling and mentorship sessions</li>
-              <li>Guidance on positive life choices</li>
-              <li>Awareness regarding harmful habits and their consequences</li>
-              <li>Personality development activities</li>
-              <li>Confidence-building sessions</li>
-              <li>Encouraging education, discipline, and social responsibility</li>
-            </ul>
             <p class="text-muted" style="font-size: 0.95rem; line-height: 1.7;">
               Through these efforts, many children demonstrated positive behavioural changes and developed a stronger focus on their education and future goals.
             </p>
-            </div>
           </article>
-          <article id="pravah" class="card" style="padding: 0; overflow: hidden;">
-            <img src="assets/images/hero.png" alt="Project Pravah — youth empowerment initiative in Hisar, Haryana" class="project-poster" style="border-radius: 0; max-height: 280px; object-fit: cover;" width="600" height="400" loading="lazy">
-            <div style="padding: 1.75rem;">
-            <div class="card-icon card-icon-gold">
-              <span class="material-symbols-outlined icon-fill" aria-hidden="true">groups</span>
-            </div>
-            <h3 style="font-size: 1.2rem; font-weight: 600; color: var(--navy); margin-bottom: 0.5rem;">Project Pravah</h3>
+
+          <hr style="border: none; border-top: 1px solid var(--border); margin: 0;">
+
+          <article id="pravah">
+            <img src="assets/images/hero.png" alt="Project Pravah — youth empowerment initiative in Hisar, Haryana" class="project-poster" style="width: 100%; max-height: 320px; object-fit: cover; border-radius: 0.5rem; margin-bottom: 1.5rem;" width="600" height="400" loading="lazy">
+            <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--navy); margin-bottom: 0.75rem;">Project Pravah</h3>
             <p class="text-muted" style="font-size: 0.95rem; line-height: 1.7; margin-bottom: 0.75rem;">
               Project Pravah is our pilot initiative launched in Hisar, Haryana — aimed at creating opportunities, spreading awareness, and building a brighter future for children and youth.
             </p>
             <p class="text-muted" style="font-size: 0.95rem; line-height: 1.7; margin-bottom: 0.75rem;">
-              Key focus areas include:
+              Key focus areas include opportunity creation for rural youth, awareness drives on education &amp; health, and grassroots community engagement beyond Delhi.
             </p>
-            <ul class="text-muted" style="font-size: 0.95rem; line-height: 1.7; margin-bottom: 0.75rem; padding-left: 1.25rem;">
-              <li>Pilot launched at Hisar, Haryana</li>
-              <li>Focus on opportunity creation for rural youth</li>
-              <li>Awareness drives on education &amp; health</li>
-            </ul>
             <p class="text-muted" style="font-size: 0.95rem; line-height: 1.7;">
               Expanding our reach beyond Delhi, Project Pravah brings grassroots action to rural communities and empowers the next generation with knowledge, access, and hope.
             </p>
-            </div>
           </article>
-        </div>
-      </div>
-    </section>
 
-    <!-- Program Impact Metrics -->
-    <section class="section section-navy" aria-labelledby="program-impact-title">
-      <div class="container">
-        <header class="section-header">
-          <span class="section-label" style="color: var(--gold);">Results</span>
-          <h2 id="program-impact-title" class="section-title" style="color: #fff;">Program Impact</h2>
-          <p class="section-desc" style="color: rgba(255,255,255,0.7);">Verified outcomes from our core initiatives.</p>
-        </header>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; text-align: center;">
-          <div>
-            <span class="material-symbols-outlined" style="font-size: 2.5rem; color: var(--gold); margin-bottom: 0.5rem;" aria-hidden="true">school</span>
-            <div class="stat-value" style="color: var(--gold);">50+</div>
-            <div class="stat-label" style="color: rgba(255,255,255,0.7);">Children Supported</div>
-          </div>
-          <div>
-            <span class="material-symbols-outlined" style="font-size: 2.5rem; color: var(--gold); margin-bottom: 0.5rem;" aria-hidden="true">volunteer_activism</span>
-            <div class="stat-value" style="color: var(--gold);">3</div>
-            <div class="stat-label" style="color: rgba(255,255,255,0.7);">Core Projects</div>
-          </div>
-          <div>
-            <span class="material-symbols-outlined" style="font-size: 2.5rem; color: var(--gold); margin-bottom: 0.5rem;" aria-hidden="true">trending_up</span>
-            <div class="stat-value" style="color: var(--gold);">2 → 50+</div>
-            <div class="stat-label" style="color: rgba(255,255,255,0.7);">Growth Since Launch</div>
-          </div>
-          <div>
-            <span class="material-symbols-outlined" style="font-size: 2.5rem; color: var(--gold); margin-bottom: 0.5rem;" aria-hidden="true">location_on</span>
-            <div class="stat-value" style="color: var(--gold);">3+</div>
-            <div class="stat-label" style="color: rgba(255,255,255,0.7);">States Reached</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- How We Work -->
-    <section class="section section-white" aria-labelledby="how-we-work-title">
-      <div class="container">
-        <header class="section-header">
-          <span class="section-label">Our Methodology</span>
-          <h2 id="how-we-work-title" class="section-title">How We Work</h2>
-          <p class="section-desc">Our methodology ensures every action creates meaningful, lasting change.</p>
-        </header>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.25rem;">
-          <div class="card" style="text-align: center; padding: 1.5rem;">
-            <span class="material-symbols-outlined text-primary" style="font-size: 2.25rem; margin-bottom: 0.75rem;" aria-hidden="true">diversity_3</span>
-            <h4 style="font-size: 1rem; font-weight: 600; color: var(--navy); margin-bottom: 0.35rem;">Community-first</h4>
-            <p class="text-muted" style="font-size: 0.85rem;">Local voices guide our interventions.</p>
-          </div>
-          <div class="card" style="text-align: center; padding: 1.5rem;">
-            <span class="material-symbols-outlined text-primary" style="font-size: 2.25rem; margin-bottom: 0.75rem;" aria-hidden="true">handshake</span>
-            <h4 style="font-size: 1rem; font-weight: 600; color: var(--navy); margin-bottom: 0.35rem;">Volunteer-powered</h4>
-            <p class="text-muted" style="font-size: 0.85rem;">Driven by passionate individuals.</p>
-          </div>
-          <div class="card" style="text-align: center; padding: 1.5rem;">
-            <span class="material-symbols-outlined text-primary" style="font-size: 2.25rem; margin-bottom: 0.75rem;" aria-hidden="true">eco</span>
-            <h4 style="font-size: 1rem; font-weight: 600; color: var(--navy); margin-bottom: 0.35rem;">Sustainable impact</h4>
-            <p class="text-muted" style="font-size: 0.85rem;">Building for the long term.</p>
-          </div>
-          <div class="card" style="text-align: center; padding: 1.5rem;">
-            <span class="material-symbols-outlined text-primary" style="font-size: 2.25rem; margin-bottom: 0.75rem;" aria-hidden="true">visibility</span>
-            <h4 style="font-size: 1rem; font-weight: 600; color: var(--navy); margin-bottom: 0.35rem;">Transparency</h4>
-            <p class="text-muted" style="font-size: 0.85rem;">Clear reporting on every metric.</p>
-          </div>
-          <div class="card" style="text-align: center; padding: 1.5rem;">
-            <span class="material-symbols-outlined text-primary" style="font-size: 2.25rem; margin-bottom: 0.75rem;" aria-hidden="true">timeline</span>
-            <h4 style="font-size: 1rem; font-weight: 600; color: var(--navy); margin-bottom: 0.35rem;">Long-term engagement</h4>
-            <p class="text-muted" style="font-size: 0.85rem;">Committed beyond initial setup.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="section section-alt" aria-labelledby="programs-cta-title" style="text-align: center;">
-      <div class="container" style="max-width: 720px;">
-        <h2 id="programs-cta-title" class="section-title" style="margin-bottom: 1rem;">Become Part Of The Change</h2>
-        <p class="section-desc" style="margin-bottom: 2rem;">
-          Your time, skills, and resources can create lasting impact. Join our community of changemakers today.
-        </p>
-        <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
-          <a href="volunteer.html" class="btn btn-primary">Volunteer With Us</a>
-          <a href="contact.html" class="btn btn-outline">Get In Touch</a>
         </div>
       </div>
     </section>
