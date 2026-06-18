@@ -255,7 +255,7 @@
         <span class="section-label">Volunteer With Us</span>
         <h1 class="section-title" style="font-size: clamp(2rem, 5vw, 3rem);">Be The Change Your Community Needs</h1>
         <p class="section-desc" style="max-width: 640px; margin: 0 0 2rem;">Join our volunteer community dedicated to empowering children and families through education, outreach, and meaningful community action.</p>
-        <a href="contact.html" class="btn btn-primary">Apply as Volunteer</a>
+        <a href="#volunteer-form-section" class="btn btn-primary">Apply as Volunteer</a>
       </div>
     </header>
 
@@ -401,6 +401,52 @@
         </div>
       </div>
     </section>
+    <section id="volunteer-form-section" class="section section-white">
+      <div class="container" style="max-width: 800px;">
+        <div class="section-header">
+          <span class="section-label">Join Us</span>
+          <h2 class="section-title">Volunteer Application</h2>
+        </div>
+        <form id="volunteerForm" style="background: var(--surface); padding: 2rem; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+          <div style="margin-bottom: 1.25rem;">
+            <label class="form-label" for="vol-name">Full Name <span aria-hidden="true" style="color:red">*</span></label>
+            <input class="form-input" type="text" id="vol-name" name="name" required pattern="[A-Za-z\s]+" title="Please enter only letters and spaces" placeholder="Jane Doe">
+          </div>
+          <div style="margin-bottom: 1.25rem;">
+            <label class="form-label" for="vol-email">Email Address <span aria-hidden="true" style="color:red">*</span></label>
+            <input class="form-input" type="email" id="vol-email" name="email" required placeholder="jane@example.com">
+          </div>
+          <div style="margin-bottom: 1.25rem;">
+            <label class="form-label" for="vol-phone">Phone Number <span aria-hidden="true" style="color:red">*</span></label>
+            <input class="form-input" type="text" id="vol-phone" name="phone" required pattern="\d{10}" maxlength="10" title="Please enter exactly 10 digits" placeholder="10-digit number">
+          </div>
+          <div style="margin-bottom: 1.25rem;">
+            <label class="form-label" for="vol-role">Preferred Role <span aria-hidden="true" style="color:red">*</span></label>
+            <select class="form-input" id="vol-role" name="role" required>
+              <option value="" disabled selected>Select a role</option>
+              <option value="Education Support">Education Support</option>
+              <option value="Community Outreach">Community Outreach</option>
+              <option value="Event Coordination">Event Coordination</option>
+              <option value="Social Media & Communications">Social Media & Communications</option>
+            </select>
+          </div>
+          <div style="margin-bottom: 1.25rem;">
+            <label class="form-label" for="vol-availability">Availability <span aria-hidden="true" style="color:red">*</span></label>
+            <input class="form-input" type="text" id="vol-availability" name="availability" required placeholder="e.g. Weekends, 4 hours">
+          </div>
+          <div style="margin-bottom: 1.25rem;">
+            <label class="form-label" for="vol-skills">Skills/Expertise (Optional)</label>
+            <input class="form-input" type="text" id="vol-skills" name="skills" placeholder="e.g. Graphic Design, Public Speaking">
+          </div>
+          <div style="margin-bottom: 1.5rem;">
+            <label class="form-label" for="vol-motivation">Why do you want to volunteer? <span aria-hidden="true" style="color:red">*</span></label>
+            <textarea class="form-textarea" id="vol-motivation" name="motivation" rows="4" required placeholder="Tell us your motivation..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%;">Submit Application</button>
+          <div id="vol-status" style="margin-top: 1rem; text-align: center; font-weight: 600;"></div>
+        </form>
+      </div>
+    </section>
   </main>
 
   <div id="footer"></div>
@@ -417,6 +463,37 @@ fetch("footer.html")
   .then(data => {
     document.getElementById("footer").innerHTML = data;
   });
+</script>
+<script>
+document.getElementById('volunteerForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const status = document.getElementById('vol-status');
+  status.textContent = "Submitting...";
+  status.style.color = "var(--navy)";
+  
+  const formData = new FormData(this);
+  const data = Object.fromEntries(formData.entries());
+  
+  try {
+    const response = await fetch('http://localhost:5000/api/volunteer/apply', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    const result = await response.json();
+    if (response.ok) {
+      status.textContent = result.message || "Application submitted successfully!";
+      status.style.color = "green";
+      this.reset();
+    } else {
+      status.textContent = result.message || "Error submitting application.";
+      status.style.color = "red";
+    }
+  } catch (err) {
+    status.textContent = "Failed to connect to the server.";
+    status.style.color = "red";
+  }
+});
 </script>
 </body>
 </html>

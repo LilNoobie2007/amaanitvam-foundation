@@ -266,7 +266,7 @@
         <span class="section-label">Internship Program</span>
         <h1 class="section-title" style="font-size: clamp(2rem, 5vw, 3rem);">Learn. Contribute. Grow With Us.</h1>
         <p class="section-desc" style="max-width: 640px; margin: 0 0 2rem;">Gain practical experience while making a meaningful social impact. Our internship program develops your skills, builds your network, and empowers you to drive positive change.</p>
-        <a href="contact.html" class="btn btn-primary">Apply For Internship</a>
+        <a href="#internship-form-section" class="btn btn-primary">Apply For Internship</a>
       </div>
     </header>
 
@@ -422,6 +422,68 @@
         </div>
       </div>
     </section>
+    <section id="internship-form-section" class="section section-white">
+      <div class="container" style="max-width: 800px;">
+        <div class="section-header">
+          <span class="section-label">Apply Now</span>
+          <h2 class="section-title">Internship Application</h2>
+        </div>
+        <form id="internshipForm" style="background: var(--surface); padding: 2rem; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+          <div style="margin-bottom: 1.25rem;">
+            <label class="form-label" for="int-name">Full Name <span aria-hidden="true" style="color:red">*</span></label>
+            <input class="form-input" type="text" id="int-name" name="name" required pattern="[A-Za-z\s]+" title="Please enter only letters and spaces" placeholder="Jane Doe">
+          </div>
+          <div style="margin-bottom: 1.25rem;">
+            <label class="form-label" for="int-email">Email Address <span aria-hidden="true" style="color:red">*</span></label>
+            <input class="form-input" type="email" id="int-email" name="email" required placeholder="jane@example.com">
+          </div>
+          <div style="margin-bottom: 1.25rem;">
+            <label class="form-label" for="int-phone">Phone Number <span aria-hidden="true" style="color:red">*</span></label>
+            <input class="form-input" type="text" id="int-phone" name="phone" required pattern="\d{10}" maxlength="10" title="Please enter exactly 10 digits" placeholder="10-digit number">
+          </div>
+          <div style="margin-bottom: 1.25rem; display: flex; gap: 1rem;">
+            <div style="flex: 1;">
+              <label class="form-label" for="int-university">University/College</label>
+              <input class="form-input" type="text" id="int-university" name="university" placeholder="e.g. Delhi University">
+            </div>
+            <div style="flex: 1;">
+              <label class="form-label" for="int-currentYear">Year of Study</label>
+              <input class="form-input" type="text" id="int-currentYear" name="currentYear" placeholder="e.g. 2nd Year">
+            </div>
+          </div>
+          <div style="margin-bottom: 1.25rem; display: flex; gap: 1rem;">
+            <div style="flex: 1;">
+              <label class="form-label" for="int-startDate">Preferred Start Date</label>
+              <input class="form-input" type="date" id="int-startDate" name="startDate">
+            </div>
+            <div style="flex: 1;">
+              <label class="form-label" for="int-duration">Duration</label>
+              <input class="form-input" type="text" id="int-duration" name="duration" placeholder="e.g. 3 Months">
+            </div>
+          </div>
+          <div style="margin-bottom: 1.25rem;">
+            <label class="form-label" for="int-portfolioUrl">Portfolio/LinkedIn URL</label>
+            <input class="form-input" type="url" id="int-portfolioUrl" name="portfolioUrl" placeholder="https://linkedin.com/in/yourprofile">
+          </div>
+          <div style="margin-bottom: 1.25rem;">
+            <label class="form-label" for="int-track">Internship Track <span aria-hidden="true" style="color:red">*</span></label>
+            <select class="form-input" id="int-track" name="track" required>
+              <option value="" disabled selected>Select a track</option>
+              <option value="Project Management">Project Management</option>
+              <option value="Community Development">Community Development</option>
+              <option value="Research & Documentation">Research & Documentation</option>
+              <option value="Marketing & Outreach">Marketing & Outreach</option>
+            </select>
+          </div>
+          <div style="margin-bottom: 1.5rem;">
+            <label class="form-label" for="int-motivation">Why do you want this internship? <span aria-hidden="true" style="color:red">*</span></label>
+            <textarea class="form-textarea" id="int-motivation" name="motivation" rows="4" required placeholder="Tell us your motivation..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%;">Submit Application</button>
+          <div id="int-status" style="margin-top: 1rem; text-align: center; font-weight: 600;"></div>
+        </form>
+      </div>
+    </section>
   </main>
   <div id="footer"></div>
   
@@ -437,6 +499,37 @@ fetch("footer.html")
   .then(data => {
     document.getElementById("footer").innerHTML = data;
   });
+</script>
+<script>
+document.getElementById('internshipForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const status = document.getElementById('int-status');
+  status.textContent = "Submitting...";
+  status.style.color = "var(--navy)";
+  
+  const formData = new FormData(this);
+  const data = Object.fromEntries(formData.entries());
+  
+  try {
+    const response = await fetch('http://localhost:5000/api/internship/apply', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    const result = await response.json();
+    if (response.ok) {
+      status.textContent = result.message || "Application submitted successfully!";
+      status.style.color = "green";
+      this.reset();
+    } else {
+      status.textContent = result.message || "Error submitting application.";
+      status.style.color = "red";
+    }
+  } catch (err) {
+    status.textContent = "Failed to connect to the server.";
+    status.style.color = "red";
+  }
+});
 </script>
 </body>
 </html>
