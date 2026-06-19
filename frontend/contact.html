@@ -461,14 +461,16 @@
       </div>
     </section>
 
-    <section id="donate" class="donation-section">
+    <section id="donate" class="donation-section"></section>
 
-  <div class="donation-wrapper">
+  <div class="donation-container">
 
     <!-- LEFT SIDE -->
     <div class="donation-form-card">
 
-      <h2>❤️ Donation Details</h2>
+      <h2 class="donation-heading">
+        <span>❤️</span> Donation Details
+      </h2>
 
       <label>Full Name</label>
       <input type="text" placeholder="Enter your full name">
@@ -483,40 +485,42 @@
 
       <div class="amount-buttons">
 
-        <button class="amount-btn" data-amount="10">₹10</button>
-
-        <button class="amount-btn" data-amount="50">₹50</button>
-
-        <button class="amount-btn" data-amount="100">₹100</button>
-
         <button class="amount-btn" data-amount="500">₹500</button>
 
         <button class="amount-btn" data-amount="1000">₹1,000</button>
+
+        <button class="amount-btn" data-amount="2500">₹2,500</button>
 
         <button class="amount-btn" data-amount="5000">₹5,000</button>
 
       </div>
 
-      <input
-        type="number"
-        id="customAmount"
-        min="10"
-        placeholder="Enter custom amount">
+      <div class="custom-amount-wrapper">
+        <span class="currency-symbol">₹</span>
+
+        <input
+          type="number"
+          id="customAmount"
+          min="10"
+          placeholder="Enter custom amount">
+      </div>
 
       <p class="minimum-note">
-        Minimum donation: ₹10
+        ℹ Minimum donation: ₹10
       </p>
 
       <div class="security-badges">
         <span>🔒 256-bit SSL</span>
-        <span>🛡 PCI DSS</span>
-        <span>💜 Razorpay Ready</span>
+        <span>🛡 PCI DSS Compliant</span>
+        <span>💜 Razorpay Verified</span>
       </div>
 
       <button id="payButton" class="pay-button">
         Proceed to Pay Securely
       </button>
-
+     <p class="payment-note">
+  🔒 Your payment information is encrypted and never stored on our servers
+</p>
     </div>
 
     <!-- RIGHT SIDE -->
@@ -526,59 +530,61 @@
         <h3>✨ Your Impact</h3>
 
         <div class="impact-item">
-          <strong>₹10</strong>
-          <span>Basic learning materials</span>
-        </div>
+  <div class="impact-icon">📚</div>
+  <div class="impact-content">
+    <strong>₹500</strong>
+    <p>Meals for a child for 1 month</p>
+  </div>
+</div>
 
-        <div class="impact-item">
-          <strong>₹50</strong>
-          <span>Educational resources</span>
-        </div>
+<div class="impact-item">
+  <div class="impact-icon">📖</div>
+  <div class="impact-content">
+    <strong>₹1,000</strong>
+    <p>School supplies & books</p>
+  </div>
+</div>
 
-        <div class="impact-item">
-          <strong>₹100</strong>
-          <span>Study materials & notebooks</span>
-        </div>
+<div class="impact-item">
+  <div class="impact-icon">🏥</div>
+  <div class="impact-content">
+    <strong>₹2,500</strong>
+    <p>Health check-up for 5 children</p>
+  </div>
+</div>
 
-        <div class="impact-item">
-          <strong>₹500</strong>
-          <span>Supports child education</span>
-        </div>
-
-        <div class="impact-item">
-          <strong>₹1,000</strong>
-          <span>Mentorship programs</span>
-        </div>
-
-        <div class="impact-item">
-          <strong>₹5,000</strong>
-          <span>Community welfare initiatives</span>
-        </div>
-
-      </div>
+<div class="impact-item">
+  <div class="impact-icon">🎓</div>
+  <div class="impact-content">
+    <strong>₹5,000</strong>
+    <p>Education support for 1 month</p>
+  </div>
+</div>
 
       <div class="tax-card">
         <h3>📜 Tax Benefits</h3>
 
         <p>
-          Donations are eligible for deduction under
-          Section 80G of the Income Tax Act.
+          All donations are eligible for tax deduction under
+          <strong>Section 80G</strong> of the Income Tax Act.
+          You'll receive an official receipt via email.
         </p>
       </div>
 
       <div class="secure-card">
-        <h3>✅ 100% Secure Donation</h3>
+        <h3>🛡 100% Secure Donation</h3>
 
         <ul>
-          <li>Bank-grade SSL encryption</li>
-          <li>Secure payment gateway</li>
-          <li>Razorpay integration ready</li>
+          <li>✓ Bank-grade 256-bit SSL encryption</li>
+          <li>✓ Payment data never stored on our servers</li>
+          <li>✓ Powered by RBI-licensed Razorpay</li>
         </ul>
       </div>
 
     </div>
 
   </div>
+   
 
 </section>
 
