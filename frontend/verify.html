@@ -56,16 +56,28 @@
   </style>
   <style>
     /* ── Fix: Verification card label/icon overflowing card bounds ── */
+    body[data-page="verify"] .section-white {
+      position: relative;
+      z-index: 2;
+      margin-top: 0;
+    }
     body[data-page="verify"] .card {
       overflow: hidden;
       position: relative;
+      z-index: 2;
+      margin-top: 0;
+      isolation: isolate;
+      background: #fff;
     }
     body[data-page="verify"] .card .section-header {
       position: relative;
       text-align: left;
     }
     body[data-page="verify"] .card .section-header .section-label {
-      position: static;
+      position: static !important;
+      left: auto !important;
+      top: auto !important;
+      transform: none !important;
       display: inline-block;
       max-width: 100%;
       background: none;
@@ -246,11 +258,12 @@
     <header class="page-hero has-image" data-hero
       style="position: relative;
       background: linear-gradient(135deg, rgba(86, 5, 26, 0.97) 0%, rgba(58, 10, 35, 0.92) 50%, rgba(26, 34, 56, 0.95) 100%);
-      padding: 6rem 0;
+      padding: 4rem 0;
       min-height: 380px;
       display: flex;
       align-items: center;
-      overflow: hidden;">
+      overflow: hidden;
+      isolation: isolate;">
       <div class="container" style="display: flex; justify-content: center; text-align: center; width: 100%;">
         <div style="max-width: 960px;">
           <span class="section-label" style="color: var(--gold);">Official Portal</span>
