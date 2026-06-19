@@ -2068,9 +2068,23 @@ h1,h2,h3,h4,h5,h6,
   background:linear-gradient(135deg,var(--primary),var(--primary-light))!important;
   color:#fff!important;
   box-shadow:0 15px 40px rgba(93,15,45,.18);
+  position:relative!important;
 }
 .donate-section .section-title,.donate-section p{color:#fff!important;}
-.donate-section .section-label{color:var(--gold)!important;}
+.donate-section .section-label{
+  position:absolute!important;
+  top:0!important;
+  left:50%!important;
+  transform:translate(-50%,-50%)!important;
+  margin:0!important;
+  padding:.7rem 1.9rem!important;
+  background:var(--accent)!important;
+  color:#5d0f2d!important;
+  font-weight:700!important;
+  border-radius:40px!important;
+  white-space:nowrap!important;
+  box-shadow:0 8px 20px rgba(93,15,45,.22)!important;
+}
 .donate-section .btn-primary{background:var(--gold)!important;color:var(--text)!important;}
 .donate-section .btn-outline{border-color:var(--gold)!important;color:#fff!important;background:transparent!important;}
 .amount-buttons{display:flex;flex-wrap:wrap;gap:12px;margin-top:15px;}
