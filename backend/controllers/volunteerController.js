@@ -1,10 +1,16 @@
 import VolunteerApplication from "../models/volunteerApplication.js";
-import { sendVolunteerConfirmationEmail, sendVolunteerAdminEmail } from "../services/emailService.js";
+import { 
+    sendVolunteerConfirmationEmail, sendVolunteerAdminEmail 
+} 
+from "../services/emailService.js";
 
 export const createVolunteerApplication = async (req, res) => {
 
     try {
-        const { name, email, phone, role, availability, skills, motivation } = req.validatedVolunteer;
+        const { 
+            name, email, phone, role, availability, skills, motivation 
+        } 
+        = req.validatedVolunteer;
         const ipAddress = req.clientIp;
         const userAgent = req.get("user-agent") || "Unknown";
 
@@ -24,8 +30,13 @@ export const createVolunteerApplication = async (req, res) => {
         await newApplication.save();
 
         const [confirmationResult, adminResult] = await Promise.all([
-            sendVolunteerConfirmationEmail({ application: newApplication }),
-            sendVolunteerAdminEmail({ application: newApplication })
+            sendVolunteerConfirmationEmail({ 
+                application: newApplication 
+            }),
+            sendVolunteerAdminEmail({ 
+                application: newApplication 
+
+            })
         ]);
 
         if (!confirmationResult || !adminResult) {

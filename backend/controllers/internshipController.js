@@ -1,5 +1,8 @@
 import InternshipApplication from "../models/internshipApplication.js";
-import { sendInternshipConfirmationEmail, sendInternshipAdminEmail } from "../services/emailService.js";
+import { 
+    sendInternshipConfirmationEmail, sendInternshipAdminEmail 
+} 
+from "../services/emailService.js";
 
 export const createInternshipApplication = async (req, res) => {
 
