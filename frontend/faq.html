@@ -73,44 +73,262 @@
 </head>
 <body data-page="faq">
 
-  <nav id="site-nav" class="site-nav is-transparent" aria-label="Main navigation">
+ <header class="site-header" id="site-header">
+  <nav class="site-nav" id="site-nav" aria-label="Main navigation">
     <div class="nav-inner">
-      <a href="index.html" class="brand" aria-label="Amaanitvam Foundation — Home">
-        <img src="assets/images/logo.jpg" alt="Amaanitvam Foundation" class="brand-logo" width="200" height="38">
+
+      <!-- LOGO — Left -->
+      <a href="index.html" class="brand" aria-label="Amaanitvam Foundation home">
+    <img src="assets/images/logo.jpg" alt="Amaanitvam Foundation" class="brand-logo">
+
+    <div class="brand-text">
+        <span class="brand-name">AMAANITVAM</span>
+        <span class="brand-subtitle">FOUNDATION</span>
+    </div>
+</a>
+
+     <!-- NAV LINKS -->
+<div class="nav-links" id="nav-links" role="navigation">
+
+  <!-- HOME -->
+  <a href="index.html" class="nav-link">Home</a>
+
+  <!-- ABOUT US -->
+  <div class="nav-item has-dropdown">
+    <button class="nav-link dropdown-trigger" aria-haspopup="true" aria-expanded="false">
+      About Us
+      <span class="nav-chevron" aria-hidden="true">
+        <svg width="12" height="7" viewBox="0 0 12 7" fill="none">
+          <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+    </button>
+
+    <div class="dropdown-menu" role="menu">
+
+      <a href="about.html" class="dropdown-item" role="menuitem">
+        <span class="dropdown-icon">
+          <span class="material-symbols-outlined">info</span>
+        </span>
+        <span class="dropdown-text">
+          <strong>About Foundation</strong>
+          <small>Our story & values</small>
+        </span>
       </a>
-      <div class="nav-links" role="menubar">
-    <a href="index.html" class="nav-link" data-nav="home">Home</a>
 
-    <a href="about.html" class="nav-link" data-nav="about">
-        About
-    </a>
+      <a href="impact.html" class="dropdown-item" role="menuitem">
+        <span class="dropdown-icon">
+          <span class="material-symbols-outlined">bar_chart</span>
+        </span>
+        <span class="dropdown-text">
+          <strong>Impact</strong>
+          <small>What we've achieved</small>
+        </span>
+      </a>
 
-    <a href="volunteer.html" class="nav-link" data-nav="volunteer">
-        Get Involved
-    </a>
+      <a href="programs.html" class="dropdown-item" role="menuitem">
+        <span class="dropdown-icon">
+          <span class="material-symbols-outlined">apps</span>
+        </span>
+        <span class="dropdown-text">
+          <strong>Programs</strong>
+          <small>Our initiatives & impact areas</small>
+        </span>
+      </a>
 
-    <a href="resources.html" class="nav-link" data-nav="resources">
-        Resources
-    </a>
+      <a href="gallery.html" class="dropdown-item" role="menuitem">
+        <span class="dropdown-icon">
+          <span class="material-symbols-outlined">photo_library</span>
+        </span>
+        <span class="dropdown-text">
+          <strong>Gallery</strong>
+          <small>Photos & moments</small>
+        </span>
+      </a>
+
+    </div>
+  </div>
+
+ 
+  <!-- GET INVOLVED -->
+  <div class="nav-item has-dropdown">
+    <button class="nav-link dropdown-trigger" aria-haspopup="true" aria-expanded="false">
+      Get Involved
+      <span class="nav-chevron" aria-hidden="true">
+        <svg width="12" height="7" viewBox="0 0 12 7" fill="none">
+          <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+    </button>
+
+    <div class="dropdown-menu" role="menu">
+
+      <a href="volunteer.html" class="dropdown-item" role="menuitem">
+        <span class="dropdown-icon">
+          <span class="material-symbols-outlined">volunteer_activism</span>
+        </span>
+        <span class="dropdown-text">
+          <strong>Volunteer</strong>
+          <small>Join our volunteer network</small>
+        </span>
+      </a>
+
+      <a href="internship.html" class="dropdown-item" role="menuitem">
+        <span class="dropdown-icon">
+          <span class="material-symbols-outlined">work</span>
+        </span>
+        <span class="dropdown-text">
+          <strong>Internship</strong>
+          <small>Apply for internship</small>
+        </span>
+      </a>
+
+      <a href="contact.html" class="dropdown-item" role="menuitem">
+        <span class="dropdown-icon">
+          <span class="material-symbols-outlined">mail</span>
+        </span>
+        <span class="dropdown-text">
+          <strong>Contact Us</strong>
+          <small>Get in touch</small>
+        </span>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- RESOURCES -->
+  <div class="nav-item has-dropdown">
+    <button class="nav-link dropdown-trigger" aria-haspopup="true" aria-expanded="false">
+      Resources
+      <span class="nav-chevron" aria-hidden="true">
+        <svg width="12" height="7" viewBox="0 0 12 7" fill="none">
+          <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+    </button>
+
+    <div class="dropdown-menu" role="menu">
+
+      <a href="updates.html" class="dropdown-item" role="menuitem">
+        <span class="dropdown-icon">
+          <span class="material-symbols-outlined">newspaper</span>
+        </span>
+        <span class="dropdown-text">
+          <strong>Circulars & Updates</strong>
+          <small>Latest news & notices</small>
+        </span>
+      </a>
+
+      <a href="verify.html" class="dropdown-item" role="menuitem">
+        <span class="dropdown-icon">
+          <span class="material-symbols-outlined">verified</span>
+        </span>
+        <span class="dropdown-text">
+          <strong>Verify Certificate</strong>
+          <small>Check your certificate</small>
+        </span>
+      </a>
+
+      <a href="faq.html" class="dropdown-item" role="menuitem">
+        <span class="dropdown-icon">
+          <span class="material-symbols-outlined">help</span>
+        </span>
+        <span class="dropdown-text">
+          <strong>FAQ</strong>
+          <small>Common questions answered</small>
+        </span>
+      </a>
+
+    </div>
+  </div>
+
 </div>
+     <!-- COLLABORATIONS -->
+  <!-- COLLABORATIONS ▼ -->
+<div class="nav-item has-dropdown">
+  <button class="nav-link dropdown-trigger" aria-haspopup="true" aria-expanded="false">
+    Collaborations & Partnerships
+    <span class="nav-chevron" aria-hidden="true">
+      <svg width="12" height="7" viewBox="0 0 12 7" fill="none">
+        <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+  </button>
+
+  <div class="dropdown-menu" role="menu">
+
+    <a href="collaborations.html" class="dropdown-item" role="menuitem">
+      <span class="dropdown-icon">
+        <span class="material-symbols-outlined">handshake</span>
+      </span>
+      <span class="dropdown-text">
+        <strong>Collaborations & Partnerships</strong>
+        <small>Work with Amaanitvam Foundation</small>
+      </span>
+    </a>
+
+  </div>
+</div>
+
+
+      <!-- NAV ACTIONS — Far right -->
       <div class="nav-actions">
-        <a href="contact.html#donate" class="btn-donate">Donate</a>
-        <button id="menu-toggle" class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open navigation menu">
-          <span class="material-symbols-outlined" aria-hidden="true">menu</span>
+        <!-- Mobile hamburger -->
+        <button class="menu-toggle" id="menu-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
         </button>
       </div>
-    </div>
+
+    </div><!-- /nav-inner -->
   </nav>
 
-  <div id="mobile-menu" class="mobile-menu" aria-label="Mobile navigation">
-    <a href="index.html" class="nav-link">Home</a>
-    <a href="about.html" class="nav-link">About</a>
-    <a href="volunteer.html" class="nav-link">Get Involved</a>
-    <a href="resources.html" class="nav-link">Resources</a>
-     <a href="programs.html" class="mobile-link">Programs</a>
-    <a href="contact.html#donate" class="btn-donate">Donate</a>
-</div>
+  <!-- ── Mobile Menu ── -->
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <div class="mobile-menu-inner">
 
+      <a href="index.html" class="mobile-link" style="padding:1rem 0.25rem;font-weight:600;display:block;">Home</a>
+
+      <div class="mobile-section">
+        <button class="mobile-group-toggle" aria-expanded="false">
+          About Us <span class="material-symbols-outlined" aria-hidden="true">expand_more</span>
+        </button>
+        <div class="mobile-group-links">
+          <a href="about.html" class="mobile-link">About Foundation</a>
+          <a href="impact.html" class="mobile-link">Impact</a>
+          <a href="events.html" class="mobile-link">Events</a>
+          <a href="gallery.html" class="mobile-link">Gallery</a>
+        </div>
+      </div>
+
+      <div class="mobile-section">
+        <button class="mobile-group-toggle" aria-expanded="false">
+          Get Involved <span class="material-symbols-outlined" aria-hidden="true">expand_more</span>
+        </button>
+        <div class="mobile-group-links">
+          <a href="volunteer.html" class="mobile-link">Volunteer</a>
+          <a href="internship.html" class="mobile-link">Internship</a>
+          <a href="contact.html" class="mobile-link">Contact Us</a>
+        </div>
+      </div>
+
+      <div class="mobile-section">
+        <button class="mobile-group-toggle" aria-expanded="false">
+          Resources <span class="material-symbols-outlined" aria-hidden="true">expand_more</span>
+        </button>
+        <div class="mobile-group-links">
+          <a href="updates.html" class="mobile-link">Circulars &amp; Updates</a>
+          <a href="contact.html#faq" class="mobile-link">FAQ</a>
+          <a href="verify.html" class="mobile-link">Verify Certificate</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</header> 
+
+ 
   <main id="main-content">
 
     <!-- Hero -->
