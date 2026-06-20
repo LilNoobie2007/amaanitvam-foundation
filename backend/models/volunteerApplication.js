@@ -55,18 +55,7 @@ const volunteerApplicationSchema = new mongoose.Schema(
             default: "pending",
             index: true
         },
-        ipAddress: {
-            type: String,
-            required: true,
-            trim: true,
-            maxlength: 80
-        },
-        userAgent: {
-            type: String,
-            required: true,
-            trim: true,
-            maxlength: 400
-        },
+
         submissionTimestamp: {
             type: Date,
             default: Date.now,

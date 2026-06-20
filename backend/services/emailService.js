@@ -192,7 +192,7 @@ export const sendInternshipConfirmationEmail = async ({ application }) => {
     return true;
 };
 
-export const sendInternshipAdminEmail = async ({ application }) => {
+export const sendInternshipAdminEmail = async ({ application, resumeFile }) => {
     const transporter = createTransporter();
     const fromAddress = getFromAddress();
     const adminEmail = getAdminEmail();
@@ -221,7 +221,7 @@ export const sendInternshipAdminEmail = async ({ application }) => {
         footerNote: `This is an automated notification for ${ORGANIZATION_NAME}. Reply directly to the sender only after reviewing the submission.`
     });
 
-    await transporter.sendMail({
+    const mailOptions = {
         from: fromAddress,
         to: adminEmail,
         replyTo: application.email,
@@ -242,7 +242,18 @@ export const sendInternshipAdminEmail = async ({ application }) => {
             `Submission Time: ${submissionTime}`
         ].join("\n"),
         html
-    });
+    };
+
+    if (resumeFile) {
+        mailOptions.attachments = [
+            {
+                filename: resumeFile.originalname,
+                content: resumeFile.buffer
+            }
+        ];
+    }
+
+    await transporter.sendMail(mailOptions);
 
     return true;
 };
