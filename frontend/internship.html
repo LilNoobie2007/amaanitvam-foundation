@@ -433,15 +433,21 @@
         </div>
         <form id="internshipForm" style="background: var(--surface); padding: 2rem; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
           <div style="margin-bottom: 1.25rem;">
-            <label class="form-label" for="int-name">Full Name <span aria-hidden="true" style="color:red">*</span></label>
+            <label class="form-label" for="int-name">Full Name 
+              <span aria-hidden="true" style="color:red">*</span>
+            </label>
             <input class="form-input" type="text" id="int-name" name="name" required pattern="[A-Za-z\s]+" title="Please enter only letters and spaces" placeholder="Jane Doe">
           </div>
           <div style="margin-bottom: 1.25rem;">
-            <label class="form-label" for="int-email">Email Address <span aria-hidden="true" style="color:red">*</span></label>
+            <label class="form-label" for="int-email">Email Address 
+              <span aria-hidden="true" style="color:red">*</span>
+            </label>
             <input class="form-input" type="email" id="int-email" name="email" required placeholder="jane@example.com">
           </div>
           <div style="margin-bottom: 1.25rem;">
-            <label class="form-label" for="int-phone">Phone Number <span aria-hidden="true" style="color:red">*</span></label>
+            <label class="form-label" for="int-phone">Phone Number 
+              <span aria-hidden="true" style="color:red">*</span>
+            </label>
             <input class="form-input" type="text" id="int-phone" name="phone" required pattern="\d{10}" maxlength="10" title="Please enter exactly 10 digits" placeholder="10-digit number">
           </div>
           <div style="margin-bottom: 1.25rem; display: flex; gap: 1rem;">
@@ -469,7 +475,9 @@
             <input class="form-input" type="url" id="int-portfolioUrl" name="portfolioUrl" placeholder="https://linkedin.com/in/yourprofile">
           </div>
           <div style="margin-bottom: 1.25rem;">
-            <label class="form-label" for="int-track">Internship Track <span aria-hidden="true" style="color:red">*</span></label>
+            <label class="form-label" for="int-track">Internship Track 
+              <span aria-hidden="true" style="color:red">*</span>
+            </label>
             <select class="form-input" id="int-track" name="track" required>
               <option value="" disabled selected>Select a track</option>
               <option value="Project Management">Project Management</option>
@@ -479,7 +487,9 @@
             </select>
           </div>
           <div style="margin-bottom: 1.5rem;">
-            <label class="form-label" for="int-motivation">Why do you want this internship? <span aria-hidden="true" style="color:red">*</span></label>
+            <label class="form-label" for="int-motivation">Why do you want this internship? 
+              <span aria-hidden="true" style="color:red">*</span>
+            </label>
             <textarea class="form-textarea" id="int-motivation" name="motivation" rows="4" required placeholder="Tell us your motivation..."></textarea>
           </div>
           <button type="submit" class="btn btn-primary" style="width: 100%;">Submit Application</button>
