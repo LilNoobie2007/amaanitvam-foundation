@@ -536,13 +536,28 @@ h1,h2,h3,h4,h5,h6,
 /* =====================================================
    FLOATING SOCIALS
 ===================================================== */
-.floating-socials,.social-sidebar{position:fixed;left:0;top:50%;transform:translateY(-50%);z-index:9999;display:flex;flex-direction:column;background:#1b1b1b;border-radius:0 12px 12px 0;overflow:hidden;}
+.floating-socials,.social-sidebar{position:fixed;left:0;top:50%;transform:translateY(-50%);z-index:9999;display:flex;flex-direction:column;background:#111111;
+box-shadow:0 8px 25px rgba(0,0,0,.25);;border-radius:0 12px 12px 0;overflow:hidden;}
 .floating-socials a,.social-sidebar a{display:flex;align-items:center;justify-content:center;width:55px;height:55px;color:#fff;text-decoration:none;font-size:22px;transition:.3s;}
-.floating-socials a:hover,.social-sidebar a:hover{background:#2c2c2c;transform:scale(1.04);}
-.floating-socials .fa-facebook-f,.social-sidebar .fa-facebook-f{color:#1877F2;}
-.floating-socials .fa-instagram,.social-sidebar .fa-instagram{color:#E4405F;}
-.floating-socials .fa-x-twitter,.social-sidebar .fa-x-twitter{color:#fff;}
-.floating-socials .fa-linkedin-in,.social-sidebar .fa-linkedin-in{color:#0A66C2;}
+.floating-socials a:hover,
+.social-sidebar a:hover{
+    background:#6f1235;
+    color:#ffffff !important;
+    transform:scale(1.04);
+}
+.floating-socials .fa-facebook-f,
+.social-sidebar .fa-facebook-f,
+
+.floating-socials .fa-instagram,
+.social-sidebar .fa-instagram,
+
+.floating-socials .fa-x-twitter,
+.social-sidebar .fa-x-twitter,
+
+.floating-socials .fa-linkedin-in,
+.social-sidebar .fa-linkedin-in{
+    color:#d8a15a;
+}
 
 /* =====================================================
    UTILITIES
@@ -835,4 +850,224 @@ h1,h2,h3,h4,h5,h6,
 }
 html{
     scroll-behavior: smooth;
+}
+.donate-section{
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 5rem 3rem;
+    text-align: center;
+
+    background: linear-gradient(135deg, #6f1235, #8d4f6b);
+    border-radius: 30px;
+}
+/* Reduce Impact Amount Size */
+.impact-item strong,
+.impact-content strong {
+    font-size: 1.3rem !important;
+    font-weight: 700 !important;
+    line-height: 1.1 !important;
+}
+/* Contact page CTA - make it match other pages */
+
+.donate-section{
+    width: 100% !important;
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+}
+
+.donate-section .section-title{
+    font-size: 4.5rem !important;
+    line-height: 1.1 !important;
+    max-width: 100% !important;
+    white-space: nowrap !important;
+}
+
+@media (max-width: 1200px){
+    .donate-section .section-title{
+        white-space: normal !important;
+        font-size: 3.5rem !important;
+    }
+}
+/* Remove horizontal scrolling */
+html,
+body{
+    width:100%;
+    overflow-x:hidden !important;
+}
+
+/* Keep donation section inside screen */
+.donation-container{
+    width:100% !important;
+    max-width:1400px !important;
+    margin:0 auto !important;
+    box-sizing:border-box !important;
+}
+
+/* Make all cards fit */
+.donation-form-card,
+.donation-info,
+.impact-card,
+.tax-card,
+.secure-card{
+    width:100% !important;
+    box-sizing:border-box !important;
+}
+/* Remove extra blank space below payment button */
+
+.donation-form-card{
+    height:auto !important;
+    min-height:auto !important;
+    padding-bottom:25px !important;
+}
+
+.donation-container{
+    align-items:flex-start !important;
+}
+
+.pay-button{
+    margin-bottom:15px !important;
+}
+/* Make right-side cards compact */
+
+.tax-card,
+.secure-card{
+    padding: 24px !important;
+}
+
+.tax-card p,
+.secure-card li{
+    font-size: 0.95rem !important;
+    line-height: 1.6 !important;
+}
+
+.secure-card ul{
+    margin: 12px 0 0 0 !important;
+    padding-left: 18px !important;
+}
+
+.secure-card li{
+    margin-bottom: 8px !important;
+}
+.tax-card{
+    min-height: auto !important;
+}
+
+.secure-card{
+    min-height: auto !important;
+}
+.donation-container{
+    grid-template-columns: 2fr 1fr !important;
+}
+/* Fix excessive donation section height */
+
+.donation-form-card,
+.donation-info,
+.impact-card,
+.tax-card,
+.secure-card{
+    height: auto !important;
+    min-height: auto !important;
+}
+
+.donation-container{
+    align-items: start !important;
+}
+/* RIGHT COLUMN FIX */
+
+.donation-info{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+}
+
+.impact-card{
+    padding:25px !important;
+}
+
+.impact-item{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    padding:16px 20px !important;
+    margin-bottom:12px;
+    border-radius:18px;
+    background:#f7f7f7;
+}
+
+.impact-icon{
+    width:60px;
+    height:60px;
+    min-width:60px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+    background:#f2ede7;
+    border-radius:18px;
+}
+
+.impact-content strong{
+    display:block;
+    font-size:1.8rem;
+    line-height:1;
+    margin-bottom:8px;
+    color:#2d2230;
+}
+
+.impact-content p{
+    margin:0;
+    font-size:1rem;
+    color:#444;
+}
+
+.tax-card{
+    padding:25px !important;
+}
+
+.tax-card h3{
+    color:#fff3d6 !important;
+    margin-bottom:15px;
+}
+
+.secure-card{
+    padding:25px !important;
+}
+
+.secure-card ul{
+    margin-top:15px;
+}
+
+.secure-card li{
+    margin-bottom:12px;
+}
+
+/* REMOVE EXTRA HEIGHT */
+.donation-form-card,
+.impact-card,
+.tax-card,
+.secure-card{
+    min-height:auto !important;
+    height:auto !important;
+}
+.impact-item{
+    display:flex;
+    align-items:center;
+    gap:24px;
+}
+
+.impact-content{
+    flex:1;
+}
+
+.impact-content strong{
+    display:block;
+    font-size:2rem;
+    margin-bottom:8px;
+}
+.contact-hero p{
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
 }
