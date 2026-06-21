@@ -1800,3 +1800,14 @@ body{
 .page-hero .btn-outline:hover{
   background:rgba(255,255,255,.10) !important;
 }
+body[data-page="faq"] .page-hero .section-title,
+body[data-page="faq"] .page-hero h1{
+    color:#5d0f2d !important;
+    -webkit-text-fill-color:#5d0f2d !important;
+    opacity:1 !important;
+}
+
+body[data-page="faq"] .page-hero .section-desc{
+    color:#6b5b55 !important;
+    opacity:1 !important;
+}
