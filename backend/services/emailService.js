@@ -113,8 +113,6 @@ export const sendAdminNotificationEmail = async ({ contact }) => {
                     <tr><td style="padding:12px;border:1px solid #dce4ef;background:#f8fafc;font-weight:700;">Subject</td><td style="padding:12px;border:1px solid #dce4ef;">${escapeHtml(contact.subject)}</td></tr>
                     <tr><td style="padding:12px;border:1px solid #dce4ef;background:#f8fafc;font-weight:700;">Message</td><td style="padding:12px;border:1px solid #dce4ef;white-space:pre-wrap;">${toHtmlParagraph(contact.message)}</td></tr>
                     <tr><td style="padding:12px;border:1px solid #dce4ef;background:#f8fafc;font-weight:700;">Submission Time</td><td style="padding:12px;border:1px solid #dce4ef;">${escapeHtml(submissionTime)}</td></tr>
-                    <tr><td style="padding:12px;border:1px solid #dce4ef;background:#f8fafc;font-weight:700;">IP Address</td><td style="padding:12px;border:1px solid #dce4ef;">${escapeHtml(contact.ipAddress)}</td></tr>
-                    <tr><td style="padding:12px;border:1px solid #dce4ef;background:#f8fafc;font-weight:700;">Browser / User Agent</td><td style="padding:12px;border:1px solid #dce4ef;">${escapeHtml(contact.userAgent)}</td></tr>
                 </tbody>
             </table>
         `,
@@ -134,9 +132,7 @@ export const sendAdminNotificationEmail = async ({ contact }) => {
             `Email Address: ${contact.email}`,
             `Subject: ${contact.subject}`,
             `Message: ${contact.message}`,
-            `Submission Time: ${submissionTime}`,
-            `IP Address: ${contact.ipAddress}`,
-            `Browser / User Agent: ${contact.userAgent}`
+            `Submission Time: ${submissionTime}`
         ].join("\n"),
         html
     });
@@ -196,7 +192,7 @@ export const sendInternshipConfirmationEmail = async ({ application }) => {
     return true;
 };
 
-export const sendInternshipAdminEmail = async ({ application }) => {
+export const sendInternshipAdminEmail = async ({ application, resumeFile }) => {
     const transporter = createTransporter();
     const fromAddress = getFromAddress();
     const adminEmail = getAdminEmail();
@@ -217,18 +213,15 @@ export const sendInternshipAdminEmail = async ({ application }) => {
                     <tr><td style="padding:12px;border:1px solid #dce4ef;background:#f8fafc;font-weight:700;">Current Year</td><td style="padding:12px;border:1px solid #dce4ef;">${escapeHtml(application.currentYear)}</td></tr>
                     <tr><td style="padding:12px;border:1px solid #dce4ef;background:#f8fafc;font-weight:700;">Motivation</td><td style="padding:12px;border:1px solid #dce4ef;white-space:pre-wrap;">${toHtmlParagraph(String(application.motivation || "").slice(0, 500))}</td></tr>
                     <tr><td style="padding:12px;border:1px solid #dce4ef;background:#f8fafc;font-weight:700;">Portfolio URL</td><td style="padding:12px;border:1px solid #dce4ef;">${escapeHtml(application.portfolioUrl)}</td></tr>
-                    <tr><td style="padding:12px;border:1px solid #dce4ef;background:#f8fafc;font-weight:700;">Preferred Start</td><td style="padding:12px;border:1px solid #dce4ef;">${escapeHtml(application.startDate)}</td></tr>
                     <tr><td style="padding:12px;border:1px solid #dce4ef;background:#f8fafc;font-weight:700;">Duration</td><td style="padding:12px;border:1px solid #dce4ef;">${escapeHtml(application.duration)}</td></tr>
                     <tr><td style="padding:12px;border:1px solid #dce4ef;background:#f8fafc;font-weight:700;">Submission Time</td><td style="padding:12px;border:1px solid #dce4ef;">${escapeHtml(submissionTime)}</td></tr>
-                    <tr><td style="padding:12px;border:1px solid #dce4ef;background:#f8fafc;font-weight:700;">IP Address</td><td style="padding:12px;border:1px solid #dce4ef;">${escapeHtml(application.ipAddress)}</td></tr>
-                    <tr><td style="padding:12px;border:1px solid #dce4ef;background:#f8fafc;font-weight:700;">Browser / User Agent</td><td style="padding:12px;border:1px solid #dce4ef;">${escapeHtml(application.userAgent)}</td></tr>
                 </tbody>
             </table>
         `,
         footerNote: `This is an automated notification for ${ORGANIZATION_NAME}. Reply directly to the sender only after reviewing the submission.`
     });
 
-    await transporter.sendMail({
+    const mailOptions = {
         from: fromAddress,
         to: adminEmail,
         replyTo: application.email,
@@ -245,14 +238,22 @@ export const sendInternshipAdminEmail = async ({ application }) => {
             `Current Year: ${application.currentYear}`,
             `Motivation: ${String(application.motivation || "").slice(0, 500)}`,
             `Portfolio URL: ${application.portfolioUrl}`,
-            `Preferred Start: ${application.startDate}`,
             `Duration: ${application.duration}`,
-            `Submission Time: ${submissionTime}`,
-            `IP Address: ${application.ipAddress}`,
-            `Browser / User Agent: ${application.userAgent}`
+            `Submission Time: ${submissionTime}`
         ].join("\n"),
         html
-    });
+    };
+
+    if (resumeFile) {
+        mailOptions.attachments = [
+            {
+                filename: resumeFile.originalname,
+                content: resumeFile.buffer
+            }
+        ];
+    }
+
+    await transporter.sendMail(mailOptions);
 
     return true;
 };
@@ -331,8 +332,6 @@ export const sendVolunteerAdminEmail = async ({ application }) => {
                     <tr><td style="padding:12px;border:1px solid #dce4ef;background:#f8fafc;font-weight:700;">Skills</td><td style="padding:12px;border:1px solid #dce4ef;">${escapeHtml(application.skills)}</td></tr>
                     <tr><td style="padding:12px;border:1px solid #dce4ef;background:#f8fafc;font-weight:700;">Motivation</td><td style="padding:12px;border:1px solid #dce4ef;white-space:pre-wrap;">${toHtmlParagraph(String(application.motivation || "").slice(0, 500))}</td></tr>
                     <tr><td style="padding:12px;border:1px solid #dce4ef;background:#f8fafc;font-weight:700;">Submission Time</td><td style="padding:12px;border:1px solid #dce4ef;">${escapeHtml(submissionTime)}</td></tr>
-                    <tr><td style="padding:12px;border:1px solid #dce4ef;background:#f8fafc;font-weight:700;">IP Address</td><td style="padding:12px;border:1px solid #dce4ef;">${escapeHtml(application.ipAddress)}</td></tr>
-                    <tr><td style="padding:12px;border:1px solid #dce4ef;background:#f8fafc;font-weight:700;">Browser / User Agent</td><td style="padding:12px;border:1px solid #dce4ef;">${escapeHtml(application.userAgent)}</td></tr>
                 </tbody>
             </table>
         `,
@@ -355,9 +354,131 @@ export const sendVolunteerAdminEmail = async ({ application }) => {
             `Availability: ${application.availability}`,
             `Skills: ${application.skills}`,
             `Motivation: ${String(application.motivation || "").slice(0, 500)}`,
-            `Submission Time: ${submissionTime}`,
-            `IP Address: ${application.ipAddress}`,
-            `Browser / User Agent: ${application.userAgent}`
+            `Submission Time: ${submissionTime}`
+        ].join("\n"),
+        html
+    });
+
+    return true;
+};
+
+export const sendDonationReceiptEmail = async ({ donation }) => {
+    const transporter = createTransporter();
+    const fromAddress = getFromAddress();
+    const submissionTime = formatDateTime(donation.submissionTimestamp || donation.createdAt || Date.now());
+
+    const formattedAmount = new Intl.NumberFormat("en-IN", {
+        style: "currency",
+        currency: "INR",
+        minimumFractionDigits: 0
+    }).format(donation.amount);
+
+    const html = renderEmailShell({
+        title: "Thank You for Your Generous Donation",
+        body: `
+            <p>Dear ${escapeHtml(donation.name)},</p>
+            <p>Thank you for your generous donation of <strong>${escapeHtml(formattedAmount)}</strong> to Amaanitvam Foundation. Your contribution directly supports our mission to create lasting social impact.</p>
+            <p>This email serves as your official donation receipt.</p>
+            <div style="margin:24px 0;padding:18px;border-radius:12px;background:#eefaf2;border:1px solid #ccebd7;">
+                <p style="margin:0 0 12px;font-weight:700;color:#0f5132;">Please join the WhatsApp community to stay updated and in touch with us.</p>
+                <a href="${WHATSAPP_INVITE_URL}" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:10px;background:#25d366;color:#ffffff;text-decoration:none;font-weight:700;font-size:15px;line-height:1;padding:14px 22px;border-radius:999px;">
+                    <span>Join WhatsApp</span>
+                </a>
+            </div>
+            <div style="margin:24px 0;padding:18px;border-radius:12px;background:#f8fafc;border:1px solid #e6ebf2;">
+                <p style="margin:0 0 8px;"><strong>Donation Receipt</strong></p>
+                <p style="margin:0;"><strong>Amount:</strong> ${escapeHtml(formattedAmount)}</p>
+                <p style="margin:0;"><strong>Transaction ID:</strong> ${escapeHtml(donation.razorpayPaymentId)}</p>
+                <p style="margin:0;"><strong>Order ID:</strong> ${escapeHtml(donation.razorpayOrderId)}</p>
+                <p style="margin:0;"><strong>Date:</strong> ${escapeHtml(submissionTime)}</p>
+                <p style="margin:0;"><strong>Status:</strong> ✅ Payment Successful</p>
+            </div>
+            <p>All donations to Amaanitvam Foundation are eligible for tax deduction under <strong>Section 80G</strong> of the Income Tax Act.</p>
+            <p style="margin-bottom:0;">With gratitude,<br>${ORGANIZATION_NAME} Team</p>
+        `,
+        footerNote: `For any follow-up, contact us at ${ORGANIZATION_EMAIL} or ${ORGANIZATION_PHONE}. ${ORGANIZATION_ADDRESS}`
+    });
+
+    await transporter.sendMail({
+        from: fromAddress,
+        to: donation.email,
+        subject: `Donation Receipt — ${formattedAmount} — Amaanitvam Foundation`,
+        text: [
+            `Dear ${donation.name},`,
+            "",
+            `Thank you for your generous donation of ${formattedAmount} to Amaanitvam Foundation.`,
+            "",
+            "Donation Receipt:",
+            `Amount: ${formattedAmount}`,
+            `Transaction ID: ${donation.razorpayPaymentId}`,
+            `Order ID: ${donation.razorpayOrderId}`,
+            `Date: ${submissionTime}`,
+            `Status: Payment Successful`,
+            "",
+            "All donations are eligible for tax deduction under Section 80G of the Income Tax Act.",
+            "",
+            "With gratitude,",
+            `${ORGANIZATION_NAME} Team`,
+            "",
+            `Contact: ${ORGANIZATION_EMAIL} | ${ORGANIZATION_PHONE}`,
+            ORGANIZATION_ADDRESS
+        ].join("\n"),
+        html
+    });
+
+    return true;
+};
+
+export const sendDonationAdminEmail = async ({ donation }) => {
+    const transporter = createTransporter();
+    const fromAddress = getFromAddress();
+    const adminEmail = getAdminEmail();
+    const submissionTime = formatDateTime(donation.submissionTimestamp || donation.createdAt || Date.now());
+
+    const formattedAmount = new Intl.NumberFormat("en-IN", {
+        style: "currency",
+        currency: "INR",
+        minimumFractionDigits: 0
+    }).format(donation.amount);
+
+    const html = renderEmailShell({
+        title: "New Donation Received 🎉",
+        body: `
+            <p>A new donation has been successfully received and verified. The details are below.</p>
+            <table style="width:100%;border-collapse:collapse;border:1px solid #dce4ef;font-size:14px;">
+                <tbody>
+                    <tr><td style="padding:12px;border:1px solid #dce4ef;background:#f8fafc;font-weight:700;width:32%;">Record ID</td><td style="padding:12px;border:1px solid #dce4ef;">${escapeHtml(donation._id?.toString())}</td></tr>
+                    <tr><td style="padding:12px;border:1px solid #dce4ef;background:#f8fafc;font-weight:700;">Donor Name</td><td style="padding:12px;border:1px solid #dce4ef;">${escapeHtml(donation.name)}</td></tr>
+                    <tr><td style="padding:12px;border:1px solid #dce4ef;background:#f8fafc;font-weight:700;">Email</td><td style="padding:12px;border:1px solid #dce4ef;">${escapeHtml(donation.email)}</td></tr>
+                    <tr><td style="padding:12px;border:1px solid #dce4ef;background:#f8fafc;font-weight:700;">Phone</td><td style="padding:12px;border:1px solid #dce4ef;">${escapeHtml(donation.phone || "Not provided")}</td></tr>
+                    <tr><td style="padding:12px;border:1px solid #dce4ef;background:#eefaf2;font-weight:700;color:#0f5132;">Amount</td><td style="padding:12px;border:1px solid #dce4ef;font-weight:700;color:#0f5132;font-size:16px;">${escapeHtml(formattedAmount)}</td></tr>
+                    <tr><td style="padding:12px;border:1px solid #dce4ef;background:#f8fafc;font-weight:700;">Razorpay Payment ID</td><td style="padding:12px;border:1px solid #dce4ef;">${escapeHtml(donation.razorpayPaymentId)}</td></tr>
+                    <tr><td style="padding:12px;border:1px solid #dce4ef;background:#f8fafc;font-weight:700;">Razorpay Order ID</td><td style="padding:12px;border:1px solid #dce4ef;">${escapeHtml(donation.razorpayOrderId)}</td></tr>
+                    <tr><td style="padding:12px;border:1px solid #dce4ef;background:#f8fafc;font-weight:700;">Payment Status</td><td style="padding:12px;border:1px solid #dce4ef;">✅ Paid</td></tr>
+                    <tr><td style="padding:12px;border:1px solid #dce4ef;background:#f8fafc;font-weight:700;">Donation Time</td><td style="padding:12px;border:1px solid #dce4ef;">${escapeHtml(submissionTime)}</td></tr>
+                </tbody>
+            </table>
+        `,
+        footerNote: `This is an automated notification for ${ORGANIZATION_NAME}. Verify payment on the Razorpay dashboard.`
+    });
+
+    await transporter.sendMail({
+        from: fromAddress,
+        to: adminEmail,
+        replyTo: donation.email,
+        subject: `💰 New Donation Received — ${formattedAmount}`,
+        text: [
+            "New Donation Received",
+            "",
+            `Record ID: ${donation._id?.toString()}`,
+            `Donor Name: ${donation.name}`,
+            `Email: ${donation.email}`,
+            `Phone: ${donation.phone || "Not provided"}`,
+            `Amount: ${formattedAmount}`,
+            `Razorpay Payment ID: ${donation.razorpayPaymentId}`,
+            `Razorpay Order ID: ${donation.razorpayOrderId}`,
+            `Status: Paid`,
+            `Donation Time: ${submissionTime}`
         ].join("\n"),
         html
     });

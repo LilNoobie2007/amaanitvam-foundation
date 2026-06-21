@@ -51,6 +51,12 @@
         display: none;
       }
     }
+    /* Remove yellow border from FAQ section */
+    .faq-item,
+    .faq-question {
+      border-color: transparent !important;
+      outline-color: transparent !important;
+    }
   </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
@@ -83,23 +89,43 @@
 
           <div class="dropdown-menu" role="menu">
             <a href="about.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon"><span class="material-symbols-outlined">info</span></span>
-              <span class="dropdown-text"><strong>About Foundation</strong><small>Our story & values</small></span>
+              <span class="dropdown-icon">
+                <span class="material-symbols-outlined">info</span>
+              </span>
+              <span class="dropdown-text">
+                <strong>About Foundation</strong>
+                <small>Our story & values</small>
+              </span>
             </a>
 
             <a href="impact.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon"><span class="material-symbols-outlined">bar_chart</span></span>
-              <span class="dropdown-text"><strong>Impact</strong><small>What we've achieved</small></span>
+              <span class="dropdown-icon">
+                <span class="material-symbols-outlined">bar_chart</span>
+              </span>
+              <span class="dropdown-text">
+                <strong>Impact</strong>
+                <small>What we've achieved</small>
+              </span>
             </a>
 
             <a href="programs.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon"><span class="material-symbols-outlined">apps</span></span>
-              <span class="dropdown-text"><strong>Programs</strong><small>Our initiatives & impact areas</small></span>
+              <span class="dropdown-icon">
+                <span class="material-symbols-outlined">apps</span>
+              </span>
+              <span class="dropdown-text">
+                <strong>Programs</strong>
+                <small>Our initiatives & impact areas</small>
+              </span>
             </a>
 
             <a href="gallery.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon"><span class="material-symbols-outlined">photo_library</span></span>
-              <span class="dropdown-text"><strong>Gallery</strong><small>Photos & moments</small></span>
+              <span class="dropdown-icon">
+                <span class="material-symbols-outlined">photo_library</span>
+              </span>
+              <span class="dropdown-text">
+                <strong>Gallery</strong>
+                <small>Photos & moments</small>
+              </span>
             </a>
           </div>
         </div>
@@ -116,18 +142,33 @@
 
           <div class="dropdown-menu" role="menu">
             <a href="volunteer.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon"><span class="material-symbols-outlined">volunteer_activism</span></span>
-              <span class="dropdown-text"><strong>Volunteer</strong><small>Join our volunteer network</small></span>
+              <span class="dropdown-icon">
+                <span class="material-symbols-outlined">volunteer_activism</span>
+              </span>
+              <span class="dropdown-text">
+                <strong>Volunteer</strong>
+                <small>Join our volunteer network</small>
+              </span>
             </a>
 
             <a href="internship.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon"><span class="material-symbols-outlined">work</span></span>
-              <span class="dropdown-text"><strong>Internship</strong><small>Apply for internship</small></span>
+              <span class="dropdown-icon">
+                <span class="material-symbols-outlined">work</span>
+              </span>
+              <span class="dropdown-text">
+                <strong>Internship</strong>
+                <small>Apply for internship</small>
+              </span>
             </a>
 
             <a href="contact.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon"><span class="material-symbols-outlined">mail</span></span>
-              <span class="dropdown-text"><strong>Contact Us</strong><small>Get in touch</small></span>
+              <span class="dropdown-icon">
+                <span class="material-symbols-outlined">mail</span>
+              </span>
+              <span class="dropdown-text">
+                <strong>Contact Us</strong>
+                <small>Get in touch</small>
+              </span>
             </a>
           </div>
         </div>
@@ -144,18 +185,33 @@
 
           <div class="dropdown-menu" role="menu">
             <a href="collaborations.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon"><span class="material-symbols-outlined">diversity_3</span></span>
-              <span class="dropdown-text"><strong>Collaborations & Partnerships</strong><small>Our partners & collaborations</small></span>
+              <span class="dropdown-icon">
+                <span class="material-symbols-outlined">diversity_3</span>
+              </span>
+              <span class="dropdown-text">
+                <strong>Collaborations & Partnerships</strong>
+                <small>Our partners & collaborations</small>
+              </span>
             </a>
 
             <a href="verify.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon"><span class="material-symbols-outlined">verified</span></span>
-              <span class="dropdown-text"><strong>Verify Certificate</strong><small>Check your certificate</small></span>
+              <span class="dropdown-icon">
+                <span class="material-symbols-outlined">verified</span>
+              </span>
+              <span class="dropdown-text">
+                <strong>Verify Certificate</strong>
+                <small>Check your certificate</small>
+              </span>
             </a>
 
             <a href="faq.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon"><span class="material-symbols-outlined">help</span></span>
-              <span class="dropdown-text"><strong>FAQ</strong><small>Common questions answered</small></span>
+              <span class="dropdown-icon">
+                <span class="material-symbols-outlined">help</span>
+              </span>
+              <span class="dropdown-text">
+                <strong>FAQ</strong>
+                <small>Common questions answered</small>
+              </span>
             </a>
           </div>
         </div>
@@ -223,7 +279,7 @@
   Amaanitvam Foundation welcomes individuals, volunteers, donors, organizations, and community partners who wish to connect, collaborate, or support our mission. Reach out to us for inquiries related to donations, volunteering opportunities, partnerships, programs, or any other information about our initiatives.
 </p>
       </div>
-    </header>
+    </section>
 
     <section class="section section-white" aria-labelledby="contact-form-heading">
       <div class="container">
@@ -336,39 +392,6 @@
       </div>
     </section>
 
-    <section class="section section-white" aria-labelledby="regions-heading">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-label">Where We Work</span>
-          <h2 id="regions-heading" class="section-title">Our Presence</h2>
-        </div>
-        <div class="grid-2" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
-          <div class="card">
-            <div class="card-icon card-icon-pink" aria-hidden="true">
-              <span class="material-symbols-outlined">apartment</span>
-            </div>
-            <h3 style="font-weight: 600; color: var(--navy); margin-bottom: 0.5rem;">Registered Office</h3>
-            <p class="text-muted" style="font-size: 0.9rem;">H.No 269 W.NO2, Mehrauli, Gadaipur, Mehrauli, South Delhi – 110030, Delhi, India</p>
-          </div>
-          <div class="card">
-            <div class="card-icon card-icon-gold" aria-hidden="true">
-              <span class="material-symbols-outlined">location_on</span>
-            </div>
-            <h3 style="font-weight: 600; color: var(--navy); margin-bottom: 0.5rem;">Field Operations — Haryana</h3>
-            <p class="text-muted" style="font-size: 0.9rem;">Project Pravah pilot — Hisar, Haryana. Expanding grassroots youth empowerment and awareness drives across rural communities.</p>
-          </div>
-          <div class="card">
-            <div class="card-icon card-icon-purple" aria-hidden="true">
-              <span class="material-symbols-outlined">school</span>
-            </div>
-            <h3 style="font-weight: 600; color: var(--navy); margin-bottom: 0.5rem;">Our Programs</h3>
-            <p class="text-muted" style="font-size: 0.9rem;">Project Shiksha — education and school admission support.
-              <br>Project Manthan — counselling and awareness for children.<br>Project Pravah — youth empowerment pilot in Hisar, Haryana.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <section class="section section-alt" aria-labelledby="partnerships-heading">
       <div class="container">
         <div class="section-header">
@@ -425,13 +448,13 @@
       </h2>
 
       <label>Full Name</label>
-      <input type="text" placeholder="Enter your full name">
+      <input type="text" id="donorName" placeholder="Enter your full name" required>
 
       <label>Email Address</label>
-      <input type="email" placeholder="your.email@example.com">
+      <input type="email" id="donorEmail" placeholder="your.email@example.com" required>
 
       <label>Phone Number</label>
-      <input type="tel" placeholder="10-digit phone number">
+      <input type="tel" id="donorPhone" placeholder="10-digit phone number" pattern="\d{10}" maxlength="10">
 
       <label>Select Amount</label>
 
@@ -470,6 +493,7 @@
       <button id="payButton" class="pay-button">
         Proceed to Pay Securely
       </button>
+      <div id="donate-status" style="margin-top: 0.75rem; text-align: center; font-weight: 600;"></div>
      <p class="payment-note">
   🔒 Your payment information is encrypted and never stored on our servers
 </p>
@@ -585,7 +609,148 @@
   </a>
 </div>
 
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script src="js/main.js"></script>
+<script>
+(function() {
+  // Amount selection logic
+  let selectedAmount = 0;
+  const amountBtns = document.querySelectorAll('.amount-btn');
+  const customAmountInput = document.getElementById('customAmount');
+
+  amountBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      amountBtns.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      selectedAmount = Number(btn.dataset.amount);
+      if (customAmountInput) customAmountInput.value = '';
+    });
+  });
+
+  if (customAmountInput) {
+    customAmountInput.addEventListener('input', function() {
+      amountBtns.forEach(function(b) { b.classList.remove('active'); });
+      selectedAmount = Number(customAmountInput.value) || 0;
+    });
+  }
+
+  // Pay button handler
+  var payButton = document.getElementById('payButton');
+  var donateStatus = document.getElementById('donate-status');
+
+  if (payButton) {
+    payButton.addEventListener('click', async function() {
+      var name = document.getElementById('donorName').value.trim();
+      var email = document.getElementById('donorEmail').value.trim();
+      var phone = document.getElementById('donorPhone').value.trim();
+
+      if (!name || !email) {
+        donateStatus.textContent = 'Please enter your name and email.';
+        donateStatus.style.color = 'red';
+        return;
+      }
+
+      if (selectedAmount < 10) {
+        donateStatus.textContent = 'Minimum donation amount is ₹10.';
+        donateStatus.style.color = 'red';
+        return;
+      }
+
+      payButton.disabled = true;
+      payButton.textContent = 'Processing...';
+      donateStatus.textContent = '';
+
+      try {
+        // Step 1: Create order on backend
+        var response = await fetch('http://localhost:5000/api/donate/create-order', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name: name, email: email, phone: phone, amount: selectedAmount })
+        });
+        var data = await response.json();
+
+        if (!response.ok || !data.success) {
+          donateStatus.textContent = data.message || 'Failed to create order.';
+          donateStatus.style.color = 'red';
+          payButton.disabled = false;
+          payButton.textContent = 'Proceed to Pay Securely';
+          return;
+        }
+
+        // Step 2: Open Razorpay Checkout
+        var options = {
+          key: data.key,
+          amount: data.order.amount,
+          currency: data.order.currency,
+          name: 'Amaanitvam Foundation',
+          description: 'Donation to Amaanitvam Foundation',
+          order_id: data.order.id,
+          prefill: {
+            name: data.donor.name,
+            email: data.donor.email,
+            contact: data.donor.phone
+          },
+          theme: {
+            color: '#56051a'
+          },
+          handler: async function(paymentResponse) {
+            // Step 3: Verify payment on backend
+            try {
+              var verifyRes = await fetch('http://localhost:5000/api/donate/verify', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  razorpay_order_id: paymentResponse.razorpay_order_id,
+                  razorpay_payment_id: paymentResponse.razorpay_payment_id,
+                  razorpay_signature: paymentResponse.razorpay_signature
+                })
+              });
+              var verifyData = await verifyRes.json();
+
+              if (verifyRes.ok && verifyData.success) {
+                donateStatus.textContent = '✅ ' + (verifyData.message || 'Payment successful! Thank you!');
+                donateStatus.style.color = '#22c55e';
+                // Reset form
+                document.getElementById('donorName').value = '';
+                document.getElementById('donorEmail').value = '';
+                document.getElementById('donorPhone').value = '';
+                if (customAmountInput) customAmountInput.value = '';
+                amountBtns.forEach(function(b) { b.classList.remove('active'); });
+                selectedAmount = 0;
+              } else {
+                donateStatus.textContent = verifyData.message || 'Payment verification failed.';
+                donateStatus.style.color = 'red';
+              }
+            } catch (err) {
+              donateStatus.textContent = 'Payment verification error. Please contact support.';
+              donateStatus.style.color = 'red';
+            }
+            payButton.disabled = false;
+            payButton.textContent = 'Proceed to Pay Securely';
+          },
+          modal: {
+            ondismiss: function() {
+              payButton.disabled = false;
+              payButton.textContent = 'Proceed to Pay Securely';
+              donateStatus.textContent = 'Payment was cancelled.';
+              donateStatus.style.color = '#888';
+            }
+          }
+        };
+
+        var rzp = new Razorpay(options);
+        rzp.open();
+
+      } catch (err) {
+        donateStatus.textContent = 'Failed to connect to the server.';
+        donateStatus.style.color = 'red';
+        payButton.disabled = false;
+        payButton.textContent = 'Proceed to Pay Securely';
+      }
+    });
+  }
+})();
+</script>
 <script>
   (function () {
     const nav = document.getElementById('site-nav');

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const volunteerApplicationSchema = new mongoose.Schema(
+const donationSchema = new mongoose.Schema(
     {
         name: {
             type: String,
@@ -17,45 +17,40 @@ const volunteerApplicationSchema = new mongoose.Schema(
         },
         phone: {
             type: String,
-            required: true,
             trim: true,
             maxlength: 20
         },
-        role: {
+        amount: {
+            type: Number,
+            required: true,
+            min: 10
+        },
+        currency: {
+            type: String,
+            default: "INR",
+            trim: true
+        },
+        razorpayOrderId: {
             type: String,
             required: true,
             trim: true,
-            enum: [
-                "Community Outreach",
-                "Event Coordination",
-                "Education Support",
-                "Social Media & Communications"
-            ]
+            unique: true
         },
-        availability: {
-            type: String,
-            required: true,
-            trim: true,
-            maxlength: 100
-        },
-        skills: {
+        razorpayPaymentId: {
             type: String,
             trim: true,
-            maxlength: 1000
+            sparse: true
         },
-        motivation: {
+        razorpaySignature: {
             type: String,
-            required: true,
-            trim: true,
-            maxlength: 5000
+            trim: true
         },
         status: {
             type: String,
-            enum: ["pending", "reviewing", "accepted", "rejected"],
-            default: "pending",
+            enum: ["created", "paid", "failed"],
+            default: "created",
             index: true
         },
-
         submissionTimestamp: {
             type: Date,
             default: Date.now,
@@ -67,8 +62,8 @@ const volunteerApplicationSchema = new mongoose.Schema(
     }
 );
 
-volunteerApplicationSchema.index({ submissionTimestamp: -1 });
+donationSchema.index({ submissionTimestamp: -1 });
 
-const VolunteerApplication = mongoose.model("VolunteerApplication", volunteerApplicationSchema);
+const Donation = mongoose.model("Donation", donationSchema);
 
-export default VolunteerApplication;
+export default Donation;

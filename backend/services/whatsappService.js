@@ -1,12 +1,14 @@
-const WHATSAPP_API_TOKEN = process.env.WHATSAPP_API_TOKEN;
-const WHATSAPP_PHONE_NUMBER_ID = process.env.WHATSAPP_PHONE_NUMBER_ID;
-const WHATSAPP_API_VERSION = process.env.WHATSAPP_API_VERSION || "v17.0";
+// Tokens will be read dynamically to ensure dotenv is fully loaded
 
 export const isWhatsAppConfigured = () =>
-    Boolean(WHATSAPP_API_TOKEN && WHATSAPP_PHONE_NUMBER_ID);
+    Boolean(process.env.WHATSAPP_API_TOKEN && process.env.WHATSAPP_PHONE_NUMBER_ID);
 
 export const sendWhatsAppNotification = async ({ to, templateName, languageCode, parameters }) => {
     try {
+        const WHATSAPP_API_TOKEN = process.env.WHATSAPP_API_TOKEN;
+        const WHATSAPP_PHONE_NUMBER_ID = process.env.WHATSAPP_PHONE_NUMBER_ID;
+        const WHATSAPP_API_VERSION = process.env.WHATSAPP_API_VERSION || "v17.0";
+
         if (!WHATSAPP_API_TOKEN) {
             console.warn("WHATSAPP_API_TOKEN is not set — skipping WhatsApp notification");
             return false;
@@ -41,6 +43,14 @@ export const sendWhatsAppNotification = async ({ to, templateName, languageCode,
                     }))
                 }
             ];
+        }
+
+        if (WHATSAPP_API_TOKEN === "demo_token") {
+            console.log("🟢 [DEMO MODE] WhatsApp Notification Mocked!");
+            console.log(`➡️  To: ${to}`);
+            console.log(`📋  Template: ${templateName}`);
+            console.log(`📦  Parameters:`, parameters);
+            return true;
         }
 
         const response = await fetch(url, {

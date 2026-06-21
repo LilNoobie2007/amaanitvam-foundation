@@ -1,37 +1,42 @@
 import Contact from "../models/contact.js";
-import { sendAdminNotificationEmail, sendUserAutoReplyEmail } from "../services/emailService.js";
+import { 
+    sendAdminNotificationEmail, sendUserAutoReplyEmail 
+} from "../services/emailService.js";
+import { sendWhatsAppNotification } from "../services/whatsappService.js";
 
 export const createContact = async (req, res) => {
 
     try {
         const { name, email, subject, message } = req.validatedContact;
-        const ipAddress = req.clientIp;
-        const userAgent = req.get("user-agent") || "Unknown";
 
         const newContact = new Contact({
             name,
             email,
             subject,
             message,
-            ipAddress,
-            userAgent,
             submissionTimestamp: new Date()
         });
 
         await newContact.save();
 
-        const [userEmailResult, adminEmailResult] = await Promise.all([
-            sendUserAutoReplyEmail({ contact: newContact }),
-            sendAdminNotificationEmail({ contact: newContact })
-        ]);
-
-        if (!userEmailResult || !adminEmailResult) {
-            throw new Error("Email delivery failed");
-        }
-
+        // Respond immediately
         res.status(201).json({
             success: true,
             message: "Your message has been received successfully."
+        });
+
+        // Send emails and WhatsApp in the background
+        Promise.all([
+            sendUserAutoReplyEmail({ contact: newContact }),
+            sendAdminNotificationEmail({ contact: newContact }),
+            sendWhatsAppNotification({
+                to: process.env.ADMIN_WHATSAPP_NUMBER || "919899923266",
+                templateName: "new_contact_message",
+                languageCode: "en",
+                parameters: [newContact.name]
+            })
+        ]).catch((emailErr) => {
+            console.error("Background notification delivery failed:", emailErr);
         });
 
     } catch (error) {

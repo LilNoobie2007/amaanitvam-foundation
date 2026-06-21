@@ -20,7 +20,6 @@ export const validateInternshipApplication = (req, res, next) => {
     const university = trimValue(req.body?.university);
     const currentYear = trimValue(req.body?.currentYear);
     const portfolioUrl = trimValue(req.body?.portfolioUrl);
-    const startDate = trimValue(req.body?.startDate);
     const duration = trimValue(req.body?.duration);
 
     if (!name || !email || !phone || !track || !motivation) {
@@ -53,15 +52,10 @@ export const validateInternshipApplication = (req, res, next) => {
         university,
         currentYear,
         portfolioUrl,
-        startDate,
         duration
     };
 
-    req.clientIp =
-        String(req.headers["x-forwarded-for"] || "").split(",")[0].trim() ||
-        req.ip ||
-        req.socket?.remoteAddress ||
-        "Unknown";
+
 
     next();
 };

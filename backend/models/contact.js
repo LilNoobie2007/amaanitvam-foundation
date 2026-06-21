@@ -27,18 +27,7 @@ const contactSchema = new mongoose.Schema(
             trim: true,
             maxlength: 5000
         },
-        ipAddress: {
-            type: String,
-            required: true,
-            trim: true,
-            maxlength: 80
-        },
-        userAgent: {
-            type: String,
-            required: true,
-            trim: true,
-            maxlength: 400
-        },
+
         submissionTimestamp: {
             type: Date,
             default: Date.now,

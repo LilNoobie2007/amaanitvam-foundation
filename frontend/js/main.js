@@ -358,64 +358,7 @@
     });
   }
 })();
-/* Donation Section */
 
-let selectedAmount = 10;
-
-const amountButtons = document.querySelectorAll('.amount-btn');
-const customAmount = document.getElementById('customAmount');
-const payButton = document.getElementById('payButton');
-
-if (amountButtons.length) {
-
-  amountButtons.forEach(btn => {
-
-    btn.addEventListener('click', () => {
-
-      amountButtons.forEach(b => b.classList.remove('active'));
-
-      btn.classList.add('active');
-
-      selectedAmount = btn.dataset.amount;
-
-      if (customAmount) {
-        customAmount.value = '';
-      }
-
-    });
-
-  });
-
-}
-
-if (customAmount) {
-
-  customAmount.addEventListener('input', function () {
-
-    amountButtons.forEach(b => b.classList.remove('active'));
-
-    selectedAmount = this.value;
-
-  });
-
-}
-
-if (payButton) {
-
-  payButton.addEventListener('click', () => {
-
-    if (!selectedAmount || selectedAmount < 10) {
-      alert('Minimum donation amount is ₹10');
-      return;
-    }
-
-    alert(
-      `Selected Donation Amount: ₹${selectedAmount}\n\nRazorpay integration will be connected by backend.`
-    );
-
-  });
-
-}
 const socialBar = `
 <div class="floating-socials">
     <a href="https://www.facebook.com/people/Amaanitvam-Foundation/61583427622759/" target="_blank">

@@ -4,13 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Collaborations & Partnerships — Amaanitvam Foundation</title>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
-
-
   <link rel="icon" href="assets/images/logo.jpg" type="image/jpg">
   <link rel="stylesheet" href="css/styles.css">
 <style>
@@ -24,10 +21,23 @@
 }
 
 .collab-hero{
-  background:linear-gradient(135deg,#6f1235,#8d4f6b);
+  background-image: linear-gradient(135deg, rgba(86, 5, 26, 0.88), rgba(86, 5, 26, 0.6)), url('assets/images/hero.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   color:#fff;
   padding:120px 20px;
   text-align:center;
+}
+
+.collab-hero .hero-label{
+  display:block;
+  color:var(--gold);
+  font-weight:600;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  font-size:.9rem;
+  margin-bottom:1rem;
 }
 
 .collab-hero h1{
@@ -146,10 +156,37 @@
   max-width:1100px;
   margin:0 auto 100px;
   padding:50px;
-  background:linear-gradient(135deg,#6f1235,#8d4f6b);
+  background:linear-gradient(135deg, rgba(86, 5, 26, 0.97) 0%, rgba(58, 10, 35, 0.92) 50%, rgba(26, 34, 56, 0.95) 100%);
   color:white;
   border-radius:30px;
   text-align:center;
+}
+
+.partnership-box .cta-label{
+  display:block;
+  color:var(--gold);
+  font-weight:600;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  font-size:.9rem;
+  margin-bottom:1rem;
+}
+
+.collab-btn{
+  display:inline-block;
+  margin-top:1.5rem;
+  text-decoration:none;
+  background:var(--gold);
+  color:#3d0f1f;
+  padding:14px 28px;
+  border-radius:999px;
+  font-weight:700;
+  transition:transform .2s ease, box-shadow .2s ease;
+}
+
+.collab-btn:hover{
+  transform:translateY(-3px);
+  box-shadow:0 10px 25px rgba(0,0,0,.25);
 }
 
 .partnership-box h2{
@@ -197,23 +234,43 @@
 
           <div class="dropdown-menu" role="menu">
             <a href="about.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon"><span class="material-symbols-outlined">info</span></span>
-              <span class="dropdown-text"><strong>About Foundation</strong><small>Our story & values</small></span>
+              <span class="dropdown-icon">
+                <span class="material-symbols-outlined">info</span>
+              </span>
+              <span class="dropdown-text">
+                <strong>About Foundation</strong>
+                <small>Our story & values</small>
+              </span>
             </a>
 
             <a href="impact.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon"><span class="material-symbols-outlined">bar_chart</span></span>
-              <span class="dropdown-text"><strong>Impact</strong><small>What we've achieved</small></span>
+              <span class="dropdown-icon">
+                <span class="material-symbols-outlined">bar_chart</span>
+              </span>
+              <span class="dropdown-text">
+                <strong>Impact</strong>
+                <small>What we've achieved</small>
+              </span>
             </a>
 
             <a href="programs.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon"><span class="material-symbols-outlined">apps</span></span>
-              <span class="dropdown-text"><strong>Programs</strong><small>Our initiatives & impact areas</small></span>
+              <span class="dropdown-icon">
+                <span class="material-symbols-outlined">apps</span>
+              </span>
+              <span class="dropdown-text">
+                <strong>Programs</strong>
+                <small>Our initiatives & impact areas</small>
+              </span>
             </a>
 
             <a href="gallery.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon"><span class="material-symbols-outlined">photo_library</span></span>
-              <span class="dropdown-text"><strong>Gallery</strong><small>Photos & moments</small></span>
+              <span class="dropdown-icon">
+                <span class="material-symbols-outlined">photo_library</span>
+              </span>
+              <span class="dropdown-text">
+                <strong>Gallery</strong>
+                <small>Photos & moments</small>
+              </span>
             </a>
           </div>
         </div>
@@ -230,18 +287,33 @@
 
           <div class="dropdown-menu" role="menu">
             <a href="volunteer.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon"><span class="material-symbols-outlined">volunteer_activism</span></span>
-              <span class="dropdown-text"><strong>Volunteer</strong><small>Join our volunteer network</small></span>
+              <span class="dropdown-icon">
+                <span class="material-symbols-outlined">volunteer_activism</span>
+              </span>
+              <span class="dropdown-text">
+                <strong>Volunteer</strong>
+                <small>Join our volunteer network</small>
+              </span>
             </a>
 
             <a href="internship.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon"><span class="material-symbols-outlined">work</span></span>
-              <span class="dropdown-text"><strong>Internship</strong><small>Apply for internship</small></span>
+              <span class="dropdown-icon">
+                <span class="material-symbols-outlined">work</span>
+              </span>
+              <span class="dropdown-text">
+                <strong>Internship</strong>
+                <small>Apply for internship</small>
+              </span>
             </a>
 
             <a href="contact.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon"><span class="material-symbols-outlined">mail</span></span>
-              <span class="dropdown-text"><strong>Contact Us</strong><small>Get in touch</small></span>
+              <span class="dropdown-icon">
+                <span class="material-symbols-outlined">mail</span>
+              </span>
+              <span class="dropdown-text">
+                <strong>Contact Us</strong>
+                <small>Get in touch</small>
+              </span>
             </a>
           </div>
         </div>
@@ -258,18 +330,33 @@
 
           <div class="dropdown-menu" role="menu">
             <a href="collaborations.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon"><span class="material-symbols-outlined">diversity_3</span></span>
-              <span class="dropdown-text"><strong>Collaborations & Partnerships</strong><small>Our partners & collaborations</small></span>
+              <span class="dropdown-icon">
+                <span class="material-symbols-outlined">diversity_3</span>
+              </span>
+              <span class="dropdown-text">
+                <strong>Collaborations & Partnerships</strong>
+                <small>Our partners & collaborations</small>
+              </span>
             </a>
 
             <a href="verify.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon"><span class="material-symbols-outlined">verified</span></span>
-              <span class="dropdown-text"><strong>Verify Certificate</strong><small>Check your certificate</small></span>
+              <span class="dropdown-icon">
+                <span class="material-symbols-outlined">verified</span>
+              </span>
+              <span class="dropdown-text">
+                <strong>Verify Certificate</strong>
+                <small>Check your certificate</small>
+              </span>
             </a>
 
             <a href="faq.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon"><span class="material-symbols-outlined">help</span></span>
-              <span class="dropdown-text"><strong>FAQ</strong><small>Common questions answered</small></span>
+              <span class="dropdown-icon">
+                <span class="material-symbols-outlined">help</span>
+              </span>
+              <span class="dropdown-text">
+                <strong>FAQ</strong>
+                <small>Common questions answered</small>
+              </span>
             </a>
           </div>
         </div>
@@ -331,6 +418,7 @@
 
 
 <section class="collab-hero">
+  <span class="hero-label">Get Involved</span>
   <h1>Collaborations & Partnerships</h1>
 
   <p>
@@ -420,6 +508,7 @@
 
 <section class="partnership-box">
 
+  <span class="cta-label">Support Our Mission</span>
   <h2>Let's Create Impact Together</h2>
 
   <p>
@@ -429,14 +518,11 @@
     group or community leader, we'd love to connect and
     explore opportunities to work together.
   </p>
-  <section class="partnership-box">
 
-    <!-- ADD THIS HERE -->
-    <a href="mailto:amaanitvamfoundation@gmail.com" class="collab-btn">
-        Reach Out To Us
-    </a>
+  <a href="mailto:amaanitvamfoundation@gmail.com" class="collab-btn">
+      Reach Out To Us
+  </a>
 
-</section>
 </section>
 
 <div id="footer"></div>

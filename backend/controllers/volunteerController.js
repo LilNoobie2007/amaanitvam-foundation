@@ -1,12 +1,14 @@
 import VolunteerApplication from "../models/volunteerApplication.js";
-import { sendVolunteerConfirmationEmail, sendVolunteerAdminEmail } from "../services/emailService.js";
+import { 
+    sendVolunteerConfirmationEmail, sendVolunteerAdminEmail 
+} 
+from "../services/emailService.js";
+import { sendWhatsAppNotification } from "../services/whatsappService.js";
 
 export const createVolunteerApplication = async (req, res) => {
 
     try {
         const { name, email, phone, role, availability, skills, motivation } = req.validatedVolunteer;
-        const ipAddress = req.clientIp;
-        const userAgent = req.get("user-agent") || "Unknown";
 
         const newApplication = new VolunteerApplication({
             name,
@@ -16,25 +18,29 @@ export const createVolunteerApplication = async (req, res) => {
             availability,
             skills,
             motivation,
-            ipAddress,
-            userAgent,
             submissionTimestamp: new Date()
         });
 
         await newApplication.save();
 
-        const [confirmationResult, adminResult] = await Promise.all([
-            sendVolunteerConfirmationEmail({ application: newApplication }),
-            sendVolunteerAdminEmail({ application: newApplication })
-        ]);
-
-        if (!confirmationResult || !adminResult) {
-            throw new Error("Email delivery failed");
-        }
-
+        // Respond immediately
         res.status(201).json({
             success: true,
             message: "Your volunteer registration has been submitted successfully."
+        });
+
+        // Send emails and WhatsApp in the background
+        Promise.all([
+            sendVolunteerConfirmationEmail({ application: newApplication }),
+            sendVolunteerAdminEmail({ application: newApplication }),
+            sendWhatsAppNotification({
+                to: process.env.ADMIN_WHATSAPP_NUMBER || "919899923266",
+                templateName: "new_volunteer_registration",
+                languageCode: "en",
+                parameters: [newApplication.name, newApplication.role]
+            })
+        ]).catch((emailErr) => {
+            console.error("Background notification delivery failed:", emailErr);
         });
 
     } catch (error) {

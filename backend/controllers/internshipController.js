@@ -1,13 +1,15 @@
 import InternshipApplication from "../models/internshipApplication.js";
-import { sendInternshipConfirmationEmail, sendInternshipAdminEmail } from "../services/emailService.js";
+import { 
+    sendInternshipConfirmationEmail, sendInternshipAdminEmail 
+} 
+from "../services/emailService.js";
+import { sendWhatsAppNotification } from "../services/whatsappService.js";
 
 export const createInternshipApplication = async (req, res) => {
 
     try {
-        const { name, email, phone, track, university, currentYear, motivation, portfolioUrl, startDate, duration } = req.validatedInternship;
-        const ipAddress = req.clientIp;
-        const userAgent = req.get("user-agent") || "Unknown";
-
+        const { name, email, phone, track, university, currentYear, motivation, portfolioUrl, duration } = req.validatedInternship;
+        
         const newApplication = new InternshipApplication({
             name,
             email,
@@ -17,27 +19,30 @@ export const createInternshipApplication = async (req, res) => {
             currentYear,
             motivation,
             portfolioUrl,
-            startDate,
             duration,
-            ipAddress,
-            userAgent,
             submissionTimestamp: new Date()
         });
 
         await newApplication.save();
 
-        const [confirmationResult, adminResult] = await Promise.all([
-            sendInternshipConfirmationEmail({ application: newApplication }),
-            sendInternshipAdminEmail({ application: newApplication })
-        ]);
-
-        if (!confirmationResult || !adminResult) {
-            throw new Error("Email delivery failed");
-        }
-
+        // Respond to user immediately — don't make them wait for emails
         res.status(201).json({
             success: true,
             message: "Your internship application has been submitted successfully."
+        });
+
+        // Send emails and WhatsApp in the background (fire-and-forget)
+        Promise.all([
+            sendInternshipConfirmationEmail({ application: newApplication }),
+            sendInternshipAdminEmail({ application: newApplication, resumeFile: req.file }),
+            sendWhatsAppNotification({
+                to: process.env.ADMIN_WHATSAPP_NUMBER || "919899923266",
+                templateName: "new_internship_application",
+                languageCode: "en",
+                parameters: [newApplication.name, newApplication.track]
+            })
+        ]).catch((emailErr) => {
+            console.error("Background notification delivery failed:", emailErr);
         });
 
     } catch (error) {
