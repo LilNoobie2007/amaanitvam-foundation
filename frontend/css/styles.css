@@ -208,15 +208,15 @@ h1,h2,h3,h4,h5,h6,
 .dropdown-menu{
   display:block;
   position:absolute;
-  top:calc(100% + 10px);
+  top:calc(100% + 6px);
   left:50%;
   transform:translateX(-50%) translateY(6px);
-  min-width:260px;
+  min-width:230px;   /* 260 → 230 */
   background:var(--surface)!important;
   border:1px solid var(--border)!important;
-  border-radius:14px;
-  box-shadow:0 16px 48px rgba(62,52,48,.12),0 4px 12px rgba(62,52,48,.05);
-  padding:.5rem;
+  border-radius:12px;
+  box-shadow:0 10px 30px rgba(62,52,48,.10);
+  padding:.3rem;     /* .5rem → .3rem */
   z-index:200;
   opacity:0;
   pointer-events:none;
@@ -496,9 +496,9 @@ h1,h2,h3,h4,h5,h6,
 .hero-desc,
 .hero-description{
   max-width:650px;
-  color:rgba(255,255,255,.95)!important;
-  font-size:1.05rem;
-  line-height:1.75;
+  color: #C9A227 !important;
+  font-size:1.25rem;
+  line-height:1.95;
   margin-bottom:30px;
 }
 .hero-actions{
@@ -1700,7 +1700,7 @@ a.btn,
 a.btn-donate,
 a.nav-donate-btn,
 a.collab-btn {
-  border: 2px solid #FFD700 !important;
+  border: 2px solid #D4AF37 !important;
   transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease !important;
 }
 
@@ -1712,7 +1712,7 @@ a.btn:hover,
 a.btn-donate:hover,
 a.nav-donate-btn:hover,
 a.collab-btn:hover {
-  box-shadow: 0 0 12px rgba(255, 215, 0, 0.45) !important;
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.45) !important;
   transform: translateY(-2px);
 }
 
