@@ -51,6 +51,12 @@
         display: none;
       }
     }
+    /* Remove yellow border from FAQ section */
+    .faq-item,
+    .faq-question {
+      border-color: transparent !important;
+      outline-color: transparent !important;
+    }
   </style>
   <style>
     /* ── Fix: Verification card label/icon overflowing card bounds ── */
@@ -326,12 +332,15 @@
         <div class="card" style="padding: 2.5rem;">
           <div class="section-header" style="margin-bottom: 2rem;">
             <span class="section-label">Verification</span>
-            <h2 id="verify-form-heading" class="section-title" style="font-size: 1.5rem;">Enter Certificate ID</h2>
+            <h2 id="verify-form-heading" class="section-title"
+    style="font-size: 3rem !important; line-height:1.2 !important;">
+  Enter Certificate ID
+</h2>
             <p class="section-desc" style="font-size: 0.95rem;">Locate the unique ID on the bottom of your certificate (format: AF-YYYY-XXXX).</p>
           </div>
           <form id="verify-form" aria-label="Certificate verification form">
             <label class="form-label" for="cert-id">Certificate ID</label>
-            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+            <div class="verify-input-row">
               <input class="form-input" type="text" id="cert-id" name="cert-id" placeholder="e.g. AF-2024-892X" required autocomplete="off" aria-describedby="cert-hint" style="flex: 1; min-width: 200px;">
               <button type="submit" class="btn btn-primary" style="flex-shrink: 0;">
                 <span class="material-symbols-outlined" aria-hidden="true">verified</span> Verify
@@ -397,6 +406,8 @@
       </div>
     </section>
 
+   
+
     <section class="section section-alt" aria-labelledby="verify-faq-heading">
       <div class="container" style="max-width: 800px;">
         <div class="section-header">
@@ -446,23 +457,26 @@
       </div>
     </section>
 
-    <!-- Donation CTA -->
-    <section class="section section-alt" aria-labelledby="donate-cta-title">
-      <div class="container">
-        <div class="donate-section">
-          <span class="section-label" style="color:var(--gold);">Support Our Mission</span>
-          <h2 id="donate-cta-title" class="section-title" style="color:#fff;margin-bottom:1rem;">Be the Change You Wish to See</h2>
-          <p style="color:rgba(255,255,255,0.8);max-width:560px;margin:0 auto 1rem;font-size:1.05rem;">
-            Join our mission to empower lives through education, compassion, and community action.
-          </p>
-          <p style="color:var(--gold);font-size:0.9rem;font-weight:600;margin-bottom:2rem;">Registered under 12A &amp; 80G — tax-deductible for Indian donors</p>
-          <div style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;">
-            <a href="contact.html#donate" class="btn btn-primary">Donate Now</a>
-            <a href="impact.html" class="btn btn-outline" style="border-color:rgba(255,255,255,0.4);color:#fff;">See Our Impact</a>
-          </div>
+     <!-- DONATION CTA -->
+  <section class="section section-alt" aria-labelledby="donate-title">
+    <div class="container">
+      <div class="donate-section">
+        <span class="section-label">Support Our Mission</span>
+        <h2 id="donate-title" class="section-title">Be the Change You Wish to See</h2>
+        <p>
+          Join our mission to empower lives through education, compassion, and community action.
+        </p>
+        <p style="color:var(--gold); font-size:0.9rem; font-weight:600; margin-bottom:2rem;">
+          Registered under 12A &amp; 80G — tax-deductible for Indian donors
+        </p>
+
+        <div style="display:flex; flex-wrap:wrap; gap:1rem; justify-content:center;">
+          <a href="contact.html#donate" class="btn btn-primary">Donate Now</a>
+          <a href="impact.html" class="btn btn-outline">See Our Impact</a>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
   </main>
 <!-- Floating Donate CTA -->
 

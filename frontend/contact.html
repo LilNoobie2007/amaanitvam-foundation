@@ -51,6 +51,12 @@
         display: none;
       }
     }
+    /* Remove yellow border from FAQ section */
+    .faq-item,
+    .faq-question {
+      border-color: transparent !important;
+      outline-color: transparent !important;
+    }
   </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
@@ -265,24 +271,13 @@
 </header>
 
 <main id="main-content">
-    <section class="page-hero has-image section" data-hero aria-labelledby="contact-hero-title"
-      style="position: relative;
-      background-image: linear-gradient(135deg, rgba(86, 5, 26, 0.88), rgba(86, 5, 26, 0.6)), url('assets/images/hero.png'); background-size: cover; background-position: center; background-repeat: no-repeat;
-      padding: 6rem 0;
-      min-height: 480px;
-      display: flex;
-      align-items: center;
-      overflow: hidden;">
-      <div class="container" style="display: flex; justify-content: center; text-align: center; width: 100%;">
-        <div style="max-width: 960px;">
-          <span class="section-label" style="color: var(--gold);">Contact Us</span>
-          <h1 id="contact-hero-title" class="section-title" style="font-size: clamp(2.5rem, 6vw, 4rem); margin-bottom: 1.25rem; color: #ffffff !important; opacity: 1;">
-            Let's Create Impact Together
-          </h1>
-          <p class="section-desc" style="max-width: 960px; margin: 0 auto 2rem; color: #ffffff; opacity: 1; font-size: 1.25rem;">
-            Amaanitvam Foundation welcomes individuals, volunteers, donors, organizations, and community partners who wish to connect, collaborate, or support our mission. Reach out to us for inquiries related to donations, volunteering opportunities, partnerships, programs, or any other information about our initiatives
-          </p>
-        </div>
+    <header class="page-hero has-image" data-hero>
+      <div class="container">
+        <span class="section-label">Contact Us</span>
+        <h1 class="section-title" style="font-size: clamp(2rem, 5vw, 3rem);">Let's Create Impact Together</h1>
+       <p class="section-desc">
+  Amaanitvam Foundation welcomes individuals, volunteers, donors, organizations, and community partners who wish to connect, collaborate, or support our mission. Reach out to us for inquiries related to donations, volunteering opportunities, partnerships, programs, or any other information about our initiatives.
+</p>
       </div>
     </section>
 
@@ -476,7 +471,7 @@
       </div>
 
       <div class="custom-amount-wrapper">
-        <span class="currency-symbol">₹</span>
+       
 
         <input
           type="number"
@@ -499,7 +494,19 @@
         Proceed to Pay Securely
       </button>
       <div id="donate-status" style="margin-top: 0.75rem; text-align: center; font-weight: 600;"></div>
-     <p class="payment-note">
+     <p style="
+  margin-top:20px;
+  text-align:center;
+  color:#5f6368 !important;
+  font-size:15px !important;
+  font-weight:500 !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:8px !important;
+  opacity:1 !important;
+  visibility:visible !important;
+">
   🔒 Your payment information is encrypted and never stored on our servers
 </p>
     </div>
@@ -541,7 +548,7 @@
     <p>Education support for 1 month</p>
   </div>
 </div>
-
+</div>
       <div class="tax-card">
         <h3>📜 Tax Benefits</h3>
 
@@ -569,33 +576,26 @@
 
 </section>
 
-    <!-- Donation CTA -->
-    <section class="section section-alt" aria-labelledby="donate-cta-title"
-      style="position: relative;
-      left: 50%;
-      right: 50%;
-      margin-left: -50vw;
-      margin-right: -50vw;
-      width: 100vw;
-      max-width: 100vw;
-      background: linear-gradient(135deg, rgba(86, 5, 26, 0.97) 0%, rgba(58, 10, 35, 0.92) 50%, rgba(26, 34, 56, 0.95) 100%);
-      padding: 5rem 0;
-      overflow: hidden;">
-      <div class="container" style="max-width: 100%; width: 100%; display: flex; justify-content: center; box-sizing: border-box; padding-left: 2rem; padding-right: 2rem;">
-        <div class="donate-section" style="text-align: center; width: 100%; max-width: 900px;">
-          <span class="section-label" style="color: var(--gold); display: block; text-align: center;">Support Our Mission</span>
-          <h2 id="donate-cta-title" class="section-title" style="color: #ffffff !important; opacity: 1; margin: 0 auto 1.25rem; text-align: center;">Be the Change You Wish to See</h2>
-          <p style="color: #ffffff; opacity: 1; max-width: 100%; margin: 0 auto 1rem; font-size: 1.1rem; text-align: center;">
-            Join our mission to empower lives through education, compassion, and community action.
-          </p>
-          <p style="color: var(--gold); font-size: 0.9rem; font-weight: 600; margin: 0 auto 2rem; text-align: center;">Registered under 12A &amp; 80G — tax-deductible for Indian donors</p>
-          <div style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;">
-            <a href="contact.html#donate" class="btn btn-primary">Donate Now</a>
-            <a href="impact.html" class="btn btn-outline" style="border-color:rgba(255,255,255,0.4);color:#fff;">See Our Impact</a>
-          </div>
+    <!-- DONATION CTA -->
+  <section class="section section-alt" aria-labelledby="donate-title">
+    <div class="container">
+      <div class="donate-section">
+        <span class="section-label">Support Our Mission</span>
+        <h2 id="donate-title" class="section-title">Be the Change You Wish to See</h2>
+        <p>
+          Join our mission to empower lives through education, compassion, and community action.
+        </p>
+        <p style="color:var(--gold); font-size:0.9rem; font-weight:600; margin-bottom:2rem;">
+          Registered under 12A &amp; 80G — tax-deductible for Indian donors
+        </p>
+
+        <div style="display:flex; flex-wrap:wrap; gap:1rem; justify-content:center;">
+          <a href="contact.html#donate" class="btn btn-primary">Donate Now</a>
+          <a href="impact.html" class="btn btn-outline">See Our Impact</a>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
   </main>
 <!-- Floating Donate CTA -->
