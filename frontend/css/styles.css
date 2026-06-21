@@ -760,12 +760,15 @@ h1,h2,h3,h4,h5,h6,
 .stat-value{
   font-size:clamp(2.2rem,4vw,3rem);
   color:var(--primary);
+  margin-bottom: 5px;
 }
 .stat-label{
   font-family:var(--font-ui);
-  color:var(--muted);
+  color:white;
   font-size:.9rem;
   font-weight:600;
+  margin-top:0;
+  
 }
 .news-card,
 .featured-card{
