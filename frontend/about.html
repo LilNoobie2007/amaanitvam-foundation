@@ -1,599 +1,470 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Learn about Amaanitvam Foundation — our origins, leadership, and commitment to building stronger communities.">
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <meta
+    content="Learn about Amaanitvam Foundation — our origins, leadership, and commitment to building stronger communities."
+    name="description" />
   <title>About Us — Amaanitvam Foundation</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
-  <link rel="icon" href="assets/images/logo.jpg" type="image/jpg">
-  <link rel="stylesheet" href="css/styles.css">
-
-<style>
-    @media (min-width: 768px) {
-      .grid-hero { 
-        grid-template-columns: 1fr 1fr !important; 
-      }
-      .grid-2-col { 
-        grid-template-columns: 1fr 1fr !important; 
-      }
-      .origins-img { 
-        order: 1 !important; 
-      }
-      .origins-text { 
-        order: 2 !important; 
-      }
-    }
-  </style>
-
-  <style>
-    /* Floating Donate CTA */
-    .floating-donate {
-      position: fixed;
-      bottom: 1.5rem;
-      right: 1.5rem;
-      z-index: 1000;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: var(--gold, #d4af37);
-      color: #1a2238;
-      padding: 0.9rem 1.6rem;
-      border-radius: 999px;
-      font-family: 'Inter', sans-serif;
-      font-weight: 600;
-      font-size: 0.95rem;
-      text-decoration: none;
-      line-height: 1;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    .floating-donate:hover,
-    .floating-donate:focus-visible {
-      transform: translateY(-3px);
-      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.3);
-      color: #1a2238;
-    }
-    .floating-donate .material-symbols-outlined {
-      font-size: 1.2rem;
-    }
-    @media (max-width: 540px) {
-      .floating-donate {
-        padding: 0.85rem;
-        border-radius: 50%;
-      }
-      .floating-donate-text {
-        display: none;
-      }
-    }
-  </style>
-  <style>
-    /* ── About page: tighter vertical rhythm & consistent image sizing ──────
-       Scoped to [data-page="about"] only, so it never affects other pages
-       or the shared css/styles.css rules. ─────────────────────────────── */
-
-    /* Shrink the hero a touch — it doesn't need 480px of empty space */
-    body[data-page="about"] .page-hero.has-image {
-      padding: 4rem 0 !important;
-      min-height: 380px !important;
-    }
-
-    /* Reduce the gap stacked between every section on this content-heavy page */
-    body[data-page="about"] main#main-content > section.section {
-      padding: 2.75rem 0 !important;
-    }
-
-    /* Section headers were adding their own large margin on top of section padding */
-    body[data-page="about"] .section-header {
-      margin-bottom: 1.75rem !important;
-    }
-
-    /* Tighten the two-column text/image rows (Our Origins, Heart of Our Work) */
-    body[data-page="about"] .grid-2-col {
-      gap: 2.25rem !important;
-    }
-
-    /* Keep the zigzag image rows the same height so the page reads as aligned
-       rather than every row floating a different amount of white space */
-    body[data-page="about"] .origins-img,
-    body[data-page="about"] .heart-img {
-      align-self: stretch;
-    }
-    body[data-page="about"] .origins-img img,
-    body[data-page="about"] .heart-img img {
-      height: 360px;
-    }
-
-    /* The award figure and timeline icons had extra breathing room stacked
-       on top of the section padding above — bring them closer to their headers */
-    body[data-page="about"] .achievement-feature {
-      min-height: 240px !important;
-    }
-
-  </style>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;family=Montserrat:wght@500;600;700;800&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <link href="assets/images/logo.jpg" rel="icon" type="image/jpg" />
+  <link href="css/styles.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
 </head>
+
 <body data-page="about">
+  <header class="site-header" id="site-header">
+    <nav aria-label="Main navigation" class="site-nav" id="site-nav">
+      <div class="nav-inner">
+        <a aria-label="Amaanitvam Foundation home" class="brand" href="index.html">
+          <img alt="Amaanitvam Foundation" class="brand-logo" src="assets/images/logo.jpg" />
+          <div class="brand-text">
+            <span class="brand-name">AMAANITVAM</span>
+            <span class="brand-subtitle">FOUNDATION</span>
+          </div>
+        </a>
 
-<header class="site-header" id="site-header">
-  <nav class="site-nav" id="site-nav" aria-label="Main navigation">
-    <div class="nav-inner">
+        <div class="nav-links" id="nav-links" role="navigation">
+          <a class="nav-link" href="index.html">Home</a>
+          <div class="nav-item has-dropdown">
+            <button aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-trigger">About Us
+              <span aria-hidden="true" class="nav-chevron">
+                <svg fill="none" height="7" viewbox="0 0 12 7" width="12">
+                  <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                    stroke-width="1.6"></path>
+                </svg>
+              </span>
+            </button>
 
-      <a href="index.html" class="brand" aria-label="Amaanitvam Foundation home">
-        <img src="assets/images/logo.jpg" alt="Amaanitvam Foundation" class="brand-logo">
-        <div class="brand-text">
-          <span class="brand-name">AMAANITVAM</span>
-          <span class="brand-subtitle">FOUNDATION</span>
-        </div>
-      </a>
+            <div class="dropdown-menu" role="menu">
+              <a class="dropdown-item" href="about.html" role="menuitem">
+                <span class="dropdown-icon">
+                  <span class="material-symbols-outlined">info</span>
+                </span>
+                <span class="dropdown-text">
+                  <strong>About Foundation</strong>
+                  <small>Our story &amp; values</small>
+                </span>
+              </a>
 
-      <div class="nav-links" id="nav-links" role="navigation">
-        <a href="index.html" class="nav-link">Home</a>
+              <a class="dropdown-item" href="impact.html" role="menuitem">
+                <span class="dropdown-icon">
+                  <span class="material-symbols-outlined">bar_chart</span>
+                </span>
+                <span class="dropdown-text">
+                  <strong>Impact</strong>
+                  <small>What we've achieved</small>
+                </span>
+              </a>
 
-        <div class="nav-item has-dropdown">
-          <button class="nav-link dropdown-trigger" aria-haspopup="true" aria-expanded="false">
-            About Us
-            <span class="nav-chevron" aria-hidden="true">
-              <svg width="12" height="7" viewBox="0 0 12 7" fill="none">
-                <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </span>
-          </button>
+              <a class="dropdown-item" href="programs.html" role="menuitem">
+                <span class="dropdown-icon">
+                  <span class="material-symbols-outlined">apps</span>
+                </span>
+                <span class="dropdown-text">
+                  <strong>Programs</strong>
+                  <small>Our initiatives &amp; impact areas</small>
+                </span>
+              </a>
 
-          <div class="dropdown-menu" role="menu">
-            <a href="about.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon">
-                <span class="material-symbols-outlined">info</span>
-              </span>
-              <span class="dropdown-text">
-                <strong>About Foundation</strong>
-                <small>Our story & values</small>
-              </span>
-            </a>
+              <a class="dropdown-item" href="gallery.html" role="menuitem">
+                <span class="dropdown-icon">
+                  <span class="material-symbols-outlined">photo_library</span>
+                </span>
+                <span class="dropdown-text">
+                  <strong>Gallery</strong>
+                  <small>Photos &amp; moments</small>
+                </span>
+              </a>
+            </div>
+          </div>
 
-            <a href="impact.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon">
-                <span class="material-symbols-outlined">bar_chart</span>
+          <div class="nav-item has-dropdown">
+            <button aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-trigger">Get Involved
+              <span aria-hidden="true" class="nav-chevron">
+                <svg fill="none" height="7" viewbox="0 0 12 7" width="12">
+                  <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                    stroke-width="1.6"></path>
+                </svg>
               </span>
-              <span class="dropdown-text">
-                <strong>Impact</strong>
-                <small>What we've achieved</small>
-              </span>
-            </a>
+            </button>
 
-            <a href="programs.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon">
-                <span class="material-symbols-outlined">apps</span>
-              </span>
-              <span class="dropdown-text">
-                <strong>Programs</strong>
-                <small>Our initiatives & impact areas</small>
-              </span>
-            </a>
+            <div class="dropdown-menu" role="menu">
+              <a class="dropdown-item" href="volunteer.html" role="menuitem">
+                <span class="dropdown-icon">
+                  <span class="material-symbols-outlined">volunteer_activism</span>
+                </span>
+                <span class="dropdown-text">
+                  <strong>Volunteer</strong>
+                  <small>Join our volunteer network</small>
+                </span>
+              </a>
 
-            <a href="gallery.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon">
-                <span class="material-symbols-outlined">photo_library</span>
+              <a class="dropdown-item" href="internship.html" role="menuitem">
+                <span class="dropdown-icon">
+                  <span class="material-symbols-outlined">work</span>
+                </span>
+                <span class="dropdown-text">
+                  <strong>Internship</strong>
+                  <small>Apply for internship</small>
+                </span>
+              </a>
+
+              <a class="dropdown-item" href="contact.html" role="menuitem">
+                <span class="dropdown-icon">
+                  <span class="material-symbols-outlined">mail</span>
+                </span>
+                <span class="dropdown-text">
+                  <strong>Contact Us</strong>
+                  <small>Get in touch</small>
+                </span>
+              </a>
+            </div>
+          </div>
+
+          <div class="nav-item has-dropdown">
+            <button aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-trigger">Resources
+              <span aria-hidden="true" class="nav-chevron">
+                <svg fill="none" height="7" viewbox="0 0 12 7" width="12">
+                  <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                    stroke-width="1.6"></path>
+                </svg>
               </span>
-              <span class="dropdown-text">
-                <strong>Gallery</strong>
-                <small>Photos & moments</small>
-              </span>
-            </a>
+            </button>
+
+            <div class="dropdown-menu" role="menu">
+              <a class="dropdown-item" href="collaborations.html" role="menuitem">
+                <span class="dropdown-icon">
+                  <span class="material-symbols-outlined">diversity_3</span>
+                </span>
+                <span class="dropdown-text">
+                  <strong>Collaborations &amp; Partnerships</strong>
+                  <small>Our partners &amp; collaborations</small>
+                </span>
+              </a>
+
+              <a class="dropdown-item" href="verify.html" role="menuitem">
+                <span class="dropdown-icon">
+                  <span class="material-symbols-outlined">verified</span>
+                </span>
+                <span class="dropdown-text">
+                  <strong>Verify Certificate</strong>
+                  <small>Check your certificate</small>
+                </span>
+              </a>
+
+              <a class="dropdown-item" href="faq.html" role="menuitem">
+                <span class="dropdown-icon">
+                  <span class="material-symbols-outlined">help</span>
+                </span>
+                <span class="dropdown-text">
+                  <strong>FAQ</strong>
+                  <small>Common questions answered</small>
+                </span>
+              </a>
+            </div>
           </div>
         </div>
 
-        <div class="nav-item has-dropdown">
-          <button class="nav-link dropdown-trigger" aria-haspopup="true" aria-expanded="false">
-            Get Involved
-            <span class="nav-chevron" aria-hidden="true">
-              <svg width="12" height="7" viewBox="0 0 12 7" fill="none">
-                <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </span>
+        <div class="nav-actions">
+          <button aria-controls="mobile-menu" aria-expanded="false" aria-label="Open navigation menu"
+            class="menu-toggle" id="menu-toggle">
+            <span class="hamburger-bar"></span>
+            <span class="hamburger-bar"></span>
+            <span class="hamburger-bar"></span>
           </button>
-
-          <div class="dropdown-menu" role="menu">
-            <a href="volunteer.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon">
-                <span class="material-symbols-outlined">volunteer_activism</span>
-              </span>
-              <span class="dropdown-text">
-                <strong>Volunteer</strong>
-                <small>Join our volunteer network</small>
-              </span>
-            </a>
-
-            <a href="internship.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon">
-                <span class="material-symbols-outlined">work</span>
-              </span>
-              <span class="dropdown-text">
-                <strong>Internship</strong>
-                <small>Apply for internship</small>
-              </span>
-            </a>
-
-            <a href="contact.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon">
-                <span class="material-symbols-outlined">mail</span>
-              </span>
-              <span class="dropdown-text">
-                <strong>Contact Us</strong>
-                <small>Get in touch</small>
-              </span>
-            </a>
-          </div>
-        </div>
-
-        <div class="nav-item has-dropdown">
-          <button class="nav-link dropdown-trigger" aria-haspopup="true" aria-expanded="false">
-            Resources
-            <span class="nav-chevron" aria-hidden="true">
-              <svg width="12" height="7" viewBox="0 0 12 7" fill="none">
-                <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </span>
-          </button>
-
-          <div class="dropdown-menu" role="menu">
-            <a href="collaborations.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon">
-                <span class="material-symbols-outlined">diversity_3</span>
-              </span>
-              <span class="dropdown-text">
-                <strong>Collaborations & Partnerships</strong>
-                <small>Our partners & collaborations</small>
-              </span>
-            </a>
-
-            <a href="verify.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon">
-                <span class="material-symbols-outlined">verified</span>
-              </span>
-              <span class="dropdown-text">
-                <strong>Verify Certificate</strong>
-                <small>Check your certificate</small>
-              </span>
-            </a>
-
-            <a href="faq.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon">
-                <span class="material-symbols-outlined">help</span>
-              </span>
-              <span class="dropdown-text">
-                <strong>FAQ</strong>
-                <small>Common questions answered</small>
-              </span>
-            </a>
-          </div>
         </div>
       </div>
+    </nav>
 
-      <div class="nav-actions">
-        <button class="menu-toggle" id="menu-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
-          <span class="hamburger-bar"></span>
-          <span class="hamburger-bar"></span>
-          <span class="hamburger-bar"></span>
-        </button>
+    <div aria-hidden="true" class="mobile-menu" id="mobile-menu">
+      <div class="mobile-menu-inner">
+        <a class="mobile-link moved-inline-style-001" href="index.html">Home</a>
+        <div class="mobile-section">
+          <button aria-expanded="false" class="mobile-group-toggle">About Us
+            <span aria-hidden="true" class="material-symbols-outlined">expand_more</span>
+          </button>
+
+          <div class="mobile-group-links">
+            <a class="mobile-link" href="about.html">About Foundation</a>
+            <a class="mobile-link" href="impact.html">Impact</a>
+            <a class="mobile-link" href="programs.html">Programs</a>
+            <a class="mobile-link" href="gallery.html">Gallery</a>
+          </div>
+        </div>
+
+        <div class="mobile-section">
+          <button aria-expanded="false" class="mobile-group-toggle">Get Involved
+            <span aria-hidden="true" class="material-symbols-outlined">expand_more</span>
+          </button>
+          <div class="mobile-group-links">
+            <a class="mobile-link" href="volunteer.html">Volunteer</a>
+            <a class="mobile-link" href="internship.html">Internship</a>
+            <a class="mobile-link" href="contact.html">Contact Us</a>
+          </div>
+        </div>
+
+        <div class="mobile-section">
+          <button aria-expanded="false" class="mobile-group-toggle">Resources
+            <span aria-hidden="true" class="material-symbols-outlined">expand_more</span>
+          </button>
+
+          <div class="mobile-group-links">
+            <a class="mobile-link" href="collaborations.html">Collaborations &amp; Partnerships</a>
+            <a class="mobile-link" href="verify.html">Verify Certificate</a>
+            <a class="mobile-link" href="faq.html">FAQ</a>
+          </div>
+        </div>
       </div>
     </div>
-  </nav>
+  </header>
 
-  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
-    <div class="mobile-menu-inner">
-
-      <a href="index.html" class="mobile-link" style="padding:1rem 0.25rem;font-weight:600;display:block;">Home</a>
-
-      <div class="mobile-section">
-        <button class="mobile-group-toggle" aria-expanded="false">
-          About Us <span class="material-symbols-outlined" aria-hidden="true">expand_more</span>
-        </button>
-        <div class="mobile-group-links">
-          <a href="about.html" class="mobile-link">About Foundation</a>
-          <a href="impact.html" class="mobile-link">Impact</a>
-          <a href="programs.html" class="mobile-link">Programs</a>
-          <a href="gallery.html" class="mobile-link">Gallery</a>
-        </div>
-      </div>
-
-      <div class="mobile-section">
-        <button class="mobile-group-toggle" aria-expanded="false">
-          Get Involved 
-          <span class="material-symbols-outlined" aria-hidden="true">expand_more</span>
-        </button>
-        <div class="mobile-group-links">
-          <a href="volunteer.html" class="mobile-link">Volunteer</a>
-          <a href="internship.html" class="mobile-link">Internship</a>
-          <a href="contact.html" class="mobile-link">Contact Us</a>
-        </div>
-      </div>
-
-      <div class="mobile-section">
-        <button class="mobile-group-toggle" aria-expanded="false">
-          Resources 
-          <span class="material-symbols-outlined" aria-hidden="true">expand_more</span>
-        </button>
-        <div class="mobile-group-links">
-          <a href="collaborations.html" class="mobile-link">Collaborations & Partnerships</a>
-          <a href="verify.html" class="mobile-link">Verify Certificate</a>
-          <a href="faq.html" class="mobile-link">FAQ</a>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</header>
-
-<main id="main-content">
-
-    <!-- Hero -->
-    <section class="page-hero has-image section" data-hero aria-labelledby="about-hero-title" 
-    style="position: relative; 
-    background-image: linear-gradient(135deg, rgba(86, 5, 26, 0.88), rgba(86, 5, 26, 0.6)), url('assets/images/about-hero.png'); 
-    background-size: cover; 
-    background-position: center; 
-    background-repeat: no-repeat; 
-    padding: 6rem 0; 
-    min-height: 480px; 
-    display: flex; 
-    align-items: center; 
-    overflow: hidden;">
-      <div class="container" style="display: flex; justify-content: center; text-align: center; width: 100%;">
-        <div style="max-width: 960px;">
-          <span class="section-label" style="color: var(--gold);">About Us</span>
-          <h1 id="about-hero-title" class="section-title" style="font-size: clamp(2.5rem, 6vw, 4rem); 
-          margin-bottom: 1.25rem; color: #ffffff !important; opacity: 1;">
-            To Be Human Is Enough.
-          </h1>
-          <p class="section-desc" style="max-width: 960px; margin: 0 auto; color: #ffffff; opacity: 1; font-size: 1.25rem;">
-            A student-led movement inspiring learning, responsibility, and positive change for a stronger society.
-          </p>
+  <main id="main-content">
+    <section aria-labelledby="about-hero-title" class="page-hero has-image section moved-inline-style-002" data-hero="">
+      <div class="container moved-inline-style-003">
+        <div class="moved-inline-style-004">
+          <span class="section-label moved-inline-style-005">About Us</span>
+          <h1 class="section-title moved-inline-style-006" id="about-hero-title">To Be Human Is Enough.</h1>
+          <p class="section-desc moved-inline-style-007">
+            A student-led movement inspiring learning, responsibility, and positive change for a stronger society.</p>
         </div>
       </div>
     </section>
 
-    <!-- Our Origins -->
-    <section class="section section-alt" aria-labelledby="origins-title">
+    <section aria-labelledby="origins-title" class="section section-alt">
       <div class="container">
-        <div class="grid-2-col" style="display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: center;">
-          <div class="origins-img" style="border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow); order: 2;">
-            <img
-              src="assets/images/about2.png"
-              alt="Early community gathering showing the foundation's grassroots beginnings"
-              width="600"
-              height="400"
-              style="width: 100%; height: 360px; object-fit: cover; display: block;"
-              loading="lazy"
-            >
+        <div class="grid-2-col moved-inline-style-008">
+          <div class="origins-img moved-inline-style-009">
+            <img alt="Early community gathering showing the foundation's grassroots beginnings"
+              class="moved-inline-style-010" height="400" loading="lazy" src="assets/images/about2.png" width="600" />
           </div>
-          <div class="origins-text" style="order: 1;">
-            <h2 id="origins-title" class="section-title" style="text-align: left; font-size: 1.75rem; margin-bottom: 1rem;">
+          <div class="origins-text moved-inline-style-011">
+            <h2 class="section-title moved-inline-style-012" id="origins-title">
               <span class="text-primary">Our Origins</span>
             </h2>
-            <p class="text-muted" style="font-size: 1.1rem; margin-bottom: 1rem; line-height: 1.7;">
-                            Amaanitvam Foundation was founded on the belief that meaningful change begins when individuals 
-                            choose to care for one another. Built on the values of compassion, responsibility, and collective progress, 
-                            the organization works to empower children, women, and underserved communities through education, mentorship, 
-                            awareness, skill development, and community engagement.
+            <p class="text-muted moved-inline-style-013">
+              Amaanitvam Foundation was founded on the belief that meaningful change begins when individuals
+              choose to care for one another. Built on the values of compassion, responsibility, and collective
+              progress,
+              the organization works to empower children, women, and underserved communities through education,
+              mentorship,
+              awareness, skill development, and community engagement.
             </p>
-            <p class="text-muted" style="line-height: 1.7;">
-              We believe that lasting social impact is created by strengthening the foundations of growth. 
-              By promoting learning opportunities, personal development, civic responsibility, and community participation, 
-              we strive to help individuals realize their potential and contribute positively to society. 
+            <p class="text-muted moved-inline-style-014">
+              We believe that lasting social impact is created by strengthening the foundations of growth.
+              By promoting learning opportunities, personal development, civic responsibility, and community
+              participation,
+              we strive to help individuals realize their potential and contribute positively to society.
             </p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- The Heart of Our Work -->
-    <section class="section section-white" aria-labelledby="heart-title">
+    <section aria-labelledby="heart-title" class="section section-white">
       <div class="container">
-        <div class="grid-2-col" style="display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: center;">
+        <div class="grid-2-col moved-inline-style-008">
           <div>
-            <h2 id="heart-title" class="section-title" style="text-align: left; font-size: 1.75rem; margin-bottom: 1rem;">
+            <h2 class="section-title moved-inline-style-012" id="heart-title">
               <span class="text-primary">The Heart of Our Work</span>
             </h2>
-            <p class="text-muted" style="font-size: 1.1rem; margin-bottom: 1rem; line-height: 1.7;">
-              We believe that education, awareness, and personal growth are powerful tools for creating meaningful and lasting social change. 
+            <p class="text-muted moved-inline-style-013">
+              We believe that education, awareness, and personal growth are powerful tools for creating meaningful and
+              lasting social change.
               By encouraging individuals to realize their potential, we help build confidence, responsibility, and hope.
             </p>
-            <p class="text-muted" style="line-height: 1.7;">
-              Through mentorship, skill development, and community engagement, we foster a spirit of service and collective action, 
+            <p class="text-muted moved-inline-style-014">
+              Through mentorship, skill development, and community engagement, we foster a spirit of service and
+              collective action,
               inspiring people to contribute positively to their communities and society.
             </p>
           </div>
-          <div class="heart-img" style="border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow);">
-            <img
-              src="assets/images/about3.png"
-              alt="Hands working collaboratively on a community planning model"
-              width="397"
-              height="375"
-              style="width: 100%; height: 360px; object-fit: cover; display: block;"
-              loading="lazy"
-            >
+          <div class="heart-img moved-inline-style-015">
+            <img alt="Hands working collaboratively on a community planning model" class="moved-inline-style-010"
+              height="375" loading="lazy" src="assets/images/about3.png" width="397" />
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Core Values -->
-    <section class="section section-alt" aria-labelledby="vmv-title">
+    <section aria-labelledby="vmv-title" class="section section-alt">
       <div class="container">
         <header class="section-header">
           <span class="section-label">What Guides Us</span>
-          <h2 id="vmv-title" class="section-title">Core Values</h2>
+          <h2 class="section-title" id="vmv-title">Core Values</h2>
           <p class="section-desc">The principles that shape every program, partnership, and community we serve.</p>
         </header>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem;">
-          <article class="card" style="text-align: center;">
-            <div class="card-icon card-icon-pink" style="margin: 0 auto 1rem;">
-              <span class="material-symbols-outlined icon-fill" aria-hidden="true">verified_user</span>
+        <div class="moved-inline-style-016">
+          <article class="card moved-inline-style-017">
+            <div class="card-icon card-icon-pink moved-inline-style-018">
+              <span aria-hidden="true" class="material-symbols-outlined icon-fill">verified_user</span>
             </div>
-            <h4 style="font-size: 1rem; font-weight: 600; color: var(--navy); margin-bottom: 0.5rem;"> Compassion</h4>
-            <p class="text-muted" style="font-size: 0.9rem;">
-              We believe meaningful change begins with empathy and a genuine commitment to helping others live with dignity and hope.</p>
+            <h4 class="moved-inline-style-019"> Compassion</h4>
+            <p class="text-muted moved-inline-style-020">
+              We believe meaningful change begins with empathy and a genuine commitment to helping others live with
+              dignity and hope.</p>
           </article>
-          <article class="card" style="text-align: center;">
-            <div class="card-icon card-icon-purple" style="margin: 0 auto 1rem;">
-              <span class="material-symbols-outlined icon-fill" aria-hidden="true">favorite</span>
+
+          <article class="card moved-inline-style-017">
+            <div class="card-icon card-icon-purple moved-inline-style-018">
+              <span aria-hidden="true" class="material-symbols-outlined icon-fill">favorite</span>
             </div>
-            <h4 style="font-size: 1rem; font-weight: 600; color: var(--navy); margin-bottom: 0.5rem;">Responsibility</h4>
-            <p class="text-muted" style="font-size: 0.9rem;">
-              We encourage individuals to recognize their role in creating a better society through service, awareness, and positive action.</p>
+            <h4 class="moved-inline-style-019">Responsibility</h4>
+            <p class="text-muted moved-inline-style-020">
+              We encourage individuals to recognize their role in creating a better society through service, awareness,
+              and positive action.</p>
           </article>
-          <article class="card" style="text-align: center;">
-            <div class="card-icon card-icon-gold" style="margin: 0 auto 1rem;">
-              <span class="material-symbols-outlined icon-fill" aria-hidden="true">school</span>
+
+          <article class="card moved-inline-style-017">
+            <div class="card-icon card-icon-gold moved-inline-style-018">
+              <span aria-hidden="true" class="material-symbols-outlined icon-fill">school</span>
             </div>
-            <h4 style="font-size: 1rem; font-weight: 600; color: var(--navy); margin-bottom: 0.5rem;">Education</h4>
-            <p class="text-muted" style="font-size: 0.9rem;">
-              We view education as a powerful catalyst for empowerment, opportunity, and long-term social transformation.</p>
+            <h4 class="moved-inline-style-019">Education</h4>
+            <p class="text-muted moved-inline-style-020">
+              We view education as a powerful catalyst for empowerment, opportunity, and long-term social
+              transformation.</p>
           </article>
-          <article class="card" style="text-align: center;">
-            <div class="card-icon card-icon-navy" style="margin: 0 auto 1rem;">
-              <span class="material-symbols-outlined icon-fill" aria-hidden="true">balance</span>
+
+          <article class="card moved-inline-style-017">
+            <div class="card-icon card-icon-navy moved-inline-style-018">
+              <span aria-hidden="true" class="material-symbols-outlined icon-fill">balance</span>
             </div>
-            <h4 style="font-size: 1rem; font-weight: 600; color: var(--navy); margin-bottom: 0.5rem;">Equality</h4>
-            <p class="text-muted" style="font-size: 0.9rem;">
-              We uphold the principle that every individual deserves equal opportunities, free from discrimination based on caste, 
+            <h4 class="moved-inline-style-019">Equality</h4>
+            <p class="text-muted moved-inline-style-020">
+              We uphold the principle that every individual deserves equal opportunities, free from discrimination based
+              on caste,
               class, gender, or background.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- Leadership -->
-    <section class="section section-white" aria-labelledby="leadership-title">
+    <section aria-labelledby="leadership-title" class="section section-white">
+
       <div class="container">
         <header class="section-header">
           <span class="section-label">Our Team</span>
-          <h2 id="leadership-title" class="section-title">Leadership Team</h2>
+          <h2 class="section-title" id="leadership-title">Leadership Team</h2>
           <p class="section-desc">The dedicated individuals driving our mission forward.</p>
         </header>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem;">
-          <article class="card" style="text-align: center;">
-            <div style="width: 96px; height: 96px; border-radius: 50%; background: rgba(233,30,99,0.1); 
-            display: flex; align-items: center; 
-            justify-content: center; 
-            margin: 0 auto 1.25rem; 
-            color: var(--primary);">
-              <span class="material-symbols-outlined" style="font-size: 2.5rem;" aria-hidden="true">person</span>
+
+        <div class="moved-inline-style-021">
+          <article class="card moved-inline-style-017">
+            <div class="moved-inline-style-022">
+              <span aria-hidden="true" class="material-symbols-outlined moved-inline-style-023">person</span>
             </div>
-            <h3 style="font-size: 1.15rem; font-weight: 600; color: var(--navy); margin-bottom: 0.25rem;">Kartik Sharma</h3>
-            <p class="text-primary" style="font-size: 0.9rem; font-weight: 600;">Founder &amp; Director</p>
+            <h3 class="moved-inline-style-024">Kartik Sharma</h3>
+            <p class="text-primary moved-inline-style-025">Founder &amp; Director</p>
           </article>
-          <article class="card" style="text-align: center;">
-            <div style="width: 96px; height: 96px; border-radius: 50%; background: rgba(108,99,255,0.1); 
-            display: flex; align-items: center; 
-            justify-content: center; 
-            margin: 0 auto 1.25rem; 
-            color: var(--purple);">
-              <span class="material-symbols-outlined" style="font-size: 2.5rem;" aria-hidden="true">person</span>
+
+          <article class="card moved-inline-style-017">
+            <div class="moved-inline-style-026">
+              <span aria-hidden="true" class="material-symbols-outlined moved-inline-style-023">person</span>
             </div>
-            <h3 style="font-size: 1.15rem; font-weight: 600; color: var(--navy); margin-bottom: 0.25rem;">Noman Ali</h3>
-            <p class="text-primary" style="font-size: 0.9rem; font-weight: 600;">Vice President</p>
+            <h3 class="moved-inline-style-024">Noman Ali</h3>
+            <p class="text-primary moved-inline-style-025">Vice President</p>
           </article>
-          <article class="card" style="text-align: center;">
-            <div style="width: 96px; height: 96px; border-radius: 50%; background: rgba(255,183,3,0.15); 
-            display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; color: var(--gold-dark);">
-              <span class="material-symbols-outlined" style="font-size: 2.5rem;" aria-hidden="true">person</span>
+
+          <article class="card moved-inline-style-017">
+            <div class="moved-inline-style-027">
+              <span aria-hidden="true" class="material-symbols-outlined moved-inline-style-023">person</span>
             </div>
-            <h3 style="font-size: 1.15rem; font-weight: 600; color: var(--navy); margin-bottom: 0.25rem;">Payal Rajwar</h3>
-            <p class="text-primary" style="font-size: 0.9rem; font-weight: 600;">Secretary</p>
+            <h3 class="moved-inline-style-024">Payal Rajwar</h3>
+            <p class="text-primary moved-inline-style-025">Secretary</p>
           </article>
-          <article class="card" style="text-align: center;">
-            <div style="width: 96px; height: 96px; border-radius: 50%; background: rgba(31,41,55,0.08); 
-            display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; color: var(--navy);">
-              <span class="material-symbols-outlined" style="font-size: 2.5rem;" aria-hidden="true">person</span>
+
+          <article class="card moved-inline-style-017">
+            <div class="moved-inline-style-028">
+              <span aria-hidden="true" class="material-symbols-outlined moved-inline-style-023">person</span>
             </div>
-            <h3 style="font-size: 1.15rem; font-weight: 600; color: var(--navy); margin-bottom: 0.25rem;">Roshan Kapar</h3>
-            <p class="text-primary" style="font-size: 0.9rem; font-weight: 600;">HR Head</p>
+            <h3 class="moved-inline-style-024">Roshan Kapar</h3>
+            <p class="text-primary moved-inline-style-025">HR Head</p>
           </article>
-          <article class="card" style="text-align: center;">
-            <div style="width: 96px; height: 96px; border-radius: 50%; background: rgba(233,30,99,0.1); 
-            display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; color: var(--primary);">
-              <span class="material-symbols-outlined" style="font-size: 2.5rem;" aria-hidden="true">person</span>
+
+          <article class="card moved-inline-style-017">
+            <div class="moved-inline-style-022">
+              <span aria-hidden="true" class="material-symbols-outlined moved-inline-style-023">person</span>
             </div>
-            <h3 style="font-size: 1.15rem; font-weight: 600; color: var(--navy); margin-bottom: 0.25rem;">Niranjan Kumari</h3>
-            <p class="text-primary" style="font-size: 0.9rem; font-weight: 600;">Senior Coordinator</p>
+            <h3 class="moved-inline-style-024">Niranjan Kumar</h3>
+            <p class="text-primary moved-inline-style-025">Senior Coordinator</p>
           </article>
-          <article class="card" style="text-align: center;">
-            <div style="width: 96px; height: 96px; border-radius: 50%; background: rgba(108,99,255,0.1); 
-            display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; color: var(--purple);">
-              <span class="material-symbols-outlined" style="font-size: 2.5rem;" aria-hidden="true">person</span>
+
+          <article class="card moved-inline-style-017">
+            <div class="moved-inline-style-026">
+              <span aria-hidden="true" class="material-symbols-outlined moved-inline-style-023">person</span>
             </div>
-            <h3 style="font-size: 1.15rem; font-weight: 600; color: var(--navy); margin-bottom: 0.25rem;">Ishika</h3>
-            <p class="text-primary" style="font-size: 0.9rem; font-weight: 600;">Graphic Design Head</p>
+            <h3 class="moved-inline-style-024">Ishika</h3>
+            <p class="text-primary moved-inline-style-025">Graphic Design Head</p>
           </article>
-          <article class="card" style="text-align: center;">
-            <div style="width: 96px; height: 96px; border-radius: 50%; background: rgba(255,183,3,0.15); 
-            display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; color: var(--gold-dark);">
-              <span class="material-symbols-outlined" style="font-size: 2.5rem;" aria-hidden="true">person</span>
+
+          <article class="card moved-inline-style-017">
+            <div class="moved-inline-style-027">
+              <span aria-hidden="true" class="material-symbols-outlined moved-inline-style-023">person</span>
             </div>
-            <h3 style="font-size: 1.15rem; font-weight: 600; color: var(--navy); margin-bottom: 0.25rem;">Sneha</h3>
-            <p class="text-primary" style="font-size: 0.9rem; font-weight: 600;">Content Writing Head</p>
+            <h3 class="moved-inline-style-024">Sneha</h3>
+            <p class="text-primary moved-inline-style-025">Content Writing Head</p>
           </article>
-          <article class="card" style="text-align: center;">
-            <div style="width: 96px; height: 96px; border-radius: 50%; background: rgba(31,41,55,0.08); 
-            display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; color: var(--navy);">
-              <span class="material-symbols-outlined" style="font-size: 2.5rem;" aria-hidden="true">person</span>
+
+          <article class="card moved-inline-style-017">
+            <div class="moved-inline-style-028">
+              <span aria-hidden="true" class="material-symbols-outlined moved-inline-style-023">person</span>
             </div>
-            <h3 style="font-size: 1.15rem; font-weight: 600; color: var(--navy); margin-bottom: 0.25rem;">Shriti</h3>
-            <p class="text-primary" style="font-size: 0.9rem; font-weight: 600;">Social Media Head</p>
+            <h3 class="moved-inline-style-024">Shriti</h3>
+            <p class="text-primary moved-inline-style-025">Social Media Head</p>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- Recognitions -->
-    <section class="section section-alt section-divider" aria-labelledby="achievements-title">
+    <section aria-labelledby="achievements-title" class="section section-alt section-divider">
+
       <div class="container">
         <header class="section-header">
           <span class="section-label">Recognition</span>
-          <h2 id="achievements-title" class="section-title">Awards &amp; Achievements</h2>
+          <h2 class="section-title" id="achievements-title">Awards &amp; Achievements</h2>
           <p class="section-desc">Honoring the dedication of our leadership and the impact of our community work.</p>
         </header>
-        <div class="split-2" style="align-items: center;">
-          <figure class="achievement-feature" style="display: flex; align-items: center; justify-content: center; 
-          min-height: 280px; background: var(--bg); border-radius: var(--radius-lg); overflow: hidden; margin: 0;">
-            <img
-              src="assets/images/prakruti-seva-samman.jpeg"
-              alt="Amaanitvam Foundation representatives receiving the Prakruti Seva Samman award on stage"
-              style="width: 100%; height: 100%; object-fit: cover; display: block;"
-              loading="lazy"
-            >
+
+        <div class="split-2 moved-inline-style-029">
+          <figure class="achievement-feature moved-inline-style-030">
+            <img alt="Amaanitvam Foundation representatives receiving the Prakruti Seva Samman award on stage"
+              class="moved-inline-style-031" loading="lazy" src="assets/images/prakruti-seva-samman.jpeg" />
           </figure>
+
           <div>
-            <span class="tag" style="margin-bottom: 1rem;">Award</span>
-            <h3 style="font-size: 1.35rem; font-weight: 700; color: var(--navy); margin-bottom: 1rem;">Prakruti Seva Samman</h3>
-            <p class="text-muted" style="line-height: 1.8; margin-bottom: 1rem;">
-              Amaanitvam Foundation was honored with the <strong>Prakruti Seva Samman</strong> 
+            <span class="tag moved-inline-style-032">Award</span>
+            <h3 class="moved-inline-style-033">Prakruti Seva Samman</h3>
+            <p class="text-muted moved-inline-style-034">
+              Amaanitvam Foundation was honored with the
+              <strong>Prakruti Seva Samman</strong>
               in recognition of its dedication to community service, education, and social welfare.
             </p>
           </div>
         </div>
 
-        <div class="split-2" style="align-items: center; margin-top: 2.5rem;">
-          <figure class="achievement-feature" style="display: flex; align-items: center; justify-content: center; 
-          min-height: 280px; background: var(--bg); border-radius: var(--radius-lg); overflow: hidden; margin: 0;">
+        <div class="split-2 moved-inline-style-035">
+          <figure class="achievement-feature moved-inline-style-030">
             <img
-              src="assets/images/best-social-worker-award.jpeg"
               alt="Roshan and Kartik Sharma receiving the Best Social Worker Award from RSS at Shankar Nagar, Shahdara"
-              style="width: 100%; height: 100%; object-fit: cover; display: block;"
-              loading="lazy"
-            >
+              class="moved-inline-style-031" loading="lazy" src="assets/images/best-social-worker-award.jpeg" />
           </figure>
+
           <div>
-            <span class="tag" style="margin-bottom: 1rem;">Award</span>
-            <h3 style="font-size: 1.35rem; font-weight: 700; color: var(--navy); margin-bottom: 1rem;">Best Social Worker Award — RSS</h3>
-            <p class="text-muted" style="line-height: 1.8; margin-bottom: 1rem;">
-              Roshan and Kartik Sharma were honored with the <strong>Best Social Worker Award</strong> 
+            <span class="tag moved-inline-style-032">Award</span>
+            <h3 class="moved-inline-style-033">Best Social Worker Award — RSS</h3>
+            <p class="text-muted moved-inline-style-034">
+              Roshan and Kartik Sharma were honored with the
+              <strong>Best Social Worker Award</strong>
               by RSS at Shankar Nagar, Shahdara, as part of the 100 years of RSS celebration.
             </p>
           </div>
@@ -601,270 +472,248 @@
       </div>
     </section>
 
-    <!-- Registration & Transparency -->
-    <section class="section section-white section-divider" aria-labelledby="transparency-title">
+    <section aria-labelledby="transparency-title" class="section section-white section-divider">
+
       <div class="container">
         <header class="section-header">
           <span class="section-label">Legal &amp; Compliance</span>
-          <h2 id="transparency-title" class="section-title">Legal  &amp; Transparency</h2>
-          <p class="section-desc">Amaanitvam Foundation is a formally registered non-profit committed to full accountability and donor trust.</p>
+          <h2 class="section-title" id="transparency-title">Legal &amp; Transparency</h2>
+          <p class="section-desc">Amaanitvam Foundation is a formally registered non-profit committed to full
+            accountability and donor trust.</p>
         </header>
-        <div class="grid-2" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+        <div class="grid-2 moved-inline-style-036">
           <div class="card">
             <div class="card-icon card-icon-navy">
-              <span class="material-symbols-outlined icon-fill" aria-hidden="true">gavel</span>
+              <span aria-hidden="true" class="material-symbols-outlined icon-fill">gavel</span>
             </div>
-            <h3 style="font-size: 1.05rem; font-weight: 600; color: var(--navy); margin-bottom: 0.75rem;">Entity Type</h3>
-            <p class="text-muted" style="font-size: 0.9rem; margin-bottom: 0.5rem;">Private Section 8 (Non-profit) Company</p>
-            <p class="text-muted" style="font-size: 0.85rem;">
-              <strong>CIN:</strong> U88900DL2025NPL455183</p>
+            <h3 class="moved-inline-style-037">Entity Type</h3>
+            <p class="text-muted moved-inline-style-038">Private Section 8 (Non-profit) Company</p>
+            <p class="text-muted moved-inline-style-039">
+              <strong>CIN:</strong> U88900DL2025NPL455183
+            </p>
           </div>
           <div class="card">
             <div class="card-icon card-icon-purple">
-              <span class="material-symbols-outlined icon-fill" aria-hidden="true">verified</span>
+              <span aria-hidden="true" class="material-symbols-outlined icon-fill">verified</span>
             </div>
-            <h3 style="font-size: 1.05rem; font-weight: 600; color: var(--navy); margin-bottom: 0.75rem;">NITI Aayog DARPAN</h3>
-            <p class="text-muted" style="font-size: 0.9rem; margin-bottom: 0.5rem;">Registered on the Government of India NGO portal</p>
-            <p class="text-muted" style="font-size: 0.85rem;">
-              <strong>DARPAN ID:</strong> DL/2025/0817469</p>
+            <h3 class="moved-inline-style-037">NITI Aayog DARPAN</h3>
+            <p class="text-muted moved-inline-style-038">Registered on the Government of India NGO portal</p>
+            <p class="text-muted moved-inline-style-039">
+              <strong>DARPAN ID:</strong> DL/2025/0817469
+            </p>
           </div>
           <div class="card">
-            <div class="card-icon card-icon-pink"><span class="material-symbols-outlined icon-fill" aria-hidden="true">location_on</span>
+            <div class="card-icon card-icon-pink">
+              <span aria-hidden="true" class="material-symbols-outlined icon-fill">location_on</span>
             </div>
-            <h3 style="font-size: 1.05rem; font-weight: 600; color: var(--navy); margin-bottom: 0.75rem;">Registered Address</h3>
-            <p class="text-muted" style="font-size: 0.9rem; line-height: 1.6;">H.No. 269, W.No. 2, Mehrauli, Gadaipur, South West Delhi, New Delhi, Delhi, India — 110030</p>
-            <p class="text-muted" style="font-size: 0.85rem; margin-top: 0.75rem;">
-              <a href="mailto:amaanitvamfoundation@gmail.com" class="text-primary">amaanitvamfoundation@gmail.com</a><br>
-              <a href="tel:+919899923266" class="text-primary">+91 98999 23266</a>
+            <h3 class="moved-inline-style-037">Registered Address</h3>
+            <p class="text-muted moved-inline-style-040">H.No. 269, W.No. 2, Mehrauli, Gadaipur, South West Delhi, New
+              Delhi, Delhi, India — 110030</p>
+            <p class="text-muted moved-inline-style-041">
+              <a class="text-primary"
+                href="mailto:amaanitvamfoundation@gmail.com">amaanitvamfoundation@gmail.com</a><br />
+              <a class="text-primary" href="tel:+919899923266">+91 98999 23266</a>
             </p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Community Impact Overview -->
-    <section class="section section-alt" aria-labelledby="impact-overview-title">
+    <section aria-labelledby="impact-overview-title" class="section section-alt">
+
       <div class="container">
         <header class="section-header">
           <span class="section-label">Community Impact</span>
-          <h2 id="impact-overview-title" class="section-title">Impact Created</h2>
-          <p class="section-desc">Measurable outcomes from Project Shiksha, Project Manthan, Project Pravah, and our community development initiatives.</p>
+          <h2 class="section-title" id="impact-overview-title">Impact Created</h2>
+          <p class="section-desc">Measurable outcomes from Project Shiksha, Project Manthan, Project Pravah, and our
+            community development initiatives.</p>
         </header>
-        <div class="impact-points-row" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.75rem;">
-          <article class="card" style="display: flex; align-items: flex-start; gap: 0.65rem; padding: 1.25rem 1rem;">
-            <span class="material-symbols-outlined icon-fill text-primary" style="font-size: 1.5rem; flex-shrink: 0;" 
-            aria-hidden="true">trending_up</span>
-            <p class="text-muted" style="font-size: 0.85rem; margin: 0; line-height: 1.5;">2 students grew to 50+ beneficiaries</p>
+        <div class="impact-points-row moved-inline-style-042">
+          <article class="card moved-inline-style-043">
+            <span aria-hidden="true"
+              class="material-symbols-outlined icon-fill text-primary moved-inline-style-044">trending_up</span>
+            <p class="text-muted moved-inline-style-045">2 students grew to 50+ beneficiaries</p>
           </article>
-          <article class="card" style="display: flex; align-items: flex-start; gap: 0.65rem; padding: 1.25rem 1rem;">
-            <span class="material-symbols-outlined icon-fill text-primary" style="font-size: 1.5rem; flex-shrink: 0;" aria-hidden="true">school
+
+          <article class="card moved-inline-style-043">
+            <span aria-hidden="true"
+              class="material-symbols-outlined icon-fill text-primary moved-inline-style-044">school
             </span>
-            <p class="text-muted" style="font-size: 0.85rem; margin: 0; line-height: 1.5;">Helped children with school admissions &amp; documentation</p>
+            <p class="text-muted moved-inline-style-045">Helped children with school admissions &amp; documentation</p>
           </article>
-          <article class="card" style="display: flex; 
-          align-items: flex-start; 
-          gap: 0.65rem; 
-          padding: 1.25rem 1rem;">
-            <span class="material-symbols-outlined icon-fill text-primary" style="font-size: 1.5rem; flex-shrink: 0;" 
-            aria-hidden="true">psychology</span>
-            <p class="text-muted" 
-            style="font-size: 0.85rem; 
-            margin: 0; line-height: 1.5;">Counselling &amp; awareness sessions for children</p>
+
+          <article class="card moved-inline-style-043">
+            <span aria-hidden="true"
+              class="material-symbols-outlined icon-fill text-primary moved-inline-style-044">psychology</span>
+            <p class="text-muted moved-inline-style-045">Counselling &amp; awareness sessions for children</p>
           </article>
-          <article class="card" 
-          style="display: flex; 
-          align-items: flex-start; 
-          gap: 0.65rem; 
-          padding: 1.25rem 1rem;">
-            <span class="material-symbols-outlined icon-fill text-primary" 
-            style="font-size: 1.5rem; 
-            flex-shrink: 0;" aria-hidden="true">groups</span>
-            <p class="text-muted" style="font-size: 0.85rem; 
-            margin: 0; 
-            line-height: 1.5;">Project Pravah pilot launched in Hisar, Haryana</p>
+
+          <article class="card moved-inline-style-043">
+            <span aria-hidden="true"
+              class="material-symbols-outlined icon-fill text-primary moved-inline-style-044">groups</span>
+            <p class="text-muted moved-inline-style-045">Project Pravah pilot launched in Hisar, Haryana</p>
           </article>
         </div>
-        <style>
-          @media (max-width: 900px) {
-            .impact-points-row { 
-              grid-template-columns: repeat(2, 1fr) !important; 
-            }
-          }
-          @media (max-width: 540px) {
-            .impact-points-row { 
-              grid-template-columns: 1fr !important; 
-            }
-          }
-        </style>
-        <p style="text-align: center;">
-          <a href="impact.html" class="btn btn-primary">Explore Our Full Impact</a>
+        <p class="moved-inline-style-017">
+          <a class="btn btn-primary" href="impact.html">Explore Our Full Impact</a>
         </p>
       </div>
     </section>
 
-    <!-- Donation CTA -->
-    <section class="section section-alt" aria-labelledby="donate-title">
+    <section aria-labelledby="donate-title" class="section section-alt">
       <div class="container">
         <div class="donate-section">
-          <span class="section-label" style=color:#2b1d22 !important;>Support Our Mission</span>
-          <h2 id="donate-title" class="section-title" style="color:#fff;margin-bottom:1rem;">Be the Change You Wish to See </h2>
-          <p style="color:rgba(255,255,255,0.8);
-          max-width:560px;
-          margin:0 auto 1rem;
-          font-size:1.05rem;">
+          <span !important;="" class="section-label moved-inline-style-046">Support Our Mission</span>
+          <h2 class="section-title moved-inline-style-047" id="donate-title">Be the Change You Wish to See </h2>
+          <p class="moved-inline-style-048">
             Join our mission to empower lives through education, compassion, and community action.
           </p>
-          <p style="color:var(--gold);
-          font-size:0.9rem;
-          font-weight:600;
-          margin-bottom:2rem;">Registered under 12A &amp; 80G — tax-deductible for Indian donors</p>
-          <div style="display:flex;
-          flex-wrap:wrap;
-          gap:1rem;
-          justify-content:center;">
-            <a href="contact.html#donate" class="btn btn-primary">Donate Now</a>
-            <a href="impact.html" class="btn btn-outline" style="border-color:rgba(255,255,255,0.4);
-            color:#fff;">See Our Impact</a>
+          <p class="moved-inline-style-049">Registered under 12A &amp; 80G — tax-deductible for Indian donors</p>
+          <div class="moved-inline-style-050">
+            <a class="btn btn-primary" href="contact.html#donate">Donate Now</a>
+            <a class="btn btn-outline moved-inline-style-051" href="impact.html">See Our Impact</a>
           </div>
         </div>
       </div>
     </section>
-
   </main>
-<!-- Floating Donate CTA -->
 
-<div id="footer"></div>
-
-<a href="contact.html#donate" class="floating-donate">
-  ❤ Donate Now
-</a>
-
-<div class="floating-socials">
-  <a href="https://www.facebook.com/people/Amaanitvam-Foundation/61583427622759/" target="_blank" aria-label="Facebook">
-    <i class="fa-brands fa-facebook-f"></i>
+  <div id="footer"></div>
+  <a class="floating-donate" href="contact.html#donate">
+    ❤ Donate Now
   </a>
-  <a href="https://www.instagram.com/amaanitvamfoundation" target="_blank" aria-label="Instagram">
-    <i class="fa-brands fa-instagram"></i>
-  </a>
-  <a href="https://x.com/AmaanitvamOrg" target="_blank" aria-label="X">
-    <i class="fa-brands fa-x-twitter"></i>
-  </a>
-  <a href="https://www.linkedin.com/company/amaanitvam-foundation/" target="_blank" aria-label="LinkedIn">
-    <i class="fa-brands fa-linkedin-in"></i>
-  </a>
-</div>
 
-<script src="js/main.js"></script>
-<script>
-  (function () {
-    const nav = document.getElementById('site-nav');
-    const menuToggle = document.getElementById('menu-toggle');
-    const mobileMenu = document.getElementById('mobile-menu');
+  <div class="floating-socials">
+    <a aria-label="Facebook" href="https://www.facebook.com/people/Amaanitvam-Foundation/61583427622759/"
+      target="_blank">
+      <i class="fa-brands fa-facebook-f"></i>
+    </a>
+    <a aria-label="Instagram" href="https://www.instagram.com/amaanitvamfoundation" target="_blank">
+      <i class="fa-brands fa-instagram"></i>
+    </a>
+    <a aria-label="X" href="https://x.com/AmaanitvamOrg" target="_blank">
+      <i class="fa-brands fa-x-twitter"></i>
+    </a>
+    <a aria-label="LinkedIn" href="https://www.linkedin.com/company/amaanitvam-foundation/" target="_blank">
+      <i class="fa-brands fa-linkedin-in"></i>
+    </a>
+  </div>
+  <script src="js/main.js"></script>
 
-    if (nav) {
-      function onScroll() {
-        nav.classList.toggle('is-solid', window.scrollY > 60);
-      }
-      window.addEventListener('scroll', onScroll, { passive: true });
-      onScroll();
-    }
+  <script>
 
-    const pageMap = {
-      about: 0,
-      impact: 0,
-      programs: 0,
-      gallery: 0,
-      volunteer: 1,
-      internship: 1,
-      contact: 1,
-      collaborations: 2,
-      verify: 2,
-      faq: 2,
-      resources: 2,
-      guidelines: 2,
-      circulars: 2
-    };
+    (function () {
+      const nav = document.getElementById('site-nav');
+      const menuToggle = document.getElementById('menu-toggle');
+      const mobileMenu = document.getElementById('mobile-menu');
 
-    const page = document.body.dataset.page;
-    if (page && pageMap[page] !== undefined) {
-      const triggers = document.querySelectorAll('.nav-link.dropdown-trigger');
-      if (triggers[pageMap[page]]) {
-        triggers[pageMap[page]].classList.add('is-active');
-      }
-    }
-
-    document.querySelectorAll('.nav-item.has-dropdown').forEach(function (item) {
-      const trigger = item.querySelector('.dropdown-trigger');
-      const menu = item.querySelector('.dropdown-menu');
-
-      function open() {
-        trigger.setAttribute('aria-expanded', 'true');
-        menu.classList.add('is-open');
+      if (nav) {
+        function onScroll() {
+          nav.classList.toggle('is-solid', window.scrollY > 60);
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
       }
 
-      function close() {
-        trigger.setAttribute('aria-expanded', 'false');
-        menu.classList.remove('is-open');
+      const pageMap = {
+        about: 0,
+        impact: 0,
+        programs: 0,
+        gallery: 0,
+        volunteer: 1,
+        internship: 1,
+        contact: 1,
+        collaborations: 2,
+        verify: 2,
+        faq: 2,
+        resources: 2,
+        guidelines: 2,
+        circulars: 2
+      };
+
+      const page = document.body.dataset.page;
+      if (page && pageMap[page] !== undefined) {
+        const triggers = document.querySelectorAll('.nav-link.dropdown-trigger');
+        if (triggers[pageMap[page]]) {
+          triggers[pageMap[page]].classList.add('is-active');
+        }
       }
 
-      item.addEventListener('mouseenter', open);
-      item.addEventListener('mouseleave', close);
+      document.querySelectorAll('.nav-item.has-dropdown').forEach(function (item) {
+        const trigger = item.querySelector('.dropdown-trigger');
+        const menu = item.querySelector('.dropdown-menu');
 
-      trigger.addEventListener('click', function () {
-        trigger.getAttribute('aria-expanded') === 'true' ? close() : open();
-      });
+        function open() {
+          trigger.setAttribute('aria-expanded', 'true');
+          menu.classList.add('is-open');
+        }
 
-      trigger.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') close();
-      });
-    });
+        function close() {
+          trigger.setAttribute('aria-expanded', 'false');
+          menu.classList.remove('is-open');
+        }
 
-    if (menuToggle && mobileMenu) {
-      menuToggle.addEventListener('click', function () {
-        const isOpen = mobileMenu.classList.toggle('is-open');
-        menuToggle.setAttribute('aria-expanded', isOpen);
-        mobileMenu.setAttribute('aria-hidden', !isOpen);
-        menuToggle.classList.toggle('is-active', isOpen);
-      });
-    }
+        item.addEventListener('mouseenter', open);
+        item.addEventListener('mouseleave', close);
 
-    document.querySelectorAll('.mobile-group-toggle').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        const section = btn.closest('.mobile-section');
-        const links = section.querySelector('.mobile-group-links');
-        const isExpanded = btn.getAttribute('aria-expanded') === 'true';
-
-        document.querySelectorAll('.mobile-section').forEach(function (s) {
-          s.querySelector('.mobile-group-toggle').setAttribute('aria-expanded', 'false');
-          s.querySelector('.mobile-group-links').classList.remove('is-open');
+        trigger.addEventListener('click', function () {
+          trigger.getAttribute('aria-expanded') === 'true' ? close() : open();
         });
 
-        if (!isExpanded) {
-          btn.setAttribute('aria-expanded', 'true');
-          links.classList.add('is-open');
+        trigger.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') close();
+        });
+      });
+
+      if (menuToggle && mobileMenu) {
+        menuToggle.addEventListener('click', function () {
+          const isOpen = mobileMenu.classList.toggle('is-open');
+          menuToggle.setAttribute('aria-expanded', isOpen);
+          mobileMenu.setAttribute('aria-hidden', !isOpen);
+          menuToggle.classList.toggle('is-active', isOpen);
+        });
+      }
+
+      document.querySelectorAll('.mobile-group-toggle').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          const section = btn.closest('.mobile-section');
+          const links = section.querySelector('.mobile-group-links');
+          const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+
+          document.querySelectorAll('.mobile-section').forEach(function (s) {
+            s.querySelector('.mobile-group-toggle').setAttribute('aria-expanded', 'false');
+            s.querySelector('.mobile-group-links').classList.remove('is-open');
+          });
+
+          if (!isExpanded) {
+            btn.setAttribute('aria-expanded', 'true');
+            links.classList.add('is-open');
+          }
+        });
+      });
+
+      document.addEventListener('click', function (e) {
+        if (!e.target.closest('.nav-item.has-dropdown')) {
+          document.querySelectorAll('.dropdown-trigger').forEach(function (t) {
+            t.setAttribute('aria-expanded', 'false');
+          });
+          document.querySelectorAll('.dropdown-menu').forEach(function (m) {
+            m.classList.remove('is-open');
+          });
         }
       });
-    });
+    })();
 
-    document.addEventListener('click', function (e) {
-      if (!e.target.closest('.nav-item.has-dropdown')) {
-        document.querySelectorAll('.dropdown-trigger').forEach(function (t) {
-          t.setAttribute('aria-expanded', 'false');
-        });
-        document.querySelectorAll('.dropdown-menu').forEach(function (m) {
-          m.classList.remove('is-open');
-        });
-      }
-    });
-  })();
+    fetch('footer.html')
+      .then(function (response) {
+        return response.text();
+      })
+      .then(function (data) {
+        const footer = document.getElementById('footer');
+        if (footer) footer.innerHTML = data;
+      });
 
-  fetch('footer.html')
-    .then(function (response) { return response.text(); })
-    .then(function (data) {
-      const footer = document.getElementById('footer');
-      if (footer) footer.innerHTML = data;
-    });
-</script>
-
+  </script>
 </body>
+
 </html>

@@ -1,617 +1,519 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <title>Certificate Verification — Amaanitvam Foundation</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
-  <meta name="description" content="Instantly verify the authenticity of certificates issued by Amaanitvam Foundation for internships, volunteering, and training programs.">
-  <link rel="icon" href="assets/images/logo.jpg" type="image/jpg">
-  <link rel="stylesheet" href="css/styles.css">
-<style>
-    /* Floating Donate CTA */
-    .floating-donate {
-      position: fixed;
-      bottom: 1.5rem;
-      right: 1.5rem;
-      z-index: 1000;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: var(--gold, #d4af37);
-      color: #1a2238;
-      padding: 0.9rem 1.6rem;
-      border-radius: 999px;
-      font-family: 'Inter', sans-serif;
-      font-weight: 600;
-      font-size: 0.95rem;
-      text-decoration: none;
-      line-height: 1;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    .floating-donate:hover,
-    .floating-donate:focus-visible {
-      transform: translateY(-3px);
-      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.3);
-      color: #1a2238;
-    }
-    .floating-donate .material-symbols-outlined {
-      font-size: 1.2rem;
-    }
-    @media (max-width: 540px) {
-      .floating-donate {
-        padding: 0.85rem;
-        border-radius: 50%;
-      }
-      .floating-donate-text {
-        display: none;
-      }
-    }
-    /* Remove yellow border from FAQ section */
-    .faq-item,
-    .faq-question {
-      border-color: transparent !important;
-      outline-color: transparent !important;
-    }
-  </style>
-  <style>
-    /* ── Fix: Verification card label/icon overflowing card bounds ── */
-    body[data-page="verify"] .section-white {
-      position: relative;
-      z-index: 2;
-      margin-top: 0;
-    }
-    body[data-page="verify"] .card {
-      overflow: hidden;
-      position: relative;
-      z-index: 2;
-      margin-top: 0;
-      isolation: isolate;
-      background: #fff;
-    }
-    body[data-page="verify"] .card .section-header {
-      position: relative;
-      text-align: left;
-    }
-    body[data-page="verify"] .card .section-header .section-label {
-      position: static !important;
-      left: auto !important;
-      top: auto !important;
-      transform: none !important;
-      display: inline-block;
-      max-width: 100%;
-      background: none;
-      padding: 0;
-      margin: 0 0 0.5rem;
-      white-space: nowrap;
-      overflow: visible;
-    }
-    body[data-page="verify"] .card .section-header .section-label::before,
-    body[data-page="verify"] .card .section-header .section-label::after {
-      content: none;
-      display: none;
-    }
-  </style>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;family=Montserrat:wght@500;600;700;800&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <meta
+    content="Instantly verify the authenticity of certificates issued by Amaanitvam Foundation for internships, volunteering, and training programs."
+    name="description" />
+  <link href="assets/images/logo.jpg" rel="icon" type="image/jpg" />
+  <link href="css/styles.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
 </head>
+
 <body data-page="verify">
-
-<header class="site-header" id="site-header">
-  <nav class="site-nav" id="site-nav" aria-label="Main navigation">
-    <div class="nav-inner">
-
-      <a href="index.html" class="brand" aria-label="Amaanitvam Foundation home">
-        <img src="assets/images/logo.jpg" alt="Amaanitvam Foundation" class="brand-logo">
-        <div class="brand-text">
-          <span class="brand-name">AMAANITVAM</span>
-          <span class="brand-subtitle">FOUNDATION</span>
-        </div>
-      </a>
-
-      <div class="nav-links" id="nav-links" role="navigation">
-        <a href="index.html" class="nav-link">Home</a>
-
-        <div class="nav-item has-dropdown">
-          <button class="nav-link dropdown-trigger" aria-haspopup="true" aria-expanded="false">
-            About Us
-            <span class="nav-chevron" aria-hidden="true">
-              <svg width="12" height="7" viewBox="0 0 12 7" fill="none">
-                <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </span>
-          </button>
-
-          <div class="dropdown-menu" role="menu">
-            <a href="about.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon">
-                <span class="material-symbols-outlined">info</span>
+  <header class="site-header" id="site-header">
+    <nav aria-label="Main navigation" class="site-nav" id="site-nav">
+      <div class="nav-inner">
+        <a aria-label="Amaanitvam Foundation home" class="brand" href="index.html">
+          <img alt="Amaanitvam Foundation" class="brand-logo" src="assets/images/logo.jpg" />
+          <div class="brand-text">
+            <span class="brand-name">AMAANITVAM</span>
+            <span class="brand-subtitle">FOUNDATION</span>
+          </div>
+        </a>
+        <div class="nav-links" id="nav-links" role="navigation">
+          <a class="nav-link" href="index.html">Home</a>
+          <div class="nav-item has-dropdown">
+            <button aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-trigger">
+              About Us
+              <span aria-hidden="true" class="nav-chevron">
+                <svg fill="none" height="7" viewbox="0 0 12 7" width="12">
+                  <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                    stroke-width="1.6"></path>
+                </svg>
               </span>
-              <span class="dropdown-text">
-                <strong>About Foundation</strong>
-                <small>Our story & values</small>
+            </button>
+            <div class="dropdown-menu" role="menu">
+              <a class="dropdown-item" href="about.html" role="menuitem">
+                <span class="dropdown-icon">
+                  <span class="material-symbols-outlined">info</span>
+                </span>
+                <span class="dropdown-text">
+                  <strong>About Foundation</strong>
+                  <small>Our story &amp; values</small>
+                </span>
+              </a>
+              <a class="dropdown-item" href="impact.html" role="menuitem">
+                <span class="dropdown-icon">
+                  <span class="material-symbols-outlined">bar_chart</span>
+                </span>
+                <span class="dropdown-text">
+                  <strong>Impact</strong>
+                  <small>What we've achieved</small>
+                </span>
+              </a>
+              <a class="dropdown-item" href="programs.html" role="menuitem">
+                <span class="dropdown-icon">
+                  <span class="material-symbols-outlined">apps</span>
+                </span>
+                <span class="dropdown-text">
+                  <strong>Programs</strong>
+                  <small>Our initiatives &amp; impact areas</small>
+                </span>
+              </a>
+              <a class="dropdown-item" href="gallery.html" role="menuitem">
+                <span class="dropdown-icon">
+                  <span class="material-symbols-outlined">photo_library</span>
+                </span>
+                <span class="dropdown-text">
+                  <strong>Gallery</strong>
+                  <small>Photos &amp; moments</small>
+                </span>
+              </a>
+            </div>
+          </div>
+          <div class="nav-item has-dropdown">
+            <button aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-trigger">
+              Get Involved
+              <span aria-hidden="true" class="nav-chevron">
+                <svg fill="none" height="7" viewbox="0 0 12 7" width="12">
+                  <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                    stroke-width="1.6"></path>
+                </svg>
               </span>
-            </a>
-
-            <a href="impact.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon">
-                <span class="material-symbols-outlined">bar_chart</span>
+            </button>
+            <div class="dropdown-menu" role="menu">
+              <a class="dropdown-item" href="volunteer.html" role="menuitem">
+                <span class="dropdown-icon">
+                  <span class="material-symbols-outlined">volunteer_activism</span>
+                </span>
+                <span class="dropdown-text">
+                  <strong>Volunteer</strong>
+                  <small>Join our volunteer network</small>
+                </span>
+              </a>
+              <a class="dropdown-item" href="internship.html" role="menuitem">
+                <span class="dropdown-icon">
+                  <span class="material-symbols-outlined">work</span>
+                </span>
+                <span class="dropdown-text">
+                  <strong>Internship</strong>
+                  <small>Apply for internship</small>
+                </span>
+              </a>
+              <a class="dropdown-item" href="contact.html" role="menuitem">
+                <span class="dropdown-icon">
+                  <span class="material-symbols-outlined">mail</span>
+                </span>
+                <span class="dropdown-text">
+                  <strong>Contact Us</strong>
+                  <small>Get in touch</small>
+                </span>
+              </a>
+            </div>
+          </div>
+          <div class="nav-item has-dropdown">
+            <button aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-trigger">
+              Resources
+              <span aria-hidden="true" class="nav-chevron">
+                <svg fill="none" height="7" viewbox="0 0 12 7" width="12">
+                  <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                    stroke-width="1.6"></path>
+                </svg>
               </span>
-              <span class="dropdown-text">
-                <strong>Impact</strong>
-                <small>What we've achieved</small>
-              </span>
-            </a>
-
-            <a href="programs.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon">
-                <span class="material-symbols-outlined">apps</span>
-              </span>
-              <span class="dropdown-text">
-                <strong>Programs</strong>
-                <small>Our initiatives & impact areas</small>
-              </span>
-            </a>
-
-            <a href="gallery.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon">
-                <span class="material-symbols-outlined">photo_library</span>
-              </span>
-              <span class="dropdown-text">
-                <strong>Gallery</strong>
-                <small>Photos & moments</small>
-              </span>
-            </a>
+            </button>
+            <div class="dropdown-menu" role="menu">
+              <a class="dropdown-item" href="collaborations.html" role="menuitem">
+                <span class="dropdown-icon">
+                  <span class="material-symbols-outlined">diversity_3</span>
+                </span>
+                <span class="dropdown-text">
+                  <strong>Collaborations &amp; Partnerships</strong>
+                  <small>Our partners &amp; collaborations</small>
+                </span>
+              </a>
+              <a class="dropdown-item" href="verify.html" role="menuitem">
+                <span class="dropdown-icon">
+                  <span class="material-symbols-outlined">verified</span>
+                </span>
+                <span class="dropdown-text">
+                  <strong>Verify Certificate</strong>
+                  <small>Check your certificate</small>
+                </span>
+              </a>
+              <a class="dropdown-item" href="faq.html" role="menuitem">
+                <span class="dropdown-icon">
+                  <span class="material-symbols-outlined">help</span>
+                </span>
+                <span class="dropdown-text">
+                  <strong>FAQ</strong>
+                  <small>Common questions answered</small>
+                </span>
+              </a>
+            </div>
           </div>
         </div>
-
-        <div class="nav-item has-dropdown">
-          <button class="nav-link dropdown-trigger" aria-haspopup="true" aria-expanded="false">
-            Get Involved
-            <span class="nav-chevron" aria-hidden="true">
-              <svg width="12" height="7" viewBox="0 0 12 7" fill="none">
-                <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </span>
+        <div class="nav-actions">
+          <button aria-controls="mobile-menu" aria-expanded="false" aria-label="Open navigation menu"
+            class="menu-toggle" id="menu-toggle">
+            <span class="hamburger-bar"></span>
+            <span class="hamburger-bar"></span>
+            <span class="hamburger-bar"></span>
           </button>
-
-          <div class="dropdown-menu" role="menu">
-            <a href="volunteer.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon">
-                <span class="material-symbols-outlined">volunteer_activism</span>
-              </span>
-              <span class="dropdown-text">
-                <strong>Volunteer</strong>
-                <small>Join our volunteer network</small>
-              </span>
-            </a>
-
-            <a href="internship.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon">
-                <span class="material-symbols-outlined">work</span>
-              </span>
-              <span class="dropdown-text">
-                <strong>Internship</strong>
-                <small>Apply for internship</small>
-              </span>
-            </a>
-
-            <a href="contact.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon">
-                <span class="material-symbols-outlined">mail</span>
-              </span>
-              <span class="dropdown-text">
-                <strong>Contact Us</strong>
-                <small>Get in touch</small>
-              </span>
-            </a>
-          </div>
-        </div>
-
-        <div class="nav-item has-dropdown">
-          <button class="nav-link dropdown-trigger" aria-haspopup="true" aria-expanded="false">
-            Resources
-            <span class="nav-chevron" aria-hidden="true">
-              <svg width="12" height="7" viewBox="0 0 12 7" fill="none">
-                <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </span>
-          </button>
-
-          <div class="dropdown-menu" role="menu">
-            <a href="collaborations.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon">
-                <span class="material-symbols-outlined">diversity_3</span>
-              </span>
-              <span class="dropdown-text">
-                <strong>Collaborations & Partnerships</strong>
-                <small>Our partners & collaborations</small>
-              </span>
-            </a>
-
-            <a href="verify.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon">
-                <span class="material-symbols-outlined">verified</span>
-              </span>
-              <span class="dropdown-text">
-                <strong>Verify Certificate</strong>
-                <small>Check your certificate</small>
-              </span>
-            </a>
-
-            <a href="faq.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon">
-                <span class="material-symbols-outlined">help</span>
-              </span>
-              <span class="dropdown-text">
-                <strong>FAQ</strong>
-                <small>Common questions answered</small>
-              </span>
-            </a>
-          </div>
         </div>
       </div>
-
-      <div class="nav-actions">
-        <button class="menu-toggle" id="menu-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
-          <span class="hamburger-bar"></span>
-          <span class="hamburger-bar"></span>
-          <span class="hamburger-bar"></span>
-        </button>
+    </nav>
+    <div aria-hidden="true" class="mobile-menu" id="mobile-menu">
+      <div class="mobile-menu-inner">
+        <a class="mobile-link moved-inline-style-001" href="index.html">Home</a>
+        <div class="mobile-section">
+          <button aria-expanded="false" class="mobile-group-toggle">
+            About Us <span aria-hidden="true" class="material-symbols-outlined">expand_more</span>
+          </button>
+          <div class="mobile-group-links">
+            <a class="mobile-link" href="about.html">About Foundation</a>
+            <a class="mobile-link" href="impact.html">Impact</a>
+            <a class="mobile-link" href="programs.html">Programs</a>
+            <a class="mobile-link" href="gallery.html">Gallery</a>
+          </div>
+        </div>
+        <div class="mobile-section">
+          <button aria-expanded="false" class="mobile-group-toggle">
+            Get Involved <span aria-hidden="true" class="material-symbols-outlined">expand_more</span>
+          </button>
+          <div class="mobile-group-links">
+            <a class="mobile-link" href="volunteer.html">Volunteer</a>
+            <a class="mobile-link" href="internship.html">Internship</a>
+            <a class="mobile-link" href="contact.html">Contact Us</a>
+          </div>
+        </div>
+        <div class="mobile-section">
+          <button aria-expanded="false" class="mobile-group-toggle">
+            Resources <span aria-hidden="true" class="material-symbols-outlined">expand_more</span>
+          </button>
+          <div class="mobile-group-links">
+            <a class="mobile-link" href="collaborations.html">Collaborations &amp; Partnerships</a>
+            <a class="mobile-link" href="verify.html">Verify Certificate</a>
+            <a class="mobile-link" href="faq.html">FAQ</a>
+          </div>
+        </div>
       </div>
     </div>
-  </nav>
-
-  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
-    <div class="mobile-menu-inner">
-
-      <a href="index.html" class="mobile-link" style="padding:1rem 0.25rem;font-weight:600;display:block;">Home</a>
-
-      <div class="mobile-section">
-        <button class="mobile-group-toggle" aria-expanded="false">
-          About Us <span class="material-symbols-outlined" aria-hidden="true">expand_more</span>
-        </button>
-        <div class="mobile-group-links">
-          <a href="about.html" class="mobile-link">About Foundation</a>
-          <a href="impact.html" class="mobile-link">Impact</a>
-          <a href="programs.html" class="mobile-link">Programs</a>
-          <a href="gallery.html" class="mobile-link">Gallery</a>
-        </div>
-      </div>
-
-      <div class="mobile-section">
-        <button class="mobile-group-toggle" aria-expanded="false">
-          Get Involved <span class="material-symbols-outlined" aria-hidden="true">expand_more</span>
-        </button>
-        <div class="mobile-group-links">
-          <a href="volunteer.html" class="mobile-link">Volunteer</a>
-          <a href="internship.html" class="mobile-link">Internship</a>
-          <a href="contact.html" class="mobile-link">Contact Us</a>
-        </div>
-      </div>
-
-      <div class="mobile-section">
-        <button class="mobile-group-toggle" aria-expanded="false">
-          Resources <span class="material-symbols-outlined" aria-hidden="true">expand_more</span>
-        </button>
-        <div class="mobile-group-links">
-          <a href="collaborations.html" class="mobile-link">Collaborations & Partnerships</a>
-          <a href="verify.html" class="mobile-link">Verify Certificate</a>
-          <a href="faq.html" class="mobile-link">FAQ</a>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</header>
-
-<main id="main-content">
-    <header class="page-hero has-image" data-hero
-      style="position: relative;
-      background-image: linear-gradient(135deg, rgba(86, 5, 26, 0.88), rgba(86, 5, 26, 0.6)), url('assets/images/hero.png'); background-size: cover; background-position: center; background-repeat: no-repeat;
-      padding: 4rem 0;
-      min-height: 380px;
-      display: flex;
-      align-items: center;
-      overflow: hidden;
-      isolation: isolate;">
-      <div class="container" style="display: flex; justify-content: center; text-align: center; width: 100%;">
-        <div style="max-width: 960px;">
-          <br><br><span class="section-label" style="color: var(--gold);">Official Portal</span>
-          <h1 class="section-title" style="font-size: clamp(2rem, 5vw, 3rem); color: #ffffff !important; opacity: 1;">Verify Certificates With Confidence</h1>
-          <p class="section-desc" style="max-width: 640px; margin: 0 auto; color: #ffffff; opacity: 1;">Instantly authenticate official certificates for internships, volunteering, and training programs issued by Amaanitvam Foundation.</p>
+  </header>
+  <main id="main-content">
+    <header class="page-hero has-image moved-inline-style-075" data-hero="">
+      <div class="container moved-inline-style-003">
+        <div class="moved-inline-style-004">
+          <br /><br /><span class="section-label moved-inline-style-005">Official Portal</span>
+          <h1 class="section-title moved-inline-style-076">Verify Certificates With Confidence</h1>
+          <p class="section-desc moved-inline-style-077">Instantly authenticate official certificates for internships,
+            volunteering, and training programs issued by Amaanitvam Foundation.</p>
         </div>
       </div>
     </header>
-
-    <section class="section section-white" aria-labelledby="verify-form-heading">
-      <div class="container" style="max-width: 640px;">
-        <div class="card" style="padding: 2.5rem;">
-          <div class="section-header" style="margin-bottom: 2rem;">
+    <section aria-labelledby="verify-form-heading" class="section section-white">
+      <div class="container moved-inline-style-131">
+        <div class="card moved-inline-style-132">
+          <div class="section-header moved-inline-style-133">
             <span class="section-label">Verification</span>
-            <h2 id="verify-form-heading" class="section-title"
-    style="font-size: 3rem !important; line-height:1.2 !important;">
-  Enter Certificate ID
-</h2>
-            <p class="section-desc" style="font-size: 0.95rem;">Locate the unique ID on the bottom of your certificate (format: AF-YYYY-XXXX).</p>
+            <h2 class="section-title moved-inline-style-134" id="verify-form-heading">
+              Enter Certificate ID
+            </h2>
+            <p class="section-desc moved-inline-style-135">Locate the unique ID on the bottom of your certificate
+              (format: AF-YYYY-XXXX).</p>
           </div>
-          <form id="verify-form" aria-label="Certificate verification form">
+          <form aria-label="Certificate verification form" id="verify-form">
             <label class="form-label" for="cert-id">Certificate ID</label>
             <div class="verify-input-row">
-              <input class="form-input" type="text" id="cert-id" name="cert-id" placeholder="e.g. AF-2024-892X" required autocomplete="off" aria-describedby="cert-hint" style="flex: 1; min-width: 200px;">
-              <button type="submit" class="btn btn-primary" style="flex-shrink: 0;">
-                <span class="material-symbols-outlined" aria-hidden="true">verified</span> Verify
+              <input aria-describedby="cert-hint" autocomplete="off" class="form-input moved-inline-style-136"
+                id="cert-id" name="cert-id" placeholder="e.g. AF-2024-892X" required="" type="text" />
+              <button class="btn btn-primary moved-inline-style-087" type="submit">
+                <span aria-hidden="true" class="material-symbols-outlined">verified</span> Verify
               </button>
             </div>
-            <p id="cert-hint" class="text-muted" style="font-size: 0.8rem; margin-top: 0.5rem;">Try <kbd style="background: var(--bg); padding: 0.1rem 0.4rem; border-radius: 4px; font-size: 0.85rem;">AF-2024-892X</kbd> for a valid demo result.</p>
+            <p class="text-muted moved-inline-style-137" id="cert-hint">Try <kbd
+                class="moved-inline-style-138">AF-2024-892X</kbd> for a valid demo result.</p>
           </form>
-          <div id="verify-result" hidden role="status" aria-live="polite"></div>
+          <div aria-live="polite" hidden="" id="verify-result" role="status"></div>
         </div>
       </div>
     </section>
-
-    <section class="section section-alt" aria-labelledby="trust-heading">
+    <section aria-labelledby="trust-heading" class="section section-alt">
       <div class="container">
         <div class="section-header">
           <span class="section-label">Why Trust Us</span>
-          <h2 id="trust-heading" class="section-title">Trust Indicators</h2>
+          <h2 class="section-title" id="trust-heading">Trust Indicators</h2>
         </div>
         <div class="grid-3">
           <div class="card">
-            <div class="card-icon card-icon-pink" aria-hidden="true">
+            <div aria-hidden="true" class="card-icon card-icon-pink">
               <span class="material-symbols-outlined icon-fill">security</span>
             </div>
-            <h3 style="font-weight: 600; color: var(--navy); margin-bottom: 0.5rem;">Secure Database</h3>
-            <p class="text-muted" style="font-size: 0.9rem;">All certificates are registered in an encrypted, tamper-proof verification system.</p>
+            <h3 class="moved-inline-style-068">Secure Database</h3>
+            <p class="text-muted moved-inline-style-020">All certificates are registered in an encrypted, tamper-proof
+              verification system.</p>
           </div>
           <div class="card">
-            <div class="card-icon card-icon-purple" aria-hidden="true">
+            <div aria-hidden="true" class="card-icon card-icon-purple">
               <span class="material-symbols-outlined icon-fill">verified</span>
             </div>
-            <h3 style="font-weight: 600; color: var(--navy); margin-bottom: 0.5rem;">Instant Validation</h3>
-            <p class="text-muted" style="font-size: 0.9rem;">Real-time lookup provides immediate authentication results for employers and institutions.</p>
+            <h3 class="moved-inline-style-068">Instant Validation</h3>
+            <p class="text-muted moved-inline-style-020">Real-time lookup provides immediate authentication results for
+              employers and institutions.</p>
           </div>
           <div class="card">
-            <div class="card-icon card-icon-gold" aria-hidden="true">
+            <div aria-hidden="true" class="card-icon card-icon-gold">
               <span class="material-symbols-outlined icon-fill">handshake</span>
             </div>
-            <h3 style="font-weight: 600; color: var(--navy); margin-bottom: 0.5rem;">Recognized Credentials</h3>
-            <p class="text-muted" style="font-size: 0.9rem;">Certificates are trusted by partner NGOs, schools, and corporate organizations nationwide.</p>
+            <h3 class="moved-inline-style-068">Recognized Credentials</h3>
+            <p class="text-muted moved-inline-style-020">Certificates are trusted by partner NGOs, schools, and
+              corporate organizations nationwide.</p>
           </div>
           <div class="card">
-            <div class="card-icon card-icon-navy" aria-hidden="true">
+            <div aria-hidden="true" class="card-icon card-icon-navy">
               <span class="material-symbols-outlined icon-fill">shield</span>
             </div>
-            <h3 style="font-weight: 600; color: var(--navy); margin-bottom: 0.5rem;">Fraud Prevention</h3>
-            <p class="text-muted" style="font-size: 0.9rem;">Protects against fake certificates and ensures only genuine credentials are recognized.</p>
+            <h3 class="moved-inline-style-068">Fraud Prevention</h3>
+            <p class="text-muted moved-inline-style-020">Protects against fake certificates and ensures only genuine
+              credentials are recognized.</p>
           </div>
           <div class="card">
-            <div class="card-icon card-icon-pink" aria-hidden="true">
+            <div aria-hidden="true" class="card-icon card-icon-pink">
               <span class="material-symbols-outlined icon-fill">list_alt</span>
             </div>
-            <h3 style="font-weight: 600; color: var(--navy); margin-bottom: 0.5rem;">Transparent Records</h3>
-            <p class="text-muted" style="font-size: 0.9rem;">Maintains a clear, auditable log of all issued and verified credentials.</p>
+            <h3 class="moved-inline-style-068">Transparent Records</h3>
+            <p class="text-muted moved-inline-style-020">Maintains a clear, auditable log of all issued and verified
+              credentials.</p>
           </div>
           <div class="card">
-            <div class="card-icon card-icon-purple" aria-hidden="true">
+            <div aria-hidden="true" class="card-icon card-icon-purple">
               <span class="material-symbols-outlined icon-fill">devices</span>
             </div>
-            <h3 style="font-weight: 600; color: var(--navy); margin-bottom: 0.5rem;">Digital Verification</h3>
-            <p class="text-muted" style="font-size: 0.9rem;">Supports modern digital workflows for document authentication from any device.</p>
+            <h3 class="moved-inline-style-068">Digital Verification</h3>
+            <p class="text-muted moved-inline-style-020">Supports modern digital workflows for document authentication
+              from any device.</p>
           </div>
         </div>
       </div>
     </section>
-
-   
-
-    <section class="section section-alt" aria-labelledby="verify-faq-heading">
-      <div class="container" style="max-width: 800px;">
+    <section aria-labelledby="verify-faq-heading" class="section section-alt">
+      <div class="container moved-inline-style-070">
         <div class="section-header">
           <span class="section-label">FAQ</span>
-          <h2 id="verify-faq-heading" class="section-title">Verification FAQ</h2>
+          <h2 class="section-title" id="verify-faq-heading">Verification FAQ</h2>
         </div>
-        <div role="region" aria-label="Verification frequently asked questions">
+        <div aria-label="Verification frequently asked questions" role="region">
           <div class="faq-item">
-            <button class="faq-question" type="button" aria-expanded="false" aria-controls="vfaq-1">
+            <button aria-controls="vfaq-1" aria-expanded="false" class="faq-question" type="button">
               What types of certificates can be verified?
-              <span class="material-symbols-outlined faq-icon" aria-hidden="true">expand_more</span>
+              <span aria-hidden="true" class="material-symbols-outlined faq-icon">expand_more</span>
             </button>
-            <div class="faq-answer" id="vfaq-1" role="region">We verify certificates for internships, volunteer programs, training workshops, and community leadership initiatives issued by Amaanitvam Foundation.</div>
+            <div class="faq-answer" id="vfaq-1" role="region">We verify certificates for internships, volunteer
+              programs, training workshops, and community leadership initiatives issued by Amaanitvam Foundation.</div>
           </div>
           <div class="faq-item">
-            <button class="faq-question" type="button" aria-expanded="false" aria-controls="vfaq-2">
+            <button aria-controls="vfaq-2" aria-expanded="false" class="faq-question" type="button">
               What format should the certificate ID be in?
-              <span class="material-symbols-outlined faq-icon" aria-hidden="true">expand_more</span>
+              <span aria-hidden="true" class="material-symbols-outlined faq-icon">expand_more</span>
             </button>
-            <div class="faq-answer" id="vfaq-2" role="region">Certificate IDs follow the format 
-              <strong>AF-YYYY-XXXX</strong> (e.g., AF-2024-892X). The ID is case-insensitive.</div>
-          </div>
-          <div class="faq-item">
-            <button class="faq-question" type="button" aria-expanded="false" aria-controls="vfaq-3">
-              What if my certificate is not found?
-              <span class="material-symbols-outlined faq-icon" aria-hidden="true">expand_more</span>
-            </button>
-            <div class="faq-answer" id="vfaq-3" role="region">Double-check the ID for typos. If the issue persists, contact us at 
-              <a href="mailto:amaanitvamfoundation@gmail.com">amaanitvamfoundation@gmail.com</a> with a copy of your certificate.
+            <div class="faq-answer" id="vfaq-2" role="region">Certificate IDs follow the format
+              <strong>AF-YYYY-XXXX</strong> (e.g., AF-2024-892X). The ID is case-insensitive.
             </div>
           </div>
           <div class="faq-item">
-            <button class="faq-question" type="button" aria-expanded="false" aria-controls="vfaq-4">
-              Can employers verify certificates on behalf of candidates?
-              <span class="material-symbols-outlined faq-icon" aria-hidden="true">expand_more</span>
+            <button aria-controls="vfaq-3" aria-expanded="false" class="faq-question" type="button">
+              What if my certificate is not found?
+              <span aria-hidden="true" class="material-symbols-outlined faq-icon">expand_more</span>
             </button>
-            <div class="faq-answer" id="vfaq-4" role="region">Yes. Anyone with the certificate ID can verify authenticity through this portal — no login required.</div>
+            <div class="faq-answer" id="vfaq-3" role="region">Double-check the ID for typos. If the issue persists,
+              contact us at
+              <a href="mailto:amaanitvamfoundation@gmail.com">amaanitvamfoundation@gmail.com</a> with a copy of your
+              certificate.
+            </div>
           </div>
           <div class="faq-item">
-            <button class="faq-question" type="button" aria-expanded="false" aria-controls="vfaq-5">
-              How do I obtain a certificate after completing a program?
-              <span class="material-symbols-outlined faq-icon" aria-hidden="true">expand_more</span>
+            <button aria-controls="vfaq-4" aria-expanded="false" class="faq-question" type="button">
+              Can employers verify certificates on behalf of candidates?
+              <span aria-hidden="true" class="material-symbols-outlined faq-icon">expand_more</span>
             </button>
-            <div class="faq-answer" id="vfaq-5" role="region">Certificates are issued upon successful completion of <a href="internship.html">internship</a> or <a href="volunteer.html">volunteer</a> programs. You will receive your unique ID via email.</div>
+            <div class="faq-answer" id="vfaq-4" role="region">Yes. Anyone with the certificate ID can verify
+              authenticity through this portal — no login required.</div>
+          </div>
+          <div class="faq-item">
+            <button aria-controls="vfaq-5" aria-expanded="false" class="faq-question" type="button">
+              How do I obtain a certificate after completing a program?
+              <span aria-hidden="true" class="material-symbols-outlined faq-icon">expand_more</span>
+            </button>
+            <div class="faq-answer" id="vfaq-5" role="region">Certificates are issued upon successful completion of <a
+                href="internship.html">internship</a> or <a href="volunteer.html">volunteer</a> programs. You will
+              receive your unique ID via email.</div>
           </div>
         </div>
       </div>
     </section>
-
-     <!-- DONATION CTA -->
-  <section class="section section-alt" aria-labelledby="donate-title">
-    <div class="container">
-      <div class="donate-section">
-        <span class="section-label">Support Our Mission</span>
-        <h2 id="donate-title" class="section-title">Be the Change You Wish to See</h2>
-        <p>
-          Join our mission to empower lives through education, compassion, and community action.
-        </p>
-        <p style="color:var(--gold); font-size:0.9rem; font-weight:600; margin-bottom:2rem;">
-          Registered under 12A &amp; 80G — tax-deductible for Indian donors
-        </p>
-
-        <div style="display:flex; flex-wrap:wrap; gap:1rem; justify-content:center;">
-          <a href="contact.html#donate" class="btn btn-primary">Donate Now</a>
-          <a href="impact.html" class="btn btn-outline">See Our Impact</a>
+    <!-- DONATION CTA -->
+    <section aria-labelledby="donate-title" class="section section-alt">
+      <div class="container">
+        <div class="donate-section">
+          <span class="section-label">Support Our Mission</span>
+          <h2 class="section-title" id="donate-title">Be the Change You Wish to See</h2>
+          <p>
+            Join our mission to empower lives through education, compassion, and community action.
+          </p>
+          <p class="moved-inline-style-049">
+            Registered under 12A &amp; 80G — tax-deductible for Indian donors
+          </p>
+          <div class="moved-inline-style-050">
+            <a class="btn btn-primary" href="contact.html#donate">Donate Now</a>
+            <a class="btn btn-outline" href="impact.html">See Our Impact</a>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
   </main>
-<!-- Floating Donate CTA -->
-
-<div id="footer"></div>
-
-<a href="contact.html#donate" class="floating-donate">
-  ❤ Donate Now
-</a>
-
-<div class="floating-socials">
-  <a href="https://www.facebook.com/people/Amaanitvam-Foundation/61583427622759/" target="_blank" aria-label="Facebook">
-    <i class="fa-brands fa-facebook-f"></i>
+  <!-- Floating Donate CTA -->
+  <div id="footer"></div>
+  <a class="floating-donate" href="contact.html#donate">
+    ❤ Donate Now
   </a>
-  <a href="https://www.instagram.com/amaanitvamfoundation" target="_blank" aria-label="Instagram">
-    <i class="fa-brands fa-instagram"></i>
-  </a>
-  <a href="https://x.com/AmaanitvamOrg" target="_blank" aria-label="X">
-    <i class="fa-brands fa-x-twitter"></i>
-  </a>
-  <a href="https://www.linkedin.com/company/amaanitvam-foundation/" target="_blank" aria-label="LinkedIn">
-    <i class="fa-brands fa-linkedin-in"></i>
-  </a>
-</div>
+  <div class="floating-socials">
+    <a aria-label="Facebook" href="https://www.facebook.com/people/Amaanitvam-Foundation/61583427622759/"
+      target="_blank">
+      <i class="fa-brands fa-facebook-f"></i>
+    </a>
+    <a aria-label="Instagram" href="https://www.instagram.com/amaanitvamfoundation" target="_blank">
+      <i class="fa-brands fa-instagram"></i>
+    </a>
+    <a aria-label="X" href="https://x.com/AmaanitvamOrg" target="_blank">
+      <i class="fa-brands fa-x-twitter"></i>
+    </a>
+    <a aria-label="LinkedIn" href="https://www.linkedin.com/company/amaanitvam-foundation/" target="_blank">
+      <i class="fa-brands fa-linkedin-in"></i>
+    </a>
+  </div>
+  <script src="js/main.js"></script>
+  <script>
+    (function () {
+      const nav = document.getElementById('site-nav');
+      const menuToggle = document.getElementById('menu-toggle');
+      const mobileMenu = document.getElementById('mobile-menu');
 
-<script src="js/main.js"></script>
-<script>
-  (function () {
-    const nav = document.getElementById('site-nav');
-    const menuToggle = document.getElementById('menu-toggle');
-    const mobileMenu = document.getElementById('mobile-menu');
-
-    if (nav) {
-      function onScroll() {
-        nav.classList.toggle('is-solid', window.scrollY > 60);
-      }
-      window.addEventListener('scroll', onScroll, { passive: true });
-      onScroll();
-    }
-
-    const pageMap = {
-      about: 0,
-      impact: 0,
-      programs: 0,
-      gallery: 0,
-      volunteer: 1,
-      internship: 1,
-      contact: 1,
-      collaborations: 2,
-      verify: 2,
-      faq: 2,
-      resources: 2,
-      guidelines: 2,
-      circulars: 2
-    };
-
-    const page = document.body.dataset.page;
-    if (page && pageMap[page] !== undefined) {
-      const triggers = document.querySelectorAll('.nav-link.dropdown-trigger');
-      if (triggers[pageMap[page]]) {
-        triggers[pageMap[page]].classList.add('is-active');
-      }
-    }
-
-    document.querySelectorAll('.nav-item.has-dropdown').forEach(function (item) {
-      const trigger = item.querySelector('.dropdown-trigger');
-      const menu = item.querySelector('.dropdown-menu');
-
-      function open() {
-        trigger.setAttribute('aria-expanded', 'true');
-        menu.classList.add('is-open');
+      if (nav) {
+        function onScroll() {
+          nav.classList.toggle('is-solid', window.scrollY > 60);
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
       }
 
-      function close() {
-        trigger.setAttribute('aria-expanded', 'false');
-        menu.classList.remove('is-open');
+      const pageMap = {
+        about: 0,
+        impact: 0,
+        programs: 0,
+        gallery: 0,
+        volunteer: 1,
+        internship: 1,
+        contact: 1,
+        collaborations: 2,
+        verify: 2,
+        faq: 2,
+        resources: 2,
+        guidelines: 2,
+        circulars: 2
+      };
+
+      const page = document.body.dataset.page;
+      if (page && pageMap[page] !== undefined) {
+        const triggers = document.querySelectorAll('.nav-link.dropdown-trigger');
+        if (triggers[pageMap[page]]) {
+          triggers[pageMap[page]].classList.add('is-active');
+        }
       }
 
-      item.addEventListener('mouseenter', open);
-      item.addEventListener('mouseleave', close);
+      document.querySelectorAll('.nav-item.has-dropdown').forEach(function (item) {
+        const trigger = item.querySelector('.dropdown-trigger');
+        const menu = item.querySelector('.dropdown-menu');
 
-      trigger.addEventListener('click', function () {
-        trigger.getAttribute('aria-expanded') === 'true' ? close() : open();
-      });
+        function open() {
+          trigger.setAttribute('aria-expanded', 'true');
+          menu.classList.add('is-open');
+        }
 
-      trigger.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') close();
-      });
-    });
+        function close() {
+          trigger.setAttribute('aria-expanded', 'false');
+          menu.classList.remove('is-open');
+        }
 
-    if (menuToggle && mobileMenu) {
-      menuToggle.addEventListener('click', function () {
-        const isOpen = mobileMenu.classList.toggle('is-open');
-        menuToggle.setAttribute('aria-expanded', isOpen);
-        mobileMenu.setAttribute('aria-hidden', !isOpen);
-        menuToggle.classList.toggle('is-active', isOpen);
-      });
-    }
+        item.addEventListener('mouseenter', open);
+        item.addEventListener('mouseleave', close);
 
-    document.querySelectorAll('.mobile-group-toggle').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        const section = btn.closest('.mobile-section');
-        const links = section.querySelector('.mobile-group-links');
-        const isExpanded = btn.getAttribute('aria-expanded') === 'true';
-
-        document.querySelectorAll('.mobile-section').forEach(function (s) {
-          s.querySelector('.mobile-group-toggle').setAttribute('aria-expanded', 'false');
-          s.querySelector('.mobile-group-links').classList.remove('is-open');
+        trigger.addEventListener('click', function () {
+          trigger.getAttribute('aria-expanded') === 'true' ? close() : open();
         });
 
-        if (!isExpanded) {
-          btn.setAttribute('aria-expanded', 'true');
-          links.classList.add('is-open');
+        trigger.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') close();
+        });
+      });
+
+      if (menuToggle && mobileMenu) {
+        menuToggle.addEventListener('click', function () {
+          const isOpen = mobileMenu.classList.toggle('is-open');
+          menuToggle.setAttribute('aria-expanded', isOpen);
+          mobileMenu.setAttribute('aria-hidden', !isOpen);
+          menuToggle.classList.toggle('is-active', isOpen);
+        });
+      }
+
+      document.querySelectorAll('.mobile-group-toggle').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          const section = btn.closest('.mobile-section');
+          const links = section.querySelector('.mobile-group-links');
+          const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+
+          document.querySelectorAll('.mobile-section').forEach(function (s) {
+            s.querySelector('.mobile-group-toggle').setAttribute('aria-expanded', 'false');
+            s.querySelector('.mobile-group-links').classList.remove('is-open');
+          });
+
+          if (!isExpanded) {
+            btn.setAttribute('aria-expanded', 'true');
+            links.classList.add('is-open');
+          }
+        });
+      });
+
+      document.addEventListener('click', function (e) {
+        if (!e.target.closest('.nav-item.has-dropdown')) {
+          document.querySelectorAll('.dropdown-trigger').forEach(function (t) {
+            t.setAttribute('aria-expanded', 'false');
+          });
+          document.querySelectorAll('.dropdown-menu').forEach(function (m) {
+            m.classList.remove('is-open');
+          });
         }
       });
-    });
+    })();
 
-    document.addEventListener('click', function (e) {
-      if (!e.target.closest('.nav-item.has-dropdown')) {
-        document.querySelectorAll('.dropdown-trigger').forEach(function (t) {
-          t.setAttribute('aria-expanded', 'false');
-        });
-        document.querySelectorAll('.dropdown-menu').forEach(function (m) {
-          m.classList.remove('is-open');
-        });
-      }
-    });
-  })();
-
-  fetch('footer.html')
-    .then(function (response) { return response.text(); })
-    .then(function (data) {
-      const footer = document.getElementById('footer');
-      if (footer) footer.innerHTML = data;
-    });
-</script>
-
+    fetch('footer.html')
+      .then(function (response) { return response.text(); })
+      .then(function (data) {
+        const footer = document.getElementById('footer');
+        if (footer) footer.innerHTML = data;
+      });
+  </script>
 </body>
+
 </html>

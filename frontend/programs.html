@@ -1,203 +1,61 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description"
-    content="Explore Amaanitvam Foundation programs — education, community development, volunteering, internships, and certificate programs.">
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <meta
+    content="Explore Amaanitvam Foundation programs — education, community development, volunteering, internships, and certificate programs."
+    name="description" />
   <title>Programs &amp; Initiatives — Amaanitvam Foundation</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
   <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Montserrat:wght@500;600;700;800&display=swap"
-    rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-    rel="stylesheet">
-  <link rel="icon" href="assets/images/logo.jpg" type="image/jpg">
-  <link rel="stylesheet" href="css/styles.css">
-  <style>
-    @media (min-width: 768px) {
-      .grid-2-col {
-        grid-template-columns: 1fr 1fr !important;
-      }
-
-      .grid-hero {
-        grid-template-columns: 1fr 1fr !important;
-      }
-
-      .story-grid {
-        grid-template-columns: 1fr 1fr !important;
-      }
-
-      .origins-img {
-        order: 1 !important;
-      }
-
-      .origins-text {
-        order: 2 !important;
-      }
-    }
-
-    .program-metric {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-top: 1rem;
-      padding-top: 1rem;
-      border-top: 1px solid var(--border);
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--navy);
-    }
-
-    .program-metric .stat-value {
-      font-size: 1.1rem;
-      margin-right: 0.25rem;
-    }
-
-    .story-quote {
-      border-left: 4px solid var(--primary);
-      padding-left: 1.5rem;
-      font-style: italic;
-      font-size: 1.1rem;
-      line-height: 1.7;
-      color: var(--navy);
-      margin-bottom: 1.5rem;
-    }
-  </style>
-  <style>
-    /* ── Programs page: tighter vertical rhythm & alignment to match about.html ──
-       Scoped to [data-page="programs"] only. ──────────────────────────────────── */
-
-    /* Hero: same compact sizing as about.html */
-    body[data-page="programs"] .page-hero.has-image {
-      padding: 4rem 0 !important;
-      min-height: 380px !important;
-    }
-
-    /* Reduce section padding to match about.html */
-    body[data-page="programs"] main#main-content>section.section {
-      padding: 2.75rem 0 !important;
-    }
-
-    /* Section headers: tighter bottom margin */
-    body[data-page="programs"] .section-header {
-      margin-bottom: 1.75rem !important;
-    }
-
-    /* Grid gaps consistent with about.html two-col rows */
-    body[data-page="programs"] .grid-2 {
-      gap: 2.25rem !important;
-    }
-
-    /* Responsive: 5-col cards drop gracefully on smaller screens */
-    @media (max-width: 1024px) {
-      body[data-page="programs"] .programs-5col {
-        grid-template-columns: repeat(3, 1fr) !important;
-      }
-    }
-
-    @media (max-width: 640px) {
-      body[data-page="programs"] .programs-5col {
-        grid-template-columns: repeat(2, 1fr) !important;
-      }
-    }
-
-    @media (max-width: 400px) {
-      body[data-page="programs"] .programs-5col {
-        grid-template-columns: 1fr !important;
-      }
-    }
-  </style>
-  <style>
-    /* Floating Donate CTA */
-    .floating-donate {
-      position: fixed;
-      bottom: 1.5rem;
-      right: 1.5rem;
-      z-index: 1000;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: var(--gold, #d4af37);
-      color: #1a2238;
-      padding: 0.9rem 1.6rem;
-      border-radius: 999px;
-      font-family: 'Inter', sans-serif;
-      font-weight: 600;
-      font-size: 0.95rem;
-      text-decoration: none;
-      line-height: 1;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .floating-donate:hover,
-    .floating-donate:focus-visible {
-      transform: translateY(-3px);
-      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.3);
-      color: #1a2238;
-    }
-
-    .floating-donate .material-symbols-outlined {
-      font-size: 1.2rem;
-    }
-
-    @media (max-width: 540px) {
-      .floating-donate {
-        padding: 0.85rem;
-        border-radius: 50%;
-      }
-
-      .floating-donate-text {
-        display: none;
-      }
-    }
-  </style>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;family=Montserrat:wght@500;600;700;800&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <link href="assets/images/logo.jpg" rel="icon" type="image/jpg" />
+  <link href="css/styles.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
 </head>
 
 <body data-page="programs">
-
   <header class="site-header" id="site-header">
-    <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+    <nav aria-label="Main navigation" class="site-nav" id="site-nav">
       <div class="nav-inner">
-
-        <a href="index.html" class="brand" aria-label="Amaanitvam Foundation home">
-          <img src="assets/images/logo.jpg" alt="Amaanitvam Foundation" class="brand-logo">
+        <a aria-label="Amaanitvam Foundation home" class="brand" href="index.html">
+          <img alt="Amaanitvam Foundation" class="brand-logo" src="assets/images/logo.jpg" />
           <div class="brand-text">
             <span class="brand-name">AMAANITVAM</span>
             <span class="brand-subtitle">FOUNDATION</span>
           </div>
         </a>
-
         <div class="nav-links" id="nav-links" role="navigation">
-          <a href="index.html" class="nav-link">Home</a>
-
+          <a class="nav-link" href="index.html">Home</a>
           <div class="nav-item has-dropdown">
-            <button class="nav-link dropdown-trigger" aria-haspopup="true" aria-expanded="false">
+            <button aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-trigger">
               About Us
-              <span class="nav-chevron" aria-hidden="true">
-                <svg width="12" height="7" viewBox="0 0 12 7" fill="none">
-                  <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
-                    stroke-linejoin="round" />
+              <span aria-hidden="true" class="nav-chevron">
+                <svg fill="none" height="7" viewbox="0 0 12 7" width="12">
+                  <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                    stroke-width="1.6"></path>
                 </svg>
               </span>
             </button>
-
             <div class="dropdown-menu" role="menu">
-              <a href="about.html" class="dropdown-item" role="menuitem">
+              <a class="dropdown-item" href="about.html" role="menuitem">
                 <span class="dropdown-icon">
                   <span class="material-symbols-outlined">info</span>
                 </span>
                 <span class="dropdown-text">
                   <strong>About Foundation</strong>
-                  <small>Our story & values</small>
+                  <small>Our story &amp; values</small>
                 </span>
               </a>
-
-              <a href="impact.html" class="dropdown-item" role="menuitem">
+              <a class="dropdown-item" href="impact.html" role="menuitem">
                 <span class="dropdown-icon">
                   <span class="material-symbols-outlined">bar_chart</span>
                 </span>
@@ -206,42 +64,38 @@
                   <small>What we've achieved</small>
                 </span>
               </a>
-
-              <a href="programs.html" class="dropdown-item" role="menuitem">
+              <a class="dropdown-item" href="programs.html" role="menuitem">
                 <span class="dropdown-icon">
                   <span class="material-symbols-outlined">apps</span>
                 </span>
                 <span class="dropdown-text">
                   <strong>Programs</strong>
-                  <small>Our initiatives & impact areas</small>
+                  <small>Our initiatives &amp; impact areas</small>
                 </span>
               </a>
-
-              <a href="gallery.html" class="dropdown-item" role="menuitem">
+              <a class="dropdown-item" href="gallery.html" role="menuitem">
                 <span class="dropdown-icon">
                   <span class="material-symbols-outlined">photo_library</span>
                 </span>
                 <span class="dropdown-text">
                   <strong>Gallery</strong>
-                  <small>Photos & moments</small>
+                  <small>Photos &amp; moments</small>
                 </span>
               </a>
             </div>
           </div>
-
           <div class="nav-item has-dropdown">
-            <button class="nav-link dropdown-trigger" aria-haspopup="true" aria-expanded="false">
+            <button aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-trigger">
               Get Involved
-              <span class="nav-chevron" aria-hidden="true">
-                <svg width="12" height="7" viewBox="0 0 12 7" fill="none">
-                  <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
-                    stroke-linejoin="round" />
+              <span aria-hidden="true" class="nav-chevron">
+                <svg fill="none" height="7" viewbox="0 0 12 7" width="12">
+                  <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                    stroke-width="1.6"></path>
                 </svg>
               </span>
             </button>
-
             <div class="dropdown-menu" role="menu">
-              <a href="volunteer.html" class="dropdown-item" role="menuitem">
+              <a class="dropdown-item" href="volunteer.html" role="menuitem">
                 <span class="dropdown-icon">
                   <span class="material-symbols-outlined">volunteer_activism</span>
                 </span>
@@ -250,8 +104,7 @@
                   <small>Join our volunteer network</small>
                 </span>
               </a>
-
-              <a href="internship.html" class="dropdown-item" role="menuitem">
+              <a class="dropdown-item" href="internship.html" role="menuitem">
                 <span class="dropdown-icon">
                   <span class="material-symbols-outlined">work</span>
                 </span>
@@ -260,8 +113,7 @@
                   <small>Apply for internship</small>
                 </span>
               </a>
-
-              <a href="contact.html" class="dropdown-item" role="menuitem">
+              <a class="dropdown-item" href="contact.html" role="menuitem">
                 <span class="dropdown-icon">
                   <span class="material-symbols-outlined">mail</span>
                 </span>
@@ -272,30 +124,27 @@
               </a>
             </div>
           </div>
-
           <div class="nav-item has-dropdown">
-            <button class="nav-link dropdown-trigger" aria-haspopup="true" aria-expanded="false">
+            <button aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-trigger">
               Resources
-              <span class="nav-chevron" aria-hidden="true">
-                <svg width="12" height="7" viewBox="0 0 12 7" fill="none">
-                  <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
-                    stroke-linejoin="round" />
+              <span aria-hidden="true" class="nav-chevron">
+                <svg fill="none" height="7" viewbox="0 0 12 7" width="12">
+                  <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                    stroke-width="1.6"></path>
                 </svg>
               </span>
             </button>
-
             <div class="dropdown-menu" role="menu">
-              <a href="collaborations.html" class="dropdown-item" role="menuitem">
+              <a class="dropdown-item" href="collaborations.html" role="menuitem">
                 <span class="dropdown-icon">
                   <span class="material-symbols-outlined">diversity_3</span>
                 </span>
                 <span class="dropdown-text">
-                  <strong>Collaborations & Partnerships</strong>
-                  <small>Our partners & collaborations</small>
+                  <strong>Collaborations &amp; Partnerships</strong>
+                  <small>Our partners &amp; collaborations</small>
                 </span>
               </a>
-
-              <a href="verify.html" class="dropdown-item" role="menuitem">
+              <a class="dropdown-item" href="verify.html" role="menuitem">
                 <span class="dropdown-icon">
                   <span class="material-symbols-outlined">verified</span>
                 </span>
@@ -304,8 +153,7 @@
                   <small>Check your certificate</small>
                 </span>
               </a>
-
-              <a href="faq.html" class="dropdown-item" role="menuitem">
+              <a class="dropdown-item" href="faq.html" role="menuitem">
                 <span class="dropdown-icon">
                   <span class="material-symbols-outlined">help</span>
                 </span>
@@ -317,10 +165,9 @@
             </div>
           </div>
         </div>
-
         <div class="nav-actions">
-          <button class="menu-toggle" id="menu-toggle" aria-label="Open navigation menu" aria-expanded="false"
-            aria-controls="mobile-menu">
+          <button aria-controls="mobile-menu" aria-expanded="false" aria-label="Open navigation menu"
+            class="menu-toggle" id="menu-toggle">
             <span class="hamburger-bar"></span>
             <span class="hamburger-bar"></span>
             <span class="hamburger-bar"></span>
@@ -328,345 +175,141 @@
         </div>
       </div>
     </nav>
-
-    <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <div aria-hidden="true" class="mobile-menu" id="mobile-menu">
       <div class="mobile-menu-inner">
-
-        <a href="index.html" class="mobile-link" style="padding:1rem 0.25rem;font-weight:600;display:block;">Home</a>
-
+        <a class="mobile-link moved-inline-style-001" href="index.html">Home</a>
         <div class="mobile-section">
-          <button class="mobile-group-toggle" aria-expanded="false">
-            About Us <span class="material-symbols-outlined" aria-hidden="true">expand_more</span>
+          <button aria-expanded="false" class="mobile-group-toggle">
+            About Us <span aria-hidden="true" class="material-symbols-outlined">expand_more</span>
           </button>
           <div class="mobile-group-links">
-            <a href="about.html" class="mobile-link">About Foundation</a>
-            <a href="impact.html" class="mobile-link">Impact</a>
-            <a href="programs.html" class="mobile-link">Programs</a>
-            <a href="gallery.html" class="mobile-link">Gallery</a>
+            <a class="mobile-link" href="about.html">About Foundation</a>
+            <a class="mobile-link" href="impact.html">Impact</a>
+            <a class="mobile-link" href="programs.html">Programs</a>
+            <a class="mobile-link" href="gallery.html">Gallery</a>
           </div>
         </div>
-
         <div class="mobile-section">
-          <button class="mobile-group-toggle" aria-expanded="false">
-            Get Involved <span class="material-symbols-outlined" aria-hidden="true">expand_more</span>
+          <button aria-expanded="false" class="mobile-group-toggle">
+            Get Involved <span aria-hidden="true" class="material-symbols-outlined">expand_more</span>
           </button>
           <div class="mobile-group-links">
-            <a href="volunteer.html" class="mobile-link">Volunteer</a>
-            <a href="internship.html" class="mobile-link">Internship</a>
-            <a href="contact.html" class="mobile-link">Contact Us</a>
+            <a class="mobile-link" href="volunteer.html">Volunteer</a>
+            <a class="mobile-link" href="internship.html">Internship</a>
+            <a class="mobile-link" href="contact.html">Contact Us</a>
           </div>
         </div>
-
         <div class="mobile-section">
-          <button class="mobile-group-toggle" aria-expanded="false">
-            Resources <span class="material-symbols-outlined" aria-hidden="true">expand_more</span>
+          <button aria-expanded="false" class="mobile-group-toggle">
+            Resources <span aria-hidden="true" class="material-symbols-outlined">expand_more</span>
           </button>
           <div class="mobile-group-links">
-            <a href="collaborations.html" class="mobile-link">Collaborations & Partnerships</a>
-            <a href="verify.html" class="mobile-link">Verify Certificate</a>
-            <a href="faq.html" class="mobile-link">FAQ</a>
+            <a class="mobile-link" href="collaborations.html">Collaborations &amp; Partnerships</a>
+            <a class="mobile-link" href="verify.html">Verify Certificate</a>
+            <a class="mobile-link" href="faq.html">FAQ</a>
           </div>
         </div>
-
       </div>
     </div>
   </header>
-
   <main id="main-content">
-
     <!-- Hero -->
-    <section class="page-hero has-image section" data-hero aria-labelledby="programs-hero-title" style="position: relative;
-      background-image: linear-gradient(135deg, rgba(86, 5, 26, 0.88), rgba(86, 5, 26, 0.6)), url('assets/images/hero.png'); background-size: cover; background-position: center; background-repeat: no-repeat;
-      padding: 6rem 0;
-      min-height: 480px;
-      display: flex;
-      align-items: center;
-      overflow: hidden;">
-      <div class="container" style="display: flex; justify-content: center; text-align: center; width: 100%;">
-        <div style="max-width: 960px;">
-          <br><br><span class="section-label" style="color: var(--gold);">Our Programs</span>
-          <h1 id="programs-hero-title" class="section-title" style="font-size: clamp(2.5rem, 6vw, 4rem);
-            margin-bottom: 1.25rem; color: #ffffff !important; opacity: 1;">
+    <section aria-labelledby="programs-hero-title" class="page-hero has-image section moved-inline-style-079"
+      data-hero="">
+      <div class="container moved-inline-style-003">
+        <div class="moved-inline-style-004">
+          <br /><br /><span class="section-label moved-inline-style-005">Our Programs</span>
+          <h1 class="section-title moved-inline-style-006" id="programs-hero-title">
             Programs Creating Pathways To Change
           </h1>
-          <p class="section-desc"
-            style="max-width: 960px; margin: 0 auto; color: #ffffff; opacity: 1; font-size: 1.25rem;">
+          <p class="section-desc moved-inline-style-007">
             Explore our initiatives empowering communities through education, awareness, mentorship, and meaningful
             action.
           </p>
         </div>
       </div>
     </section>
-
     <!-- Program Categories -->
-    <section class="section section-alt" aria-labelledby="programs-categories-title">
+    <section aria-labelledby="programs-categories-title" class="section section-alt">
       <div class="container">
         <header class="section-header">
           <span class="section-label">What We Do</span>
-          <h2 id="programs-categories-title" class="section-title">Core Program Areas</h2>
+          <h2 class="section-title" id="programs-categories-title">Core Program Areas</h2>
           <p class="section-desc">Our holistic approach addresses community needs through structured, sustainable
             interventions.</p>
         </header>
-        <div class="programs-5col" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem;">
-
-          <article id="education" class="card" style="text-align: center; padding: 1.25rem 1rem;">
-            <div class="card-icon card-icon-pink" style="margin: 0 auto 0.75rem;">
-              <span class="material-symbols-outlined icon-fill" aria-hidden="true">school</span>
+        <div class="programs-5col moved-inline-style-123">
+          <article class="card moved-inline-style-124" id="education">
+            <div class="card-icon card-icon-pink moved-inline-style-125">
+              <span aria-hidden="true" class="material-symbols-outlined icon-fill">school</span>
             </div>
-            <h3 style="font-size: 0.95rem; font-weight: 600; color: var(--navy); margin-bottom: 0.4rem;">Education</h3>
-            <p class="text-muted" style="font-size: 0.8rem; margin-bottom: 0; line-height: 1.5;">
+            <h3 class="moved-inline-style-126">Education</h3>
+            <p class="text-muted moved-inline-style-127">
               School admissions &amp; learning support for underserved children.
             </p>
-            <a href="impact.html" class="btn btn-outline"
-              style="margin-top: 1rem; font-size: 0.8rem; padding: 0.4rem 0.75rem;">View Impact</a>
+            <a class="btn btn-outline moved-inline-style-128" href="impact.html">View Impact</a>
           </article>
-
-          <article id="community" class="card" style="text-align: center; padding: 1.25rem 1rem;">
-            <div class="card-icon card-icon-purple" style="margin: 0 auto 0.75rem;">
-              <span class="material-symbols-outlined icon-fill" aria-hidden="true">groups</span>
+          <article class="card moved-inline-style-124" id="community">
+            <div class="card-icon card-icon-purple moved-inline-style-125">
+              <span aria-hidden="true" class="material-symbols-outlined icon-fill">groups</span>
             </div>
-            <h3 style="font-size: 0.95rem; font-weight: 600; color: var(--navy); margin-bottom: 0.4rem;">Community
+            <h3 class="moved-inline-style-126">Community
               Development</h3>
-            <p class="text-muted" style="font-size: 0.8rem; margin-bottom: 0; line-height: 1.5;">
+            <p class="text-muted moved-inline-style-127">
               Counselling, awareness &amp; mentorship for stronger communities.
             </p>
-            <a href="impact.html" class="btn btn-outline"
-              style="margin-top: 1rem; font-size: 0.8rem; padding: 0.4rem 0.75rem;">View Impact</a>
+            <a class="btn btn-outline moved-inline-style-128" href="impact.html">View Impact</a>
           </article>
-
-          <article id="volunteer" class="card" style="text-align: center; padding: 1.25rem 1rem;">
-            <div class="card-icon card-icon-gold" style="margin: 0 auto 0.75rem;">
-              <span class="material-symbols-outlined icon-fill" aria-hidden="true">volunteer_activism</span>
+          <article class="card moved-inline-style-124" id="volunteer">
+            <div class="card-icon card-icon-gold moved-inline-style-125">
+              <span aria-hidden="true" class="material-symbols-outlined icon-fill">volunteer_activism</span>
             </div>
-            <h3 style="font-size: 0.95rem; font-weight: 600; color: var(--navy); margin-bottom: 0.4rem;">Volunteer
+            <h3 class="moved-inline-style-126">Volunteer
               Network</h3>
-            <p class="text-muted" style="font-size: 0.8rem; margin-bottom: 0; line-height: 1.5;">
+            <p class="text-muted moved-inline-style-127">
               Passionate individuals driving on-ground community impact.
             </p>
-            <a href="volunteer.html" class="btn btn-outline"
-              style="margin-top: 1rem; font-size: 0.8rem; padding: 0.4rem 0.75rem;">Join Network</a>
+            <a class="btn btn-outline moved-inline-style-128" href="volunteer.html">Join Network</a>
           </article>
-
-          <article id="internships" class="card" style="text-align: center; padding: 1.25rem 1rem;">
-            <div class="card-icon card-icon-navy" style="margin: 0 auto 0.75rem;">
-              <span class="material-symbols-outlined icon-fill" aria-hidden="true">work</span>
+          <article class="card moved-inline-style-124" id="internships">
+            <div class="card-icon card-icon-navy moved-inline-style-125">
+              <span aria-hidden="true" class="material-symbols-outlined icon-fill">work</span>
             </div>
-            <h3 style="font-size: 0.95rem; font-weight: 600; color: var(--navy); margin-bottom: 0.4rem;">Internships
+            <h3 class="moved-inline-style-126">Internships
             </h3>
-            <p class="text-muted" style="font-size: 0.8rem; margin-bottom: 0; line-height: 1.5;">
+            <p class="text-muted moved-inline-style-127">
               Real-world experience &amp; skill-building for changemakers.
             </p>
-            <a href="internship.html" class="btn btn-outline"
-              style="margin-top: 1rem; font-size: 0.8rem; padding: 0.4rem 0.75rem;">Apply Now</a>
+            <a class="btn btn-outline moved-inline-style-128" href="internship.html">Apply Now</a>
           </article>
-
-          <article id="certificates" class="card" style="text-align: center; padding: 1.25rem 1rem;">
-            <div class="card-icon card-icon-purple" style="margin: 0 auto 0.75rem;">
-              <span class="material-symbols-outlined icon-fill" aria-hidden="true">verified</span>
+          <article class="card moved-inline-style-124" id="certificates">
+            <div class="card-icon card-icon-purple moved-inline-style-125">
+              <span aria-hidden="true" class="material-symbols-outlined icon-fill">verified</span>
             </div>
-            <h3 style="font-size: 0.95rem; font-weight: 600; color: var(--navy); margin-bottom: 0.4rem;">Certificate
+            <h3 class="moved-inline-style-126">Certificate
               Programs</h3>
-            <p class="text-muted" style="font-size: 0.8rem; margin-bottom: 0; line-height: 1.5;">
+            <p class="text-muted moved-inline-style-127">
               Verified, publicly verifiable credentials for completions.
             </p>
-            <a href="verify.html" class="btn btn-outline"
-              style="margin-top: 1rem; font-size: 0.8rem; padding: 0.4rem 0.75rem;">Verify Certificate</a>
+            <a class="btn btn-outline moved-inline-style-128" href="verify.html">Verify Certificate</a>
           </article>
-
         </div>
       </div>
     </section>
-
     <!-- Featured Initiatives -->
-    <section class="section" aria-labelledby="initiatives-title"
-      style="background: var(--bg); padding-top: 5rem; padding-bottom: 5rem;">
-      <style>
-        .elegant-header {
-          text-align: left;
-          max-width: 650px;
-          margin-bottom: 6rem;
-        }
-
-        .elegant-label {
-          display: block;
-          font-family: var(--font-ui);
-          font-size: 0.8rem;
-          color: #9c3f3f;
-          letter-spacing: 0.15em;
-          font-weight: 700;
-          text-transform: uppercase;
-          margin-bottom: 1rem;
-        }
-
-        .elegant-title {
-          font-family: var(--font-heading);
-          font-size: clamp(2.5rem, 4vw, 3rem);
-          color: var(--text);
-          margin-bottom: 1.5rem;
-          font-weight: 600;
-          line-height: 1.1;
-        }
-
-        .elegant-desc {
-          font-size: 1.15rem;
-          color: var(--muted);
-          line-height: 1.7;
-        }
-
-        .project-showcase {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 4rem;
-          margin-bottom: 8rem;
-          align-items: start;
-        }
-
-        @media (min-width: 900px) {
-          .project-showcase {
-            grid-template-columns: 5fr 6fr;
-            gap: 6rem;
-          }
-        }
-
-        .project-image-wrapper {
-          position: relative;
-        }
-
-        .project-image-wrapper img {
-          width: 100%;
-          aspect-ratio: 3/4;
-          object-fit: cover;
-          box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
-        }
-
-        .project-image-caption {
-          position: absolute;
-          bottom: -2rem;
-          left: 0;
-          background: var(--surface);
-          padding: 1.25rem 2rem;
-          border: 1px solid var(--border);
-          width: 80%;
-          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
-        }
-
-        .caption-label {
-          display: block;
-          font-family: var(--font-ui);
-          font-size: 0.75rem;
-          color: #9c3f3f;
-          letter-spacing: 0.15em;
-          font-weight: 700;
-          text-transform: uppercase;
-          margin-bottom: 0.25rem;
-        }
-
-        .caption-title {
-          font-family: var(--font-heading);
-          font-size: 1.4rem;
-          color: var(--text);
-          margin: 0;
-          font-weight: 600;
-        }
-
-        .project-content {
-          padding-top: 1rem;
-        }
-
-        .project-content-label {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.5rem;
-          font-family: var(--font-ui);
-          font-size: 0.8rem;
-          color: var(--muted);
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
-          margin-bottom: 1.5rem;
-          font-weight: 600;
-        }
-
-        .project-content-title {
-          font-family: var(--font-heading);
-          font-size: clamp(2rem, 3.5vw, 2.5rem);
-          color: var(--text);
-          margin-bottom: 1.5rem;
-          line-height: 1.1;
-          font-weight: 600;
-        }
-
-        .project-text {
-          font-size: 1.05rem;
-          color: var(--muted);
-          line-height: 1.75;
-          margin-bottom: 1.25rem;
-        }
-
-        .project-btn-group {
-          display: flex;
-          gap: 1rem;
-          margin-top: 2.5rem;
-          flex-wrap: wrap;
-        }
-
-        .btn-rect {
-          padding: 1rem 1.75rem;
-          font-family: var(--font-ui);
-          font-size: 0.8rem;
-          font-weight: 700;
-          letter-spacing: 0.08em;
-          text-transform: uppercase;
-          border-radius: 0;
-          display: inline-flex;
-          align-items: center;
-          gap: 0.5rem;
-          transition: all 0.3s ease;
-          text-decoration: none;
-        }
-
-        .btn-rect-dark {
-          background: #0d1a14;
-          color: #fff !important;
-          border: 1px solid #0d1a14;
-        }
-
-        .btn-rect-dark:hover {
-          background: var(--primary);
-          border-color: var(--primary);
-        }
-
-        .btn-rect-light {
-          background: transparent;
-          color: var(--text) !important;
-          border: 1px solid var(--border);
-        }
-
-        .btn-rect-light:hover {
-          background: var(--surface);
-        }
-
-        .project-divider {
-          height: 1px;
-          background: var(--border);
-          width: 100%;
-          margin: 4rem 0 6rem 0;
-          opacity: 0.5;
-        }
-      </style>
-
-      <div class="container" style="max-width: 1100px;">
+    <section aria-labelledby="initiatives-title" class="section moved-inline-style-089">
+      <div class="container moved-inline-style-090">
         <header class="elegant-header">
           <span class="elegant-label">ON THE GROUND</span>
-          <h2 id="initiatives-title" class="elegant-title">Core Initiatives &amp; Projects</h2>
+          <h2 class="elegant-title" id="initiatives-title">Core Initiatives &amp; Projects</h2>
           <p class="elegant-desc">Our flagship programs delivering education support, youth empowerment, and personal
             development for children and adolescents.</p>
         </header>
-
         <!-- Project Shiksha -->
-        <article id="shiksha" class="project-showcase">
+        <article class="project-showcase" id="shiksha">
           <div class="project-image-wrapper">
-            <img src="assets/images/project_shiksha1.jpeg"
-              alt="Project Shiksha — school admission support and education for children">
+            <img alt="Project Shiksha — school admission support and education for children"
+              src="assets/images/project_shiksha1.jpeg" />
             <div class="project-image-caption">
               <span class="caption-label">PROJECT 01</span>
               <h4 class="caption-title">Shiksha</h4>
@@ -674,7 +317,7 @@
           </div>
           <div class="project-content">
             <span class="project-content-label">
-              <span class="material-symbols-outlined" style="font-size: 1.1rem;">school</span>
+              <span class="material-symbols-outlined moved-inline-style-091">school</span>
               EDUCATION SUPPORT
             </span>
             <h3 class="project-content-title">Project Shiksha</h3>
@@ -692,25 +335,22 @@
               Today, these children are continuing their education and moving toward a brighter future.
             </p>
             <div class="project-btn-group">
-              <a href="contact.html#donate" class="btn-rect btn-rect-dark">
-                <span class="material-symbols-outlined"
-                  style="font-size: 1.1rem; margin-right: 0.2rem;">volunteer_activism</span>
+              <a class="btn-rect btn-rect-dark" href="contact.html#donate">
+                <span class="material-symbols-outlined moved-inline-style-129">volunteer_activism</span>
                 DONATE NOW
               </a>
-              <a href="impact.html" class="btn-rect btn-rect-light">
+              <a class="btn-rect btn-rect-light" href="impact.html">
                 VIEW IMPACT
               </a>
             </div>
           </div>
         </article>
-
         <div class="project-divider"></div>
-
         <!-- Project Manthan -->
-        <article id="manthan" class="project-showcase">
+        <article class="project-showcase" id="manthan">
           <div class="project-image-wrapper">
-            <img src="assets/images/project-manthan-final.jpg"
-              alt="Project Manthan — counselling and awareness for children and adolescents">
+            <img alt="Project Manthan — counselling and awareness for children and adolescents"
+              src="assets/images/project-manthan-final.jpg" />
             <div class="project-image-caption">
               <span class="caption-label">PROJECT 02</span>
               <h4 class="caption-title">Manthan</h4>
@@ -718,7 +358,7 @@
           </div>
           <div class="project-content">
             <span class="project-content-label">
-              <span class="material-symbols-outlined" style="font-size: 1.1rem;">psychology</span>
+              <span class="material-symbols-outlined moved-inline-style-091">psychology</span>
               COUNSELLING &amp; AWARENESS
             </span>
             <h3 class="project-content-title">Project Manthan</h3>
@@ -736,24 +376,22 @@
               focus on their education and future goals.
             </p>
             <div class="project-btn-group">
-              <a href="contact.html#donate" class="btn-rect btn-rect-dark">
-                <span class="material-symbols-outlined"
-                  style="font-size: 1.1rem; margin-right: 0.2rem;">volunteer_activism</span>
+              <a class="btn-rect btn-rect-dark" href="contact.html#donate">
+                <span class="material-symbols-outlined moved-inline-style-129">volunteer_activism</span>
                 DONATE NOW
               </a>
-              <a href="impact.html" class="btn-rect btn-rect-light">
+              <a class="btn-rect btn-rect-light" href="impact.html">
                 LEARN MORE
               </a>
             </div>
           </div>
         </article>
-
         <div class="project-divider"></div>
-
         <!-- Project Pravah -->
-        <article id="pravah" class="project-showcase" style="margin-bottom: 0;">
+        <article class="project-showcase moved-inline-style-092" id="pravah">
           <div class="project-image-wrapper">
-            <img src="assets/images/project-pravah-final.jpg" alt="Project Pravah — youth empowerment initiative in Hisar, Haryana">
+            <img alt="Project Pravah — youth empowerment initiative in Hisar, Haryana"
+              src="assets/images/project-pravah-final.jpg" />
             <div class="project-image-caption">
               <span class="caption-label">PROJECT 03</span>
               <h4 class="caption-title">Pravah</h4>
@@ -761,7 +399,7 @@
           </div>
           <div class="project-content">
             <span class="project-content-label">
-              <span class="material-symbols-outlined" style="font-size: 1.1rem;">groups</span>
+              <span class="material-symbols-outlined moved-inline-style-091">groups</span>
               YOUTH EMPOWERMENT
             </span>
             <h3 class="project-content-title">Project Pravah</h3>
@@ -778,67 +416,59 @@
               empowers the next generation with knowledge, access, and hope.
             </p>
             <div class="project-btn-group">
-              <a href="contact.html#donate" class="btn-rect btn-rect-dark">
-                <span class="material-symbols-outlined"
-                  style="font-size: 1.1rem; margin-right: 0.2rem;">volunteer_activism</span>
+              <a class="btn-rect btn-rect-dark" href="contact.html#donate">
+                <span class="material-symbols-outlined moved-inline-style-129">volunteer_activism</span>
                 DONATE NOW
               </a>
-              <a href="impact.html" class="btn-rect btn-rect-light">
+              <a class="btn-rect btn-rect-light" href="impact.html">
                 DISCOVER
               </a>
             </div>
           </div>
         </article>
-
       </div>
     </section>
-
     <!-- Donation CTA -->
-    <section class="section section-alt" aria-labelledby="donate-cta-title">
+    <section aria-labelledby="donate-cta-title" class="section section-alt">
       <div class="container">
         <div class="donate-section">
-          <span class="section-label" style="color:var(--gold);">Support Our Mission</span>
-          <h2 id="donate-cta-title" class="section-title" style="color:#fff;margin-bottom:1rem;">Be the Change You Wish
+          <span class="section-label moved-inline-style-078">Support Our Mission</span>
+          <h2 class="section-title moved-inline-style-047" id="donate-cta-title">Be the Change You Wish
             to See</h2>
-          <p style="color:rgba(255,255,255,0.8);max-width:560px;margin:0 auto 1rem;font-size:1.05rem;">
+          <p class="moved-inline-style-048">
             Join our mission to empower lives through education, compassion, and community action.
           </p>
-          <p style="color:var(--gold);font-size:0.9rem;font-weight:600;margin-bottom:2rem;">Registered under 12A &amp;
+          <p class="moved-inline-style-049">Registered under 12A &amp;
             80G — tax-deductible for Indian donors</p>
-          <div style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;">
-            <a href="contact.html#donate" class="btn btn-primary">Donate Now</a>
-            <a href="impact.html" class="btn btn-outline" style="border-color:rgba(255,255,255,0.4);color:#fff;">See Our
+          <div class="moved-inline-style-050">
+            <a class="btn btn-primary" href="contact.html#donate">Donate Now</a>
+            <a class="btn btn-outline moved-inline-style-051" href="impact.html">See Our
               Impact</a>
           </div>
         </div>
       </div>
     </section>
-
   </main>
   <!-- Floating Donate CTA -->
-
   <div id="footer"></div>
-
-  <a href="contact.html#donate" class="floating-donate">
+  <a class="floating-donate" href="contact.html#donate">
     ❤ Donate Now
   </a>
-
   <div class="floating-socials">
-    <a href="https://www.facebook.com/people/Amaanitvam-Foundation/61583427622759/" target="_blank"
-      aria-label="Facebook">
+    <a aria-label="Facebook" href="https://www.facebook.com/people/Amaanitvam-Foundation/61583427622759/"
+      target="_blank">
       <i class="fa-brands fa-facebook-f"></i>
     </a>
-    <a href="https://www.instagram.com/amaanitvamfoundation" target="_blank" aria-label="Instagram">
+    <a aria-label="Instagram" href="https://www.instagram.com/amaanitvamfoundation" target="_blank">
       <i class="fa-brands fa-instagram"></i>
     </a>
-    <a href="https://x.com/AmaanitvamOrg" target="_blank" aria-label="X">
+    <a aria-label="X" href="https://x.com/AmaanitvamOrg" target="_blank">
       <i class="fa-brands fa-x-twitter"></i>
     </a>
-    <a href="https://www.linkedin.com/company/amaanitvam-foundation/" target="_blank" aria-label="LinkedIn">
+    <a aria-label="LinkedIn" href="https://www.linkedin.com/company/amaanitvam-foundation/" target="_blank">
       <i class="fa-brands fa-linkedin-in"></i>
     </a>
   </div>
-
   <script src="js/main.js"></script>
   <script>
     (function () {
@@ -950,7 +580,6 @@
         if (footer) footer.innerHTML = data;
       });
   </script>
-
 </body>
 
 </html>

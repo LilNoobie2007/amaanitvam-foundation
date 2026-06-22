@@ -1,343 +1,288 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <title>Internship Program — Amaanitvam Foundation</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
-  <meta name="description" content="Gain real-world experience and make social impact through Amaanitvam Foundation's internship program.">
-  <link rel="icon" href="assets/images/logo.jpg" type="image/jpg">
-  <link rel="stylesheet" href="css/styles.css">
-<style>
-    /* Floating Donate CTA */
-    .floating-donate {
-      position: fixed;
-      bottom: 1.5rem;
-      right: 1.5rem;
-      z-index: 1000;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: var(--gold, #d4af37);
-      color: #1a2238;
-      padding: 0.9rem 1.6rem;
-      border-radius: 999px;
-      font-family: 'Inter', sans-serif;
-      font-weight: 600;
-      font-size: 0.95rem;
-      text-decoration: none;
-      line-height: 1;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    .floating-donate:hover,
-    .floating-donate:focus-visible {
-      transform: translateY(-3px);
-      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.3);
-      color: #1a2238;
-    }
-    .floating-donate .material-symbols-outlined {
-      font-size: 1.2rem;
-    }
-    @media (max-width: 540px) {
-      .floating-donate {
-        padding: 0.85rem;
-        border-radius: 50%;
-      }
-      .floating-donate-text {
-        display: none;
-      }
-    }
-  </style>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;family=Montserrat:wght@500;600;700;800&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <meta content="Gain real-world experience and make social impact through Amaanitvam Foundation's internship program."
+    name="description" />
+  <link href="assets/images/logo.jpg" rel="icon" type="image/jpg" />
+  <link href="css/styles.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
 </head>
+
 <body data-page="internship">
-
-<header class="site-header" id="site-header">
-  <nav class="site-nav" id="site-nav" aria-label="Main navigation">
-    <div class="nav-inner">
-
-      <a href="index.html" class="brand" aria-label="Amaanitvam Foundation home">
-        <img src="assets/images/logo.jpg" alt="Amaanitvam Foundation" class="brand-logo">
-        <div class="brand-text">
-          <span class="brand-name">AMAANITVAM</span>
-          <span class="brand-subtitle">FOUNDATION</span>
-        </div>
-      </a>
-
-      <div class="nav-links" id="nav-links" role="navigation">
-        <a href="index.html" class="nav-link">Home</a>
-
-        <div class="nav-item has-dropdown">
-          <button class="nav-link dropdown-trigger" aria-haspopup="true" aria-expanded="false">
-            About Us
-            <span class="nav-chevron" aria-hidden="true">
-              <svg width="12" height="7" viewBox="0 0 12 7" fill="none">
-                <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </span>
-          </button>
-
-          <div class="dropdown-menu" role="menu">
-            <a href="about.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon">
-                <span class="material-symbols-outlined">info</span>
+  <header class="site-header" id="site-header">
+    <nav aria-label="Main navigation" class="site-nav" id="site-nav">
+      <div class="nav-inner">
+        <a aria-label="Amaanitvam Foundation home" class="brand" href="index.html">
+          <img alt="Amaanitvam Foundation" class="brand-logo" src="assets/images/logo.jpg" />
+          <div class="brand-text">
+            <span class="brand-name">AMAANITVAM</span>
+            <span class="brand-subtitle">FOUNDATION</span>
+          </div>
+        </a>
+        <div class="nav-links" id="nav-links" role="navigation">
+          <a class="nav-link" href="index.html">Home</a>
+          <div class="nav-item has-dropdown">
+            <button aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-trigger">
+              About Us
+              <span aria-hidden="true" class="nav-chevron">
+                <svg fill="none" height="7" viewbox="0 0 12 7" width="12">
+                  <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                    stroke-width="1.6"></path>
+                </svg>
               </span>
-              <span class="dropdown-text">
-                <strong>About Foundation</strong>
-                <small>Our story & values</small>
+            </button>
+            <div class="dropdown-menu" role="menu">
+              <a class="dropdown-item" href="about.html" role="menuitem">
+                <span class="dropdown-icon">
+                  <span class="material-symbols-outlined">info</span>
+                </span>
+                <span class="dropdown-text">
+                  <strong>About Foundation</strong>
+                  <small>Our story &amp; values</small>
+                </span>
+              </a>
+              <a class="dropdown-item" href="impact.html" role="menuitem">
+                <span class="dropdown-icon">
+                  <span class="material-symbols-outlined">bar_chart</span>
+                </span>
+                <span class="dropdown-text">
+                  <strong>Impact</strong>
+                  <small>What we've achieved</small>
+                </span>
+              </a>
+              <a class="dropdown-item" href="programs.html" role="menuitem">
+                <span class="dropdown-icon">
+                  <span class="material-symbols-outlined">apps</span>
+                </span>
+                <span class="dropdown-text">
+                  <strong>Programs</strong>
+                  <small>Our initiatives &amp; impact areas</small>
+                </span>
+              </a>
+              <a class="dropdown-item" href="gallery.html" role="menuitem">
+                <span class="dropdown-icon">
+                  <span class="material-symbols-outlined">photo_library</span>
+                </span>
+                <span class="dropdown-text">
+                  <strong>Gallery</strong>
+                  <small>Photos &amp; moments</small>
+                </span>
+              </a>
+            </div>
+          </div>
+          <div class="nav-item has-dropdown">
+            <button aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-trigger">
+              Get Involved
+              <span aria-hidden="true" class="nav-chevron">
+                <svg fill="none" height="7" viewbox="0 0 12 7" width="12">
+                  <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                    stroke-width="1.6"></path>
+                </svg>
               </span>
-            </a>
-
-            <a href="impact.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon">
-                <span class="material-symbols-outlined">bar_chart</span>
+            </button>
+            <div class="dropdown-menu" role="menu">
+              <a class="dropdown-item" href="volunteer.html" role="menuitem">
+                <span class="dropdown-icon">
+                  <span class="material-symbols-outlined">volunteer_activism</span>
+                </span>
+                <span class="dropdown-text">
+                  <strong>Volunteer</strong>
+                  <small>Join our volunteer network</small>
+                </span>
+              </a>
+              <a class="dropdown-item" href="internship.html" role="menuitem">
+                <span class="dropdown-icon">
+                  <span class="material-symbols-outlined">work</span>
+                </span>
+                <span class="dropdown-text">
+                  <strong>Internship</strong>
+                  <small>Apply for internship</small>
+                </span>
+              </a>
+              <a class="dropdown-item" href="contact.html" role="menuitem">
+                <span class="dropdown-icon">
+                  <span class="material-symbols-outlined">mail</span>
+                </span>
+                <span class="dropdown-text">
+                  <strong>Contact Us</strong>
+                  <small>Get in touch</small>
+                </span>
+              </a>
+            </div>
+          </div>
+          <div class="nav-item has-dropdown">
+            <button aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-trigger">
+              Resources
+              <span aria-hidden="true" class="nav-chevron">
+                <svg fill="none" height="7" viewbox="0 0 12 7" width="12">
+                  <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                    stroke-width="1.6"></path>
+                </svg>
               </span>
-              <span class="dropdown-text">
-                <strong>Impact</strong>
-                <small>What we've achieved</small>
-              </span>
-            </a>
-
-            <a href="programs.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon">
-                <span class="material-symbols-outlined">apps</span>
-              </span>
-              <span class="dropdown-text">
-                <strong>Programs</strong>
-                <small>Our initiatives & impact areas</small>
-              </span>
-            </a>
-
-            <a href="gallery.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon">
-                <span class="material-symbols-outlined">photo_library</span>
-              </span>
-              <span class="dropdown-text">
-                <strong>Gallery</strong>
-                <small>Photos & moments</small>
-              </span>
-            </a>
+            </button>
+            <div class="dropdown-menu" role="menu">
+              <a class="dropdown-item" href="collaborations.html" role="menuitem">
+                <span class="dropdown-icon">
+                  <span class="material-symbols-outlined">diversity_3</span>
+                </span>
+                <span class="dropdown-text">
+                  <strong>Collaborations &amp; Partnerships</strong>
+                  <small>Our partners &amp; collaborations</small>
+                </span>
+              </a>
+              <a class="dropdown-item" href="verify.html" role="menuitem">
+                <span class="dropdown-icon">
+                  <span class="material-symbols-outlined">verified</span>
+                </span>
+                <span class="dropdown-text">
+                  <strong>Verify Certificate</strong>
+                  <small>Check your certificate</small>
+                </span>
+              </a>
+              <a class="dropdown-item" href="faq.html" role="menuitem">
+                <span class="dropdown-icon">
+                  <span class="material-symbols-outlined">help</span>
+                </span>
+                <span class="dropdown-text">
+                  <strong>FAQ</strong>
+                  <small>Common questions answered</small>
+                </span>
+              </a>
+            </div>
           </div>
         </div>
-
-        <div class="nav-item has-dropdown">
-          <button class="nav-link dropdown-trigger" aria-haspopup="true" aria-expanded="false">
-            Get Involved
-            <span class="nav-chevron" aria-hidden="true">
-              <svg width="12" height="7" viewBox="0 0 12 7" fill="none">
-                <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </span>
+        <div class="nav-actions">
+          <button aria-controls="mobile-menu" aria-expanded="false" aria-label="Open navigation menu"
+            class="menu-toggle" id="menu-toggle">
+            <span class="hamburger-bar"></span>
+            <span class="hamburger-bar"></span>
+            <span class="hamburger-bar"></span>
           </button>
-
-          <div class="dropdown-menu" role="menu">
-            <a href="volunteer.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon">
-                <span class="material-symbols-outlined">volunteer_activism</span>
-              </span>
-              <span class="dropdown-text">
-                <strong>Volunteer</strong>
-                <small>Join our volunteer network</small>
-              </span>
-            </a>
-
-            <a href="internship.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon">
-                <span class="material-symbols-outlined">work</span>
-              </span>
-              <span class="dropdown-text">
-                <strong>Internship</strong>
-                <small>Apply for internship</small>
-              </span>
-            </a>
-
-            <a href="contact.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon">
-                <span class="material-symbols-outlined">mail</span>
-              </span>
-              <span class="dropdown-text">
-                <strong>Contact Us</strong>
-                <small>Get in touch</small>
-              </span>
-            </a>
-          </div>
-        </div>
-
-        <div class="nav-item has-dropdown">
-          <button class="nav-link dropdown-trigger" aria-haspopup="true" aria-expanded="false">
-            Resources
-            <span class="nav-chevron" aria-hidden="true">
-              <svg width="12" height="7" viewBox="0 0 12 7" fill="none">
-                <path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </span>
-          </button>
-
-          <div class="dropdown-menu" role="menu">
-            <a href="collaborations.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon">
-                <span class="material-symbols-outlined">diversity_3</span>
-              </span>
-              <span class="dropdown-text">
-                <strong>Collaborations & Partnerships</strong>
-                <small>Our partners & collaborations</small>
-              </span>
-            </a>
-
-            <a href="verify.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon">
-                <span class="material-symbols-outlined">verified</span>
-              </span>
-              <span class="dropdown-text">
-                <strong>Verify Certificate</strong>
-                <small>Check your certificate</small>
-              </span>
-            </a>
-
-            <a href="faq.html" class="dropdown-item" role="menuitem">
-              <span class="dropdown-icon">
-                <span class="material-symbols-outlined">help</span>
-              </span>
-              <span class="dropdown-text">
-                <strong>FAQ</strong>
-                <small>Common questions answered</small>
-              </span>
-            </a>
-          </div>
         </div>
       </div>
-
-      <div class="nav-actions">
-        <button class="menu-toggle" id="menu-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
-          <span class="hamburger-bar"></span>
-          <span class="hamburger-bar"></span>
-          <span class="hamburger-bar"></span>
-        </button>
+    </nav>
+    <div aria-hidden="true" class="mobile-menu" id="mobile-menu">
+      <div class="mobile-menu-inner">
+        <a class="mobile-link moved-inline-style-001" href="index.html">Home</a>
+        <div class="mobile-section">
+          <button aria-expanded="false" class="mobile-group-toggle">
+            About Us <span aria-hidden="true" class="material-symbols-outlined">expand_more</span>
+          </button>
+          <div class="mobile-group-links">
+            <a class="mobile-link" href="about.html">About Foundation</a>
+            <a class="mobile-link" href="impact.html">Impact</a>
+            <a class="mobile-link" href="programs.html">Programs</a>
+            <a class="mobile-link" href="gallery.html">Gallery</a>
+          </div>
+        </div>
+        <div class="mobile-section">
+          <button aria-expanded="false" class="mobile-group-toggle">
+            Get Involved <span aria-hidden="true" class="material-symbols-outlined">expand_more</span>
+          </button>
+          <div class="mobile-group-links">
+            <a class="mobile-link" href="volunteer.html">Volunteer</a>
+            <a class="mobile-link" href="internship.html">Internship</a>
+            <a class="mobile-link" href="contact.html">Contact Us</a>
+          </div>
+        </div>
+        <div class="mobile-section">
+          <button aria-expanded="false" class="mobile-group-toggle">
+            Resources <span aria-hidden="true" class="material-symbols-outlined">expand_more</span>
+          </button>
+          <div class="mobile-group-links">
+            <a class="mobile-link" href="collaborations.html">Collaborations &amp; Partnerships</a>
+            <a class="mobile-link" href="verify.html">Verify Certificate</a>
+            <a class="mobile-link" href="faq.html">FAQ</a>
+          </div>
+        </div>
       </div>
     </div>
-  </nav>
-
-  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
-    <div class="mobile-menu-inner">
-
-      <a href="index.html" class="mobile-link" style="padding:1rem 0.25rem;font-weight:600;display:block;">Home</a>
-
-      <div class="mobile-section">
-        <button class="mobile-group-toggle" aria-expanded="false">
-          About Us <span class="material-symbols-outlined" aria-hidden="true">expand_more</span>
-        </button>
-        <div class="mobile-group-links">
-          <a href="about.html" class="mobile-link">About Foundation</a>
-          <a href="impact.html" class="mobile-link">Impact</a>
-          <a href="programs.html" class="mobile-link">Programs</a>
-          <a href="gallery.html" class="mobile-link">Gallery</a>
-        </div>
-      </div>
-
-      <div class="mobile-section">
-        <button class="mobile-group-toggle" aria-expanded="false">
-          Get Involved <span class="material-symbols-outlined" aria-hidden="true">expand_more</span>
-        </button>
-        <div class="mobile-group-links">
-          <a href="volunteer.html" class="mobile-link">Volunteer</a>
-          <a href="internship.html" class="mobile-link">Internship</a>
-          <a href="contact.html" class="mobile-link">Contact Us</a>
-        </div>
-      </div>
-
-      <div class="mobile-section">
-        <button class="mobile-group-toggle" aria-expanded="false">
-          Resources <span class="material-symbols-outlined" aria-hidden="true">expand_more</span>
-        </button>
-        <div class="mobile-group-links">
-          <a href="collaborations.html" class="mobile-link">Collaborations & Partnerships</a>
-          <a href="verify.html" class="mobile-link">Verify Certificate</a>
-          <a href="faq.html" class="mobile-link">FAQ</a>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</header>
-
-<main id="main-content">
-    <section class="page-hero has-image section" data-hero aria-labelledby="internship-hero-title"
-      style="position: relative;
-      background-image: linear-gradient(135deg, rgba(86, 5, 26, 0.88), rgba(86, 5, 26, 0.6)), url('assets/images/hero.png'); background-size: cover; background-position: center; background-repeat: no-repeat;
-      padding: 6rem 0;
-      min-height: 480px;
-      display: flex;
-      align-items: center;
-      overflow: hidden;">
-      <div class="container" style="display: flex; justify-content: center; text-align: center; width: 100%;">
-        <div style="max-width: 960px;">
-          <span class="section-label" style="color: var(--gold);">Internship Program</span>
-          <h1 id="internship-hero-title" class="section-title" style="font-size: clamp(2.5rem, 6vw, 4rem); margin-bottom: 1.25rem; color: #ffffff !important; opacity: 1;">
+  </header>
+  <main id="main-content">
+    <section aria-labelledby="internship-hero-title" class="page-hero has-image section moved-inline-style-079"
+      data-hero="">
+      <div class="container moved-inline-style-003">
+        <div class="moved-inline-style-004">
+          <span class="section-label moved-inline-style-005">Internship Program</span>
+          <h1 class="section-title moved-inline-style-006" id="internship-hero-title">
             Learn. Contribute. Grow With Us.
           </h1>
-          <p class="section-desc" style="max-width: 960px; margin: 0 auto 2rem; color: #ffffff; opacity: 1; font-size: 1.25rem;">
-            Gain practical experience while making a meaningful social impact. Our internship program develops your skills, builds your network, and empowers you to drive positive change.
+          <p class="section-desc moved-inline-style-101">
+            Gain practical experience while making a meaningful social impact. Our internship program develops your
+            skills, builds your network, and empowers you to drive positive change.
           </p>
-          <a href="#internship-form-section" class="btn btn-primary">Apply For Internship</a>
+          <a class="btn btn-primary" href="#internship-form-section">Apply For Internship</a>
         </div>
       </div>
     </section>
-
-    <section class="section section-white" aria-labelledby="tracks-heading">
+    <section aria-labelledby="tracks-heading" class="section section-white">
       <div class="container">
         <div class="section-header">
           <span class="section-label">Tracks</span>
-          <h2 id="tracks-heading" class="section-title">Internship Tracks</h2>
+          <h2 class="section-title" id="tracks-heading">Internship Tracks</h2>
           <p class="section-desc">Choose a track aligned with your career goals and passion for social impact.</p>
         </div>
-        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; align-items: stretch;">
-          <article class="card" style="display: flex; flex-direction: column;">
-            <div class="card-icon card-icon-pink" aria-hidden="true">
+        <div class="moved-inline-style-102">
+          <article class="card moved-inline-style-071">
+            <div aria-hidden="true" class="card-icon card-icon-pink">
               <span class="material-symbols-outlined">assignment</span>
             </div>
-            <h3 style="font-weight: 600; color: var(--navy); margin-bottom: 0.5rem; font-size: 1rem;">Project Management</h3>
-            <p class="text-muted" style="font-size: 0.875rem; margin-bottom: 1rem; flex-grow: 1;">Assist in planning, executing, and monitoring community initiatives and impact programs.</p>
-            <ul class="text-muted" style="font-size: 0.825rem; padding-left: 1.25rem; margin: 0;">
+            <h3 class="moved-inline-style-103">Project Management</h3>
+            <p class="text-muted moved-inline-style-104">Assist in planning, executing, and monitoring community
+              initiatives and impact programs.</p>
+            <ul class="text-muted moved-inline-style-105">
               <li>Project tracking &amp; reporting</li>
               <li>Resource coordination</li>
               <li>Impact measurement</li>
             </ul>
           </article>
-          <article class="card" style="display: flex; flex-direction: column;">
-            <div class="card-icon card-icon-purple" aria-hidden="true">
+          <article class="card moved-inline-style-071">
+            <div aria-hidden="true" class="card-icon card-icon-purple">
               <span class="material-symbols-outlined">diversity_1</span>
             </div>
-            <h3 style="font-weight: 600; color: var(--navy); margin-bottom: 0.5rem; font-size: 1rem;">Community Development</h3>
-            <p class="text-muted" style="font-size: 0.875rem; margin-bottom: 1rem; flex-grow: 1;">Engage directly with communities to implement grassroots programs and needs assessments.</p>
-            <ul class="text-muted" style="font-size: 0.825rem; padding-left: 1.25rem; margin: 0;">
+            <h3 class="moved-inline-style-103">Community Development</h3>
+            <p class="text-muted moved-inline-style-104">Engage directly with communities to implement grassroots
+              programs and needs assessments.</p>
+            <ul class="text-muted moved-inline-style-105">
               <li>Community outreach</li>
               <li>Needs assessment</li>
               <li>Program facilitation</li>
             </ul>
           </article>
-          <article class="card" style="display: flex; flex-direction: column;">
-            <div class="card-icon card-icon-gold" aria-hidden="true">
+          <article class="card moved-inline-style-071">
+            <div aria-hidden="true" class="card-icon card-icon-gold">
               <span class="material-symbols-outlined">analytics</span>
             </div>
-            <h3 style="font-weight: 600; color: var(--navy); margin-bottom: 0.5rem; font-size: 1rem;">Research &amp; Documentation</h3>
-            <p class="text-muted" style="font-size: 0.875rem; margin-bottom: 1rem; flex-grow: 1;">Conduct studies and document best practices in social development and program evaluation.</p>
-            <ul class="text-muted" style="font-size: 0.825rem; padding-left: 1.25rem; margin: 0;">
+            <h3 class="moved-inline-style-103">Research &amp; Documentation</h3>
+            <p class="text-muted moved-inline-style-104">Conduct studies and document best practices in social
+              development and program evaluation.</p>
+            <ul class="text-muted moved-inline-style-105">
               <li>Data collection &amp; analysis</li>
               <li>Case study creation</li>
               <li>Report writing</li>
             </ul>
           </article>
-          <article class="card" style="display: flex; flex-direction: column;">
-            <div class="card-icon card-icon-navy" aria-hidden="true">
+          <article class="card moved-inline-style-071">
+            <div aria-hidden="true" class="card-icon card-icon-navy">
               <span class="material-symbols-outlined">campaign</span>
             </div>
-            <h3 style="font-weight: 600; color: var(--navy); margin-bottom: 0.5rem; font-size: 1rem;">Marketing &amp; Outreach</h3>
-            <p class="text-muted" style="font-size: 0.875rem; margin-bottom: 1rem; flex-grow: 1;">Help expand our reach and engage potential donors, volunteers, and community partners.</p>
-            <ul class="text-muted" style="font-size: 0.825rem; padding-left: 1.25rem; margin: 0;">
+            <h3 class="moved-inline-style-103">Marketing &amp; Outreach</h3>
+            <p class="text-muted moved-inline-style-104">Help expand our reach and engage potential donors, volunteers,
+              and community partners.</p>
+            <ul class="text-muted moved-inline-style-105">
               <li>Campaign design</li>
               <li>Stakeholder engagement</li>
               <li>Event promotion</li>
@@ -346,140 +291,154 @@
         </div>
       </div>
     </section>
-
-    <section class="section section-alt" aria-labelledby="outcomes-heading">
+    <section aria-labelledby="outcomes-heading" class="section section-alt">
       <div class="container">
         <div class="section-header">
           <span class="section-label">What You'll Gain</span>
-          <h2 id="outcomes-heading" class="section-title">Learning Outcomes</h2>
+          <h2 class="section-title" id="outcomes-heading">Learning Outcomes</h2>
         </div>
         <div class="grid-3">
           <div class="card">
-            <div class="card-icon card-icon-pink" aria-hidden="true">
+            <div aria-hidden="true" class="card-icon card-icon-pink">
               <span class="material-symbols-outlined icon-fill">work</span>
             </div>
-            <h3 style="font-weight: 600; color: var(--navy); margin-bottom: 0.5rem;">Real-World Experience</h3>
-            <p class="text-muted" style="font-size: 0.9rem;">Work on actual projects that impact communities, not just theoretical assignments.</p>
+            <h3 class="moved-inline-style-068">Real-World Experience</h3>
+            <p class="text-muted moved-inline-style-020">Work on actual projects that impact communities, not just
+              theoretical assignments.</p>
           </div>
           <div class="card">
-            <div class="card-icon card-icon-purple" aria-hidden="true">
+            <div aria-hidden="true" class="card-icon card-icon-purple">
               <span class="material-symbols-outlined icon-fill">groups</span>
             </div>
-            <h3 style="font-weight: 600; color: var(--navy); margin-bottom: 0.5rem;">Mentorship &amp; Guidance</h3>
-            <p class="text-muted" style="font-size: 0.9rem;">Learn directly from experienced professionals and domain experts throughout your internship.</p>
+            <h3 class="moved-inline-style-068">Mentorship &amp; Guidance</h3>
+            <p class="text-muted moved-inline-style-020">Learn directly from experienced professionals and domain
+              experts throughout your internship.</p>
           </div>
           <div class="card">
-            <div class="card-icon card-icon-gold" aria-hidden="true">
+            <div aria-hidden="true" class="card-icon card-icon-gold">
               <span class="material-symbols-outlined icon-fill">trending_up</span>
             </div>
-            <h3 style="font-weight: 600; color: var(--navy); margin-bottom: 0.5rem;">Skill Development</h3>
-            <p class="text-muted" style="font-size: 0.9rem;">Acquire technical and soft skills essential for careers in social impact and development.</p>
+            <h3 class="moved-inline-style-068">Skill Development</h3>
+            <p class="text-muted moved-inline-style-020">Acquire technical and soft skills essential for careers in
+              social impact and development.</p>
           </div>
           <div class="card">
-            <div class="card-icon card-icon-navy" aria-hidden="true">
+            <div aria-hidden="true" class="card-icon card-icon-navy">
               <span class="material-symbols-outlined icon-fill">folder_special</span>
             </div>
-            <h3 style="font-weight: 600; color: var(--navy); margin-bottom: 0.5rem;">Portfolio Building</h3>
-            <p class="text-muted" style="font-size: 0.9rem;">Build a strong portfolio with tangible outcomes from your internship projects.</p>
+            <h3 class="moved-inline-style-068">Portfolio Building</h3>
+            <p class="text-muted moved-inline-style-020">Build a strong portfolio with tangible outcomes from your
+              internship projects.</p>
           </div>
           <div class="card">
-            <div class="card-icon card-icon-pink" aria-hidden="true">
+            <div aria-hidden="true" class="card-icon card-icon-pink">
               <span class="material-symbols-outlined icon-fill">hub</span>
             </div>
-            <h3 style="font-weight: 600; color: var(--navy); margin-bottom: 0.5rem;">Professional Networking</h3>
-            <p class="text-muted" style="font-size: 0.9rem;">Connect with industry professionals, fellow interns, and organizational leaders.</p>
+            <h3 class="moved-inline-style-068">Professional Networking</h3>
+            <p class="text-muted moved-inline-style-020">Connect with industry professionals, fellow interns, and
+              organizational leaders.</p>
           </div>
           <div class="card">
-            <div class="card-icon card-icon-purple" aria-hidden="true">
+            <div aria-hidden="true" class="card-icon card-icon-purple">
               <span class="material-symbols-outlined icon-fill">volunteer_activism</span>
             </div>
-            <h3 style="font-weight: 600; color: var(--navy); margin-bottom: 0.5rem;">Social Impact Exposure</h3>
-            <p class="text-muted" style="font-size: 0.9rem;">Gain deep understanding of social issues and how to address them effectively.</p>
+            <h3 class="moved-inline-style-068">Social Impact Exposure</h3>
+            <p class="text-muted moved-inline-style-020">Gain deep understanding of social issues and how to address
+              them effectively.</p>
           </div>
         </div>
       </div>
     </section>
-
-   
-
-    <section class="section section-alt" aria-labelledby="certificate-heading">
+    <!-- <section aria-labelledby="certificate-heading" class="section section-alt">
       <div class="container">
         <div class="split-2">
           <div>
             <span class="section-label">Credentials</span>
-            <h2 id="certificate-heading" class="section-title" style="text-align: left; margin-bottom: 1rem;">Verified Certificates</h2>
-            <p class="text-muted" style="margin-bottom: 1.25rem;">Upon successful completion, interns receive an official Amaanitvam Foundation certificate with a unique ID. Employers and institutions can instantly verify authenticity through our portal.</p>
-            <p class="text-muted" style="margin-bottom: 1.5rem;">Certificate IDs follow the format 
-              <strong>AF-YYYY-XXXX</strong> and are registered in our secure verification database.</p>
-            <a href="verify.html" class="btn btn-secondary">
-              <span class="material-symbols-outlined" aria-hidden="true">verified</span> Verify a Certificate
+            <h2 class="section-title moved-inline-style-106" id="certificate-heading">Verified Certificates</h2>
+            <p class="text-muted moved-inline-style-064">Upon successful completion, interns receive an official
+              Amaanitvam Foundation certificate with a unique ID. Employers and institutions can instantly verify
+              authenticity through our portal.</p>
+            <p class="text-muted moved-inline-style-065">Certificate IDs follow the format
+              <strong>AF-YYYY-XXXX</strong> and are registered in our secure verification database.
+            </p>
+            <a class="btn btn-secondary" href="verify.html">
+              <span aria-hidden="true" class="material-symbols-outlined">verified</span> Verify a Certificate
             </a>
           </div>
-          <div class="card" style="text-align: center; background: linear-gradient(135deg, rgba(233,30,99,0.05), rgba(108,99,255,0.08));">
-            <span class="material-symbols-outlined icon-fill text-primary" style="font-size: 4rem; margin-bottom: 1rem;" aria-hidden="true">workspace_premium</span>
-            <h3 style="font-weight: 700; color: var(--navy); margin-bottom: 0.5rem;">Official Internship Certificate</h3>
-            <p class="text-muted" style="font-size: 0.9rem; margin-bottom: 1rem;">Digitally verifiable certificates are issued upon successful completion of eligible programs.</p>
-            <div style="font-family: monospace; background: var(--surface); padding: 0.75rem 1.25rem; border-radius: 8px; border: 1px solid var(--border); display: inline-block; font-size: 0.9rem; color: var(--navy);">AF-2024-892X</div>
+          <div class="card moved-inline-style-107">
+            <span aria-hidden="true"
+              class="material-symbols-outlined icon-fill text-primary moved-inline-style-108">workspace_premium</span>
+            <h3 class="moved-inline-style-109">Official Internship Certificate</h3>
+            <p class="text-muted moved-inline-style-110">Digitally verifiable certificates are issued upon successful
+              completion of eligible programs.</p>
+            <div class="moved-inline-style-111">AF-2024-892X</div>
           </div>
         </div>
       </div>
-    </section>
-
-    <section id="internship-form-section" class="section section-white">
-      <div class="container" style="max-width: 800px;">
+    </section> -->
+    <section class="section section-white" id="internship-form-section">
+      <div class="container moved-inline-style-070">
         <div class="section-header">
           <span class="section-label">Apply Now</span>
           <h2 class="section-title">Internship Application</h2>
         </div>
-        <form id="internshipForm" style="background: var(--surface); padding: 2rem; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
-          <div style="margin-bottom: 1.25rem;">
-            <label class="form-label" for="int-name">Full Name 
-              <span aria-hidden="true" style="color:red">*</span>
+        <form class="moved-inline-style-112" id="internshipForm">
+          <div class="moved-inline-style-064">
+            <label class="form-label" for="int-name">Full Name
+              <span aria-hidden="true" class="moved-inline-style-113">*</span>
             </label>
-            <input class="form-input" type="text" id="int-name" name="name" required pattern="[A-Za-z\s]+" title="Please enter only letters and spaces" placeholder="Jane Doe">
+            <input class="form-input" id="int-name" name="name" pattern="[A-Za-z\s]+" placeholder="Jane Doe" required=""
+              title="Please enter only letters and spaces" type="text" />
           </div>
-          <div style="margin-bottom: 1.25rem;">
-            <label class="form-label" for="int-email">Email Address 
-              <span aria-hidden="true" style="color:red">*</span>
+          <div class="moved-inline-style-064">
+            <label class="form-label" for="int-email">Email Address
+              <span aria-hidden="true" class="moved-inline-style-113">*</span>
             </label>
-            <input class="form-input" type="email" id="int-email" name="email" required placeholder="jane@example.com">
+            <input class="form-input" id="int-email" name="email" placeholder="jane@example.com" required=""
+              type="email" />
           </div>
-          <div style="margin-bottom: 1.25rem;">
-            <label class="form-label" for="int-phone">Phone Number 
-              <span aria-hidden="true" style="color:red">*</span>
+          <div class="moved-inline-style-064">
+            <label class="form-label" for="int-phone">Phone Number
+              <span aria-hidden="true" class="moved-inline-style-113">*</span>
             </label>
-            <input class="form-input" type="text" id="int-phone" name="phone" required pattern="\d{10}" maxlength="10" title="Please enter exactly 10 digits" placeholder="10-digit number">
+            <input class="form-input" id="int-phone" maxlength="10" name="phone" pattern="\d{10}"
+              placeholder="10-digit number" required="" title="Please enter exactly 10 digits" type="text" />
           </div>
-          <div style="margin-bottom: 1.25rem; display: flex; gap: 1rem;">
-            <div style="flex: 1;">
+          <div class="moved-inline-style-114">
+            <div class="moved-inline-style-115">
               <label class="form-label" for="int-university">University/College</label>
-              <input class="form-input" type="text" id="int-university" name="university" placeholder="e.g. Delhi University">
+              <input class="form-input" id="int-university" name="university" placeholder="e.g. Delhi University"
+                type="text" />
             </div>
-            <div style="flex: 1;">
+            <div class="moved-inline-style-115">
               <label class="form-label" for="int-currentYear">Year of Study</label>
-              <input class="form-input" type="text" id="int-currentYear" name="currentYear" placeholder="e.g. 2nd Year">
+              <input class="form-input" id="int-currentYear" name="currentYear" placeholder="e.g. 2nd Year"
+                type="text" />
             </div>
           </div>
-          <div style="margin-bottom: 1.25rem; display: flex; gap: 1rem;">
-            <div style="flex: 1;">
-              <label class="form-label" for="int-resume">Attach Resume <span aria-hidden="true" style="color:red">*</span></label>
-              <input class="form-input" type="file" id="int-resume" name="resume" accept=".pdf,.doc,.docx" required style="padding: 0.5rem;">
+          <div class="moved-inline-style-114">
+            <div class="moved-inline-style-115">
+              <label class="form-label" for="int-resume">Attach Resume <span aria-hidden="true"
+                  class="moved-inline-style-113">*</span></label>
+              <input accept=".pdf,.doc,.docx" class="form-input moved-inline-style-116" id="int-resume" name="resume"
+                required="" type="file" />
             </div>
-            <div style="flex: 1;">
+            <div class="moved-inline-style-115">
               <label class="form-label" for="int-duration">Duration</label>
-              <input class="form-input" type="text" id="int-duration" name="duration" placeholder="e.g. 3 Months">
+              <input class="form-input" id="int-duration" name="duration" placeholder="e.g. 3 Months" type="text" />
             </div>
           </div>
-          <div style="margin-bottom: 1.25rem;">
+          <div class="moved-inline-style-064">
             <label class="form-label" for="int-portfolioUrl">Portfolio/LinkedIn URL</label>
-            <input class="form-input" type="url" id="int-portfolioUrl" name="portfolioUrl" placeholder="https://linkedin.com/in/yourprofile">
+            <input class="form-input" id="int-portfolioUrl" name="portfolioUrl"
+              placeholder="https://linkedin.com/in/yourprofile" type="url" />
           </div>
-          <div style="margin-bottom: 1.25rem;">
-            <label class="form-label" for="int-track">Internship Track 
-              <span aria-hidden="true" style="color:red">*</span>
+          <div class="moved-inline-style-064">
+            <label class="form-label" for="int-track">Internship Domain
+              <span aria-hidden="true" class="moved-inline-style-113">*</span>
             </label>
-            <select class="form-input" id="int-track" name="track" required>
-              <option value="" disabled selected>Select a track</option>
+            <select class="form-input" id="int-track" name="track" required="">
+              <option disabled="" selected="" value="">Select a domain</option>
               <option value="Creative">Creative</option>
               <option value="Graphics">Graphics</option>
               <option value="Social media">Social media</option>
@@ -489,256 +448,234 @@
               <option value="Full stack">Full stack</option>
             </select>
           </div>
-          <div style="margin-bottom: 1.5rem;">
-            <label class="form-label" for="int-motivation">Why do you want this internship? 
-              <span aria-hidden="true" style="color:red">*</span>
+          <div class="moved-inline-style-065">
+            <label class="form-label" for="int-motivation">Why do you want this internship?
+              <span aria-hidden="true" class="moved-inline-style-113">*</span>
             </label>
-            <textarea class="form-textarea" id="int-motivation" name="motivation" rows="4" required placeholder="Tell us your motivation..."></textarea>
+            <textarea class="form-textarea" id="int-motivation" name="motivation"
+              placeholder="Tell us your motivation..." required="" rows="4"></textarea>
           </div>
-          <button type="submit" class="btn btn-primary submit-btn" id="int-submit-btn" style="width: 100%; position: relative; overflow: hidden; transition: all 0.3s ease;">
+          <button class="btn btn-primary submit-btn moved-inline-style-117" id="int-submit-btn" type="submit">
             <span class="submit-btn-text">Submit Application</span>
-            <span class="submit-btn-spinner" style="display:none;">
-              <svg width="22" height="22" viewBox="0 0 24 24" style="animation: spin 0.8s linear infinite; vertical-align: middle;">
-                <circle cx="12" cy="12" r="10" stroke="white" stroke-width="3" fill="none" stroke-dasharray="31.4 31.4" stroke-linecap="round"/>
+            <span class="submit-btn-spinner moved-inline-style-118">
+              <svg class="moved-inline-style-119" height="22" viewbox="0 0 24 24" width="22">
+                <circle cx="12" cy="12" fill="none" r="10" stroke="white" stroke-dasharray="31.4 31.4"
+                  stroke-linecap="round" stroke-width="3"></circle>
               </svg>
-              <span style="margin-left:8px;">Submitting...</span>
+              <span class="moved-inline-style-120">Submitting...</span>
             </span>
-            <span class="submit-btn-success" style="display:none;">
-              <svg width="22" height="22" viewBox="0 0 24 24" style="vertical-align: middle;">
-                <circle cx="12" cy="12" r="10" fill="rgba(255,255,255,0.25)"/>
-                <path d="M7 13l3 3 7-7" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <span class="submit-btn-success moved-inline-style-118">
+              <svg class="moved-inline-style-121" height="22" viewbox="0 0 24 24" width="22">
+                <circle cx="12" cy="12" fill="rgba(255,255,255,0.25)" r="10"></circle>
+                <path d="M7 13l3 3 7-7" fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round"
+                  stroke-width="2.5"></path>
               </svg>
-              <span style="margin-left:8px;">Submitted Successfully!</span>
+              <span class="moved-inline-style-120">Submitted Successfully!</span>
             </span>
           </button>
-          <div id="int-status" style="margin-top: 1rem; text-align: center; font-weight: 600;"></div>
+          <div class="moved-inline-style-122" id="int-status"></div>
         </form>
       </div>
     </section>
   </main>
-<!-- Floating Donate CTA -->
-<style>
-  @keyframes spin { to { transform: rotate(360deg); } }
-  @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    20%, 60% { transform: translateX(-6px); }
-    40%, 80% { transform: translateX(6px); }
-  }
-  @keyframes successPulse {
-    0% { box-shadow: 0 0 0 0 rgba(34,197,94,0.5); }
-    70% { box-shadow: 0 0 0 14px rgba(34,197,94,0); }
-    100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
-  }
-  @keyframes slideUp {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .submit-btn:active:not(.is-loading) { transform: scale(0.97); }
-  .submit-btn.is-loading { pointer-events: none; opacity: 0.85; }
-  .submit-btn.is-success { background: #22c55e !important; animation: successPulse 0.8s ease-out; }
-  .submit-btn.is-error { animation: shake 0.5s ease; }
-  #int-status.show { animation: slideUp 0.4s ease forwards; }
-</style>
-<script>
-document.getElementById('internshipForm').addEventListener('submit', async function(e) {
-  e.preventDefault();
-  const btn = document.getElementById('int-submit-btn');
-  const btnText = btn.querySelector('.submit-btn-text');
-  const btnSpinner = btn.querySelector('.submit-btn-spinner');
-  const btnSuccess = btn.querySelector('.submit-btn-success');
-  const status = document.getElementById('int-status');
+  <!-- Floating Donate CTA -->
+  <script>
+    document.getElementById('internshipForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const btn = document.getElementById('int-submit-btn');
+      const btnText = btn.querySelector('.submit-btn-text');
+      const btnSpinner = btn.querySelector('.submit-btn-spinner');
+      const btnSuccess = btn.querySelector('.submit-btn-success');
+      const status = document.getElementById('int-status');
 
-  // Reset states
-  btn.classList.remove('is-success', 'is-error');
-  status.textContent = '';
-  status.className = '';
-  status.style.color = '';
+      // Reset states
+      btn.classList.remove('is-success', 'is-error');
+      status.textContent = '';
+      status.className = '';
+      status.style.color = '';
 
-  // Show spinner
-  btnText.style.display = 'none';
-  btnSpinner.style.display = 'inline-flex';
-  btnSuccess.style.display = 'none';
-  btn.classList.add('is-loading');
+      // Show spinner
+      btnText.style.display = 'none';
+      btnSpinner.style.display = 'inline-flex';
+      btnSuccess.style.display = 'none';
+      btn.classList.add('is-loading');
 
-  const formData = new FormData(this);
+      const formData = new FormData(this);
 
-  try {
-    const response = await fetch('http://localhost:5000/api/internship/apply', {
-      method: 'POST',
-      body: formData
-    });
-    const result = await response.json();
-    if (response.ok) {
-      // Show success
-      btnSpinner.style.display = 'none';
-      btnSuccess.style.display = 'inline-flex';
-      btn.classList.remove('is-loading');
-      btn.classList.add('is-success');
-      status.textContent = result.message || "Application submitted successfully!";
-      status.style.color = "#22c55e";
-      status.className = 'show';
-      this.reset();
-      // Reset button after 3 seconds
-      setTimeout(() => {
-        btnSuccess.style.display = 'none';
+      try {
+        const response = await fetch('http://localhost:5000/api/internship/apply', {
+          method: 'POST',
+          body: formData
+        });
+        const result = await response.json();
+        if (response.ok) {
+          // Show success
+          btnSpinner.style.display = 'none';
+          btnSuccess.style.display = 'inline-flex';
+          btn.classList.remove('is-loading');
+          btn.classList.add('is-success');
+          status.textContent = result.message || "Application submitted successfully!";
+          status.style.color = "#22c55e";
+          status.className = 'show';
+          this.reset();
+          // Reset button after 3 seconds
+          setTimeout(() => {
+            btnSuccess.style.display = 'none';
+            btnText.style.display = 'inline';
+            btn.classList.remove('is-success');
+          }, 3000);
+        } else {
+          btnSpinner.style.display = 'none';
+          btnText.style.display = 'inline';
+          btn.classList.remove('is-loading');
+          btn.classList.add('is-error');
+          status.textContent = result.message || "Error submitting application.";
+          status.style.color = "red";
+          status.className = 'show';
+          setTimeout(() => btn.classList.remove('is-error'), 600);
+        }
+      } catch (err) {
+        btnSpinner.style.display = 'none';
         btnText.style.display = 'inline';
-        btn.classList.remove('is-success');
-      }, 3000);
-    } else {
-      btnSpinner.style.display = 'none';
-      btnText.style.display = 'inline';
-      btn.classList.remove('is-loading');
-      btn.classList.add('is-error');
-      status.textContent = result.message || "Error submitting application.";
-      status.style.color = "red";
-      status.className = 'show';
-      setTimeout(() => btn.classList.remove('is-error'), 600);
-    }
-  } catch (err) {
-    btnSpinner.style.display = 'none';
-    btnText.style.display = 'inline';
-    btn.classList.remove('is-loading');
-    btn.classList.add('is-error');
-    status.textContent = "Failed to connect to the server.";
-    status.style.color = "red";
-    status.className = 'show';
-    setTimeout(() => btn.classList.remove('is-error'), 600);
-  }
-});
-</script>
-
-<div id="footer"></div>
-
-<a href="contact.html#donate" class="floating-donate">
-  ❤ Donate Now
-</a>
-
-<div class="floating-socials">
-  <a href="https://www.facebook.com/people/Amaanitvam-Foundation/61583427622759/" target="_blank" aria-label="Facebook">
-    <i class="fa-brands fa-facebook-f"></i>
-  </a>
-  <a href="https://www.instagram.com/amaanitvamfoundation" target="_blank" aria-label="Instagram">
-    <i class="fa-brands fa-instagram"></i>
-  </a>
-  <a href="https://x.com/AmaanitvamOrg" target="_blank" aria-label="X">
-    <i class="fa-brands fa-x-twitter"></i>
-  </a>
-  <a href="https://www.linkedin.com/company/amaanitvam-foundation/" target="_blank" aria-label="LinkedIn">
-    <i class="fa-brands fa-linkedin-in"></i>
-  </a>
-</div>
-
-<script src="js/main.js"></script>
-<script>
-  (function () {
-    const nav = document.getElementById('site-nav');
-    const menuToggle = document.getElementById('menu-toggle');
-    const mobileMenu = document.getElementById('mobile-menu');
-
-    if (nav) {
-      function onScroll() {
-        nav.classList.toggle('is-solid', window.scrollY > 60);
+        btn.classList.remove('is-loading');
+        btn.classList.add('is-error');
+        status.textContent = "Failed to connect to the server.";
+        status.style.color = "red";
+        status.className = 'show';
+        setTimeout(() => btn.classList.remove('is-error'), 600);
       }
-      window.addEventListener('scroll', onScroll, { passive: true });
-      onScroll();
-    }
-
-    const pageMap = {
-      about: 0,
-      impact: 0,
-      programs: 0,
-      gallery: 0,
-      volunteer: 1,
-      internship: 1,
-      contact: 1,
-      collaborations: 2,
-      verify: 2,
-      faq: 2,
-      resources: 2,
-      guidelines: 2,
-      circulars: 2
-    };
-
-    const page = document.body.dataset.page;
-    if (page && pageMap[page] !== undefined) {
-      const triggers = document.querySelectorAll('.nav-link.dropdown-trigger');
-      if (triggers[pageMap[page]]) {
-        triggers[pageMap[page]].classList.add('is-active');
-      }
-    }
-
-    document.querySelectorAll('.nav-item.has-dropdown').forEach(function (item) {
-      const trigger = item.querySelector('.dropdown-trigger');
-      const menu = item.querySelector('.dropdown-menu');
-
-      function open() {
-        trigger.setAttribute('aria-expanded', 'true');
-        menu.classList.add('is-open');
-      }
-
-      function close() {
-        trigger.setAttribute('aria-expanded', 'false');
-        menu.classList.remove('is-open');
-      }
-
-      item.addEventListener('mouseenter', open);
-      item.addEventListener('mouseleave', close);
-
-      trigger.addEventListener('click', function () {
-        trigger.getAttribute('aria-expanded') === 'true' ? close() : open();
-      });
-
-      trigger.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') close();
-      });
     });
+  </script>
+  <div id="footer"></div>
+  <a class="floating-donate" href="contact.html#donate">
+    ❤ Donate Now
+  </a>
+  <div class="floating-socials">
+    <a aria-label="Facebook" href="https://www.facebook.com/people/Amaanitvam-Foundation/61583427622759/"
+      target="_blank">
+      <i class="fa-brands fa-facebook-f"></i>
+    </a>
+    <a aria-label="Instagram" href="https://www.instagram.com/amaanitvamfoundation" target="_blank">
+      <i class="fa-brands fa-instagram"></i>
+    </a>
+    <a aria-label="X" href="https://x.com/AmaanitvamOrg" target="_blank">
+      <i class="fa-brands fa-x-twitter"></i>
+    </a>
+    <a aria-label="LinkedIn" href="https://www.linkedin.com/company/amaanitvam-foundation/" target="_blank">
+      <i class="fa-brands fa-linkedin-in"></i>
+    </a>
+  </div>
+  <script src="js/main.js"></script>
+  <script>
+    (function () {
+      const nav = document.getElementById('site-nav');
+      const menuToggle = document.getElementById('menu-toggle');
+      const mobileMenu = document.getElementById('mobile-menu');
 
-    if (menuToggle && mobileMenu) {
-      menuToggle.addEventListener('click', function () {
-        const isOpen = mobileMenu.classList.toggle('is-open');
-        menuToggle.setAttribute('aria-expanded', isOpen);
-        mobileMenu.setAttribute('aria-hidden', !isOpen);
-        menuToggle.classList.toggle('is-active', isOpen);
-      });
-    }
+      if (nav) {
+        function onScroll() {
+          nav.classList.toggle('is-solid', window.scrollY > 60);
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+      }
 
-    document.querySelectorAll('.mobile-group-toggle').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        const section = btn.closest('.mobile-section');
-        const links = section.querySelector('.mobile-group-links');
-        const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+      const pageMap = {
+        about: 0,
+        impact: 0,
+        programs: 0,
+        gallery: 0,
+        volunteer: 1,
+        internship: 1,
+        contact: 1,
+        collaborations: 2,
+        verify: 2,
+        faq: 2,
+        resources: 2,
+        guidelines: 2,
+        circulars: 2
+      };
 
-        document.querySelectorAll('.mobile-section').forEach(function (s) {
-          s.querySelector('.mobile-group-toggle').setAttribute('aria-expanded', 'false');
-          s.querySelector('.mobile-group-links').classList.remove('is-open');
+      const page = document.body.dataset.page;
+      if (page && pageMap[page] !== undefined) {
+        const triggers = document.querySelectorAll('.nav-link.dropdown-trigger');
+        if (triggers[pageMap[page]]) {
+          triggers[pageMap[page]].classList.add('is-active');
+        }
+      }
+
+      document.querySelectorAll('.nav-item.has-dropdown').forEach(function (item) {
+        const trigger = item.querySelector('.dropdown-trigger');
+        const menu = item.querySelector('.dropdown-menu');
+
+        function open() {
+          trigger.setAttribute('aria-expanded', 'true');
+          menu.classList.add('is-open');
+        }
+
+        function close() {
+          trigger.setAttribute('aria-expanded', 'false');
+          menu.classList.remove('is-open');
+        }
+
+        item.addEventListener('mouseenter', open);
+        item.addEventListener('mouseleave', close);
+
+        trigger.addEventListener('click', function () {
+          trigger.getAttribute('aria-expanded') === 'true' ? close() : open();
         });
 
-        if (!isExpanded) {
-          btn.setAttribute('aria-expanded', 'true');
-          links.classList.add('is-open');
+        trigger.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') close();
+        });
+      });
+
+      if (menuToggle && mobileMenu) {
+        menuToggle.addEventListener('click', function () {
+          const isOpen = mobileMenu.classList.toggle('is-open');
+          menuToggle.setAttribute('aria-expanded', isOpen);
+          mobileMenu.setAttribute('aria-hidden', !isOpen);
+          menuToggle.classList.toggle('is-active', isOpen);
+        });
+      }
+
+      document.querySelectorAll('.mobile-group-toggle').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          const section = btn.closest('.mobile-section');
+          const links = section.querySelector('.mobile-group-links');
+          const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+
+          document.querySelectorAll('.mobile-section').forEach(function (s) {
+            s.querySelector('.mobile-group-toggle').setAttribute('aria-expanded', 'false');
+            s.querySelector('.mobile-group-links').classList.remove('is-open');
+          });
+
+          if (!isExpanded) {
+            btn.setAttribute('aria-expanded', 'true');
+            links.classList.add('is-open');
+          }
+        });
+      });
+
+      document.addEventListener('click', function (e) {
+        if (!e.target.closest('.nav-item.has-dropdown')) {
+          document.querySelectorAll('.dropdown-trigger').forEach(function (t) {
+            t.setAttribute('aria-expanded', 'false');
+          });
+          document.querySelectorAll('.dropdown-menu').forEach(function (m) {
+            m.classList.remove('is-open');
+          });
         }
       });
-    });
+    })();
 
-    document.addEventListener('click', function (e) {
-      if (!e.target.closest('.nav-item.has-dropdown')) {
-        document.querySelectorAll('.dropdown-trigger').forEach(function (t) {
-          t.setAttribute('aria-expanded', 'false');
-        });
-        document.querySelectorAll('.dropdown-menu').forEach(function (m) {
-          m.classList.remove('is-open');
-        });
-      }
-    });
-  })();
-
-  fetch('footer.html')
-    .then(function (response) { return response.text(); })
-    .then(function (data) {
-      const footer = document.getElementById('footer');
-      if (footer) footer.innerHTML = data;
-    });
-</script>
-
+    fetch('footer.html')
+      .then(function (response) { return response.text(); })
+      .then(function (data) {
+        const footer = document.getElementById('footer');
+        if (footer) footer.innerHTML = data;
+      });
+  </script>
 </body>
+
 </html>
