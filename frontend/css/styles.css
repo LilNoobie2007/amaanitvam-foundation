@@ -590,6 +590,12 @@ button {
   margin-top: 0;
 }
 
+/* IMPACT PAGE HERO BUTTONS ONLY */
+body[data-page="impact"] .hero-actions{
+  justify-content: center !important;
+  transform: translateY(15px);
+}
+
 /* =====================================================
    04 PAGE HERO SECTIONS
    ===================================================== */
@@ -4026,6 +4032,28 @@ body[data-page="gallery"] .gallery-grid {
 
 body[data-page="gallery"] .gallery-item {
   aspect-ratio: 4 / 3 !important;
+}
+
+body[data-page="gallery"] .hero-actions{
+  justify-content: center !important;
+  margin-top: 3rem !important;
+}
+
+body[data-page="gallery"] .hero-actions{
+  justify-content: center !important;
+  margin-top: 3rem !important;
+}
+
+body[data-page="volunteer"] .hero-actions{
+  justify-content:center !important;
+  margin-top:3rem !important;
+}
+
+/* INTERNSHIP PAGE HERO BUTTONS ONLY */
+body[data-page="internship"] .hero-actions{
+  display:flex !important;
+  justify-content:center !important;
+  margin-top:3rem !important;
 }
 
 /* CONTACT PAGE */
