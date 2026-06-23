@@ -4,6 +4,8 @@
   --primary: #5d0f2d;
   --primary-dark: #4a0b23;
   --primary-light: #7a1d44;
+  --navy: #5d0f2d;
+  --purple: #c46b87;
   --maroon: #6f1235;
   --cream: #f8f3ed;
   --secondary: #c46b87;
@@ -1392,14 +1394,14 @@ h6,
 }
 
 .donate-section .btn-primary {
-    background: var(--gold) !important;
-    color: #4a0b23 !important;
-    border: 2px solid var(--gold) !important;
-    box-shadow: 0 12px 28px rgba(0, 0, 0, .18) !important;
+  background: var(--gold) !important;
+  color: #4a0b23 !important;
+  border: 2px solid var(--gold) !important;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, .18) !important;
 
-    font-size: 1.7rem !important;   
-    padding: 20px 50px !important;  
-    margin-top: 30px !important;
+  font-size: 1.7rem !important;
+  padding: 20px 50px !important;
+  margin-top: 30px !important;
 }
 
 .donate-section .btn-primary:hover {
@@ -2658,6 +2660,9 @@ body[data-page="impact"] .section-header {
 }
 
 body[data-page="impact"] .donate-section {
+  margin-top: 0 !important;
+}
+
 /* impact(1).html | data-page="impact" */
 .elegant-header {
   text-align: center;
