@@ -1062,8 +1062,11 @@ h6,
   opacity: 1 !important;
   width: 100% !important;
   min-height: 0 !important;
-  margin: 0 !important;
-  padding: 42px 20px 34px !important;
+  max-width: 750px !important;
+  margin: 0 auto !important;
+  padding: 3rem 2rem !important;
+  border-radius: 24px !important;
+
   background: #fff7f8 !important;
   overflow: visible !important
 }
@@ -1299,63 +1302,61 @@ h6,
 /* GLOBAL SUPPORT OUR MISSION CTA - SAME ON EVERY PAGE */
 .section:has(.donate-section) {
   background: var(--bg) !important;
-  padding: 40px 20px 40px !important;
-  margin: 0 !important
+  margin: 2rem 0 !important;
+  padding: 0 20px !important
 }
 
 .section:has(.donate-section) .container {
-  max-width: 1280px !important;
-  padding: 0 3rem !important
+  max-width: 750px !important;
+  padding: 0 !important
 }
 
 .donate-section {
-  max-width: 1200px !important;
-  margin: 60px auto 40px !important;
-  padding: 90px 50px !important;
-  border-radius: 34px !important;
+  max-width: 720px !important;
+  margin: 0 auto !important;
+  padding: 2.5rem 1.5rem !important;
+  border-radius: 24px !important;
   background: linear-gradient(135deg, #690b31, #8a164b) !important;
   text-align: center !important;
-  box-shadow: 0 20px 50px rgba(93, 15, 45, .22) !important;
+  box-shadow: 0 14px 32px rgba(93, 15, 45, .22) !important;
   color: #fff !important
 }
 
 .donate-section .section-label {
   color: var(--gold) !important;
-  letter-spacing: .45em !important;
-  margin-bottom: 1.2rem !important;
-  font-size: 1.2rem !important
+  letter-spacing: .3em !important;
+  margin-bottom: .75rem !important;
+  font-size: .9rem !important
 }
 
 .donate-section .section-title {
   color: #fff !important;
-  font-size: clamp(4rem, 7vw, 6rem) !important;
-  line-height: .95 !important;
-  max-width: 900px !important;
-  margin: 0 auto 24px !important;
+  font-size: clamp(2rem, 4vw, 3rem) !important;
+  line-height: 1.05 !important;
+  max-width: 620px !important;
+  margin: 0 auto 1rem !important;
   text-align: center !important
 }
 
 .donate-section p {
   color: #fff !important;
-  max-width: 850px !important;
-  margin: 0 auto 8px !important;
+  max-width: 560px !important;
+  margin: 0 auto .5rem !important;
   font-weight: 600 !important
 }
 
-.donate-section p[style] {
-  color: #fff !important;
-  margin-bottom: 32px !important
+.donate-section .donation-cta-note {
+  margin-bottom: 1.25rem !important
 }
 
 .donate-section .btn-primary {
-    background: var(--gold) !important;
-    color: #4a0b23 !important;
-    border: 2px solid var(--gold) !important;
-    box-shadow: 0 12px 28px rgba(0, 0, 0, .18) !important;
-
-    font-size: 1.8rem !important;   
-    padding: 20px 50px !important;  
-    margin-top: 30px !important;
+  background: var(--gold) !important;
+  color: #4a0b23 !important;
+  border: 2px solid var(--gold) !important;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, .18) !important;
+  font-size: 1.1rem !important;
+  padding: .8rem 1.8rem !important;
+  margin-top: 6px !important
 }
 
 .donate-section .btn-primary:hover {
@@ -2109,7 +2110,8 @@ body[data-page="impact"] #program-impact-title+.section-desc {
   }
 
   .section:has(.donate-section) {
-    padding: 25px 16px 35px !important
+    margin: 2rem 0 !important;
+    padding: 0 1.25rem !important
   }
 
   .section:has(.donate-section) .container {
@@ -2117,18 +2119,18 @@ body[data-page="impact"] #program-impact-title+.section-desc {
   }
 
   .donate-section {
-    margin: 35px auto 25px !important;
-    padding: 55px 22px !important;
-    border-radius: 24px !important
+    margin: 0 auto !important;
+    padding: 2.25rem 1.5rem !important;
+    border-radius: 22px !important
   }
 
   .donate-section .section-title {
-    font-size: clamp(3rem, 11vw, 4rem) !important
+    font-size: clamp(1.9rem, 5vw, 2.5rem) !important
   }
 
   .donate-section .section-label {
-    letter-spacing: .28em !important;
-    font-size: .75rem !important
+    letter-spacing: .24em !important;
+    font-size: .8rem !important
   }
 }
 
@@ -2645,9 +2647,6 @@ body[data-page="impact"] .section-header {
 }
 
 body[data-page="impact"] .donate-section {
-  padding-top: 0 !important;
-}
-
 /* impact(1).html | data-page="impact" */
 .elegant-header {
   text-align: center;
