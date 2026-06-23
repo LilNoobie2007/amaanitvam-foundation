@@ -10,6 +10,7 @@ import internshipRoutes from "./routes/internshipRoutes.js";
 import volunteerRoutes from "./routes/volunteerRoutes.js";
 import webhookRoutes from "./routes/webhookRoutes.js";
 import donationRoutes from "./routes/donationRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
 
 dotenv.config();
 
@@ -27,8 +28,11 @@ app.use(helmet());
 const allowedOrigins = [
     "http://127.0.0.1:5500",
     "http://localhost:5500",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
     "https://amaanitvam.org",
-    "https://www.amaanitvam.org"
+    "https://www.amaanitvam.org",
+    "https://admin.amaanitvam.org"
 ];
 app.use(cors({
     origin: function (origin, callback) {
@@ -47,7 +51,7 @@ const apiLimiter = rateLimit({
     max: 50, // limit each IP to 50 requests per windowMs
     message: { success: false, message: "Too many requests from this IP, please try again after 15 minutes" }
 });
-app.use("/api/", apiLimiter);
+// app.use("/api/", apiLimiter);
 
 app.use(express.json({ limit: "100kb" }));
 app.use(express.urlencoded({ extended: true }));
@@ -57,6 +61,7 @@ app.use("/api/internship", internshipRoutes);
 app.use("/api/volunteer", volunteerRoutes);
 app.use("/api/webhook", webhookRoutes);
 app.use("/api/donate", donationRoutes);
+app.use("/api/admin", adminRoutes);
 
 app.get("/", (req, res) => {
     res.send("Backend Running");
