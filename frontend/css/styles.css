@@ -555,8 +555,8 @@ h6,
   position: relative;
   overflow: hidden;
   background-image: url('assets/images/hero.jpg');
-  background-size: cover;
-  background-position: center 70%;
+  background-size: contain;
+  background-position: center bottom;
   background-repeat: no-repeat;
 }
 
@@ -571,6 +571,7 @@ h6,
 .home-hero .container {
   position: relative;
   z-index: 2;
+  width: 100%;
 }
 
 .hero-grid {
@@ -580,13 +581,13 @@ h6,
   padding-top: 0;
 }
 
-.hero-grid>div,
+.hero-grid > div,
 .hero-content {
   max-width: 760px;
   margin-left: 55px;
   padding-left: 0 !important;
   text-align: left !important;
-  transform: translateY(80px);
+  transform: translateY(45px);
 }
 
 .hero-title {
