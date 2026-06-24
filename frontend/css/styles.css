@@ -4290,7 +4290,54 @@ body[data-page="refund"] .legal-page h1,
   align-self: start !important;
 }
 
-.project-text {
-  line-height: 1.9;
-  margin-bottom: 20px;
+.project-text{
+    line-height:1.9;
+    margin-bottom:20px;
+}
+.project-image-wrapper{
+    margin-top:0 !important;
+    padding-top:0 !important;
+}
+
+.project-content{
+    align-self:start !important;
+}
+.project-showcase{
+    align-items: start !important;
+}
+
+.project-image-wrapper{
+    align-self: start !important;
+    margin-top: 0 !important;
+    position: sticky;
+    top: 120px;
+}
+
+.project-content{
+    align-self: start !important;
+}
+.project-image-wrapper{
+    top: 15px !important;
+}
+/* Hide scrollbar but keep scrolling working */
+.project-content {
+  -ms-overflow-style: none;   /* IE + old Edge */
+  scrollbar-width: none;      /* Firefox */
+}
+
+.project-content::-webkit-scrollbar {
+  display: none;              /* Chrome, Edge, Safari */
+}
+/* Prevent project image cards from overlapping the next section */
+.project-showcase {
+    margin-bottom: 140px !important;
+}
+
+.project-image-wrapper {
+    margin-bottom: 40px !important;
+}
+
+.project-divider {
+    margin-top: 40px !important;
+    margin-bottom: 40px !important;
 }
