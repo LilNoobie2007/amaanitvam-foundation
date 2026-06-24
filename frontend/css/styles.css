@@ -522,7 +522,7 @@ button {
   overflow: hidden;
   background-image: url('assets/images/hero.jpg');
   background-size: contain;
-  background-position: center bottom;
+  background-position: center 110% !important;
   background-repeat: no-repeat;
 }
 
@@ -591,7 +591,7 @@ button {
 }
 
 /* IMPACT PAGE HERO BUTTONS ONLY */
-body[data-page="impact"] .hero-actions{
+body[data-page="impact"] .hero-actions {
   justify-content: center !important;
   transform: translateY(15px);
 }
@@ -2145,6 +2145,80 @@ body[data-page="collaborations"] .partnership-box p {
   margin-bottom: 1.5rem;
 }
 
+.donation-banner {
+  background: var(--bg) !important;
+  padding: 40px 20px 50px !important;
+}
+
+.donation-card {
+  max-width: 1100px !important;
+  margin: 0 auto !important;
+  padding: 70px 40px !important;
+  border-radius: 30px !important;
+  background: linear-gradient(135deg, #690b31, #9b0f58) !important;
+  text-align: center !important;
+  color: #fff !important;
+  border: none !important;
+  box-shadow: 0 15px 35px rgba(93, 15, 45, .25) !important;
+}
+
+.donation-label {
+  display: block !important;
+  color: var(--gold) !important;
+  font-family: var(--font-ui) !important;
+  font-size: .9rem !important;
+  font-weight: 700 !important;
+  letter-spacing: .28em !important;
+  text-transform: uppercase !important;
+  margin-bottom: 18px !important;
+}
+
+.donation-card h2 {
+  color: #fff !important;
+  font-family: var(--font-heading) !important;
+  font-size: clamp(2.5rem, 4vw, 4rem) !important;
+  line-height: 1.05 !important;
+  margin: 0 auto 20px !important;
+  max-width: 850px !important;
+}
+
+.donation-card p {
+  color: #fff !important;
+  max-width: 950px !important;
+  margin: 0 auto 12px !important;
+  font-size: 1.1rem !important;
+  line-height: 1.7 !important;
+  font-weight: 600 !important;
+}
+
+.donation-note {
+  margin-bottom: 35px !important;
+}
+
+.donation-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 20px 55px !important;
+  border-radius: 999px !important;
+  background: var(--gold) !important;
+  color: var(--primary) !important;
+  font-family: var(--font-ui) !important;
+  font-size: 1.5rem !important;
+  font-weight: 800 !important;
+  text-decoration: none !important;
+  transition: .3s ease !important;
+  border: none !important;
+
+  margin-top: 20px !important; /* niche lane ke liye */
+}
+
+.donation-btn:hover {
+  background: var(--gold-dark) !important;
+  color: var(--primary) !important;
+  transform: translateY(-2px);
+}
+
 /* =====================================================
    13 FOOTER - ALL PAGES
    ===================================================== */
@@ -2892,8 +2966,20 @@ body[data-page="collaborations"] .partnership-box p {
 }
 
 .moved-inline-style-021 {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.team-row-1 {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.team-row-2 {
+  display: flex;
+  justify-content: center;
   gap: 1.5rem;
 }
 
@@ -4034,26 +4120,21 @@ body[data-page="gallery"] .gallery-item {
   aspect-ratio: 4 / 3 !important;
 }
 
-body[data-page="gallery"] .hero-actions{
+body[data-page="gallery"] .hero-actions {
   justify-content: center !important;
   margin-top: 3rem !important;
 }
 
-body[data-page="gallery"] .hero-actions{
+body[data-page="volunteer"] .hero-actions {
   justify-content: center !important;
   margin-top: 3rem !important;
-}
-
-body[data-page="volunteer"] .hero-actions{
-  justify-content:center !important;
-  margin-top:3rem !important;
 }
 
 /* INTERNSHIP PAGE HERO BUTTONS ONLY */
-body[data-page="internship"] .hero-actions{
-  display:flex !important;
-  justify-content:center !important;
-  margin-top:3rem !important;
+body[data-page="internship"] .hero-actions {
+  display: flex !important;
+  justify-content: center !important;
+  margin-top: 3rem !important;
 }
 
 /* CONTACT PAGE */
@@ -4178,34 +4259,38 @@ body[data-page="refund"] .legal-page h1,
     letter-spacing: .14em !important;
   }
 }
+
 /* Sticky Project Layout */
-
-.project-showcase{
-    display:grid;
-    grid-template-columns:45% 55%;
-    gap:60px;
-    align-items:start;
-    margin:80px 0;
+.project-showcase {
+  display: grid;
+  grid-template-columns: 45% 55%;
+  gap: 60px;
+  align-items: start !important;
+  margin: 80px 0;
 }
 
-.project-image-wrapper{
-    position:sticky;
-    top:120px;
-    align-self:start;
+.project-image-wrapper {
+  position: sticky;
+  top: 120px;
+  align-self: start !important;
+  margin-top: 0 !important;
+  padding-top: 0 !important;
 }
 
-.project-image-wrapper img{
-    width:100%;
-    border-radius:24px;
-    display:block;
+.project-image-wrapper img {
+  width: 100%;
+  border-radius: 24px;
+  display: block;
 }
 
-.project-content{
-    height:550px;
-    overflow-y:auto;
-    padding-right:15px;
+.project-content {
+  height: 550px;
+  overflow-y: auto;
+  padding-right: 15px;
+  align-self: start !important;
 }
 
+<<<<<<< HEAD
 .project-text{
     line-height:1.9;
     margin-bottom:20px;
@@ -4243,4 +4328,9 @@ body[data-page="refund"] .legal-page h1,
 
 .project-content::-webkit-scrollbar {
   display: none;              /* Chrome, Edge, Safari */
+=======
+.project-text {
+  line-height: 1.9;
+  margin-bottom: 20px;
+>>>>>>> 3824a1ec15e7271ea3f93560e41456d2cb16a91b
 }
