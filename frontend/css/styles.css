@@ -4290,7 +4290,6 @@ body[data-page="refund"] .legal-page h1,
   align-self: start !important;
 }
 
-<<<<<<< HEAD
 .project-text{
     line-height:1.9;
     margin-bottom:20px;
@@ -4328,9 +4327,17 @@ body[data-page="refund"] .legal-page h1,
 
 .project-content::-webkit-scrollbar {
   display: none;              /* Chrome, Edge, Safari */
-=======
-.project-text {
-  line-height: 1.9;
-  margin-bottom: 20px;
->>>>>>> 3824a1ec15e7271ea3f93560e41456d2cb16a91b
+}
+/* Prevent project image cards from overlapping the next section */
+.project-showcase {
+    margin-bottom: 140px !important;
+}
+
+.project-image-wrapper {
+    margin-bottom: 40px !important;
+}
+
+.project-divider {
+    margin-top: 40px !important;
+    margin-bottom: 40px !important;
 }
