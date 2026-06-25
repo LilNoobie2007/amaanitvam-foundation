@@ -109,4 +109,31 @@ router.delete('/gallery/:id', requireAdmin, async (req, res) => {
     }
 });
 
+router.put('/gallery/:id', requireAdmin, upload.single('image'), async (req, res) => {
+    try {
+        const image = await Gallery.findById(req.params.id);
+        if (!image) {
+            return res.status(404).json({ success: false, message: 'Image not found' });
+        }
+        
+        if (req.body.title) {
+            image.title = req.body.title;
+        }
+
+        if (req.file) {
+            // Delete old file
+            const oldFilePath = path.join(__dirnameAdmin, '..', image.imageUrl);
+            if (fs.existsSync(oldFilePath)) {
+                fs.unlinkSync(oldFilePath);
+            }
+            image.imageUrl = `/uploads/${req.file.filename}`;
+        }
+
+        await image.save();
+        res.status(200).json({ success: true, image });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
 export default router;

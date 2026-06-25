@@ -8,10 +8,15 @@ export default function Gallery() {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
   
-  // Modal state
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newTitle, setNewTitle] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
+  
+  // Edit state
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editingImage, setEditingImage] = useState(null);
+  const [editTitle, setEditTitle] = useState('');
+  const [editFile, setEditFile] = useState(null);
 
   useEffect(() => {
     fetchImages();
@@ -61,6 +66,53 @@ export default function Gallery() {
       fetchImages(); // Refresh the list
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to upload image');
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleEditClick = (img) => {
+    setEditingImage(img);
+    setEditTitle(img.title);
+    setEditFile(null);
+    setIsEditModalOpen(true);
+  };
+
+  const handleEditFileSelect = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setEditFile(e.target.files[0]);
+    }
+  };
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    if (!editTitle) {
+      setError('Title cannot be empty');
+      return;
+    }
+
+    setUploading(true);
+    setError('');
+
+    const formData = new FormData();
+    formData.append('title', editTitle);
+    if (editFile) {
+      formData.append('image', editFile);
+    }
+
+    try {
+      await api.put(`/admin/gallery/${editingImage._id}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+      setIsEditModalOpen(false);
+      setEditingImage(null);
+      setEditTitle('');
+      setEditFile(null);
+      fetchImages(); // Refresh the list
+    } catch (err) {
+      setError(err.response?.data?.message || 'Failed to update image');
     } finally {
       setUploading(false);
     }
@@ -122,7 +174,14 @@ export default function Gallery() {
                   alt={img.title} 
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                  <button 
+                    onClick={() => handleEditClick(img)}
+                    className="p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-lg transition-colors"
+                    title="Edit Image"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
+                  </button>
                   <button 
                     onClick={() => handleDelete(img._id)}
                     className="p-2 bg-red-600 hover:bg-red-700 text-white rounded-lg shadow-lg transition-colors"
@@ -224,6 +283,90 @@ export default function Gallery() {
                 >
                   {uploading && <Loader2 className="w-4 h-4 animate-spin" />}
                   {uploading ? 'Uploading...' : 'Save Image'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+      {/* Edit Modal */}
+      {isEditModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+          <div className="bg-white rounded-2xl w-full max-w-md overflow-hidden shadow-2xl">
+            <div className="px-6 py-4 border-b border-slate-100 flex justify-between items-center">
+              <h2 className="text-lg font-bold text-slate-900">Edit Image</h2>
+              <button 
+                onClick={() => setIsEditModalOpen(false)}
+                className="text-slate-400 hover:text-slate-600"
+              >
+                &times;
+              </button>
+            </div>
+            
+            <form onSubmit={handleUpdate} className="p-6">
+              {error && isEditModalOpen && (
+                <div className="mb-4 bg-red-50 text-red-600 p-3 rounded-lg text-sm border border-red-100">
+                  {error}
+                </div>
+              )}
+              
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                    Image Title
+                  </label>
+                  <input
+                    type="text"
+                    value={editTitle}
+                    onChange={(e) => setEditTitle(e.target.value)}
+                    placeholder="e.g. Project Manthan Event"
+                    className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-[#56051a]/20 focus:border-[#56051a]/30 transition-all outline-none"
+                    required
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                    Upload New Image (Optional)
+                  </label>
+                  <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 border-dashed rounded-xl bg-slate-50 hover:bg-slate-100 transition-colors cursor-pointer relative">
+                    <div className="space-y-1 text-center">
+                      <Upload className="mx-auto h-8 w-8 text-slate-400" />
+                      <div className="flex text-sm text-slate-600">
+                        <label htmlFor="edit-file-upload" className="relative cursor-pointer rounded-md font-medium text-[#56051a] hover:text-[#56051a]/80 focus-within:outline-none">
+                          <span>{editFile ? editFile.name : 'Upload a new file to replace the old one'}</span>
+                          <input 
+                            id="edit-file-upload" 
+                            name="edit-file-upload" 
+                            type="file" 
+                            className="sr-only" 
+                            accept="image/*"
+                            onChange={handleEditFileSelect}
+                          />
+                        </label>
+                      </div>
+                      <p className="text-xs text-slate-500">Leave empty to keep current image</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-6 flex justify-end gap-3">
+                <button
+                  type="button"
+                  onClick={() => setIsEditModalOpen(false)}
+                  className="px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-xl hover:bg-slate-50"
+                  disabled={uploading}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={uploading || !editTitle}
+                  className="flex items-center gap-2 px-4 py-2 bg-[#56051a] text-white text-sm font-medium rounded-xl hover:bg-[#56051a]/90 disabled:opacity-50 transition-colors"
+                >
+                  {uploading && <Loader2 className="w-4 h-4 animate-spin" />}
+                  {uploading ? 'Updating...' : 'Save Changes'}
                 </button>
               </div>
             </form>
