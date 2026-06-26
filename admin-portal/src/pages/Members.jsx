@@ -68,7 +68,7 @@ export default function Members() {
       setNewMember(INITIAL_FORM);
       fetchMembers();
     } catch (err) {
-      toast.error(err.message || err.response?.data?.message || 'Failed to add member');
+      toast.error(err.response?.data?.message || err.message || 'Failed to add member');
     } finally {
       setSubmitting(false);
     }
@@ -95,6 +95,20 @@ export default function Members() {
       fetchMembers();
     } catch (err) {
       toast.error(err.response?.data?.message || 'Failed to deactivate member');
+    } finally {
+      setActionLoading(null);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    if (!window.confirm('Are you sure you want to delete this member? This action cannot be undone.')) return;
+    setActionLoading(id);
+    try {
+      await api.delete(`/admin/members/${id}`);
+      toast.success('Member deleted successfully');
+      fetchMembers();
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Failed to delete member');
     } finally {
       setActionLoading(null);
     }
@@ -198,13 +212,21 @@ export default function Members() {
                             <option value="member">Member</option>
                             <option value="admin">Admin</option>
                           </select>
-                          {member.status !== 'inactive' && (
+                          {member.status !== 'inactive' ? (
                             <button
                               onClick={() => handleDeactivate(memberId)}
                               disabled={actionLoading === memberId}
-                              className="text-red-600 hover:bg-red-50 px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors disabled:opacity-50"
+                              className="text-amber-600 hover:bg-amber-50 px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors disabled:opacity-50"
                             >
                               Deactivate
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => handleDelete(memberId)}
+                              disabled={actionLoading === memberId}
+                              className="text-red-600 hover:bg-red-50 px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors disabled:opacity-50"
+                            >
+                              Delete
                             </button>
                           )}
                         </div>

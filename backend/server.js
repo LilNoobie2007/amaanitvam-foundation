@@ -14,6 +14,11 @@
     import adminRoutes from "./routes/adminRoutes.js";
     import certificateRoutes from "./routes/certificateRoutes.js";
     import galleryRoutes from "./routes/galleryRoutes.js";
+    import meetingRoutes from "./routes/meetingRoutes.js";
+    import taskRoutes from "./routes/TasksRoutes.js";
+    import announcementRoutes from "./routes/announcementRoutes.js";
+    import projectRoutes from "./routes/projectRoutes.js";
+    import User from "./models/user.js";
     import path from "path";
     import { fileURLToPath } from "url";
     
@@ -32,6 +37,7 @@
     const allowedOrigins = [
         "http://127.0.0.1:5500", "http://localhost:5500",
         "http://localhost:5173", "http://127.0.0.1:5173",
+        "http://localhost:5174", "http://127.0.0.1:5174",
         "https://amaanitvam.org", "https://www.amaanitvam.org",
         "https://admin.amaanitvam.org"
     ];
@@ -56,6 +62,10 @@
     app.use("/api/admin", adminRoutes);
     app.use("/api/certificates", certificateRoutes);
     app.use("/api/gallery", galleryRoutes);
+    app.use("/api/meetings", meetingRoutes);
+    app.use("/api/tasks", taskRoutes);
+    app.use("/api/announcements", announcementRoutes);
+    app.use("/api/projects", projectRoutes);
     
     app.get("/", (req, res) => res.send("Backend Running"));
     app.get("/health", (req, res) => res.json({ success: true, message: "OK" }));

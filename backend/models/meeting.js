@@ -17,7 +17,7 @@ const meetingSchema = new mongoose.Schema(
     attendees: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "user"
+            ref: "User"
         }
     ]
 },

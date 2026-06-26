@@ -187,6 +187,18 @@ export const deactivateMember = async (req, res) => {
     }
 };
 
+// DELETE /api/admin/members/:id
+export const deleteMember = async (req, res) => {
+    try {
+        const member = await User.findByIdAndDelete(req.params.id);
+        if (!member) return res.status(404).json({ success: false, message: 'Member not found.' });
+        res.json({ success: true, message: 'Member deleted successfully.' });
+    } catch (error) {
+        console.error('Delete member error:', error);
+        res.status(500).json({ success: false, message: 'Failed to delete member.' });
+    }
+};
+
 // GET /api/admin/donations
 export const getDonations = async (req, res) => {
     try {
