@@ -240,44 +240,43 @@
           <p class="section-desc">From education programs to volunteer drives — browse highlights from across our
             initiatives.</p>
         </div>
-        <div class="gallery-grid">
-          <figure class="gallery-item">
-            <img alt="Project Manthan" src="assets/images/project-manthan-final.jpg" />
-            <div class="gallery-overlay">
-              <span>Project Manthan — Counselling &amp; Awareness</span>
-            </div>
-          </figure>
-          <figure class="gallery-item">
-            <img alt="Project Shiksha" src="assets/images/project-shiksha2.png" />
-            <div class="gallery-overlay">
-              <span>Project Shiksha — Education Support</span>
-            </div>
-          </figure>
-          <figure class="gallery-item">
-            <img alt="Project Pravah" src="assets/images/1.jpg" />
-            <div class="gallery-overlay">
-              <span>Project Pravah — Youth Empowerment in Hisar</span>
-            </div>
-          </figure>
-          <figure class="gallery-item">
-            <img alt="Community ceremony" src="assets/images/best-social-worker-award.jpeg" />
-            <div class="gallery-overlay">
-              <span>Community Ceremony</span>
-            </div>
-          </figure>
-          <figure class="gallery-item">
-            <img alt="Prakruti Seva Samman award recognition" src="assets/images/prakruti-seva-samman.jpeg" />
-            <div class="gallery-overlay">
-              <span>Prakruti Seva Samman Award Recognition</span>
-            </div>
-          </figure>
-          <figure class="gallery-item">
-            <img alt="Internship drive" src="assets/images/gallery_image_3.png" />
-            <div class="gallery-overlay">
-              <span>Internship Drive</span>
-            </div>
-          </figure>
+        <div class="gallery-grid" id="gallery-container">
+          <!-- Dynamic images will be loaded here via JS -->
+          <p id="gallery-loading" style="text-align: center; grid-column: 1 / -1; color: var(--text-muted); padding: 3rem;">Loading gallery images...</p>
         </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const BACKEND_URL = "http://localhost:5000";
+
+    async function loadGalleryImages() {
+      const container = document.getElementById('gallery-container');
+      try {
+        const response = await fetch(`${BACKEND_URL}/api/gallery`);
+        const data = await response.json();
+        
+        if (data.success && data.images && data.images.length > 0) {
+          container.innerHTML = data.images.map(img => `
+            <figure class="gallery-item" style="content-visibility: auto; contain-intrinsic-size: 1px 280px; background: #f0f0f0;">
+              <img alt="${img.title}" src="${BACKEND_URL}${img.imageUrl}" loading="lazy" decoding="async" />
+              <div class="gallery-overlay">
+                <span>${img.title}</span>
+              </div>
+            </figure>
+          `).join('');
+        } else {
+          container.innerHTML = '<p style="text-align: center; grid-column: 1 / -1; color: var(--text-muted); padding: 3rem;">Images will appear here soon.</p>';
+        }
+      } catch (error) {
+        container.innerHTML = '<p style="text-align: center; grid-column: 1 / -1; color: #dc2626; padding: 3rem;">Failed to load gallery images.</p>';
+        console.error('Error fetching gallery:', error);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadGalleryImages);
+  </script>
       </div>
     </section>
   </main>
