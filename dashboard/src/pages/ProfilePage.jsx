@@ -1,12 +1,46 @@
+import { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { Mail, Phone, Building, Calendar } from 'lucide-react';
+import { Mail, Phone, Building, Calendar, Edit2, Loader2 } from 'lucide-react';
+import api from '../config/api';
+import toast from 'react-hot-toast';
 
 export default function ProfilePage() {
-  const { userProfile } = useAuth();
+  const { userProfile, checkAuth } = useAuth();
+  const [isEditing, setIsEditing] = useState(false);
+  const [formData, setFormData] = useState({ name: '', phone: '' });
+  const [loading, setLoading] = useState(false);
+
+  const handleEditClick = () => {
+    setFormData({
+      name: userProfile?.name || '',
+      phone: userProfile?.phone || ''
+    });
+    setIsEditing(true);
+  };
+
+  const handleSave = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      await api.put('/admin/me', formData);
+      toast.success('Profile updated successfully');
+      await checkAuth(); // refresh user profile in context
+      setIsEditing(false);
+    } catch (error) {
+      toast.error('Failed to update profile');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <div className="max-w-2xl mx-auto space-y-6 animate-fade-in">
-      <h1 className="text-2xl font-bold text-slate-900">My Profile</h1>
+    <div className="max-w-2xl mx-auto space-y-6 animate-fade-in relative">
+      <div className="flex justify-between items-center">
+        <h1 className="text-2xl font-bold text-slate-900">My Profile</h1>
+        <button onClick={handleEditClick} className="px-4 py-2 bg-[#56051a] text-white rounded-xl font-medium text-sm hover:bg-[#7a1e3a] transition-colors flex items-center gap-2">
+          <Edit2 className="w-4 h-4" /> Edit Profile
+        </button>
+      </div>
 
       <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
         <div className="bg-gradient-to-r from-[#56051a] to-[#7a1e3a] px-6 py-8 text-center">
@@ -26,6 +60,31 @@ export default function ProfilePage() {
           <ProfileRow icon={Calendar} label="Joined" value={userProfile?.joinedAt ? new Date(userProfile.joinedAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' }) : 'N/A'} />
         </div>
       </div>
+
+      {isEditing && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl p-6 w-full max-w-md animate-fade-in">
+            <h2 className="text-lg font-bold text-slate-900 mb-4">Edit Profile</h2>
+            <form onSubmit={handleSave} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-1">Name</label>
+                <input required value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full px-3 py-2 border rounded-xl text-sm" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">Phone</label>
+                <input value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} className="w-full px-3 py-2 border rounded-xl text-sm" />
+              </div>
+              <div className="flex justify-end gap-3 pt-2">
+                <button type="button" onClick={() => setIsEditing(false)} className="px-4 py-2 text-sm font-medium text-slate-600 bg-slate-100 rounded-xl hover:bg-slate-200">Cancel</button>
+                <button type="submit" disabled={loading} className="px-4 py-2 text-sm font-medium text-white bg-[#56051a] rounded-xl hover:bg-[#7a1e3a] flex items-center gap-2">
+                  {loading && <Loader2 className="w-4 h-4 animate-spin" />}
+                  Save Changes
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

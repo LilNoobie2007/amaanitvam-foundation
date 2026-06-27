@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Users, UserCheck, FileText, ClipboardList, Calendar, Megaphone, FolderKanban, TrendingUp } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import api from '../config/api';
 import { useAuth } from '../contexts/AuthContext';
 import toast from 'react-hot-toast';
@@ -116,11 +117,11 @@ export default function DashboardHome() {
               <p className="text-sm text-slate-400 text-center py-6">No announcements yet</p>
             ) : (
               announcements.slice(0, 5).map((a) => (
-                <div key={a._id} className="p-3 rounded-xl bg-slate-50 hover:bg-slate-100 transition-colors">
+                <Link to="/announcements" key={a._id} className="block p-3 rounded-xl bg-slate-50 hover:bg-slate-100 transition-colors cursor-pointer">
                   <p className="text-sm font-medium text-slate-800">{a.title}</p>
                   <p className="text-xs text-slate-500 mt-1 line-clamp-2">{a.message || a.description || ''}</p>
                   <p className="text-xs text-slate-400 mt-1">{new Date(a.createdAt).toLocaleDateString()}</p>
-                </div>
+                </Link>
               ))
             )}
           </div>
@@ -137,7 +138,7 @@ export default function DashboardHome() {
               <p className="text-sm text-slate-400 text-center py-6">No tasks found</p>
             ) : (
               myTasks.slice(0, 5).map((t) => (
-                <div key={t._id} className="flex items-center gap-3 p-3 rounded-xl bg-slate-50 hover:bg-slate-100 transition-colors">
+                <Link to="/tasks" key={t._id} className="flex items-center gap-3 p-3 rounded-xl bg-slate-50 hover:bg-slate-100 transition-colors cursor-pointer">
                   <StatusBadge status={t.status} />
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-slate-800 truncate">{t.title}</p>
@@ -146,7 +147,7 @@ export default function DashboardHome() {
                       {t.deadline && ` • Due: ${new Date(t.deadline).toLocaleDateString()}`}
                     </p>
                   </div>
-                </div>
+                </Link>
               ))
             )}
           </div>
@@ -163,7 +164,7 @@ export default function DashboardHome() {
               <p className="text-sm text-slate-400 text-center py-6">No projects yet</p>
             ) : (
               projects.slice(0, 5).map((p) => (
-                <div key={p._id} className="p-3 rounded-xl bg-slate-50">
+                <Link to="/projects" key={p._id} className="block p-3 rounded-xl bg-slate-50 hover:bg-slate-100 transition-colors cursor-pointer">
                   <div className="flex justify-between items-center mb-2">
                     <p className="text-sm font-medium text-slate-800 truncate">{p.title || p.name}</p>
                     <span className="text-xs font-medium text-[#56051a]">{p.progress || 0}%</span>
@@ -171,7 +172,7 @@ export default function DashboardHome() {
                   <div className="w-full bg-slate-200 rounded-full h-2">
                     <div className="bg-[#56051a] h-2 rounded-full transition-all" style={{ width: `${p.progress || 0}%` }}></div>
                   </div>
-                </div>
+                </Link>
               ))
             )}
           </div>
@@ -196,10 +197,10 @@ function StatCard({ icon: Icon, label, value, color }) {
 }
 
 function StatusBadge({ status }) {
-  const colors = { open: 'bg-amber-100 text-amber-700', inProgress: 'bg-blue-100 text-blue-700', completed: 'bg-emerald-100 text-emerald-700' };
+  const colors = { open: 'bg-amber-100 text-amber-700', inProgress: 'bg-blue-100 text-blue-700', completed: 'bg-emerald-100 text-emerald-700', pending_approval: 'bg-purple-100 text-purple-700' };
   return (
     <span className={`px-2 py-1 text-[10px] font-semibold uppercase rounded-md ${colors[status] || 'bg-slate-100 text-slate-600'}`}>
-      {status === 'inProgress' ? 'In Progress' : status}
+      {status === 'inProgress' ? 'In Progress' : (status === 'pending_approval' ? 'Pending Approval' : status)}
     </span>
   );
 }

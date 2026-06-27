@@ -8,11 +8,14 @@ import {
     updateTask,
     deleteTask
 } from '../controllers/taskController.js';
+import { verifyFirebaseToken, requireAdmin } from '../middleware/verifyFirebaseToken.js';
 
 const taskRouter = express.Router();
 
+taskRouter.use(verifyFirebaseToken);
+
 // Create Task
-taskRouter.post('/create', createTask);
+taskRouter.post('/create', requireAdmin, createTask);
 
 // Get All Tasks
 taskRouter.get('/', getTasks);
@@ -30,6 +33,6 @@ taskRouter.get('/:id', getTaskById);
 taskRouter.put('/:id', updateTask);
 
 // Delete Task
-taskRouter.delete('/:id', deleteTask);
+taskRouter.delete('/:id', requireAdmin, deleteTask);
 
 export default taskRouter;

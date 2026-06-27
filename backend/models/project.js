@@ -18,9 +18,14 @@ const projectSchema = new mongoose.Schema(
 
     status: {
         type: String,
-        enum: ["ongoing", "completed"],
+        enum: ["ongoing", "completed", "pending_approval"],
         default: "ongoing"
-    }
+    },
+    
+    assignedMembers: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    }]
 },
 {
     timestamps: true

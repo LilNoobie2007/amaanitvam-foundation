@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { Bell, AlertTriangle, Info, CheckCircle2 } from 'lucide-react';
 import api from '../config/api';
 
+import SwipeableNotification from './SwipeableNotification';
+
 export default function TopBar() {
   const [notifications, setNotifications] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -27,6 +29,15 @@ export default function TopBar() {
       setNotifications(notifications.map(n => n._id === id ? { ...n, isRead: true } : n));
     } catch (error) {
       console.error('Failed to mark as read', error);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await api.delete(`/notifications/${id}`);
+      setNotifications(notifications.filter(n => n._id !== id));
+    } catch (error) {
+      console.error('Failed to delete notification', error);
     }
   };
 
@@ -77,28 +88,13 @@ export default function TopBar() {
                 </div>
               ) : (
                 notifications.map((notif) => (
-                  <div key={notif._id} className={`p-4 border-b border-slate-50 hover:bg-slate-50 transition-colors flex gap-3 ${!notif.isRead ? 'bg-blue-50/30' : ''}`}>
-                    <div className="mt-0.5 shrink-0">
-                      {getIcon(notif.type)}
-                    </div>
-                    <div>
-                      <p className={`text-sm ${!notif.isRead ? 'font-semibold text-slate-800' : 'font-medium text-slate-700'}`}>
-                        {notif.title}
-                      </p>
-                      <p className="text-xs text-slate-500 mt-1 line-clamp-2">{notif.message}</p>
-                      <p className="text-[10px] text-slate-400 mt-2 flex justify-between items-center">
-                        <span>{new Date(notif.createdAt).toLocaleString()}</span>
-                        {!notif.isRead && (
-                          <button 
-                            onClick={() => handleMarkAsRead(notif._id)}
-                            className="text-[#56051a] hover:underline"
-                          >
-                            Mark as read
-                          </button>
-                        )}
-                      </p>
-                    </div>
-                  </div>
+                  <SwipeableNotification
+                    key={notif._id}
+                    notif={notif}
+                    getIcon={getIcon}
+                    handleMarkAsRead={handleMarkAsRead}
+                    handleDelete={handleDelete}
+                  />
                 ))
               )}
             </div>

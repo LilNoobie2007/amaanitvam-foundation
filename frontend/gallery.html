@@ -249,7 +249,9 @@
   </main>
 
   <script>
-    const BACKEND_URL = "http://localhost:5000";
+    const BACKEND_URL = window.location.hostname.includes('github.dev') 
+      ? window.location.origin.replace(/-\d+\.github\.dev/, '-5000.github.dev')
+      : "http://localhost:5000";
 
     async function loadGalleryImages() {
       const container = document.getElementById('gallery-container');

@@ -30,7 +30,8 @@ export const createTask = async(req, res) => {
                 userId: assignedTo,
                 title: "New Task Assigned",
                 message: `You have been assigned a new task: ${title}`,
-                type: "info"
+                type: "info",
+                link: "/tasks"
             });
             
             if (populatedTask.assignedTo && populatedTask.assignedTo.phone) {
@@ -109,9 +110,36 @@ export const getTasksByUser = async(req, res) => {
 // Update Task
 export const updateTask = async(req, res) => {
     try {
+        const { newComment, ...updateData } = req.body;
+        
+        let updateQuery = { ...updateData };
+        if (newComment) {
+            updateQuery.$push = { comments: { text: newComment } };
+        }
+
+        const isAdmin = req.user.role === 'admin' || req.user.role === 'super_admin';
+        
+        // If a non-admin tries to set a task to completed, change it to pending_approval
+        if (updateData.status === 'completed' && !isAdmin) {
+            updateQuery.status = 'pending_approval';
+            
+            // Notify admins
+            import('../models/user.js').then(async ({ default: User }) => {
+                const admins = await User.find({ role: { $in: ['admin', 'super_admin'] } });
+                const notifications = admins.map(admin => ({
+                    userId: admin._id,
+                    title: "Task Completion Request",
+                    message: `${req.user.name} has requested approval for task completion.`,
+                    type: "alert",
+                    link: "/tasks"
+                }));
+                await Notification.insertMany(notifications);
+            });
+        }
+
         const task = await taskModel.findByIdAndUpdate(
             req.params.id,
-            req.body,
+            updateQuery,
             { new: true, runValidators: true }
         ).populate("assignedTo", "name email");
 

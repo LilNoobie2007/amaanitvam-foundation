@@ -42,7 +42,8 @@ export const createAnnouncement = async(req, res) => {
         await Notification.create({
             title: "New Announcement",
             message: title,
-            type: priority === "High" ? "emergency" : "info"
+            type: priority === "High" ? "emergency" : "info",
+            link: "/announcements"
         });
 
         res.status(201).json({ success: true, message: "Announcement created successfully", announcement: populatedAnnouncement });

@@ -14,10 +14,14 @@ export default function Dashboard() {
   const [loadingDonations, setLoadingDonations] = useState(true);
 
   useEffect(() => {
-    fetchStats();
     if (userProfile?.role === 'admin' || userProfile?.role === 'super_admin') {
+      fetchStats();
       fetchRecentApplications();
       fetchRecentDonations();
+    } else if (userProfile && userProfile.role !== 'admin' && userProfile.role !== 'super_admin') {
+      setLoadingStats(false);
+      setLoadingApplications(false);
+      setLoadingDonations(false);
     }
   }, [userProfile?.role]);
 

@@ -16,9 +16,21 @@ const taskSchema = new mongoose.Schema(
 
     status: {
         type: String,
-        enum: ["open", "inProgress", "completed"],
+        enum: ["open", "inProgress", "completed", "pending_approval"],
         default: "open"
     },
+
+    progress: {
+        type: Number,
+        default: 0,
+        min: 0,
+        max: 100
+    },
+
+    comments: [{
+        text: String,
+        createdAt: { type: Date, default: Date.now }
+    }],
 
     deadline:{
         type:Date,

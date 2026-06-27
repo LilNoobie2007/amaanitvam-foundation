@@ -4,7 +4,7 @@ import Notification from "../models/notification.js";
 // Create Project
 export const createProject = async(req, res) => {
     try {
-        const { title, description, progress, status } = req.body;
+        const { title, description, progress, status, assignedMembers } = req.body;
 
         if (!title) {
             return res.status(400).json({
@@ -17,7 +17,8 @@ export const createProject = async(req, res) => {
             title,
             description,
             progress: progress || 0,
-            status: status || "ongoing"
+            status: status || "ongoing",
+            assignedMembers: assignedMembers || []
         });
 
         const project = await newProject.save();
@@ -25,7 +26,8 @@ export const createProject = async(req, res) => {
         await Notification.create({
             title: "New Project Started",
             message: `A new project '${title}' has been launched!`,
-            type: "success"
+            type: "success",
+            link: "/projects"
         });
 
         res.status(201).json({ success: true, message: "Project created successfully", project });
@@ -38,7 +40,11 @@ export const createProject = async(req, res) => {
 // Get All Projects
 export const getProjects = async(req, res) => {
     try {
-        const projects = await projectModel.find();
+        let query = {};
+        if (req.user.role !== 'admin' && req.user.role !== 'super_admin') {
+            query = { assignedMembers: req.user._id };
+        }
+        const projects = await projectModel.find(query).populate('assignedMembers', 'name email');
         res.status(200).json({ success: true, projects });
     } catch (error) {
         console.log("Get Projects Error:", error);
@@ -65,9 +71,30 @@ export const getProjectById = async(req, res) => {
 // Update Project
 export const updateProject = async(req, res) => {
     try {
+        let updateData = { ...req.body };
+        const isAdmin = req.user.role === 'admin' || req.user.role === 'super_admin';
+        
+        // If a non-admin tries to set a project to completed (progress=100 or status=completed), change it to pending_approval
+        if ((updateData.status === 'completed' || updateData.progress === 100 || updateData.progress === '100') && !isAdmin) {
+            updateData.status = 'pending_approval';
+            
+            // Notify admins
+            import('../models/user.js').then(async ({ default: User }) => {
+                const admins = await User.find({ role: { $in: ['admin', 'super_admin'] } });
+                const notifications = admins.map(admin => ({
+                    userId: admin._id,
+                    title: "Project Completion Request",
+                    message: `${req.user.name} has requested approval for project completion.`,
+                    type: "alert",
+                    link: "/projects"
+                }));
+                await Notification.insertMany(notifications);
+            });
+        }
+
         const project = await projectModel.findByIdAndUpdate(
             req.params.id,
-            req.body,
+            updateData,
             { new: true, runValidators: true }
         );
 

@@ -63,4 +63,17 @@ router.put('/read-all', async (req, res) => {
     }
 });
 
+// DELETE /api/notifications/:id
+router.delete('/:id', async (req, res) => {
+    try {
+        await Notification.findOneAndDelete({
+            _id: req.params.id,
+            $or: [{ userId: req.user._id }, { userId: { $exists: false } }, { userId: null }]
+        });
+        res.json({ success: true });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Failed to delete notification' });
+    }
+});
+
 export default router;

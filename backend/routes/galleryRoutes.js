@@ -12,9 +12,22 @@
     router.get('/', async (req, res) => {
         try {
             const images = await Gallery.find().sort({ createdAt: -1 });
-            res.status(200).json({ success: true, images });
+            const mappedImages = images.map(img => ({
+                ...img.toObject(),
+                imageUrl: img.imageUrl.replace('/uploads/', '/api/gallery/images/')
+            }));
+            res.status(200).json({ success: true, images: mappedImages });
         } catch (error) {
             res.status(500).json({ success: false, message: 'Server error fetching gallery.' });
+        }
+    });
+
+    router.get('/images/:filename', (req, res) => {
+        const filePath = path.join(__dirnameGallery, '../uploads', req.params.filename);
+        if (fs.existsSync(filePath)) {
+            res.sendFile(filePath);
+        } else {
+            res.status(404).json({ success: false, message: 'Image not found' });
         }
     });
     

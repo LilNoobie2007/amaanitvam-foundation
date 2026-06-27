@@ -46,13 +46,15 @@ export default function TasksPage() {
     } catch { toast.error(editingId ? 'Failed to update task' : 'Failed to create task'); }
   };
 
-  const openEdit = (task) => {
+    const openEdit = (task) => {
     setFormData({
       title: task.title,
       description: task.description || '',
       assignedTo: task.assignedTo?._id || task.assignedTo || '',
       deadline: task.deadline ? new Date(task.deadline).toISOString().split('T')[0] : '',
-      status: task.status
+      status: task.status,
+      progress: task.progress || 0,
+      newComment: ''
     });
     setEditingId(task._id);
     setShowCreate(true);
@@ -67,6 +69,7 @@ export default function TasksPage() {
     open: 'bg-amber-100 text-amber-700 border-amber-200',
     inProgress: 'bg-blue-100 text-blue-700 border-blue-200',
     completed: 'bg-emerald-100 text-emerald-700 border-emerald-200',
+    pending_approval: 'bg-purple-100 text-purple-700 border-purple-200',
   };
 
   return (
@@ -77,7 +80,7 @@ export default function TasksPage() {
           <p className="text-sm text-slate-500 mt-1">Track tasks and deadlines</p>
         </div>
         {isAdmin && (
-          <button onClick={() => { setEditingId(null); setFormData({ title: '', description: '', assignedTo: '', deadline: '', status: 'open' }); setShowCreate(true); }} className="px-4 py-2 bg-[#56051a] text-white rounded-xl font-medium text-sm hover:bg-[#7a1e3a] transition-colors flex items-center gap-2">
+          <button onClick={() => { setEditingId(null); setFormData({ title: '', description: '', assignedTo: '', deadline: '', status: 'open', progress: 0, newComment: '' }); setShowCreate(true); }} className="px-4 py-2 bg-[#56051a] text-white rounded-xl font-medium text-sm hover:bg-[#7a1e3a] transition-colors flex items-center gap-2">
             <Plus className="w-4 h-4" /> Create Task
           </button>
         )}
@@ -85,27 +88,58 @@ export default function TasksPage() {
 
       {showCreate && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl p-6 w-full max-w-md animate-fade-in">
-            <h2 className="text-lg font-bold text-slate-900 mb-4">{editingId ? 'Edit Task' : 'Create New Task'}</h2>
+          <div className="bg-white rounded-2xl p-6 w-full max-w-md max-h-[90vh] overflow-y-auto animate-fade-in">
+            <h2 className="text-lg font-bold text-slate-900 mb-4">{editingId ? (isAdmin ? 'Edit Task' : 'Update Task Progress') : 'Create New Task'}</h2>
             <form onSubmit={handleCreateOrUpdate} className="space-y-4">
-              <div><label className="block text-sm font-medium mb-1">Title</label><input required value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} className="w-full px-3 py-2 border rounded-xl text-sm" /></div>
-              <div><label className="block text-sm font-medium mb-1">Assign To</label>
-                <select required value={formData.assignedTo} onChange={e => setFormData({...formData, assignedTo: e.target.value})} className="w-full px-3 py-2 border rounded-xl text-sm">
-                  <option value="">Select Member</option>
-                  {users.map(u => <option key={u._id} value={u._id}>{u.name} ({u.role})</option>)}
-                </select>
-              </div>
-              {editingId && (
-                <div><label className="block text-sm font-medium mb-1">Status</label>
-                  <select required value={formData.status} onChange={e => setFormData({...formData, status: e.target.value})} className="w-full px-3 py-2 border rounded-xl text-sm">
-                    <option value="open">Open</option>
-                    <option value="inProgress">In Progress</option>
-                    <option value="completed">Completed</option>
-                  </select>
+              {isAdmin && (
+                <>
+                  <div><label className="block text-sm font-medium mb-1">Title</label><input required value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} className="w-full px-3 py-2 border rounded-xl text-sm" /></div>
+                  <div><label className="block text-sm font-medium mb-1">Assign To</label>
+                    <select required value={formData.assignedTo} onChange={e => setFormData({...formData, assignedTo: e.target.value})} className="w-full px-3 py-2 border rounded-xl text-sm">
+                      <option value="">Select Member</option>
+                      {users.map(u => <option key={u._id} value={u._id}>{u.name} ({u.role})</option>)}
+                    </select>
+                  </div>
+                  <div><label className="block text-sm font-medium mb-1">Deadline</label><input type="date" required value={formData.deadline} onChange={e => setFormData({...formData, deadline: e.target.value})} className="w-full px-3 py-2 border rounded-xl text-sm" /></div>
+                  <div><label className="block text-sm font-medium mb-1">Description</label><textarea value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} className="w-full px-3 py-2 border rounded-xl text-sm" rows="3"></textarea></div>
+                </>
+              )}
+              {!isAdmin && (
+                <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 mb-4">
+                  <h3 className="font-semibold text-slate-800">{formData.title}</h3>
+                  <p className="text-xs text-slate-500 mt-1">{formData.description}</p>
                 </div>
               )}
-              <div><label className="block text-sm font-medium mb-1">Deadline</label><input type="date" required value={formData.deadline} onChange={e => setFormData({...formData, deadline: e.target.value})} className="w-full px-3 py-2 border rounded-xl text-sm" /></div>
-              <div><label className="block text-sm font-medium mb-1">Description</label><textarea value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} className="w-full px-3 py-2 border rounded-xl text-sm" rows="3"></textarea></div>
+              
+              {editingId && (
+                <>
+                  <div><label className="block text-sm font-medium mb-1">Status</label>
+                    <select required value={formData.status} onChange={e => {
+                      const newStatus = e.target.value;
+                      setFormData({
+                        ...formData, 
+                        status: newStatus,
+                        progress: newStatus === 'completed' ? 100 : formData.progress
+                      });
+                    }} className="w-full px-3 py-2 border rounded-xl text-sm">
+                      <option value="open">Open</option>
+                      <option value="inProgress">In Progress</option>
+                      <option value="completed">Completed</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1 flex justify-between">
+                      <span>Progress</span>
+                      <span className="text-[#56051a] font-bold">{formData.progress || 0}%</span>
+                    </label>
+                    <input type="range" min="0" max="100" value={formData.progress || 0} onChange={e => setFormData({...formData, progress: e.target.value})} className="w-full accent-[#56051a]" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1">Add Update Comment</label>
+                    <input type="text" placeholder="e.g. Task has been started" value={formData.newComment || ''} onChange={e => setFormData({...formData, newComment: e.target.value})} className="w-full px-3 py-2 border rounded-xl text-sm" />
+                  </div>
+                </>
+              )}
               <div className="flex justify-end gap-3 pt-2">
                 <button type="button" onClick={() => setShowCreate(false)} className="px-4 py-2 text-sm font-medium text-slate-600 bg-slate-100 rounded-xl hover:bg-slate-200">Cancel</button>
                 <button type="submit" className="px-4 py-2 text-sm font-medium text-white bg-[#56051a] rounded-xl hover:bg-[#7a1e3a]">{editingId ? 'Save Changes' : 'Create'}</button>
@@ -136,20 +170,30 @@ export default function TasksPage() {
           {filtered.map(t => (
             <div key={t._id} className="bg-white rounded-xl border border-slate-200 p-4 flex items-center gap-4 hover:shadow-sm transition-shadow">
               <span className={`px-2.5 py-1 text-[10px] font-bold uppercase rounded-lg border ${statusColors[t.status] || 'bg-slate-100 text-slate-600'}`}>
-                {t.status === 'inProgress' ? 'In Progress' : t.status}
+                {t.status === 'inProgress' ? 'In Progress' : (t.status === 'pending_approval' ? 'Pending Approval' : t.status)}
               </span>
               <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-slate-800 truncate">{t.title}</h3>
+                <div className="flex items-center gap-2">
+                  <h3 className="font-semibold text-slate-800 truncate">{t.title}</h3>
+                  <span className="text-[10px] bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded font-medium">{t.progress || 0}%</span>
+                </div>
+                <div className="w-full bg-slate-100 rounded-full h-1.5 mt-1.5 mb-1 max-w-[200px]">
+                  <div className="bg-[#56051a] h-1.5 rounded-full" style={{ width: `${t.progress || 0}%` }}></div>
+                </div>
                 <p className="text-xs text-slate-500 mt-0.5">
                   Assigned to: {t.assignedTo?.name || 'Unassigned'}
                   {t.deadline && ` • Due: ${new Date(t.deadline).toLocaleDateString()}`}
                 </p>
+                {t.comments && t.comments.length > 0 && (
+                  <p className="text-xs text-slate-400 mt-1 italic line-clamp-1">
+                    Latest: {t.comments[t.comments.length - 1].text}
+                  </p>
+                )}
               </div>
-              {isAdmin && (
-                <button onClick={() => openEdit(t)} className="p-2 text-slate-400 hover:text-[#56051a] hover:bg-slate-100 rounded-lg transition-colors">
-                  <Edit2 className="w-4 h-4" />
-                </button>
-              )}
+              <button onClick={() => openEdit(t)} className="p-2 text-slate-400 hover:text-[#56051a] hover:bg-slate-100 rounded-lg transition-colors flex items-center gap-1 text-xs font-medium">
+                <Edit2 className="w-4 h-4" />
+                {!isAdmin && <span>Update</span>}
+              </button>
             </div>
           ))}
         </div>

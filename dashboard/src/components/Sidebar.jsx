@@ -136,7 +136,7 @@ export default function Sidebar() {
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-sm font-semibold text-white truncate" title={userProfile?.name}>
-              {userProfile?.name?.split(' ')[0] || 'User'}
+              {userProfile?.name ? userProfile.name.split(' ')[0] : 'User'}
             </p>
             <span className="inline-block mt-0.5 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide bg-slate-700/60 text-slate-300 rounded-full">
               {userProfile?.role || 'member'}

@@ -170,7 +170,7 @@ export default function Gallery() {
             <div key={img._id} className="bg-white rounded-2xl border border-slate-200 overflow-hidden group">
               <div className="aspect-[4/3] relative bg-slate-100">
                 <img 
-                  src={`http://localhost:5000${img.imageUrl}`} 
+                  src={`${api.defaults.baseURL.replace('/api', '')}${img.imageUrl}`} 
                   alt={img.title} 
                   className="w-full h-full object-cover"
                 />

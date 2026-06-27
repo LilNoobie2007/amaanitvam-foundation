@@ -68,11 +68,28 @@ export default function MeetingsPage() {
               <div><label className="block text-sm font-medium mb-1">Title</label><input required value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} className="w-full px-3 py-2 border rounded-xl text-sm" /></div>
               <div><label className="block text-sm font-medium mb-1">Date & Time</label><input type="datetime-local" required value={formData.meetingDate} onChange={e => setFormData({...formData, meetingDate: e.target.value})} className="w-full px-3 py-2 border rounded-xl text-sm" /></div>
               <div>
-                <label className="block text-sm font-medium mb-1">Attendees (Leave empty for everyone)</label>
-                <select multiple value={formData.attendees} onChange={e => setFormData({...formData, attendees: Array.from(e.target.selectedOptions, option => option.value)})} className="w-full px-3 py-2 border rounded-xl text-sm h-24">
-                  {users.map(u => <option key={u._id} value={u._id}>{u.name} ({u.role})</option>)}
-                </select>
-                <p className="text-xs text-slate-400 mt-1">Hold Ctrl/Cmd to select multiple</p>
+                <label className="block text-sm font-medium mb-2">Attendees (Leave empty for everyone)</label>
+                <div className="max-h-40 overflow-y-auto border rounded-xl p-2 space-y-1">
+                  {users.map(u => (
+                    <label key={u._id} className="flex items-center gap-2 p-1.5 hover:bg-slate-50 rounded cursor-pointer">
+                      <input 
+                        type="checkbox" 
+                        checked={formData.attendees?.includes(u._id)}
+                        onChange={() => {
+                          setFormData(prev => ({
+                            ...prev,
+                            attendees: prev.attendees.includes(u._id)
+                              ? prev.attendees.filter(id => id !== u._id)
+                              : [...(prev.attendees || []), u._id]
+                          }));
+                        }}
+                        className="rounded text-[#56051a] focus:ring-[#56051a]"
+                      />
+                      <span className="text-sm">{u.name} <span className="text-xs text-slate-400">({u.role})</span></span>
+                    </label>
+                  ))}
+                  {users.length === 0 && <p className="text-xs text-slate-500 text-center">No members found</p>}
+                </div>
               </div>
               <div><label className="block text-sm font-medium mb-1">Description</label><textarea value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} className="w-full px-3 py-2 border rounded-xl text-sm" rows="3"></textarea></div>
               <div className="flex justify-end gap-3 pt-2">
