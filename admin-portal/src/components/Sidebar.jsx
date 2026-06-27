@@ -5,6 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 export default function Sidebar() {
   const { userProfile, logout } = useAuth();
   const navigate = useNavigate();
+  console.log("User Profile:", userProfile);
 
   const handleLogout = async () => {
     try {

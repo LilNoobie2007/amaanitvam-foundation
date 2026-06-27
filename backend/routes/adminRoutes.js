@@ -2,11 +2,20 @@ import express from 'express';
 import { verifyFirebaseToken, requireAdmin } from '../middleware/verifyFirebaseToken.js';
 import User from '../models/user.js';
 import {
-    getMe, getDashboardStats,
-    getCandidates, updateCandidateStatus,
-    getMembers, addMember, updateMemberRole, deactivateMember, deleteMember,
+    getMe,
+    getDashboardStats,
+    getCandidates,
+    updateCandidateStatus,
+    getMembers,
+    addMember,
+    updateMember,
+    updateMemberRole,
+    deactivateMember,
+    deleteMember,
     getDonations,
-    getCertificates, generateCertificate, revokeCertificate
+    getCertificates,
+    generateCertificate,
+    revokeCertificate
 } from '../controllers/adminController.js';
 
 const router = express.Router();
@@ -46,6 +55,7 @@ router.put('/candidates/:id/status', requireAdmin, updateCandidateStatus);
 
 router.get('/members', requireAdmin, getMembers);
 router.post('/members', requireAdmin, addMember);
+router.put('/members/:id', requireAdmin, updateMember);
 router.put('/members/:id/role', requireAdmin, updateMemberRole);
 router.put('/members/:id/deactivate', requireAdmin, deactivateMember);
 router.delete('/members/:id', requireAdmin, deleteMember);

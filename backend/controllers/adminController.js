@@ -259,3 +259,31 @@ export const revokeCertificate = async (req, res) => {
         res.status(500).json({ success: false, message: 'Failed to revoke certificate.' });
     }
 };
+export const updateMember = async (req, res) => {
+  try {
+    const { name, phone, department } = req.body;
+
+    const member = await User.findByIdAndUpdate(
+      req.params.id,
+      { name, phone, department },
+      { new: true }
+    );
+
+    if (!member)
+      return res.status(404).json({
+        success: false,
+        message: "Member not found"
+      });
+
+    res.json({
+      success: true,
+      member
+    });
+
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message
+    });
+  }
+};
