@@ -1,18 +1,14 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-  <meta
-    content="Amaanitvam Foundation empowers communities through education, volunteerism, internships, and transparent impact-driven initiatives."
-    name="description" />
-  <title>Amaanitvam Foundation — Creating Opportunities, Building Stronger Communities</title>
+  <title>Webinars — Amaanitvam Foundation</title>
   <link href="https://fonts.googleapis.com" rel="preconnect" />
   <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
   <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;family=Montserrat:wght@500;600;700;800&amp;display=swap"
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;family=Montserrat:wght@400;500;600;700;800&amp;display=swap"
     rel="stylesheet" />
   <link
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
@@ -20,9 +16,218 @@
   <link href="assets/images/logo.jpg" rel="icon" type="image/jpg" />
   <link href="css/styles.css" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
+  <style>
+    .events-container {
+      padding: var(--section-py) 0;
+    }
+    .featured-webinar-layout {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 3rem;
+      align-items: stretch;
+    }
+    @media (max-width: 992px) {
+      .featured-webinar-layout {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+    }
+    
+    /* --- ELEGANT IMAGE ALIGNMENT, TRANSITIONS & ANIMATIONS --- */
+    
+    /* Core Gallery Layout */
+    .poster-gallery {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      /* Smooth fade-in entry animation for the image container */
+      animation: fadeInReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* Main Poster Frame */
+    .main-poster {
+      border: 3px solid var(--gold);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+      background: var(--surface);
+      /* Establishes 16:9 cinematic aspect ratio for guaranteed alignment */
+      aspect-ratio: 16 / 9; 
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+    }
+
+    /* Main Poster Hover Effect */
+    .main-poster:hover {
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 0 20px 38px rgba(0, 0, 0, 0.18);
+    }
+
+    /* Image zoom transition inside frame */
+    .main-poster img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .main-poster:hover img {
+      transform: scale(1.04);
+    }
+
+    /* Bottom Snapshot Grid */
+    .gallery-snapshots {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    /* Snapshot Cards */
+    .snapshot-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      background: var(--surface);
+      /* Forces identical symmetric alignment side-by-side */
+      aspect-ratio: 4 / 3; 
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+    }
+
+    /* Snapshot Hover Effects */
+    .snapshot-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.14);
+      border-color: var(--gold);
+    }
+
+    /* Snapshot Image internal zoom transition */
+    .snapshot-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
+      filter: brightness(0.95);
+    }
+
+    .snapshot-card:hover img {
+      transform: scale(1.06);
+      filter: brightness(1);
+    }
+
+    /* CSS Keyframe Animation for Page Load Entry */
+    @keyframes fadeInReveal {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* --- END ANIMATION STYLES --- */
+
+    /* Elegant Sidebar Details Pane */
+    .webinar-details-pane {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-top: 4px solid var(--primary);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .webinar-status-badge {
+      display: inline-block;
+      align-self: flex-start;
+      background: rgba(93, 15, 45, 0.08);
+      color: var(--primary);
+      font-family: var(--font-ui);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.4rem 1rem;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 1.5rem;
+    }
+    .webinar-main-title {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 3.5vw, 2.6rem);
+      color: var(--primary);
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+    }
+    .webinar-subtitle-hindi {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 2.2rem;
+      color: var(--gold-dark);
+      margin-bottom: 2rem;
+      font-weight: 700;
+    }
+    .speaker-profile {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      padding: 1.25rem 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 2rem;
+    }
+    .speaker-avatar-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: rgba(216, 161, 95, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold-dark);
+      font-size: 1.4rem;
+    }
+    .speaker-info h4 {
+      font-family: var(--font-ui);
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--text);
+      margin: 0;
+    }
+    .speaker-info p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin: 0.2rem 0 0 0;
+    }
+    .pill-tags-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+    }
+    .topic-pill {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 0.4rem 1rem;
+      border-radius: 999px;
+      font-family: var(--font-ui);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .webinar-description-text {
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+    }
+  </style>
 </head>
 
-<body data-page="home">
+<body data-page="webinars-competitions">
   <header class="site-header" id="site-header">
     <nav aria-label="Main navigation" class="site-nav" id="site-nav">
       <div class="nav-inner">
@@ -48,8 +253,7 @@
             <div class="dropdown-menu" role="menu">
               <a class="dropdown-item" href="about.html" role="menuitem">
                 <span class="dropdown-icon"><span class="material-symbols-outlined">info</span></span>
-                <span class="dropdown-text"><strong>About Foundation</strong><small>Our story &amp;
-                    values</small></span>
+                <span class="dropdown-text"><strong>About Foundation</strong><small>Our story &amp; values</small></span>
               </a>
               <a class="dropdown-item" href="impact.html" role="menuitem">
                 <span class="dropdown-icon"><span class="material-symbols-outlined">bar_chart</span></span>
@@ -57,8 +261,7 @@
               </a>
               <a class="dropdown-item" href="programs.html" role="menuitem">
                 <span class="dropdown-icon"><span class="material-symbols-outlined">apps</span></span>
-                <span class="dropdown-text"><strong>Programs</strong><small>Our initiatives &amp; impact
-                    areas</small></span>
+                <span class="dropdown-text"><strong>Programs</strong><small>Our initiatives &amp; impact areas</small></span>
               </a>
               <a class="dropdown-item" href="gallery.html" role="menuitem">
                 <span class="dropdown-icon"><span class="material-symbols-outlined">photo_library</span></span>
@@ -179,100 +382,85 @@
       </div>
     </div>
   </header>
-  <main id="main-content">
-    <!-- HERO -->
-    <section aria-labelledby="hero-title" class="home-hero" data-hero=""
-      style="background-image: url('assets/images/hero.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
-      <div class="container hero-grid">
+
+  <section class="page-hero has-image" data-hero
+    style="position: relative; background-image: linear-gradient(135deg, rgba(93, 15, 45, 0.9), rgba(74, 11, 35, 0.75)), url('assets/images/hero.png'); background-size: cover; background-position: center; padding: 5rem 0; min-height: 380px; display: flex; align-items: center;">
+    <div class="container" style="display: flex; justify-content: center; text-align: center; width: 100%;">
+      <div style="max-width: 960px;">
+        <span class="hero-label section-label" style="color: var(--gold);">Resources</span>
+        <h1 class="section-title" style="font-size: clamp(2.5rem, 6vw, 4rem); margin-bottom: 1rem; color: #ffffff !important;">
+          Official Webinars</h1>
+        <p class="section-desc" style="max-width: 750px; margin: 0 auto; color: #ffffff; opacity: 0.95; font-size: 1.2rem;">
+          Interactive sessions, expert deep dives, and leadership panels hosted by Amaanitvam Foundation.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <main class="container events-container">
+    <div class="featured-webinar-layout">
+      
+      <div class="poster-gallery">
+        <div class="main-poster">
+          <img alt="नारी शक्ति: Dharma, Samman aur Vikas Poster" src="assets/images/Webinar1.jpeg" />
+        </div>
+        <div class="gallery-snapshots">
+          <div class="snapshot-card">
+            <img alt="Webinar Interactive View 1" src="assets/images/Webinar2.jpeg" />
+          </div>
+          <div class="snapshot-card">
+            <img alt="Webinar Interactive View 2" src="assets/images/Webinar3.jpeg" />
+          </div>
+        </div>
+      </div>
+
+      <div class="webinar-details-pane">
         <div>
-          <h1 class="hero-title" id="hero-title">
-            What Are We, If Not for One Another?
-          </h1>
-          <p class="hero-desc" id="hero-desc">
-            Empowering Lives Through Education, Compassion, and Collective Action. A student-led movement inspiring
-            learning, responsibility, and positive change for a stronger society.
-          </p>
-          <div class="hero-actions"
-            style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; padding-bottom: 0.5rem; overflow: visible;">
-            <a class="btn btn-primary" href="volunteer.html" style="flex-shrink: 0; white-space: nowrap;">Volunteer
-              Now</a>
-            <a class="btn btn-primary" href="internship.html" style="flex-shrink: 0; white-space: nowrap;">Apply for
-              Internship</a>
+          <span class="webinar-status-badge">Featured Webinar</span>
+          <div class="webinar-subtitle-hindi">नारी शक्ति:</div>
+          <h2 class="webinar-main-title">Dharma, Samman aur Vikas</h2>
+
+          <div class="speaker-profile">
+            <div class="speaker-avatar-icon">
+              <i class="fa-solid fa-user-graduate"></i>
+            </div>
+            <div class="speaker-info">
+              <h4>Ms. Prachi Sharma</h4>
+              <p>Youth Leader | National Level Speaker</p>
+            </div>
           </div>
-        </div>
-      </div>
-    </section>
-    <!-- WHY US -->
-    <section aria-labelledby="why-us-title" class="section section-white">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-label">Why Us?</span>
-          <h2 class="section-title" id="why-us-title">Creating Meaningful Impact Together</h2>
-          <p class="section-desc">
-            We focus on education, empowerment, and community-driven change to build a stronger future.
+
+          <div class="pill-tags-container">
+            <span class="topic-pill">Education &amp; Opportunities</span>
+            <span class="topic-pill">Leadership Development</span>
+            <span class="topic-pill">Empowered Women</span>
+            <span class="topic-pill">Confidence Building</span>
+          </div>
+
+          <p class="webinar-description-text">
+            An impactful interactive leadership session centered on cultivating core framework capabilities, driving social self-confidence paradigms, and defining next-generation educational opportunity pipelines.
           </p>
         </div>
-        <div class="grid-3">
-          <div class="card">
-            <span class="material-symbols-outlined text-primary moved-inline-style-097">school</span>
-            <h3>Education First</h3>
-            <p class="text-muted">Supporting learning opportunities that help individuals unlock their potential.</p>
-          </div>
-          <div class="card">
-            <span class="material-symbols-outlined text-purple moved-inline-style-097">volunteer_activism</span>
-            <h3>Community Impact</h3>
-            <p class="text-muted">Building stronger communities through collaboration, service, and social
-              responsibility.</p>
-          </div>
-          <div class="card">
-            <span class="material-symbols-outlined text-gold moved-inline-style-097">trending_up</span>
-            <h3>Sustainable Growth</h3>
-            <p class="text-muted">Creating long-term positive change through skill development and empowerment.</p>
-          </div>
-        </div>
+
+        <a class="btn btn-primary" href="contact.html" style="width: 100%; text-align: center;">Inquire For Sessions</a>
       </div>
-    </section>
-    <!-- VISION & MISSION -->
-    <section aria-labelledby="vision-mission-title" class="section section-alt">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-label">Our Purpose</span>
-          <h2 class="section-title" id="vision-mission-title">Vision &amp; Mission</h2>
-          <p class="section-desc">
-            The principles that guide every program, partnership, and community we serve.
-          </p>
-        </div>
-        <div class="grid-2 moved-inline-style-098">
-          <div>
-            <h3 class="moved-inline-style-099">Mission Statement</h3>
-            <p class="text-muted moved-inline-style-100" id="mission-text">
-              At Amaanitvam Foundation, we strive to inspire compassion, responsibility, and active citizenship.
-              Through education, mentorship, awareness, and community engagement, we empower individuals to create
-              meaningful change and contribute to a more inclusive, equitable, and compassionate society where everyone
-              has the opportunity to learn, grow, and thrive.
-            </p>
-          </div>
-          <div>
-            <h3 class="moved-inline-style-099">Vision Statement</h3>
-            <p class="text-muted moved-inline-style-100" id="vision-text">
-              Amaanitvam Foundation envisions a brighter and more inclusive India where every individual has access to
-              opportunities for learning, growth, and self-development.
-              Through education, mentorship, and community-driven action, we aim to nurture confident, responsible, and
-              compassionate citizens who contribute positively to society and inspire lasting change.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
+
+    </div>
   </main>
 
+  <section class="section section-navy" style="text-align: center; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; padding: 4rem 0;">
+    <div class="container">
+      <h2 style="color: #fff !important; margin-bottom: 1rem;">Earn Validation Certificates</h2>
+      <p style="color: var(--cream); max-width: 700px; margin: 0 auto 2rem;">Attended this or any of our live foundational seminars? Enter your registration details in our validation panel to securely fetch your verification ledger entry.</p>
+      <a class="btn btn-outline" href="verify.html" style="border-color: var(--gold) !important; color: #fff !important;">Verify Certificate</a>
+    </div>
+  </section>
+
   <div id="footer"></div>
-  <a class="floating-donate" href="contact.html#donate">
-    ❤ Donate Now
-  </a>
+  <a class="floating-donate" href="contact.html#donate">❤ Donate Now</a>
+
   <div class="floating-socials">
-    <a aria-label="Facebook" href="https://www.facebook.com/people/Amaanitvam-Foundation/61583427622759/"
-      target="_blank">
+    <a aria-label="Facebook" href="https://www.facebook.com/people/Amaanitvam-Foundation/61583427622759/" target="_blank">
       <i class="fa-brands fa-facebook-f"></i>
     </a>
     <a aria-label="Instagram" href="https://www.instagram.com/amaanitvamfoundation" target="_blank">
@@ -287,7 +475,6 @@
   </div>
 
   <script src="js/main.js"></script>
-  
   <script>
     (function () {
       const nav = document.getElementById('site-nav');
@@ -303,19 +490,10 @@
       }
 
       const pageMap = {
-        about: 0,
-        impact: 0,
-        programs: 0,
-        gallery: 0,
-        volunteer: 1,
-        internship: 1,
-        contact: 1,
-        collaborations: 2,
-        verify: 2,
-        faq: 2,
-        resources: 2,
-        guidelines: 2,
-        circulars: 2
+        about: 0, impact: 0, programs: 0, gallery: 0,
+        volunteer: 1, internship: 1, contact: 1,
+        collaborations: 2, verify: 2, faq: 2, resources: 2,
+        'webinars-competitions': 2
       };
 
       const page = document.body.dataset.page;
@@ -334,7 +512,6 @@
           trigger.setAttribute('aria-expanded', 'true');
           menu.classList.add('is-open');
         }
-
         function close() {
           trigger.setAttribute('aria-expanded', 'false');
           menu.classList.remove('is-open');
@@ -342,13 +519,8 @@
 
         item.addEventListener('mouseenter', open);
         item.addEventListener('mouseleave', close);
-
         trigger.addEventListener('click', function () {
           trigger.getAttribute('aria-expanded') === 'true' ? close() : open();
-        });
-
-        trigger.addEventListener('keydown', function (e) {
-          if (e.key === 'Escape') close();
         });
       });
 
@@ -356,68 +528,17 @@
         menuToggle.addEventListener('click', function () {
           const isOpen = mobileMenu.classList.toggle('is-open');
           menuToggle.setAttribute('aria-expanded', isOpen);
-          mobileMenu.setAttribute('aria-hidden', !isOpen);
           menuToggle.classList.toggle('is-active', isOpen);
         });
       }
-
-      document.querySelectorAll('.mobile-group-toggle').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          const section = btn.closest('.mobile-section');
-          const links = section.querySelector('.mobile-group-links');
-          const isExpanded = btn.getAttribute('aria-expanded') === 'true';
-
-          document.querySelectorAll('.mobile-section').forEach(function (s) {
-            s.querySelector('.mobile-group-toggle').setAttribute('aria-expanded', 'false');
-            s.querySelector('.mobile-group-links').classList.remove('is-open');
-          });
-
-          if (!isExpanded) {
-            btn.setAttribute('aria-expanded', 'true');
-            links.classList.add('is-open');
-          }
-        });
-      });
-
-      document.addEventListener('click', function (e) {
-        if (!e.target.closest('.nav-item.has-dropdown')) {
-          document.querySelectorAll('.dropdown-trigger').forEach(function (t) {
-            t.setAttribute('aria-expanded', 'false');
-          });
-          document.querySelectorAll('.dropdown-menu').forEach(function (m) {
-            m.classList.remove('is-open');
-          });
-        }
-      });
     })();
 
-      fetch('footer.html')
+    fetch('footer.html')
       .then(function (response) { return response.text(); })
       .then(function (data) {
         const footer = document.getElementById('footer');
         if (footer) footer.innerHTML = data;
       });
-
-      // Fetch CMS Content
-      fetch('http://localhost:5000/api/cms')
-        .then(response => response.json())
-        .then(data => {
-          if (data.success && data.content) {
-            const cms = data.content.homepage;
-            const aboutCms = data.content.aboutUs;
-            
-            const heroTitle = document.getElementById('hero-title');
-            const heroDesc = document.getElementById('hero-desc');
-            const missionText = document.getElementById('mission-text');
-            const visionText = document.getElementById('vision-text');
-            
-            if (heroTitle && cms?.heroTitle) heroTitle.innerText = cms.heroTitle;
-            if (heroDesc && cms?.heroSubtitle) heroDesc.innerText = cms.heroSubtitle;
-            if (missionText && aboutCms?.mission) missionText.innerText = aboutCms.mission;
-            if (visionText && aboutCms?.vision) visionText.innerText = aboutCms.vision;
-          }
-        })
-        .catch(err => console.error('Error fetching CMS:', err));
   </script>
 </body>
 

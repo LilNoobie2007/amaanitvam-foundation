@@ -1,5 +1,6 @@
 import express from 'express';
 import { verifyFirebaseToken, requireAdmin } from '../middleware/verifyFirebaseToken.js';
+import { requireAllowedIP } from '../middleware/ipRestriction.js';
 import User from '../models/user.js';
 import {
     getMe,
@@ -15,8 +16,11 @@ import {
     getDonations,
     getCertificates,
     generateCertificate,
-    revokeCertificate
-} from '../controllers/adminController.js';
+    revokeCertificate,
+    getSettings,
+    updateSettings,
+    getAuditLogs
+} from '../controllers/adminController.js'; 
 
 const router = express.Router();
 
@@ -38,7 +42,7 @@ router.get('/seed', async (req, res) => {
             status: "active",
             department: "Technology"
         });
-        await admin.save();
+        await adminUser.save();
         res.json({ success: true, message: "Super admin created successfully!" });
     } catch (err) {
         res.status(500).json({ success: false, error: err.message });
@@ -48,23 +52,28 @@ router.get('/seed', async (req, res) => {
 router.use(verifyFirebaseToken);
 
 router.get('/me', getMe);
-router.get('/stats', getDashboardStats);
+router.get('/stats', requireAdmin, requireAllowedIP, getDashboardStats);
 
-router.get('/candidates', requireAdmin, getCandidates);
-router.put('/candidates/:id/status', requireAdmin, updateCandidateStatus);
+router.get('/candidates', requireAdmin, requireAllowedIP, getCandidates);
+router.put('/candidates/:id/status', requireAdmin, requireAllowedIP, updateCandidateStatus);
 
-router.get('/members', requireAdmin, getMembers);
-router.post('/members', requireAdmin, addMember);
-router.put('/members/:id', requireAdmin, updateMember);
-router.put('/members/:id/role', requireAdmin, updateMemberRole);
-router.put('/members/:id/deactivate', requireAdmin, deactivateMember);
-router.delete('/members/:id', requireAdmin, deleteMember);
+router.get('/members', requireAdmin, requireAllowedIP, getMembers);
+router.post('/members', requireAdmin, requireAllowedIP, addMember);
+router.put('/members/:id', requireAdmin, requireAllowedIP, updateMember);
+router.put('/members/:id/role', requireAdmin, requireAllowedIP, updateMemberRole);
+router.put('/members/:id/deactivate', requireAdmin, requireAllowedIP, deactivateMember);
+router.delete('/members/:id', requireAdmin, requireAllowedIP, deleteMember);
 
-router.get('/donations', requireAdmin, getDonations);
+router.get('/donations', requireAdmin, requireAllowedIP, getDonations);
 
-router.get('/certificates', requireAdmin, getCertificates);
-router.post('/certificates', requireAdmin, generateCertificate);
-router.put('/certificates/:id/revoke', requireAdmin, revokeCertificate);
+router.get('/certificates', requireAdmin, requireAllowedIP, getCertificates);
+router.post('/certificates', requireAdmin, requireAllowedIP, generateCertificate);
+router.put('/certificates/:id/revoke', requireAdmin, requireAllowedIP, revokeCertificate);
+
+router.get('/settings', requireAdmin, requireAllowedIP, getSettings);
+router.put('/settings', requireAdmin, requireAllowedIP, updateSettings);
+
+router.get('/audit-logs', requireAdmin, requireAllowedIP, getAuditLogs);
 
 import multer from 'multer';
 import path from 'path';
@@ -85,7 +94,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-router.post('/gallery', requireAdmin, upload.single('image'), async (req, res) => {
+router.post('/gallery', requireAdmin, requireAllowedIP, upload.single('image'), async (req, res) => {
     try {
         if (!req.file) {
             return res.status(400).json({ success: false, message: 'No image uploaded' });
@@ -103,7 +112,7 @@ router.post('/gallery', requireAdmin, upload.single('image'), async (req, res) =
     }
 });
 
-router.delete('/gallery/:id', requireAdmin, async (req, res) => {
+router.delete('/gallery/:id', requireAdmin, requireAllowedIP, async (req, res) => {
     try {
         const image = await Gallery.findById(req.params.id);
         if (!image) {
@@ -120,7 +129,7 @@ router.delete('/gallery/:id', requireAdmin, async (req, res) => {
     }
 });
 
-router.put('/gallery/:id', requireAdmin, upload.single('image'), async (req, res) => {
+router.put('/gallery/:id', requireAdmin, requireAllowedIP, upload.single('image'), async (req, res) => {
     try {
         const image = await Gallery.findById(req.params.id);
         if (!image) {

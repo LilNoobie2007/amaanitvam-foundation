@@ -1,19 +1,54 @@
 @import 'tailwindcss';
 
+@theme {
+  --color-primary: #5D0F2D;
+  --color-primary-dark: #4A0B23;
+  --color-primary-light: #7A1D44;
+  --color-secondary: #C46B87;
+  --color-gold: #D8A15F;
+  --color-cream: #F8F3ED;
+  --color-background: #F5EFE6;
+  --color-surface: #FFFAF3;
+  --color-border-custom: #DCC8B6;
+  --color-text-main: #3D2B2B;
+  --color-text-muted: #6B5B55;
+
+  --font-heading: 'Cormorant Garamond', serif;
+  --font-body: 'Inter', sans-serif;
+  --font-ui: 'Montserrat', sans-serif;
+}
+
 @layer base {
   body {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    @apply bg-background text-text-main font-body antialiased;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading font-bold;
   }
 }
 
 @layer components {
   .sidebar-nav-link {
-    @apply flex items-center gap-3 px-4 py-2.5 text-sm text-slate-400 rounded-lg transition-all duration-200 hover:bg-white/5 hover:text-white;
+    @apply flex items-center gap-3 px-4 py-3 text-sm font-ui text-white/70 rounded-xl transition-all duration-300 hover:bg-white/10 hover:text-white;
   }
   .sidebar-nav-link.active {
-    @apply bg-white/10 text-white font-medium;
+    @apply bg-gold/20 text-gold font-semibold border-r-4 border-gold rounded-r-none;
+  }
+
+  .card-premium {
+    @apply bg-surface border border-border-custom rounded-[22px] p-6 shadow-sm hover:shadow-md transition-shadow duration-300;
+  }
+
+  .btn-maroon {
+    @apply bg-primary hover:bg-primary-dark text-white font-ui font-bold uppercase tracking-wider px-6 py-2.5 rounded-xl border border-gold transition-all duration-300 active:scale-95;
+  }
+
+  .input-premium {
+    @apply bg-white border border-border-custom rounded-xl px-4 py-2.5 text-sm font-body outline-none focus:ring-2 focus:ring-gold/30 focus:border-gold transition-all;
+  }
+
+  .table-premium {
+    @apply w-full border-separate border-spacing-0 overflow-hidden rounded-[18px] border border-border-custom;
   }
 }
 
@@ -23,14 +58,5 @@
 }
 
 .animate-fade-in {
-  animation: fadeIn 0.3s ease-out;
-}
-
-@keyframes slideIn {
-  from { opacity: 0; transform: translateX(-10px); }
-  to { opacity: 1; transform: translateX(0); }
-}
-
-.animate-slide-in {
-  animation: slideIn 0.3s ease-out;
+  animation: fadeIn 0.4s ease-out;
 }
