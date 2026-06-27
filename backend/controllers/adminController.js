@@ -1,3 +1,4 @@
+import PDFDocument from "pdfkit";
 import User from '../models/user.js';
 import InternshipApplication from '../models/internshipApplication.js';
 import VolunteerApplication from '../models/volunteerApplication.js';
@@ -321,6 +322,85 @@ export const revokeCertificate = async (req, res) => {
         res.status(500).json({ success: false, message: 'Failed to revoke certificate.' });
     }
 };
+// GET /api/admin/certificates/:id/download
+export const downloadCertificate = async (req, res) => {
+  try {
+    const certificate = await Certificate.findById(req.params.id);
+
+    if (!certificate) {
+      return res.status(404).json({
+        success: false,
+        message: "Certificate not found",
+      });
+    }
+
+    const doc = new PDFDocument({
+      size: "A4",
+      margin: 50,
+    });
+
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename=${certificate.certificateId}.pdf`
+    );
+
+    res.setHeader("Content-Type", "application/pdf");
+
+    doc.pipe(res);
+
+    doc
+      .fontSize(24)
+      .text("Amaanitvam Foundation", {
+        align: "center",
+      });
+
+    doc.moveDown();
+
+    doc
+      .fontSize(20)
+      .text("Certificate", {
+        align: "center",
+      });
+
+    doc.moveDown(2);
+
+    doc.fontSize(14).text(`Certificate ID: ${certificate.certificateId}`);
+
+    doc.moveDown();
+
+    doc.text(`Issued To: ${certificate.issuedTo}`);
+
+    doc.text(`Email: ${certificate.email}`);
+
+    doc.text(`Type: ${certificate.type}`);
+
+    doc.text(`Domain: ${certificate.domain || "-"}`);
+
+    doc.text(
+      `Issue Date: ${new Date(
+        certificate.issueDate
+      ).toLocaleDateString()}`
+    );
+
+    doc.moveDown(2);
+
+    doc.text(
+      "This certificate is issued by Amaanitvam Foundation.",
+      {
+        align: "center",
+      }
+    );
+
+    doc.end();
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
 export const updateMember = async (req, res) => {
   try {
     const { name, phone, department } = req.body;
@@ -401,4 +481,39 @@ export const getAuditLogs = async (req, res) => {
         console.error('Audit logs error:', error);
         res.status(500).json({ success: false, message: 'Failed to fetch audit logs.' });
     }
+};
+// GET /api/admin/reports
+export const getReports = async (req, res) => {
+  try {
+    const [
+      members,
+      candidates,
+      donations
+    ] = await Promise.all([
+      User.countDocuments({ status: "active" }),
+      InternshipApplication.countDocuments(),
+      Donation.find().sort({ createdAt: -1 })
+    ]);
+
+    const totalDonations = donations.reduce(
+      (sum, d) => sum + (d.amount || 0),
+      0
+    );
+
+    res.json({
+      success: true,
+      reports: {
+        totalMembers: members,
+        totalCandidates: candidates,
+        totalDonations,
+        totalTransactions: donations.length
+      }
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
 };

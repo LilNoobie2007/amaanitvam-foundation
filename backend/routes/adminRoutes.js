@@ -3,6 +3,10 @@ import { verifyFirebaseToken, requireAdmin } from '../middleware/verifyFirebaseT
 import { requireAllowedIP } from '../middleware/ipRestriction.js';
 import User from '../models/user.js';
 import {
+    getCampaigns,
+    createCampaign
+} from "../controllers/campaignController.js";
+import {
     getMe,
     getDashboardStats,
     getCandidates,
@@ -17,6 +21,8 @@ import {
     getCertificates,
     generateCertificate,
     revokeCertificate,
+    downloadCertificate,
+    getReports,
     getSettings,
     updateSettings,
     getAuditLogs
@@ -53,10 +59,14 @@ router.use(verifyFirebaseToken);
 
 router.get('/me', getMe);
 router.get('/stats', requireAdmin, requireAllowedIP, getDashboardStats);
-
+router.get(
+  "/reports",
+  requireAdmin,
+  requireAllowedIP,
+  getReports
+);
 router.get('/candidates', requireAdmin, requireAllowedIP, getCandidates);
 router.put('/candidates/:id/status', requireAdmin, requireAllowedIP, updateCandidateStatus);
-
 router.get('/members', requireAdmin, requireAllowedIP, getMembers);
 router.post('/members', requireAdmin, requireAllowedIP, addMember);
 router.put('/members/:id', requireAdmin, requireAllowedIP, updateMember);
@@ -65,11 +75,29 @@ router.put('/members/:id/deactivate', requireAdmin, requireAllowedIP, deactivate
 router.delete('/members/:id', requireAdmin, requireAllowedIP, deleteMember);
 
 router.get('/donations', requireAdmin, requireAllowedIP, getDonations);
+router.get(
+    "/campaigns",
+    requireAdmin,
+    requireAllowedIP,
+    getCampaigns
+);
+
+router.post(
+    "/campaigns",
+    requireAdmin,
+    requireAllowedIP,
+    createCampaign
+);
 
 router.get('/certificates', requireAdmin, requireAllowedIP, getCertificates);
 router.post('/certificates', requireAdmin, requireAllowedIP, generateCertificate);
 router.put('/certificates/:id/revoke', requireAdmin, requireAllowedIP, revokeCertificate);
-
+router.get(
+  "/certificates/:id/download",
+  requireAdmin,
+  requireAllowedIP,
+  downloadCertificate
+);
 router.get('/settings', requireAdmin, requireAllowedIP, getSettings);
 router.put('/settings', requireAdmin, requireAllowedIP, updateSettings);
 

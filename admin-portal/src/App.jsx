@@ -14,6 +14,7 @@ import Attendance from './pages/Attendance';
 import MyCertificates from './pages/MyCertificates';
 import Settings from './pages/Settings';
 import CMS from './pages/CMS';
+import Reports from "./pages/Reports";
 
 export default function App() {
   return (
@@ -129,6 +130,16 @@ export default function App() {
           </ProtectedRoute>
         }
       />
+      <Route
+  path="/reports"
+  element={
+    <ProtectedRoute>
+      <AdminLayout>
+        <Reports />
+      </AdminLayout>
+    </ProtectedRoute>
+  }
+/>
       <Route
         path="/cms"
         element={

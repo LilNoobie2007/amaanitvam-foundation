@@ -25,6 +25,11 @@ const donationSchema = new mongoose.Schema(
             required: true,
             min: 10
         },
+        campaign: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Campaign",
+    default: null
+},
         currency: {
             type: String,
             default: "INR",

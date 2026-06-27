@@ -6,10 +6,20 @@ import toast from 'react-hot-toast';
 export default function Donations() {
   const [donations, setDonations] = useState([]);
   const [loading, setLoading] = useState(true);
+const [campaigns, setCampaigns] = useState([]);
 
+const [showCampaignModal, setShowCampaignModal] = useState(false);
+
+const [campaignForm, setCampaignForm] = useState({
+  title: '',
+  description: '',
+  goalAmount: '',
+  status: 'active'
+});
   useEffect(() => {
-    fetchDonations();
-  }, []);
+  fetchDonations();
+  fetchCampaigns();
+}, []);
 
   const fetchDonations = async () => {
     setLoading(true);
@@ -22,7 +32,37 @@ export default function Donations() {
       setLoading(false);
     }
   };
+const fetchCampaigns = async () => {
+  try {
+    const res = await api.get('/admin/campaigns');
+    setCampaigns(res.data.campaigns || []);
+  } catch (err) {
+    console.error(err);
+    toast.error('Failed to load campaigns');
+  }
+};
+const createCampaign = async (e) => {
+  e.preventDefault();
 
+  try {
+    await api.post('/admin/campaigns', campaignForm);
+
+    toast.success('Campaign created successfully');
+
+    setShowCampaignModal(false);
+
+    setCampaignForm({
+      title: '',
+      description: '',
+      goalAmount: '',
+      status: 'active'
+    });
+
+    fetchCampaigns();
+  } catch (err) {
+    toast.error(err.response?.data?.message || 'Failed to create campaign');
+  }
+};
   const totalAmount = donations.reduce((sum, d) => sum + (d.amount || 0), 0);
 
   const thisMonthAmount = donations
@@ -91,17 +131,29 @@ export default function Donations() {
   ];
 
   return (
+    <>
     <div>
       {/* Topbar */}
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-2xl font-bold text-slate-800">Donations</h1>
-        <button
-          onClick={exportCSV}
-          className="bg-[#56051a] hover:bg-[#7a1e3a] text-white px-4 py-2.5 rounded-xl text-sm font-semibold flex items-center gap-2 transition-colors"
-        >
-          <Download className="w-4 h-4" />
-          Export CSV
-        </button>
+       <div className="flex gap-3">
+
+  <button
+    onClick={() => setShowCampaignModal(true)}
+    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold"
+  >
+    + Add Campaign
+  </button>
+
+  <button
+    onClick={exportCSV}
+    className="bg-[#56051a] hover:bg-[#7a1e3a] text-white px-4 py-2.5 rounded-xl text-sm font-semibold flex items-center gap-2 transition-colors"
+  >
+    <Download className="w-4 h-4" />
+    Export CSV
+  </button>
+
+</div>
       </div>
 
       {/* Stats */}
@@ -122,7 +174,112 @@ export default function Donations() {
           </div>
         ))}
       </div>
+         {/* Campaign Section */}
 
+<div className="bg-white rounded-xl border border-slate-100 shadow-sm p-6 mb-8">
+
+  <div className="flex justify-between items-center mb-6">
+
+    <h2 className="text-xl font-bold text-slate-800">
+      Fundraising Campaigns
+    </h2>
+
+    <span className="text-sm text-slate-500">
+      {campaigns.length} Campaigns
+    </span>
+
+  </div>
+
+  {campaigns.length === 0 ? (
+
+    <div className="text-center py-10 text-slate-400">
+
+      No Campaigns Yet
+
+    </div>
+
+  ) : (
+
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+
+      {campaigns.map((campaign) => {
+
+        const progress =
+          campaign.goalAmount > 0
+            ? (campaign.raisedAmount / campaign.goalAmount) * 100
+            : 0;
+
+        return (
+
+          <div
+            key={campaign._id}
+            className="border rounded-xl p-5 hover:shadow-md transition"
+          >
+
+            <h3 className="font-bold text-lg">
+
+              {campaign.title}
+
+            </h3>
+
+            <p className="text-sm text-slate-500 mt-2">
+
+              {campaign.description}
+
+            </p>
+
+            <div className="mt-4">
+
+              <div className="flex justify-between text-sm">
+
+                <span>
+
+                  ₹{campaign.raisedAmount.toLocaleString("en-IN")}
+
+                </span>
+
+                <span>
+
+                  ₹{campaign.goalAmount.toLocaleString("en-IN")}
+
+                </span>
+
+              </div>
+
+              <div className="w-full h-2 bg-slate-200 rounded-full mt-2">
+
+                <div
+                  className="h-2 bg-green-500 rounded-full"
+                  style={{
+                    width: `${Math.min(progress,100)}%`
+                  }}
+                />
+
+              </div>
+
+            </div>
+
+            <div className="mt-4">
+
+              <span className="px-3 py-1 rounded-full text-xs bg-blue-100 text-blue-700 capitalize">
+
+                {campaign.status}
+
+              </span>
+
+            </div>
+
+          </div>
+
+        );
+
+      })}
+
+    </div>
+
+  )}
+
+</div>
       {/* Data Table */}
       <div className="bg-white rounded-xl border border-slate-100 shadow-sm">
         <div className="overflow-x-auto">
@@ -171,5 +328,121 @@ export default function Donations() {
         </div>
       </div>
     </div>
+    {/* Add Campaign Modal */}
+
+{showCampaignModal && (
+  <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+
+    <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg p-6">
+
+      <h2 className="text-2xl font-bold mb-6">
+        Add Campaign
+      </h2>
+
+      <form onSubmit={createCampaign} className="space-y-4">
+
+        <div>
+          <label className="block text-sm font-medium mb-1">
+            Title
+          </label>
+
+          <input
+            type="text"
+            required
+            value={campaignForm.title}
+            onChange={(e) =>
+              setCampaignForm({
+                ...campaignForm,
+                title: e.target.value,
+              })
+            }
+            className="w-full border rounded-lg px-3 py-2"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-1">
+            Description
+          </label>
+
+          <textarea
+            rows="3"
+            value={campaignForm.description}
+            onChange={(e) =>
+              setCampaignForm({
+                ...campaignForm,
+                description: e.target.value,
+              })
+            }
+            className="w-full border rounded-lg px-3 py-2"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-1">
+            Goal Amount
+          </label>
+
+          <input
+            type="number"
+            required
+            value={campaignForm.goalAmount}
+            onChange={(e) =>
+              setCampaignForm({
+                ...campaignForm,
+                goalAmount: e.target.value,
+              })
+            }
+            className="w-full border rounded-lg px-3 py-2"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-1">
+            Status
+          </label>
+
+          <select
+            value={campaignForm.status}
+            onChange={(e) =>
+              setCampaignForm({
+                ...campaignForm,
+                status: e.target.value,
+              })
+            }
+            className="w-full border rounded-lg px-3 py-2"
+          >
+            <option value="active">Active</option>
+            <option value="completed">Completed</option>
+            <option value="inactive">Inactive</option>
+          </select>
+        </div>
+
+        <div className="flex justify-end gap-3 pt-3">
+
+          <button
+            type="button"
+            onClick={() => setShowCampaignModal(false)}
+            className="px-4 py-2 border rounded-lg"
+          >
+            Cancel
+          </button>
+
+          <button
+            type="submit"
+            className="bg-[#56051a] text-white px-5 py-2 rounded-lg"
+          >
+            Create Campaign
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+)}
+  </>
   );
 }

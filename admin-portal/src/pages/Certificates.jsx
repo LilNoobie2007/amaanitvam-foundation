@@ -10,6 +10,7 @@ const INITIAL_FORM = { issuedTo: '', email: '', type: 'Internship', domain: 'Cre
 export default function Certificates() {
   const [certificates, setCertificates] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedCertificates, setSelectedCertificates] = useState([]);
   const [showGenerateModal, setShowGenerateModal] = useState(false);
   const [formData, setFormData] = useState(INITIAL_FORM);
   const [submitting, setSubmitting] = useState(false);
@@ -63,6 +64,27 @@ export default function Certificates() {
       setActionLoading(null);
     }
   };
+  const toggleCertificateSelection = (id) => {
+  setSelectedCertificates((prev) =>
+    prev.includes(id)
+      ? prev.filter((item) => item !== id)
+      : [...prev, id]
+  );
+};
+const handleBulkGenerate = async () => {
+
+  if (selectedCertificates.length === 0) {
+    toast.error("Please select at least one certificate.");
+    return;
+  }
+
+  toast.success(
+    `Bulk generation started for ${selectedCertificates.length} certificate(s).`
+  );
+
+  console.log(selectedCertificates);
+
+};
 
   const SkeletonRow = () => (
     <tr className="border-b border-slate-50">
@@ -73,20 +95,55 @@ export default function Certificates() {
       ))}
     </tr>
   );
+  const downloadCertificate = async (id) => {
+  try {
+    const response = await api.get(
+      `/admin/certificates/${id}/download`,
+      {
+        responseType: "blob",
+      }
+    );
 
+    const url = window.URL.createObjectURL(
+      new Blob([response.data])
+    );
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `certificate-${id}.pdf`;
+
+    document.body.appendChild(link);
+    link.click();
+
+    link.remove();
+    window.URL.revokeObjectURL(url);
+  } catch (error) {
+    toast.error("Failed to download certificate");
+    console.error(error);
+  }
+};
   return (
     <div>
       {/* Topbar */}
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-2xl font-bold text-slate-800">Certificate Management</h1>
-        <button
-          onClick={() => setShowGenerateModal(true)}
-          className="bg-[#56051a] hover:bg-[#7a1e3a] text-white px-4 py-2.5 rounded-xl text-sm font-semibold flex items-center gap-2 transition-colors"
-        >
-          <Plus className="w-4 h-4" />
-          Generate Certificate
-        </button>
-      </div>
+     <div className="flex gap-3">
+
+  <button
+    onClick={handleBulkGenerate}
+    disabled={selectedCertificates.length === 0}
+    className="bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors"
+  >
+    Generate Selected ({selectedCertificates.length})
+  </button>
+
+  <button
+    onClick={() => setShowGenerateModal(true)}
+    className="bg-[#56051a] hover:bg-[#7a1e3a] text-white px-4 py-2.5 rounded-xl text-sm font-semibold flex items-center gap-2 transition-colors"
+  >
+    <Plus className="w-4 h-4" />
+    Generate Certificate
+  </button>
+
+</div>
 
       {/* Data Table */}
       <div className="bg-white rounded-xl border border-slate-100 shadow-sm">
@@ -94,6 +151,8 @@ export default function Certificates() {
           <table className="w-full">
             <thead>
               <tr>
+                <th className="px-6 py-3">
+</th>
                 <th className="px-6 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider bg-slate-50/50">Certificate ID</th>
                 <th className="px-6 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider bg-slate-50/50">Issued To</th>
                 <th className="px-6 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider bg-slate-50/50">Type</th>
@@ -119,6 +178,13 @@ export default function Certificates() {
                   const certId = cert._id || cert.id;
                   return (
                     <tr key={certId} className="border-b border-slate-50 hover:bg-slate-50/50 transition-colors">
+                      <td className="px-6 py-4">
+  <input
+    type="checkbox"
+    checked={selectedCertificates.includes(certId)}
+    onChange={() => toggleCertificateSelection(certId)}
+  />
+</td>
                       <td className="px-6 py-4 text-sm text-slate-600 font-mono text-xs">
                         {cert.certificateId || certId?.slice(-8)?.toUpperCase() || '—'}
                       </td>
@@ -152,12 +218,14 @@ export default function Certificates() {
                               Revoke
                             </button>
                           )}
-                          <button
-                            className="bg-slate-50 text-slate-600 hover:bg-slate-100 px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1"
-                          >
-                            <Download className="w-3 h-3" />
-                            Download
-                          </button>
+                               <button
+  onClick={() => downloadCertificate(cert._id)}
+  className="bg-slate-50 text-slate-600 hover:bg-slate-100 px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1"
+>
+  <Download className="w-3 h-3" />
+  Download
+</button>
+                     
                         </div>
                       </td>
                     </tr>

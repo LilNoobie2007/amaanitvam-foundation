@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, Users, UserCog, Heart, Award, Globe, LogOut, Shield, Image, Settings as SettingsIcon } from 'lucide-react';
+import { LayoutDashboard, Users, UserCog, Heart, Award, Globe, LogOut, Shield, Image,BarChart3, Settings as SettingsIcon } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { useState, useEffect } from 'react';
 import api from '../config/api';
@@ -95,6 +95,10 @@ export default function Sidebar() {
               <Image className="w-[18px] h-[18px] opacity-70" />
               Gallery Images
             </NavLink>
+            <NavLink to="/reports" className={navLinkClass}>
+  <BarChart3 className="w-[18px] h-[18px] opacity-70" />
+  Reports
+</NavLink>
             <NavLink to="/settings" className={navLinkClass}>
               <SettingsIcon className="w-[18px] h-[18px] opacity-70" />
               System Settings

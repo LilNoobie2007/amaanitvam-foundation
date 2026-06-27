@@ -9,6 +9,7 @@ export default function Dashboard() {
   const [stats, setStats] = useState({ totalCandidates: 0, totalMembers: 0, totalDonations: 0, totalCertificates: 0 });
   const [recentApplications, setRecentApplications] = useState([]);
   const [recentDonations, setRecentDonations] = useState([]);
+  const [campaigns, setCampaigns] = useState([]);
   const [loadingStats, setLoadingStats] = useState(true);
   const [loadingApplications, setLoadingApplications] = useState(true);
   const [loadingDonations, setLoadingDonations] = useState(true);
@@ -18,6 +19,7 @@ export default function Dashboard() {
       fetchStats();
       fetchRecentApplications();
       fetchRecentDonations();
+      fetchCampaigns();
     } else if (userProfile && userProfile.role !== 'admin' && userProfile.role !== 'super_admin') {
       setLoadingStats(false);
       setLoadingApplications(false);
@@ -58,7 +60,14 @@ export default function Dashboard() {
       setLoadingDonations(false);
     }
   };
-
+  const fetchCampaigns = async () => {
+  try {
+    const res = await api.get('/admin/campaigns');
+    setCampaigns(res.data.campaigns || []);
+  } catch (err) {
+    console.error(err);
+  }
+};
   const getStatusBadge = (status) => {
     const styles = {
       pending: 'bg-amber-50 text-amber-700',
@@ -120,7 +129,75 @@ export default function Dashboard() {
           </div>
         ))}
       </div>
+      {/* Donations Overview */}
 
+<div className="bg-white rounded-xl border border-slate-100 shadow-sm p-6 mb-8">
+
+  <div className="flex justify-between items-center mb-6">
+
+    <h2 className="text-lg font-semibold text-slate-800">
+      Donations Overview
+    </h2>
+
+    <span className="text-sm text-slate-500">
+      {campaigns.length} Campaigns
+    </span>
+
+  </div>
+
+  <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+
+    <div className="bg-slate-50 rounded-xl p-5">
+
+      <p className="text-sm text-slate-500">
+        Total Donations
+      </p>
+
+      <p className="text-2xl font-bold text-emerald-600 mt-2">
+        ₹{stats.totalDonations?.toLocaleString('en-IN') || 0}
+      </p>
+
+    </div>
+
+    <div className="bg-slate-50 rounded-xl p-5">
+
+      <p className="text-sm text-slate-500">
+        Active Campaigns
+      </p>
+
+      <p className="text-2xl font-bold text-blue-600 mt-2">
+        {campaigns.filter(c => c.status === 'active').length}
+      </p>
+
+    </div>
+
+    <div className="bg-slate-50 rounded-xl p-5">
+
+      <p className="text-sm text-slate-500">
+        Total Campaigns
+      </p>
+
+      <p className="text-2xl font-bold text-purple-600 mt-2">
+        {campaigns.length}
+      </p>
+
+    </div>
+
+    <div className="bg-slate-50 rounded-xl p-5">
+
+      <p className="text-sm text-slate-500">
+        Latest Donation
+      </p>
+
+      <p className="text-xl font-bold text-[#56051a] mt-2">
+        ₹{recentDonations[0]?.amount?.toLocaleString('en-IN') || 0}
+      </p>
+
+    </div>
+
+  </div>
+
+</div>
       {/* Admin Only: Recent Applications & Donations */}
       {(userProfile?.role === 'admin' || userProfile?.role === 'super_admin') && (
         <>
