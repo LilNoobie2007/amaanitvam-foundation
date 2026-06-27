@@ -18,6 +18,7 @@
     import taskRoutes from "./routes/TasksRoutes.js";
     import announcementRoutes from "./routes/announcementRoutes.js";
     import projectRoutes from "./routes/projectRoutes.js";
+    import departmentRoutes from "./routes/departmentRoutes.js";
     import notificationRoutes from "./routes/notificationRoutes.js";
     import publicRoutes from "./routes/publicRoutes.js";
     import cmsRoutes from "./routes/cmsRoutes.js";
@@ -68,9 +69,7 @@
     app.use("/api/meetings", meetingRoutes);
     app.use("/api/tasks", taskRoutes);
     app.use("/api/announcements", announcementRoutes);
-    app.use("/api/projects", projectRoutes);
-    app.use("/api/notifications", notificationRoutes);
-    app.use("/api/public", publicRoutes);
+    app.use("/api/departments", departmentRoutes);
     app.use("/api/cms", cmsRoutes);
     
     app.get("/", (req, res) => res.send("Backend Running"));
