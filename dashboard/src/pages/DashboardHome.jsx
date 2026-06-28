@@ -181,6 +181,7 @@ export default function DashboardHome() {
           </div>
         </div>
         </div>
+        </div>
 
         <div className="w-full lg:w-80 xl:w-96 shrink-0">
           <ActivityFeed />
