@@ -18,7 +18,7 @@
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
     rel="stylesheet" />
   <link href="assets/images/logo.jpg" rel="icon" type="image/jpg" />
-  <link href="css/styles.css" rel="stylesheet" />
+  <link href="assets/css/styles.css" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
 </head>
 
@@ -112,15 +112,18 @@
               </a>
               <a class="dropdown-item" href="verify.html" role="menuitem">
                 <span class="dropdown-icon"><span class="material-symbols-outlined">verified</span></span>
-                <span class="dropdown-text"><strong>Verify certificates</strong><small>Check your certificate</small></span>
+                <span class="dropdown-text"><strong>Verify certificates</strong><small>Check your
+                    certificate</small></span>
               </a>
               <a class="dropdown-item" href="webinars-competitions.html" role="menuitem">
                 <span class="dropdown-icon"><span class="material-symbols-outlined">event</span></span>
-                <span class="dropdown-text"><strong>Webinar &amp; competitions</strong><small>Join events and participate</small></span>
+                <span class="dropdown-text"><strong>Webinar &amp; competitions</strong><small>Join events and
+                    participate</small></span>
               </a>
               <a class="dropdown-item" href="collaborations.html" role="menuitem">
                 <span class="dropdown-icon"><span class="material-symbols-outlined">diversity_3</span></span>
-                <span class="dropdown-text"><strong>Collaboration &amp; partnership</strong><small>Our partners</small></span>
+                <span class="dropdown-text"><strong>Collaboration &amp; partnership</strong><small>Our
+                    partners</small></span>
               </a>
               <a class="dropdown-item" href="faq.html" role="menuitem">
                 <span class="dropdown-icon"><span class="material-symbols-outlined">help</span></span>
@@ -286,8 +289,8 @@
     </a>
   </div>
 
-  <script src="js/main.js"></script>
-  
+  <script src="assets/js/main.js"></script>
+
   <script>
     (function () {
       const nav = document.getElementById('site-nav');
@@ -391,33 +394,33 @@
       });
     })();
 
-      fetch('footer.html')
+    fetch('footer.html')
       .then(function (response) { return response.text(); })
       .then(function (data) {
         const footer = document.getElementById('footer');
         if (footer) footer.innerHTML = data;
       });
 
-      // Fetch CMS Content
-      fetch('http://localhost:5000/api/cms')
-        .then(response => response.json())
-        .then(data => {
-          if (data.success && data.content) {
-            const cms = data.content.homepage;
-            const aboutCms = data.content.aboutUs;
-            
-            const heroTitle = document.getElementById('hero-title');
-            const heroDesc = document.getElementById('hero-desc');
-            const missionText = document.getElementById('mission-text');
-            const visionText = document.getElementById('vision-text');
-            
-            if (heroTitle && cms?.heroTitle) heroTitle.innerText = cms.heroTitle;
-            if (heroDesc && cms?.heroSubtitle) heroDesc.innerText = cms.heroSubtitle;
-            if (missionText && aboutCms?.mission) missionText.innerText = aboutCms.mission;
-            if (visionText && aboutCms?.vision) visionText.innerText = aboutCms.vision;
-          }
-        })
-        .catch(err => console.error('Error fetching CMS:', err));
+    // Fetch CMS Content
+    fetch('http://localhost:5000/api/cms')
+      .then(response => response.json())
+      .then(data => {
+        if (data.success && data.content) {
+          const cms = data.content.homepage;
+          const aboutCms = data.content.aboutUs;
+
+          const heroTitle = document.getElementById('hero-title');
+          const heroDesc = document.getElementById('hero-desc');
+          const missionText = document.getElementById('mission-text');
+          const visionText = document.getElementById('vision-text');
+
+          if (heroTitle && cms?.heroTitle) heroTitle.innerText = cms.heroTitle;
+          if (heroDesc && cms?.heroSubtitle) heroDesc.innerText = cms.heroSubtitle;
+          if (missionText && aboutCms?.mission) missionText.innerText = aboutCms.mission;
+          if (visionText && aboutCms?.vision) visionText.innerText = aboutCms.vision;
+        }
+      })
+      .catch(err => console.error('Error fetching CMS:', err));
   </script>
 </body>
 
