@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Image, Upload, Trash2, Loader2, Plus } from 'lucide-react';
+import { Image, Upload, Trash2, Loader2, Plus, Eye, X } from 'lucide-react';
 import api from '../config/api';
 
 export default function Gallery() {
@@ -17,6 +17,7 @@ export default function Gallery() {
   const [editingImage, setEditingImage] = useState(null);
   const [editTitle, setEditTitle] = useState('');
   const [editFile, setEditFile] = useState(null);
+  const [viewingImage, setViewingImage] = useState(null);
 
   useEffect(() => {
     fetchImages();
@@ -176,6 +177,13 @@ export default function Gallery() {
                 />
                 <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
                   <button 
+                    onClick={() => setViewingImage(img)}
+                    className="p-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg shadow-lg transition-colors"
+                    title="View Image"
+                  >
+                    <Eye className="w-5 h-5" />
+                  </button>
+                  <button 
                     onClick={() => handleEditClick(img)}
                     className="p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-lg transition-colors"
                     title="Edit Image"
@@ -201,6 +209,35 @@ export default function Gallery() {
               </div>
             </div>
           ))}
+        </div>
+      )}
+
+      {/* View Modal */}
+      {viewingImage && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-[fadeIn_0.2s_ease-out]">
+          <div className="bg-white rounded-2xl w-full max-w-3xl overflow-hidden shadow-2xl relative animate-[slideUp_0.25s_ease-out]">
+            <button 
+              onClick={() => setViewingImage(null)}
+              className="absolute top-4 right-4 p-2 bg-black/20 hover:bg-black/40 text-white rounded-full transition-colors z-10"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            <div className="w-full h-[60vh] bg-slate-100 flex items-center justify-center overflow-hidden">
+              <img 
+                src={`${api.defaults.baseURL.replace('/api', '')}${viewingImage.imageUrl}`} 
+                alt={viewingImage.title} 
+                className="w-full h-full object-contain"
+              />
+            </div>
+            <div className="p-6 bg-white">
+              <h2 className="text-xl font-bold text-slate-900 mb-2">{viewingImage.title}</h2>
+              <div className="flex flex-col sm:flex-row gap-4 text-sm text-slate-600">
+                <p><span className="font-semibold">Uploaded On:</span> {new Date(viewingImage.createdAt).toLocaleString()}</p>
+                <p><span className="font-semibold">Type:</span> {viewingImage.contentType || 'N/A'}</p>
+                <p><span className="font-semibold">ID:</span> {viewingImage._id}</p>
+              </div>
+            </div>
+          </div>
         </div>
       )}
 

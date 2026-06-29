@@ -52,15 +52,6 @@ export default function Sidebar() {
 
       {/* Navigation (Scrollbar hidden across all major browsers) */}
       <nav className="flex-1 overflow-y-auto py-6 px-4 space-y-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-        {/* OVERVIEW */}
-        <p className="inline-block px-4 mb-[0.85rem] text-[0.82rem] font-ui font-bold text-[var(--gold-dark,#B8860B)] uppercase tracking-[0.18em]">
-          Overview
-        </p>
-        <NavLink to="/" end className={navLinkClass}>
-          <LayoutDashboard className="w-4.5 h-4.5" />
-          <span className="font-ui">Dashboard</span>
-        </NavLink>
-
         {/* ADMIN ONLY SECTIONS */}
         {(userProfile?.role === 'admin' || userProfile?.role === 'super_admin') && (
           <>

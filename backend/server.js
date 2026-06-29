@@ -75,6 +75,9 @@
     app.use("/api/cms", cmsRoutes);
     app.use("/api/activities", activityRoutes);
     app.use("/api/search", searchRoutes);
+    app.use("/api/public", publicRoutes);
+    app.use("/api/projects", projectRoutes);
+    app.use("/api/notifications", notificationRoutes);
     
     app.get("/", (req, res) => res.send("Backend Running"));
     app.get("/health", (req, res) => res.json({ success: true, message: "OK" }));
@@ -83,6 +86,7 @@
         res.status(err.status || 500).json({ success: false, message: err.message });
     });
     
-    const PORT = process.env.PORT || 5000;
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-    
+    const PORT = process.env.PORT || 5001;
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });

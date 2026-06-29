@@ -2,7 +2,6 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
 import AdminLayout from './layouts/AdminLayout';
 import Login from './pages/Login';
-import Dashboard from './pages/Dashboard';
 import Candidates from './pages/Candidates';
 import Members from './pages/Members';
 import Donations from './pages/Donations';
@@ -25,9 +24,7 @@ export default function App() {
         path="/"
         element={
           <ProtectedRoute>
-            <AdminLayout>
-              <Dashboard />
-            </AdminLayout>
+            <Navigate to="/candidates" replace />
           </ProtectedRoute>
         }
       />

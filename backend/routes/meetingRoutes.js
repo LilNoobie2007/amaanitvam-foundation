@@ -8,11 +8,14 @@ import {
     uploadMinutes
 } from '../controllers/meetingController.js';
 import upload from '../middleware/upload.js';
+import { verifyFirebaseToken, requireAdmin } from '../middleware/verifyFirebaseToken.js';
 
 const meetingRouter = express.Router();
 
+meetingRouter.use(verifyFirebaseToken);
+
 // Create Meeting
-meetingRouter.post('/create', createMeeting);
+meetingRouter.post('/create', requireAdmin, createMeeting);
 
 // Get All Meetings
 meetingRouter.get('/', getMeetings);
