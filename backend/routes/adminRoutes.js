@@ -7,6 +7,7 @@ import {
     createCampaign
 } from "../controllers/campaignController.js";
 import {
+    updateProfile,
     getMe,
     getDashboardStats,
     getCandidates,
@@ -58,6 +59,7 @@ router.get('/seed', async (req, res) => {
 router.use(verifyFirebaseToken);
 
 router.get('/me', getMe);
+router.post('/update-profile', updateProfile);
 router.get('/stats', requireAdmin, requireAllowedIP, getDashboardStats);
 router.get(
   "/reports",
