@@ -33,7 +33,7 @@ export function AuthProvider({ children }) {
   const logout = () => signOut(auth);
   const resetPassword = (email) => sendPasswordResetEmail(auth, email);
 
-  const value = { user, userProfile, loading, login, logout, resetPassword };
+  const value = { user, userProfile, setUserProfile, loading, login, logout, resetPassword };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

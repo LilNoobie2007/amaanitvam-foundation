@@ -10,6 +10,65 @@ import AuditLog from '../models/auditLog.js';
 // GET /api/admin/me
 export const getMe = async (req, res) => {
     res.json({ success: true, user: req.user });
+
+};
+
+
+// POST /api/admin/update-profile
+    export const updateProfile = async (req, res) => {
+    try {
+        const { name, phone, department, profileImage } = req.body;
+
+    const updateData = {
+      name: name?.trim(),
+      phone: phone?.trim() || '',
+      department: department?.trim() || ''
+    };
+
+    if (!updateData.name) {
+      return res.status(400).json({
+        success: false,
+        message: 'Name is required.'
+      });
+    }
+
+    if (profileImage) {
+      if (!String(profileImage).startsWith('data:image/')) {
+        return res.status(400).json({
+          success: false,
+          message: 'Invalid profile image format.'
+        });
+      }
+      updateData.profileImage = profileImage;
+    }
+
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      updateData,
+      { returnDocument: 'after', runValidators: true }
+    );
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found.'
+      });
+    }
+
+    res.json({
+      success: true,
+      message: 'Profile updated successfully.',
+      user
+    });
+  } catch (error) {
+    console.error('Update profile error:', error);
+    res.status(500).json({
+      success: false,
+      message: error.message || 'Failed to update profile.'
+   });
+  }
+
+
 };
 
 // GET /api/admin/stats

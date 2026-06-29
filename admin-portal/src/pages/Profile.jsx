@@ -5,7 +5,7 @@ import api from '../config/api';
 import toast from 'react-hot-toast';
 
 export default function Profile() {
-  const { userProfile } = useAuth();
+  const { userProfile, setUserProfile } = useAuth();
   const [formData, setFormData] = useState({ name: '', phone: '', department: '' });
   const [profileImage, setProfileImage] = useState(null);
   const [previewUrl, setPreviewUrl] = useState('');
@@ -59,7 +59,8 @@ export default function Profile() {
         payload.profileImage = base64Image;
       }
 
-      await api.post('/admin/update-profile', payload);
+      const res = await api.post('/admin/update-profile', payload);
+      setUserProfile(res.data.user);
       toast.success('Profile updated successfully!');
       setProfileImage(null);
     } catch (err) {
