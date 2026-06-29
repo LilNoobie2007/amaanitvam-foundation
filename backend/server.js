@@ -55,7 +55,7 @@
         credentials: true
     }));
     
-    app.use(express.json({ limit: "100kb" }));
+    app.use(express.json({ limit: "10mb" }));
     app.use(express.urlencoded({ extended: true }));
     
     app.use("/uploads", express.static(path.join(__dirname, "uploads")));
@@ -86,7 +86,7 @@
         res.status(err.status || 500).json({ success: false, message: err.message });
     });
     
-    const PORT = process.env.PORT || 5001;
+    const PORT = process.env.PORT || 5000;
     app.listen(PORT, () => {
         console.log(`Server running on port ${PORT}`);
     });

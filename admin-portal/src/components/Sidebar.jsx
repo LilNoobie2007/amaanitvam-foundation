@@ -131,9 +131,17 @@ export default function Sidebar() {
       {/* Footer — User Info */}
       <div className="px-4 py-4 border-t border-gold/10 bg-primary/10">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-gold/20 border border-gold/30 rounded-full flex items-center justify-center text-gold text-sm font-bold shrink-0">
-            {userProfile?.name?.charAt(0)?.toUpperCase() || 'A'}
-          </div>
+          {userProfile?.profileImage ? (
+            <img 
+              src={userProfile.profileImage} 
+              alt="Profile" 
+              className="w-10 h-10 rounded-full object-cover border border-gold/30 shrink-0" 
+            />
+          ) : (
+            <div className="w-10 h-10 bg-gold/20 border border-gold/30 rounded-full flex items-center justify-center text-gold text-sm font-bold shrink-0">
+              {userProfile?.name?.charAt(0)?.toUpperCase() || 'A'}
+            </div>
+          )}
           <div className="flex-1 min-w-0">
             <p className="text-xs font-ui font-bold text-white truncate" title={userProfile?.name}>
               {userProfile?.name?.split(' ')[0] || 'Admin'}

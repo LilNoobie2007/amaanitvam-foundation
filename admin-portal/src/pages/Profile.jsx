@@ -39,16 +39,27 @@ export default function Profile() {
     e.preventDefault();
     setSaving(true);
     try {
-      const data = new FormData();
-      data.append('name', formData.name);
-      data.append('phone', formData.phone);
-      data.append('department', formData.department);
+      let base64Image = null;
       if (profileImage) {
-        data.append('profileImage', profileImage);
+        base64Image = await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(profileImage);
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = error => reject(error);
+        });
       }
-      await api.put('/admin/me', data, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      });
+
+      const payload = {
+        name: formData.name,
+        phone: formData.phone,
+        department: formData.department,
+      };
+
+      if (base64Image) {
+        payload.profileImage = base64Image;
+      }
+
+      await api.post('/admin/update-profile', payload);
       toast.success('Profile updated successfully!');
       setProfileImage(null);
     } catch (err) {

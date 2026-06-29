@@ -188,7 +188,7 @@ export const updateMemberRole = async (req, res) => {
     const member = await User.findByIdAndUpdate(
       req.params.id,
       { role },
-      { new: true, runValidators: true }
+      { returnDocument: 'after', runValidators: true }
     );
 
     if (!member) {
@@ -424,7 +424,7 @@ export const updateMember = async (req, res) => {
     const member = await User.findByIdAndUpdate(
       req.params.id,
       { name, phone, department },
-      { new: true, runValidators: true }
+      { returnDocument: 'after', runValidators: true }
     );
 
     if (!member) {
@@ -472,7 +472,7 @@ export const updateSettings = async (req, res) => {
         const updated = await Setting.findByIdAndUpdate(
             settings._id,
             req.body,
-            { new: true }
+            { returnDocument: 'after' }
         );
 
         await AuditLog.create({
