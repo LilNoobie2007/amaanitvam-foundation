@@ -1435,11 +1435,10 @@ body[data-page="verify"] .card .section-header .section-label::after {
   visibility: visible !important;
   opacity: 1 !important;
   width: 100% !important;
-  min-height: 0 !important;
-  max-width: 750px !important;
+  max-width: 1180px !important;
   margin: 0 auto !important;
-  padding: 3rem 2rem !important;
-  border-radius: 24px !important;
+  padding: 40px !important;
+  border-radius: 28px !important;
   background: #fff7f8 !important;
   overflow: visible !important;
 }
