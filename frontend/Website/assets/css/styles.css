@@ -6580,3 +6580,82 @@ body[data-page="contact"] .contact-hero,
   color: var(--gold) !important;
   -webkit-text-fill-color: var(--gold) !important;
 }
+
+/* FAQ page arranged like contact FAQ - keep all sections */
+body[data-page="faq"] .page-hero {
+  display: block !important;
+}
+
+body[data-page="faq"] main#main-content>section:not(.page-hero) {
+  padding: 72px 0 !important;
+}
+
+body[data-page="faq"] .section-header {
+  text-align: center !important;
+  max-width: 900px !important;
+  margin: 0 auto 3.5rem !important;
+}
+
+body[data-page="faq"] .faq-list {
+  width: 100% !important;
+  max-width: 920px !important;
+  margin: 0 auto !important;
+}
+
+body[data-page="faq"] .faq-item {
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(93, 15, 45, 0.18) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+body[data-page="faq"] .faq-question {
+  width: 100% !important;
+  min-height: 70px !important;
+  padding: 22px 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 24px !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  color: var(--primary) !important;
+  font-family: var(--font-ui) !important;
+  font-size: 1.12rem !important;
+  font-weight: 700 !important;
+  line-height: 1.4 !important;
+  text-align: left !important;
+  cursor: pointer !important;
+}
+
+body[data-page="faq"] .faq-answer {
+  display: block !important;
+  max-height: 0 !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  color: var(--muted) !important;
+  font-size: 0.98rem !important;
+  line-height: 1.75 !important;
+  transition: max-height .3s ease, padding .3s ease !important;
+}
+
+body[data-page="faq"] .faq-item.is-open .faq-answer {
+  max-height: 320px !important;
+  padding: 0 0 22px !important;
+}
+
+body[data-page="faq"] .faq-icon {
+  flex-shrink: 0 !important;
+  font-size: 24px !important;
+  color: var(--primary) !important;
+  transition: transform .3s ease !important;
+}
+
+body[data-page="faq"] .faq-item.is-open .faq-icon {
+  transform: rotate(180deg) !important;
+}
