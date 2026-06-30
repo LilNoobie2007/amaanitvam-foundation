@@ -11,6 +11,7 @@ import ProfilePage from './pages/ProfilePage';
 import InternReportsPage from './pages/InternReportsPage';
 import AttendancePage from './pages/AttendancePage';
 import MyCertificatesPage from './pages/MyCertificatesPage';
+import DepartmentsPage from './pages/DepartmentsPage';
 
 function DashPage({ children }) {
   return <ProtectedRoute><DashboardLayout>{children}</DashboardLayout></ProtectedRoute>;
@@ -29,6 +30,7 @@ export default function App() {
       <Route path="/intern-reports" element={<DashPage><InternReportsPage /></DashPage>} />
       <Route path="/attendance" element={<DashPage><AttendancePage /></DashPage>} />
       <Route path="/my-certificates" element={<DashPage><MyCertificatesPage /></DashPage>} />
+      <Route path="/departments" element={<DashPage><DepartmentsPage /></DashPage>} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

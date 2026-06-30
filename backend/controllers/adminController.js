@@ -6,6 +6,7 @@ import Donation from '../models/donation.js';
 import Certificate from '../models/certificate.js';
 import Setting from '../models/setting.js';
 import AuditLog from '../models/auditLog.js';
+import Department from '../models/department.js';
 
 // GET /api/admin/me
 export const getMe = async (req, res) => {
@@ -53,12 +54,25 @@ export const getCandidates = async (req, res) => {
         if (status) query.status = status;
 
         const skip = (Number(page) - 1) * Number(limit);
-        const [candidates, total] = await Promise.all([
+        const [candidates, total, departmentDomains] = await Promise.all([
             InternshipApplication.find(query).sort({ createdAt: -1 }).skip(skip).limit(Number(limit)),
-            InternshipApplication.countDocuments(query)
+            InternshipApplication.countDocuments(query),
+            Department.distinct('departmentName')
         ]);
 
-        res.json({ success: true, candidates, total, page: Number(page), totalPages: Math.ceil(total / limit) });
+        const domainSet = new Set([
+            ...candidates.map((candidate) => candidate?.track).filter(Boolean),
+            ...departmentDomains.filter(Boolean),
+        ]);
+
+        res.json({
+            success: true,
+            candidates,
+            total,
+            page: Number(page),
+            totalPages: Math.ceil(total / limit),
+            domains: [...domainSet].sort(),
+        });
     } catch (error) {
         console.error('Candidates error:', error);
         res.status(500).json({ success: false, message: 'Failed to fetch candidates.' });

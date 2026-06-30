@@ -1,8 +1,18 @@
 import Department from "../models/department.js";
 import User from "../models/user.js";
 
-/*CREATE Department*/
+const requireAdminUser = (req, res) => {
+  if (req.user?.role !== "admin" && req.user?.role !== "super_admin") {
+    return res.status(403).json({ message: "Admin access required." });
+  }
+  return null;
+};
+
+//CREATE Department
 export const createDepartment = async (req, res) => {
+  const authError = requireAdminUser(req, res);
+  if (authError) return authError;
+
   try {
     const {
       departmentName,
@@ -69,6 +79,9 @@ export const createDepartment = async (req, res) => {
 
 //edit
 export const editDepartment = async (req, res) => {
+  const authError = requireAdminUser(req, res);
+  if (authError) return authError;
+
   try {
     const { id } = req.params;
 
@@ -151,6 +164,9 @@ export const getDepartmentById = async (req, res) => {
 
 //delete 
 export const deleteDepartment = async (req, res) => {
+  const authError = requireAdminUser(req, res);
+  if (authError) return authError;
+
   try {
     const { id } = req.params;
 
@@ -168,7 +184,6 @@ export const deleteDepartment = async (req, res) => {
   }
 };
 // assign member...
-
 export const assignMember = async (req, res) => {
   try {
     const departmentId = req.params.id || req.body.departmentId;
@@ -213,6 +228,18 @@ export const assignMember = async (req, res) => {
 
 // department performance 
 
+const canUpdatePerformance = (req, department) => {
+  if (req.user?.role === "admin" || req.user?.role === "super_admin") {
+    return true;
+  }
+
+  if (department.departmentHead && req.user?._id?.toString() === department.departmentHead.toString()) {
+    return true;
+  }
+
+  return false;
+};
+
 export const updatePerformance = async (req, res) => {
   try {
     const { id } = req.params;
@@ -228,6 +255,10 @@ export const updatePerformance = async (req, res) => {
 
     if (!department) {
       return res.status(404).json({ message: "Department not found" });
+    }
+
+    if (!canUpdatePerformance(req, department)) {
+      return res.status(403).json({ message: "Only the department head or an admin can update department performance." });
     }
 
     department.performance = performance;

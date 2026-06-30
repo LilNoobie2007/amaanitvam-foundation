@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, CalendarDays, ClipboardList, Megaphone, FolderKanban, CalendarCheck, Shield, UserCircle, LogOut, BarChart3 } from 'lucide-react';
+import { LayoutDashboard, CalendarDays, ClipboardList, Megaphone, FolderKanban, CalendarCheck, Shield, UserCircle, LogOut, BarChart3, Building2 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { useState, useEffect } from 'react';
 import api from '../config/api';
@@ -88,6 +88,10 @@ export default function Sidebar() {
           <FolderKanban className="w-[18px] h-[18px] opacity-70" />
           Projects
         </NavLink>
+        <NavLink to="/departments" className={navLinkClass}>
+          <Building2 className="w-[18px] h-[18px] opacity-70" />
+          Departments
+        </NavLink>
 
         {/* Member/Intern workspace */}
         {!isAdmin && (
@@ -110,11 +114,15 @@ export default function Sidebar() {
         {isAdmin && (
           <>
             <p className="px-4 pt-5 pb-1.5 text-xs font-semibold text-slate-500 uppercase tracking-wider">
-              Reports
+              My WorkSpace
             </p>
             <NavLink to="/user-reports" className={navLinkClass}>
               <BarChart3 className="w-[18px] h-[18px] opacity-70" />
-              All User Reports
+              Report
+            </NavLink>
+            <NavLink to="/attendance" className={navLinkClass}>
+              <BarChart3 className="w-[18px] h-[18px] opacity-70" />
+              Attendance
             </NavLink>
           </>
         )}

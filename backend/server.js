@@ -19,6 +19,7 @@
     import announcementRoutes from "./routes/announcementRoutes.js";
     import projectRoutes from "./routes/projectRoutes.js";
     import departmentRoutes from "./routes/departmentRoutes.js";
+    import attendanceRoutes from "./routes/attendanceRoutes.js";
     import notificationRoutes from "./routes/notificationRoutes.js";
     import publicRoutes from "./routes/publicRoutes.js";
     import cmsRoutes from "./routes/cmsRoutes.js";
@@ -72,6 +73,7 @@
     app.use("/api/tasks", taskRoutes);
     app.use("/api/announcements", announcementRoutes);
     app.use("/api/departments", departmentRoutes);
+    app.use("/api/attendance", attendanceRoutes);
     app.use("/api/cms", cmsRoutes);
     app.use("/api/activities", activityRoutes);
     app.use("/api/search", searchRoutes);

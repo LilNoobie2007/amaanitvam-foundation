@@ -1,4 +1,5 @@
 import express from "express";
+import { verifyFirebaseToken, requireAdmin } from '../middleware/verifyFirebaseToken.js';
 
 import {
   createDepartment,
@@ -13,41 +14,22 @@ import {
 
 const router = express.Router();
 
-/* =========================
-   CREATE Department
-========================= */
-router.post("/create", createDepartment);
+router.use(verifyFirebaseToken);
 
-/* =========================
-   GET Departments
-========================= */
+// CREATE Department
+router.post("/create", requireAdmin, createDepartment);
+
+//   GET Departments
 router.get("/", getDepartments);
 router.get("/:id", getDepartmentById);
+//   EDIT Department
+router.put("/:id", requireAdmin, editDepartment);
 
-/* =========================
-   EDIT Department
-   (includes optional head update)
-========================= */
-router.put("/:id", editDepartment);
-
-/* =========================
-   DELETE Department
-========================= */
-router.delete("/:id", deleteDepartment);
-
-/* =========================
-   ASSIGN MEMBER
-========================= */
-router.post("/:id/assign-member", assignMember);
-
-/* =========================
-   UPDATE PERFORMANCE
-========================= */
+//   DELETE Department
+router.delete("/:id", requireAdmin, deleteDepartment);
+//   UPDATE PERFORMANCE
 router.put("/:id/performance", updatePerformance);
-
-/* =========================
-   DEPARTMENT REPORT
-========================= */
+ //  DEPARTMENT REPORT
 router.get("/:id/report", getDepartmentReport);
 
 export default router;
