@@ -1,25 +1,25 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <title>Amaanitvam Team Dashboard</title>
-  <link rel="stylesheet" href="assets/css/styles.css" />
+  <link href="assets/css/styles.css" rel="stylesheet" />
 </head>
 
 <body class="dashboard-page">
   <div class="app-shell">
     <aside class="sidebar">
-      <a class="brand" href="dashboard.html" aria-label="NGO Dashboard Home">
+      <a aria-label="NGO Dashboard Home" class="brand" href="dashboard.html">
         <span class="brand-mark">A</span>
         <span>
           <strong>Amaanitvam</strong>
           <small>Foundation Dashboard</small>
         </span>
       </a>
-
-      <nav class="side-nav" aria-label="Dashboard sections">
+      <nav aria-label="Dashboard sections" class="side-nav">
         <a class="active" href="dashboard.html#overview"><span>Overview</span><b>15</b></a>
         <a href="section.html?view=members"><span>Members</span><b>1.2k</b></a>
         <a href="section.html?view=recruitment"><span>Recruitment</span><b>86</b></a>
@@ -30,28 +30,23 @@
         <a href="section.html?view=reports"><span>Reports</span><b>PDF</b></a>
       </nav>
     </aside>
-
     <main class="main">
       <header class="topbar">
-        <button class="icon-btn menu-toggle" id="menuToggle" type="button" aria-label="Toggle menu"
-          aria-expanded="false">
+        <button aria-expanded="false" aria-label="Toggle menu" class="icon-btn menu-toggle" id="menuToggle"
+          type="button">
           <span></span><span></span><span></span>
         </button>
-
         <div>
           <p class="eyebrow">Centralized NGO Operations</p>
           <h1>Dashboard Overview</h1>
         </div>
-
         <form class="searchbar" role="search">
-          <input type="search" placeholder="Search members, candidates, reports..." aria-label="Global search" />
+          <input aria-label="Global search" placeholder="Search members, candidates, reports..." type="search" />
           <button type="submit">Search</button>
         </form>
-
         <span class="team-pill"><span>A</span><strong>Team</strong></span>
       </header>
-
-      <section class="filter-strip" aria-label="Dashboard filters">
+      <section aria-label="Dashboard filters" class="filter-strip">
         <select aria-label="Department filter">
           <option>All Departments</option>
           <option>Education</option>
@@ -64,7 +59,7 @@
           <option>Volunteer</option>
           <option>Authority</option>
         </select>
-        <input type="date" value="2026-06-29" aria-label="Filter by date" />
+        <input aria-label="Filter by date" type="date" value="2026-06-29" />
         <select aria-label="Status filter">
           <option>All Statuses</option>
           <option>Pending</option>
@@ -73,8 +68,7 @@
         </select>
         <button class="secondary-btn" type="button">Export Data</button>
       </section>
-
-      <section id="overview" class="hero-grid">
+      <section class="hero-grid" id="overview">
         <article class="welcome-panel">
           <div>
             <p class="eyebrow">Today, 29 Jun 2026</p>
@@ -88,7 +82,6 @@
             <a href="section.html?view=meetings">Schedule Meeting</a>
           </div>
         </article>
-
         <article class="priority-panel panel">
           <div class="panel-head">
             <h2>Priority Alerts</h2><a href="section.html?view=notifications">View All</a>
@@ -100,9 +93,7 @@
           </ul>
         </article>
       </section>
-
-      <section class="stats-grid" id="statsGrid" aria-label="Dashboard statistics"></section>
-
+      <section aria-label="Dashboard statistics" class="stats-grid" id="statsGrid"></section>
       <section class="content-grid">
         <article class="panel wide">
           <div class="panel-head">
@@ -110,16 +101,16 @@
               <p class="eyebrow">NGO Growth Statistics</p>
               <h2>Monthly Growth Chart</h2>
             </div><a href="section.html?view=reports#donation-analytics">Analytics</a>
-          </div><canvas id="growthChart" height="130" aria-label="Monthly growth chart"></canvas>
+          </div><canvas aria-label="Monthly growth chart" height="130" id="growthChart"></canvas>
         </article>
         <article class="panel">
           <div class="panel-head">
             <h2>Task Progress</h2><a href="section.html?view=tasks">Open</a>
           </div>
           <div class="progress-stack">
-            <div><span>Completed</span><b>68%</b><i style="--w:68%"></i></div>
-            <div><span>In Progress</span><b>21%</b><i style="--w:21%"></i></div>
-            <div><span>Pending</span><b>11%</b><i style="--w:11%"></i></div>
+            <div><span>Completed</span><b>68%</b><i class="moved-inline-style-final-010"></i></div>
+            <div><span>In Progress</span><b>21%</b><i class="moved-inline-style-final-011"></i></div>
+            <div><span>Pending</span><b>11%</b><i class="moved-inline-style-final-012"></i></div>
           </div>
         </article>
         <article class="panel">
@@ -141,8 +132,7 @@
           <div class="action-grid" id="quickActions"></div>
         </article>
       </section>
-
-      <section class="module-section" aria-label="All dashboard modules">
+      <section aria-label="All dashboard modules" class="module-section">
         <div class="section-title">
           <div>
             <p class="eyebrow">Role-Based Modules</p>

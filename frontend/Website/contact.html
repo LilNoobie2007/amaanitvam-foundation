@@ -216,16 +216,13 @@
     </div>
   </header>
   <main id="main-content">
-    <section class="page-hero has-image" data-hero=""
-      style="position: relative; background-image: linear-gradient(135deg, rgba(86, 5, 26, 0.88), rgba(86, 5, 26, 0.6)), url('assets/images/hero.png'); background-size: cover; background-position: center; background-repeat: no-repeat; padding: 6rem 0; min-height: 480px; display: flex; align-items: center; overflow: hidden;">
-      <div class="container" style="display: flex; justify-content: center; text-align: center; width: 100%;">
-        <div style="max-width: 960px;">
-          <br><br><span class="section-label" style="color: var(--gold); opacity: 1;">Contact Us</span>
-          <h1 class="section-title"
-            style="font-size: clamp(2.5rem, 6vw, 4rem); margin-bottom: 1.25rem; color: #ffffff !important; opacity: 1;">
+    <section class="page-hero has-image moved-inline-style-final-001" data-hero="">
+      <div class="container moved-inline-style-final-002">
+        <div class="moved-inline-style-final-003">
+          <br /><br /><span class="section-label moved-inline-style-final-007">Contact Us</span>
+          <h1 class="section-title moved-inline-style-final-005">
             Let's Create Impact Together</h1>
-          <p class="section-desc"
-            style="max-width: 960px; margin: 0 auto; color: #ffffff; opacity: 1; font-size: 1.25rem;">
+          <p class="section-desc moved-inline-style-final-006">
             Amaanitvam Foundation welcomes individuals, volunteers, donors, organizations, and community partners who
             wish
             to connect, collaborate, or support our mission. Reach out to us for inquiries related to donations,
@@ -411,10 +408,10 @@
         </div>
       </div>
     </section>
-    <section aria-labelledby="donation-heading" class="section section-white donation-section" id="donate"
-      style="max-width: none !important; border-radius: 0 !important; padding: var(--section-py) 0 !important;">
+    <section aria-labelledby="donation-heading"
+      class="section section-white donation-section moved-inline-style-final-008" id="donate">
       <div class="container">
-        <div class="split-2" style="align-items: start;">
+        <div class="split-2 moved-inline-style-final-009">
           <div class="donation-form-card">
             <h2 class="donation-heading" id="donation-heading">
               <span aria-hidden="true">❤️</span> Donation Details
@@ -498,7 +495,6 @@
       </div>
     </section>
   </main>
-
   <div id="footer"></div>
   <a class="floating-donate" href="contact.html#donate">
     ❤ Donate Now
@@ -519,255 +515,10 @@
     </a>
   </div>
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+
+
   <script src="assets/js/main.js"></script>
-  <script>
-    (function () {
-
-      let selectedAmount = 0;
-      const amountBtns = document.querySelectorAll('.amount-btn');
-      const customAmountInput = document.getElementById('customAmount');
-
-      amountBtns.forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          amountBtns.forEach(function (b) { b.classList.remove('active'); });
-          btn.classList.add('active');
-          selectedAmount = Number(btn.dataset.amount);
-          if (customAmountInput) customAmountInput.value = '';
-        });
-      });
-
-      if (customAmountInput) {
-        customAmountInput.addEventListener('input', function () {
-          amountBtns.forEach(function (b) { b.classList.remove('active'); });
-          selectedAmount = Number(customAmountInput.value) || 0;
-        });
-      }
-
-      var payButton = document.getElementById('payButton');
-      var donateStatus = document.getElementById('donate-status');
-
-      if (payButton) {
-        payButton.addEventListener('click', async function () {
-          var name = document.getElementById('donorName').value.trim();
-          var email = document.getElementById('donorEmail').value.trim();
-          var phone = document.getElementById('donorPhone').value.trim();
-
-          if (!name || !email) {
-            donateStatus.textContent = 'Please enter your name and email.';
-            donateStatus.style.color = 'red';
-            return;
-          }
-
-          if (selectedAmount < 10) {
-            donateStatus.textContent = 'Minimum donation amount is ₹10.';
-            donateStatus.style.color = 'red';
-            return;
-          }
-
-          payButton.disabled = true;
-          payButton.textContent = 'Processing...';
-          donateStatus.textContent = '';
-
-          try {
-
-            var response = await fetch('http://localhost:5000/api/donate/create-order', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ name: name, email: email, phone: phone, amount: selectedAmount })
-            });
-            var data = await response.json();
-
-            if (!response.ok || !data.success) {
-              donateStatus.textContent = data.message || 'Failed to create order.';
-              donateStatus.style.color = 'red';
-              payButton.disabled = false;
-              payButton.textContent = 'Proceed to Pay Securely';
-              return;
-            }
-
-            var options = {
-              key: data.key,
-              amount: data.order.amount,
-              currency: data.order.currency,
-              name: 'Amaanitvam Foundation',
-              description: 'Donation to Amaanitvam Foundation',
-              order_id: data.order.id,
-              prefill: {
-                name: data.donor.name,
-                email: data.donor.email,
-                contact: data.donor.phone
-              },
-              theme: {
-                color: '#56051a'
-              },
-              handler: async function (paymentResponse) {
-
-                try {
-                  var verifyRes = await fetch('http://localhost:5000/api/donate/verify', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                      razorpay_order_id: paymentResponse.razorpay_order_id,
-                      razorpay_payment_id: paymentResponse.razorpay_payment_id,
-                      razorpay_signature: paymentResponse.razorpay_signature
-                    })
-                  });
-                  var verifyData = await verifyRes.json();
-
-                  if (verifyRes.ok && verifyData.success) {
-                    donateStatus.textContent = '✅ ' + (verifyData.message || 'Payment successful! Thank you!');
-                    donateStatus.style.color = '#22c55e';
-
-                    document.getElementById('donorName').value = '';
-                    document.getElementById('donorEmail').value = '';
-                    document.getElementById('donorPhone').value = '';
-                    if (customAmountInput) customAmountInput.value = '';
-                    amountBtns.forEach(function (b) { b.classList.remove('active'); });
-                    selectedAmount = 0;
-                  } else {
-                    donateStatus.textContent = verifyData.message || 'Payment verification failed.';
-                    donateStatus.style.color = 'red';
-                  }
-                } catch (err) {
-                  donateStatus.textContent = 'Payment verification error. Please contact support.';
-                  donateStatus.style.color = 'red';
-                }
-                payButton.disabled = false;
-                payButton.textContent = 'Proceed to Pay Securely';
-              },
-              modal: {
-                ondismiss: function () {
-                  payButton.disabled = false;
-                  payButton.textContent = 'Proceed to Pay Securely';
-                  donateStatus.textContent = 'Payment was cancelled.';
-                  donateStatus.style.color = '#888';
-                }
-              }
-            };
-
-            var rzp = new Razorpay(options);
-            rzp.open();
-
-          } catch (err) {
-            donateStatus.textContent = 'Failed to connect to the server.';
-            donateStatus.style.color = 'red';
-            payButton.disabled = false;
-            payButton.textContent = 'Proceed to Pay Securely';
-          }
-        });
-      }
-    })();
-  </script>
-  <script>
-    (function () {
-      const nav = document.getElementById('site-nav');
-      const menuToggle = document.getElementById('menu-toggle');
-      const mobileMenu = document.getElementById('mobile-menu');
-
-      if (nav) {
-        function onScroll() {
-          nav.classList.toggle('is-solid', window.scrollY > 60);
-        }
-        window.addEventListener('scroll', onScroll, { passive: true });
-        onScroll();
-      }
-
-      const pageMap = {
-        about: 0,
-        impact: 0,
-        programs: 0,
-        gallery: 0,
-        volunteer: 1,
-        internship: 1,
-        contact: 1,
-        collaborations: 2,
-        verify: 2,
-        faq: 2,
-        resources: 2,
-        guidelines: 2,
-        circulars: 2
-      };
-
-      const page = document.body.dataset.page;
-      if (page && pageMap[page] !== undefined) {
-        const triggers = document.querySelectorAll('.nav-link.dropdown-trigger');
-        if (triggers[pageMap[page]]) {
-          triggers[pageMap[page]].classList.add('is-active');
-        }
-      }
-
-      document.querySelectorAll('.nav-item.has-dropdown').forEach(function (item) {
-        const trigger = item.querySelector('.dropdown-trigger');
-        const menu = item.querySelector('.dropdown-menu');
-
-        function open() {
-          trigger.setAttribute('aria-expanded', 'true');
-          menu.classList.add('is-open');
-        }
-
-        function close() {
-          trigger.setAttribute('aria-expanded', 'false');
-          menu.classList.remove('is-open');
-        }
-
-        item.addEventListener('mouseenter', open);
-        item.addEventListener('mouseleave', close);
-
-        trigger.addEventListener('click', function () {
-          trigger.getAttribute('aria-expanded') === 'true' ? close() : open();
-        });
-
-        trigger.addEventListener('keydown', function (e) {
-          if (e.key === 'Escape') close();
-        });
-      });
-
-      if (menuToggle && mobileMenu) {
-        menuToggle.addEventListener('click', function () {
-          const isOpen = mobileMenu.classList.toggle('is-open');
-          menuToggle.setAttribute('aria-expanded', isOpen);
-          mobileMenu.setAttribute('aria-hidden', !isOpen);
-          menuToggle.classList.toggle('is-active', isOpen);
-        });
-      }
-
-      document.querySelectorAll('.mobile-group-toggle').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          const section = btn.closest('.mobile-section');
-          const links = section.querySelector('.mobile-group-links');
-          const isExpanded = btn.getAttribute('aria-expanded') === 'true';
-
-          document.querySelectorAll('.mobile-section').forEach(function (s) {
-            s.querySelector('.mobile-group-toggle').setAttribute('aria-expanded', 'false');
-            s.querySelector('.mobile-group-links').classList.remove('is-open');
-          });
-
-          if (!isExpanded) {
-            btn.setAttribute('aria-expanded', 'true');
-            links.classList.add('is-open');
-          }
-        });
-      });
-
-      document.addEventListener('click', function (e) {
-        if (!e.target.closest('.nav-item.has-dropdown')) {
-          document.querySelectorAll('.dropdown-trigger').forEach(function (t) {
-            t.setAttribute('aria-expanded', 'false');
-          });
-          document.querySelectorAll('.dropdown-menu').forEach(function (m) {
-            m.classList.remove('is-open');
-          });
-        }
-      });
-    })();
-
-    fetch('footer.html')
-      .then(function (response) { return response.text(); })
-      .then(function (data) {
-        const footer = document.getElementById('footer');
-        if (footer) footer.innerHTML = data;
-      });
-  </script>
 </body>
 
 </html>

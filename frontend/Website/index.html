@@ -184,39 +184,28 @@
   </header>
   <main id="main-content">
     <!-- HERO -->
-   <section aria-labelledby="hero-title" class="home-hero" data-hero=""
-  style="background-image: url('assets/images/hero.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
-
-  <div class="container hero-grid">
-    <div class="hero-content">
-
-      <h1 class="hero-title" id="hero-title">
-        What Are We, If Not for One Another?
-      </h1>
-
-      <p class="hero-desc" id="hero-desc">
-        Empowering Lives Through Education, Compassion, and Collective Action.
-        A student-led movement inspiring learning, responsibility, and positive
-        change for a stronger society.
-      </p>
-
-      <div class="hero-actions"
-        style="display:flex; flex-wrap:wrap; gap:1rem; align-items:center; padding-bottom:.5rem; overflow:visible;">
-        <a class="btn btn-primary" href="volunteer.html"
-          style="flex-shrink:0; white-space:nowrap;">
-          Volunteer Now
-        </a>
-
-        <a class="btn btn-primary" href="internship.html"
-          style="flex-shrink:0; white-space:nowrap;">
-          Apply for Internship
-        </a>
+    <section aria-labelledby="hero-title" class="home-hero" data-hero="">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <h1 class="hero-title" id="hero-title">
+            What Are We, If Not for One Another?
+          </h1>
+          <p class="hero-desc" id="hero-desc">
+            Empowering Lives Through Education, Compassion, and Collective Action.
+            A student-led movement inspiring learning, responsibility, and positive
+            change for a stronger society.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="volunteer.html">
+              Volunteer Now
+            </a>
+            <a class="btn btn-primary" href="internship.html">
+              Apply for Internship
+            </a>
+          </div>
+        </div>
       </div>
-
-    </div>
-  </div>
-
-</section>
+    </section>
     <!-- WHY US -->
     <section aria-labelledby="why-us-title" class="section section-white">
       <div class="container">
@@ -267,7 +256,6 @@
               compassionate citizens who contribute positively to society and inspire lasting change.
             </p>
           </div>
-      
           <div>
             <h3 class="moved-inline-style-099">Mission Statement</h3>
             <p class="text-muted moved-inline-style-100" id="mission-text">
@@ -281,7 +269,6 @@
       </div>
     </section>
   </main>
-
   <div id="footer"></div>
   <a class="floating-donate" href="contact.html#donate">
     ❤ Donate Now
@@ -301,140 +288,8 @@
       <i class="fa-brands fa-linkedin-in"></i>
     </a>
   </div>
-
   <script src="assets/js/main.js"></script>
 
-  <script>
-    (function () {
-      const nav = document.getElementById('site-nav');
-      const menuToggle = document.getElementById('menu-toggle');
-      const mobileMenu = document.getElementById('mobile-menu');
-
-      if (nav) {
-        function onScroll() {
-          nav.classList.toggle('is-solid', window.scrollY > 60);
-        }
-        window.addEventListener('scroll', onScroll, { passive: true });
-        onScroll();
-      }
-
-      const pageMap = {
-        about: 0,
-        impact: 0,
-        programs: 0,
-        gallery: 0,
-        volunteer: 1,
-        internship: 1,
-        contact: 1,
-        collaborations: 2,
-        verify: 2,
-        faq: 2,
-        resources: 2,
-        guidelines: 2,
-        circulars: 2
-      };
-
-      const page = document.body.dataset.page;
-      if (page && pageMap[page] !== undefined) {
-        const triggers = document.querySelectorAll('.nav-link.dropdown-trigger');
-        if (triggers[pageMap[page]]) {
-          triggers[pageMap[page]].classList.add('is-active');
-        }
-      }
-
-      document.querySelectorAll('.nav-item.has-dropdown').forEach(function (item) {
-        const trigger = item.querySelector('.dropdown-trigger');
-        const menu = item.querySelector('.dropdown-menu');
-
-        function open() {
-          trigger.setAttribute('aria-expanded', 'true');
-          menu.classList.add('is-open');
-        }
-
-        function close() {
-          trigger.setAttribute('aria-expanded', 'false');
-          menu.classList.remove('is-open');
-        }
-
-        item.addEventListener('mouseenter', open);
-        item.addEventListener('mouseleave', close);
-
-        trigger.addEventListener('click', function () {
-          trigger.getAttribute('aria-expanded') === 'true' ? close() : open();
-        });
-
-        trigger.addEventListener('keydown', function (e) {
-          if (e.key === 'Escape') close();
-        });
-      });
-
-      if (menuToggle && mobileMenu) {
-        menuToggle.addEventListener('click', function () {
-          const isOpen = mobileMenu.classList.toggle('is-open');
-          menuToggle.setAttribute('aria-expanded', isOpen);
-          mobileMenu.setAttribute('aria-hidden', !isOpen);
-          menuToggle.classList.toggle('is-active', isOpen);
-        });
-      }
-
-      document.querySelectorAll('.mobile-group-toggle').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          const section = btn.closest('.mobile-section');
-          const links = section.querySelector('.mobile-group-links');
-          const isExpanded = btn.getAttribute('aria-expanded') === 'true';
-
-          document.querySelectorAll('.mobile-section').forEach(function (s) {
-            s.querySelector('.mobile-group-toggle').setAttribute('aria-expanded', 'false');
-            s.querySelector('.mobile-group-links').classList.remove('is-open');
-          });
-
-          if (!isExpanded) {
-            btn.setAttribute('aria-expanded', 'true');
-            links.classList.add('is-open');
-          }
-        });
-      });
-
-      document.addEventListener('click', function (e) {
-        if (!e.target.closest('.nav-item.has-dropdown')) {
-          document.querySelectorAll('.dropdown-trigger').forEach(function (t) {
-            t.setAttribute('aria-expanded', 'false');
-          });
-          document.querySelectorAll('.dropdown-menu').forEach(function (m) {
-            m.classList.remove('is-open');
-          });
-        }
-      });
-    })();
-
-    fetch('footer.html')
-      .then(function (response) { return response.text(); })
-      .then(function (data) {
-        const footer = document.getElementById('footer');
-        if (footer) footer.innerHTML = data;
-      });
-
-    // Fetch CMS Content
-    fetch('http://localhost:5000/api/cms')
-      .then(response => response.json())
-      .then(data => {
-        if (data.success && data.content) {
-          const cms = data.content.homepage;
-          const aboutCms = data.content.aboutUs;
-
-          const heroTitle = document.getElementById('hero-title');
-          const heroDesc = document.getElementById('hero-desc');
-          const missionText = document.getElementById('mission-text');
-          const visionText = document.getElementById('vision-text');
-
-          if (heroTitle && cms?.heroTitle) heroTitle.innerText = cms.heroTitle;
-          if (heroDesc && cms?.heroSubtitle) heroDesc.innerText = cms.heroSubtitle;
-          if (missionText && aboutCms?.mission) missionText.innerText = aboutCms.mission;
-          if (visionText && aboutCms?.vision) visionText.innerText = aboutCms.vision;
-        }
-      })
-      .catch(err => console.error('Error fetching CMS:', err));
-  </script>
 </body>
 
 </html>
