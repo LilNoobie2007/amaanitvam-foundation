@@ -2209,14 +2209,14 @@ body[data-page="collaborations"] .partnership-box p {
 }
 
 .footer-container {
-  max-width: 1280px !important;
-  margin: 0 auto !important;
-  padding: 2rem 2rem !important;
-  display: grid !important;
-  grid-template-columns: 1.4fr 1fr 1fr 1.3fr !important;
-  gap: 3rem !important;
-  align-items: start !important;
-  width: 100% !important;
+    width: 100% !important;
+    max-width: 1400px !important;
+    margin: 0 auto !important;
+    padding: 2rem 1rem !important;
+    display: grid !important;
+    grid-template-columns: 1.4fr 1fr 1fr 1.3fr !important;
+    gap: 2rem !important;
+    align-items: start !important;
 }
 
 .footer-col {
