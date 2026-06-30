@@ -1,6 +1,6 @@
 /* =====================================================
-   COMPLETE WEBSITE CSS - DEDUPED
-   Duplicate selector blocks merged; repeated properties kept with latest value.
+   COMPLETE WEBSITE CSS - CLEANED
+   Duplicate selector blocks merged; repeated declarations kept with latest value.
    ===================================================== */
 
 @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap");
@@ -543,13 +543,13 @@ button {
   padding-top: 0;
 }
 
-.hero-grid > div,
+.hero-grid>div,
 .hero-content {
   max-width: 760px;
   margin-left: 55px;
   padding-left: 0 !important;
   text-align: left !important;
-  transform: translateY(160px) !important; /* sirf ye value badli hai */
+  transform: translateY(160px) !important;
 }
 
 .hero-title {
@@ -844,16 +844,6 @@ body[data-page="about"] .page-hero .section-label {
   font-size: 1rem !important;
   font-weight: 800 !important;
   cursor: pointer !important;
-}
-
-.donate-section .btn-primary {
-  background: var(--gold) !important;
-  color: #4a0b23 !important;
-  border: 2px solid var(--gold) !important;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, .18) !important;
-  font-size: 1.7rem !important;
-  padding: 20px 50px !important;
-  margin-top: 30px !important;
 }
 
 .donate-section .btn-primary:hover {
@@ -1221,10 +1211,6 @@ body[data-page="home"] .section.section-white .card p {
   text-transform: uppercase;
 }
 
-/* =========================
-   DONATION SECTION - FIXED
-   ========================= */
-
 .section:has(.donate-section) {
   background: var(--bg) !important;
   margin: 0 !important;
@@ -1235,17 +1221,6 @@ body[data-page="home"] .section.section-white .card p {
   max-width: 1200px !important;
   margin: 0 auto !important;
   padding: 0 20px !important;
-}
-
-.donate-section {
-  max-width: 1100px !important;
-  margin: 0 auto !important;
-  padding: 55px 40px !important;
-  border-radius: 30px !important;
-  background: linear-gradient(135deg, #690b31, #9b0f58) !important;
-  text-align: center !important;
-  color: #fff !important;
-  box-shadow: 0 15px 35px rgba(93, 15, 45, .25) !important;
 }
 
 .donate-section .section-label {
@@ -1268,19 +1243,13 @@ body[data-page="home"] .section.section-white .card p {
   text-align: center !important;
 }
 
-.donate-section p {
-  color: #fff !important;
-  max-width: 780px !important;
-  margin: 0 auto !important;
-  font-size: 1.05rem !important;
-  line-height: 1.75 !important;
-}
-
-.donate-section .donation-cta-note {
-  margin: 0 auto 25px !important;
-}
-
 .donate-section .btn-primary {
+  background: var(--gold) !important;
+  color: #4a0b23 !important;
+  border: 2px solid var(--gold) !important;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, .18) !important;
+  font-size: 1.7rem !important;
+  padding: 20px 50px !important;
   margin-top: 10px !important;
 }
 
@@ -1698,18 +1667,21 @@ body[data-page="verify"] .card .section-header .section-label::after {
   border-radius: 24px !important;
   background: linear-gradient(135deg, #690b31, #8a164b) !important;
   text-align: center !important;
-  box-shadow: 0 14px 32px rgba(93, 15, 45, .22) !important;
   color: #fff !important;
+  box-shadow: 0 14px 32px rgba(93, 15, 45, .22) !important;
 }
 
 .donate-section p {
   color: #fff !important;
   max-width: 560px !important;
   margin: 0 auto .5rem !important;
+  font-size: 1.05rem !important;
+  line-height: 1.75 !important;
   font-weight: 600 !important;
 }
 
 .donate-section .donation-cta-note {
+  margin: 0 auto 25px !important;
   margin-bottom: 1.25rem !important;
 }
 
@@ -2832,21 +2804,6 @@ body[data-page="collaborations"] .partnership-box p {
   overflow: hidden;
 }
 
-.moved-inline-style-003 {
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  width: 100%;
-}
-
-.moved-inline-style-004 {
-  max-width: 960px;
-}
-
-.moved-inline-style-005 {
-  color: var(--gold);
-}
-
 .moved-inline-style-006 {
   font-size: clamp(2.5rem, 6vw, 4rem);
   margin-bottom: 1.25rem;
@@ -3261,33 +3218,6 @@ body[data-page="collaborations"] .partnership-box p {
   margin-top: 0.75rem;
   text-align: center;
   font-weight: 600;
-}
-
-.moved-inline-style-075 {
-  position: relative;
-  background-image: linear-gradient(135deg, rgba(86, 5, 26, 0.88), rgba(86, 5, 26, 0.6)), url("assets/images/hero.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  padding: 4rem 0;
-  min-height: 380px;
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-  isolation: isolate;
-}
-
-.moved-inline-style-076 {
-  font-size: clamp(2rem, 5vw, 3rem);
-  color: #ffffff !important;
-  opacity: 1;
-}
-
-.moved-inline-style-077 {
-  max-width: 640px;
-  margin: 0 auto;
-  color: #ffffff;
-  opacity: 1;
 }
 
 .moved-inline-style-078 {
@@ -4750,7 +4680,6 @@ body:has(.app-shell) .status.alert {
   .container {
     padding: 0 3rem;
   }
-
 }
 
 @media (min-width:1024px) {
@@ -4765,7 +4694,6 @@ body:has(.app-shell) .status.alert {
   .menu-toggle {
     display: none;
   }
-
 }
 
 @media (max-width:1100px) {
@@ -4777,7 +4705,6 @@ body:has(.app-shell) .status.alert {
     grid-template-columns: 1fr !important;
     max-width: 680px !important;
   }
-
 }
 
 @media (max-width:1024px) {
@@ -4798,7 +4725,6 @@ body:has(.app-shell) .status.alert {
   .hero-title {
     font-size: clamp(3rem, 9vw, 4.5rem) !important;
   }
-
 }
 
 @media (max-width:900px) {
@@ -4822,7 +4748,6 @@ body:has(.app-shell) .status.alert {
     gap: 8px;
     text-align: center;
   }
-
 }
 
 @media (max-width:768px) {
@@ -4908,7 +4833,6 @@ body:has(.app-shell) .status.alert {
     letter-spacing: .24em !important;
     font-size: .8rem !important;
   }
-
 }
 
 @media (max-width:600px) {
@@ -4928,7 +4852,6 @@ body:has(.app-shell) .status.alert {
   .section.section-white {
     padding: 60px 16px;
   }
-
 }
 
 @media (max-width: 900px) {
@@ -4950,14 +4873,12 @@ body:has(.app-shell) .status.alert {
     margin-left: 0 !important;
     padding-left: 24px !important;
   }
-
 }
 
 @media (max-width: 540px) {
   .impact-points-row {
     grid-template-columns: 1fr !important;
   }
-
 }
 
 @media (min-width: 768px) {
@@ -4992,14 +4913,12 @@ body:has(.app-shell) .status.alert {
   .origins-text {
     order: 2 !important;
   }
-
 }
 
 @media (min-width: 480px) {
   .before-after {
     grid-template-columns: 1fr 1fr;
   }
-
 }
 
 @media (min-width: 900px) {
@@ -5007,14 +4926,12 @@ body:has(.app-shell) .status.alert {
     grid-template-columns: 5fr 6fr;
     gap: 6rem;
   }
-
 }
 
 @media (max-width: 1024px) {
   body[data-page="programs"] .programs-5col {
     grid-template-columns: repeat(3, 1fr) !important;
   }
-
 }
 
 @media (max-width: 640px) {
@@ -5091,14 +5008,12 @@ body:has(.app-shell) .status.alert {
   body:has(.app-shell) .section-hero h2 {
     font-size: 36px;
   }
-
 }
 
 @media (max-width: 400px) {
   body[data-page="programs"] .programs-5col {
     grid-template-columns: 1fr !important;
   }
-
 }
 
 @media (max-width: 992px) {
@@ -5106,7 +5021,6 @@ body:has(.app-shell) .status.alert {
     grid-template-columns: 1fr !important;
     gap: 2rem !important;
   }
-
 }
 
 @media (max-width: 1180px) {
@@ -5119,7 +5033,6 @@ body:has(.app-shell) .status.alert {
   body:has(.app-shell) .filter-strip {
     grid-template-columns: repeat(3, 1fr);
   }
-
 }
 
 @media (max-width: 920px) {
@@ -5166,10 +5079,8 @@ body:has(.app-shell) .status.alert {
     min-width: 0;
     grid-template-columns: repeat(3, 1fr);
   }
-
 }
 
-/* Other at-rules kept unchanged */
 @keyframes spin {
   to {
     transform: rotate(360deg);
@@ -5219,10 +5130,6 @@ body:has(.app-shell) .status.alert {
   }
 }
 
-/* =====================================================
-   DASHBOARD PAGE CSS - SCOPED ONLY TO body.dashboard-page
-   Safe to keep inside the same website stylesheet.
-   ===================================================== */
 body.dashboard-page * {
   box-sizing: border-box;
   margin: 0;
@@ -5946,7 +5853,7 @@ body.dashboard-page .toast.show {
   opacity: 1;
 }
 
-@media(max-width:1180px) {
+@media (max-width:1180px) {
 
   body.dashboard-page .stats-grid,
   body.dashboard-page .module-grid {
@@ -5958,7 +5865,7 @@ body.dashboard-page .toast.show {
   }
 }
 
-@media(max-width:920px) {
+@media (max-width:920px) {
   body.dashboard-page .app-shell {
     grid-template-columns: 1fr;
   }
@@ -6013,7 +5920,7 @@ body.dashboard-page .toast.show {
   }
 }
 
-@media(max-width:620px) {
+@media (max-width:620px) {
   body.dashboard-page .dashboard-main {
     padding: 14px;
   }
@@ -6056,10 +5963,9 @@ body.dashboard-page .toast.show {
   }
 }
 
-/* ===== FAQ PAGE INLINE CSS MOVED FROM HTML ===== */
 .moved-inline-style-075 {
   position: relative;
-  background-image: linear-gradient(135deg, rgba(86, 5, 26, 0.88), rgba(86, 5, 26, 0.6)), url('assets/images/hero.png');
+  background-image: linear-gradient(135deg, rgba(86, 5, 26, 0.88), rgba(86, 5, 26, 0.6)), url("assets/images/hero.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -6068,6 +5974,7 @@ body.dashboard-page .toast.show {
   display: flex;
   align-items: center;
   overflow: hidden;
+  isolation: isolate;
 }
 
 .moved-inline-style-003 {
@@ -6088,9 +5995,9 @@ body.dashboard-page .toast.show {
 
 .moved-inline-style-076 {
   font-size: clamp(2.5rem, 6vw, 4rem);
-  margin-bottom: 1.25rem;
   color: #ffffff !important;
   opacity: 1;
+  margin-bottom: 1.25rem;
   background: none !important;
   -webkit-background-clip: unset !important;
   background-clip: unset !important;
@@ -6105,7 +6012,6 @@ body.dashboard-page .toast.show {
   font-size: 1.25rem;
 }
 
-/* ===== FINAL CLEAN FIXES ===== */
 body[data-page="faq"] .page-hero.has-image,
 body[data-page="faq"] .moved-inline-style-075 {
   background-image: linear-gradient(135deg, rgba(86, 5, 26, 0.88), rgba(86, 5, 26, 0.6)), url("assets/images/hero.png") !important;
@@ -6162,4 +6068,11 @@ body[data-page="faq"] .moved-inline-style-077 {
 
 .card a[href^="https://mail.google.com"]:hover {
   color: var(--gold) !important;
+}
+
+#vision-text,
+#mission-text {
+  text-align: justify !important;
+  text-justify: inter-word;
+  text-align-last: left;
 }
