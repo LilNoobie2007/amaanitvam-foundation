@@ -10,65 +10,6 @@ import AuditLog from '../models/auditLog.js';
 // GET /api/admin/me
 export const getMe = async (req, res) => {
     res.json({ success: true, user: req.user });
-
-};
-
-
-// POST /api/admin/update-profile
-    export const updateProfile = async (req, res) => {
-    try {
-        const { name, phone, department, profileImage } = req.body;
-
-    const updateData = {
-      name: name?.trim(),
-      phone: phone?.trim() || '',
-      department: department?.trim() || ''
-    };
-
-    if (!updateData.name) {
-      return res.status(400).json({
-        success: false,
-        message: 'Name is required.'
-      });
-    }
-
-    if (profileImage) {
-      if (!String(profileImage).startsWith('data:image/')) {
-        return res.status(400).json({
-          success: false,
-          message: 'Invalid profile image format.'
-        });
-      }
-      updateData.profileImage = profileImage;
-    }
-
-    const user = await User.findByIdAndUpdate(
-      req.user._id,
-      updateData,
-      { returnDocument: 'after', runValidators: true }
-    );
-
-    if (!user) {
-      return res.status(404).json({
-        success: false,
-        message: 'User not found.'
-      });
-    }
-
-    res.json({
-      success: true,
-      message: 'Profile updated successfully.',
-      user
-    });
-  } catch (error) {
-    console.error('Update profile error:', error);
-    res.status(500).json({
-      success: false,
-      message: error.message || 'Failed to update profile.'
-   });
-  }
-
-
 };
 
 // GET /api/admin/stats
@@ -247,7 +188,7 @@ export const updateMemberRole = async (req, res) => {
     const member = await User.findByIdAndUpdate(
       req.params.id,
       { role },
-      { returnDocument: 'after', runValidators: true }
+      { new: true, runValidators: true }
     );
 
     if (!member) {
@@ -483,7 +424,7 @@ export const updateMember = async (req, res) => {
     const member = await User.findByIdAndUpdate(
       req.params.id,
       { name, phone, department },
-      { returnDocument: 'after', runValidators: true }
+      { new: true, runValidators: true }
     );
 
     if (!member) {
@@ -531,7 +472,7 @@ export const updateSettings = async (req, res) => {
         const updated = await Setting.findByIdAndUpdate(
             settings._id,
             req.body,
-            { returnDocument: 'after' }
+            { new: true }
         );
 
         await AuditLog.create({
@@ -590,6 +531,39 @@ export const getReports = async (req, res) => {
     res.status(500).json({
       success: false,
       message: error.message
+    });
+  }
+};
+// PUT /api/admin/me
+// Lets a logged-in user update their own profile (name, phone only).
+// Email is intentionally excluded — even if a client sends "email" in
+// the body, it's never read or applied, so it can't reach the database.
+export const updateMe = async (req, res) => {
+  try {
+    const { name, phone } = req.body;
+
+    const member = await User.findByIdAndUpdate(
+      req.user._id,
+      { name, phone },
+      { new: true, runValidators: true }
+    );
+
+    if (!member) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found"
+      });
+    }
+
+    res.json({
+      success: true,
+      user: member
+    });
+
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message
     });
   }
 };
