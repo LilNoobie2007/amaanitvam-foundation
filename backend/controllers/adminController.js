@@ -172,34 +172,47 @@ export const addMember = async (req, res) => {
     }
 };
 
+
 // PUT /api/admin/members/:id/role
 export const updateMemberRole = async (req, res) => {
-    try {
-        const { role } = req.body;
-        if (!['super_admin', 'admin', 'member', 'intern'].includes(role)) {
-            return res.status(400).json({ success: false, message: 'Invalid role.' });
-        }
+  try {
+    const { role } = req.body;
 
-        const member = await User.findByIdAndUpdate(
-            req.params.id,
-            { role },
-            { returnDocument: 'after' }
-        );
-
-        if (!member) return res.status(404).json({ success: false, message: 'Member not found.' });
-
-        await AuditLog.create({
-            userId: req.user._id,
-            action: 'update_member_role',
-            details: `Updated role of ${member.email} to ${role}`,
-            ipAddress: req.ip
-        });
-
-        res.json({ success: true, member });
-    } catch (error) {
-        console.error('Update role error:', error);
-        res.status(500).json({ success: false, message: 'Failed to update role.' });
+    if (!['super_admin', 'admin', 'member', 'intern', 'volunteer'].includes(role)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid role.'
+      });
     }
+
+    const member = await User.findByIdAndUpdate(
+      req.params.id,
+      { role },
+      { returnDocument: 'after', runValidators: true }
+    );
+
+    if (!member) {
+      return res.status(404).json({
+        success: false,
+        message: 'Member not found.'
+      });
+    }
+
+    await AuditLog.create({
+      userId: req.user._id,
+      action: 'update_member_role',
+      details: `Updated role of ${member.email} to ${role}`,
+      ipAddress: req.ip
+    });
+
+    res.json({ success: true, member });
+  } catch (error) {
+    console.error('Update role error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to update role.'
+    });
+  }
 };
 
 // PUT /api/admin/members/:id/deactivate
@@ -401,6 +414,9 @@ export const downloadCertificate = async (req, res) => {
     });
   }
 };
+
+
+// PUT /api/admin/members/:id
 export const updateMember = async (req, res) => {
   try {
     const { name, phone, department } = req.body;
@@ -408,14 +424,15 @@ export const updateMember = async (req, res) => {
     const member = await User.findByIdAndUpdate(
       req.params.id,
       { name, phone, department },
-      { new: true }
+      { returnDocument: 'after', runValidators: true }
     );
 
-    if (!member)
+    if (!member) {
       return res.status(404).json({
         success: false,
         message: "Member not found"
       });
+    }
 
     res.json({
       success: true,
@@ -455,7 +472,7 @@ export const updateSettings = async (req, res) => {
         const updated = await Setting.findByIdAndUpdate(
             settings._id,
             req.body,
-            { new: true }
+            { returnDocument: 'after' }
         );
 
         await AuditLog.create({

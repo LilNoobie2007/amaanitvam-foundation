@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        enum: ['super_admin', 'admin', 'member', 'intern'],
+        enum: ['admin', 'member', 'intern', 'volunteer'],
         default: 'intern'
     },
     status: {
@@ -35,6 +35,10 @@ const userSchema = new mongoose.Schema({
     department: {
         type: String,
         trim: true
+    },
+    profileImage: {
+        type: String,
+        default: ''
     },
     joinedAt: {
         type: Date,

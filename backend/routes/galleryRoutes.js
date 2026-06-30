@@ -22,12 +22,27 @@
         }
     });
 
-    router.get('/images/:filename', (req, res) => {
-        const filePath = path.join(__dirnameGallery, '../uploads', req.params.filename);
-        if (fs.existsSync(filePath)) {
-            res.sendFile(filePath);
-        } else {
-            res.status(404).json({ success: false, message: 'Image not found' });
+    router.get('/images/:filename', async (req, res) => {
+        try {
+            const apiSearch = `/api/gallery/images/${req.params.filename}`;
+            const uploadSearch = `/uploads/${req.params.filename}`;
+            const imageInDb = await Gallery.findOne({ 
+                $or: [{ imageUrl: apiSearch }, { imageUrl: uploadSearch }] 
+            });
+            
+            if (imageInDb && imageInDb.imageBuffer) {
+                res.set('Content-Type', imageInDb.contentType || 'image/jpeg');
+                return res.send(imageInDb.imageBuffer);
+            }
+            
+            const filePath = path.join(__dirnameGallery, '../uploads', req.params.filename);
+            if (fs.existsSync(filePath)) {
+                res.sendFile(filePath);
+            } else {
+                res.status(404).json({ success: false, message: 'Image not found' });
+            }
+        } catch (error) {
+            res.status(500).json({ success: false, message: 'Server error' });
         }
     });
     
@@ -55,7 +70,18 @@
                 const destPath = path.join(destDir, destFileName);
                 if (fs.existsSync(sourcePath)) {
                     fs.copyFileSync(sourcePath, destPath);
-                    await Gallery.create({ imageUrl: `/uploads/${destFileName}`, title: img.title });
+                    const buffer = fs.readFileSync(sourcePath);
+                    const ext = path.extname(img.file).toLowerCase();
+                    let mimeType = 'image/jpeg';
+                    if (ext === '.png') mimeType = 'image/png';
+                    else if (ext === '.gif') mimeType = 'image/gif';
+                    
+                    await Gallery.create({ 
+                        imageUrl: `/api/gallery/images/${destFileName}`, 
+                        title: img.title,
+                        imageBuffer: buffer,
+                        contentType: mimeType
+                    });
                     created++;
                 }
             }

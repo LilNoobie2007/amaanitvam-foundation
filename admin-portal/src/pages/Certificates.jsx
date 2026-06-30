@@ -1,20 +1,15 @@
 import { useState, useEffect } from 'react';
-import { Award, Plus, X, Download } from 'lucide-react';
+import { Award, Search, Download, CheckCircle, XCircle, ShieldCheck } from 'lucide-react';
 import api from '../config/api';
 import toast from 'react-hot-toast';
-
-const DOMAIN_OPTIONS = ['Creative', 'Graphics', 'Social media', 'Marketing', 'Frontend', 'Backend', 'Full stack'];
-const TYPE_OPTIONS = ['Internship', 'Volunteer', 'Appreciation', 'Achievement'];
-const INITIAL_FORM = { issuedTo: '', email: '', type: 'Internship', domain: 'Creative' };
 
 export default function Certificates() {
   const [certificates, setCertificates] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedCertificates, setSelectedCertificates] = useState([]);
-  const [showGenerateModal, setShowGenerateModal] = useState(false);
-  const [formData, setFormData] = useState(INITIAL_FORM);
-  const [submitting, setSubmitting] = useState(false);
-  const [actionLoading, setActionLoading] = useState(null);
+  const [showVerifyModal, setShowVerifyModal] = useState(false);
+  const [verifyId, setVerifyId] = useState('');
+  const [verifyResult, setVerifyResult] = useState(null);
+  const [verifying, setVerifying] = useState(false);
 
   useEffect(() => {
     fetchCertificates();
@@ -32,59 +27,43 @@ export default function Certificates() {
     }
   };
 
-  const handleGenerate = async (e) => {
+  const handleVerify = async (e) => {
     e.preventDefault();
-    if (!formData.issuedTo || !formData.email) {
-      toast.error('Name and email are required');
+    if (!verifyId.trim()) {
+      toast.error('Please enter a certificate ID');
       return;
     }
-    setSubmitting(true);
+    setVerifying(true);
+    setVerifyResult(null);
     try {
-      await api.post('/admin/certificates', formData);
-      toast.success('Certificate generated!');
-      setShowGenerateModal(false);
-      setFormData(INITIAL_FORM);
-      fetchCertificates();
+      const res = await api.get(`/certificates/verify/${verifyId.trim()}`);
+      setVerifyResult(res.data);
     } catch (err) {
-      toast.error(err.response?.data?.message || 'Failed to generate certificate');
+      if (err.response?.status === 404) {
+        setVerifyResult({ success: false, message: 'Certificate not found. This certificate ID is invalid.' });
+      } else {
+        toast.error('Verification failed');
+      }
     } finally {
-      setSubmitting(false);
+      setVerifying(false);
     }
   };
 
-  const handleRevoke = async (id) => {
-    setActionLoading(id);
+  const downloadCertificate = async (id) => {
     try {
-      await api.put(`/admin/certificates/${id}/revoke`, { reason: 'Revoked by admin' });
-      toast.success('Certificate revoked');
-      fetchCertificates();
-    } catch (err) {
-      toast.error(err.response?.data?.message || 'Failed to revoke certificate');
-    } finally {
-      setActionLoading(null);
+      const response = await api.get(`/admin/certificates/${id}/download`, { responseType: 'blob' });
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `certificate-${id}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      toast.error('Failed to download certificate');
     }
   };
-  const toggleCertificateSelection = (id) => {
-  setSelectedCertificates((prev) =>
-    prev.includes(id)
-      ? prev.filter((item) => item !== id)
-      : [...prev, id]
-  );
-};
-const handleBulkGenerate = async () => {
-
-  if (selectedCertificates.length === 0) {
-    toast.error("Please select at least one certificate.");
-    return;
-  }
-
-  toast.success(
-    `Bulk generation started for ${selectedCertificates.length} certificate(s).`
-  );
-
-  console.log(selectedCertificates);
-
-};
 
   const SkeletonRow = () => (
     <tr className="border-b border-slate-50">
@@ -95,64 +74,31 @@ const handleBulkGenerate = async () => {
       ))}
     </tr>
   );
-  const downloadCertificate = async (id) => {
-  try {
-    const response = await api.get(
-      `/admin/certificates/${id}/download`,
-      {
-        responseType: "blob",
-      }
-    );
 
-    const url = window.URL.createObjectURL(
-      new Blob([response.data])
-    );
-
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = `certificate-${id}.pdf`;
-
-    document.body.appendChild(link);
-    link.click();
-
-    link.remove();
-    window.URL.revokeObjectURL(url);
-  } catch (error) {
-    toast.error("Failed to download certificate");
-    console.error(error);
-  }
-};
   return (
     <div>
-      {/* Topbar */}
-     <div className="flex gap-3">
+      {/* Header */}
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-2xl font-bold text-slate-800">Certificate Management</h1>
+        <button
+          onClick={() => { setShowVerifyModal(true); setVerifyResult(null); setVerifyId(''); }}
+          className="bg-[#56051a] hover:bg-[#7a1e3a] text-white px-4 py-2.5 rounded-xl text-sm font-semibold flex items-center gap-2 transition-colors"
+        >
+          <ShieldCheck className="w-4 h-4" />
+          Verify Certificate
+        </button>
+      </div>
 
-  <button
-    onClick={handleBulkGenerate}
-    disabled={selectedCertificates.length === 0}
-    className="bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors"
-  >
-    Generate Selected ({selectedCertificates.length})
-  </button>
-
-  <button
-    onClick={() => setShowGenerateModal(true)}
-    className="bg-[#56051a] hover:bg-[#7a1e3a] text-white px-4 py-2.5 rounded-xl text-sm font-semibold flex items-center gap-2 transition-colors"
-  >
-    <Plus className="w-4 h-4" />
-    Generate Certificate
-  </button>
-
-</div>
-
-      {/* Data Table */}
+      {/* Issued Certificates Table */}
       <div className="bg-white rounded-xl border border-slate-100 shadow-sm">
+        <div className="px-6 py-4 border-b border-slate-100">
+          <h2 className="text-lg font-semibold text-slate-800">Issued Certificates</h2>
+          <p className="text-sm text-slate-500 mt-1">All certificates issued by Amaanitvam Foundation</p>
+        </div>
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
               <tr>
-                <th className="px-6 py-3">
-</th>
                 <th className="px-6 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider bg-slate-50/50">Certificate ID</th>
                 <th className="px-6 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider bg-slate-50/50">Issued To</th>
                 <th className="px-6 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider bg-slate-50/50">Type</th>
@@ -164,156 +110,119 @@ const handleBulkGenerate = async () => {
             </thead>
             <tbody>
               {loading ? (
-                Array.from({ length: 4 }).map((_, i) => <SkeletonRow key={i} />)
+                Array.from({ length: 3 }).map((_, i) => <SkeletonRow key={i} />)
               ) : certificates.length === 0 ? (
                 <tr>
                   <td colSpan={7} className="text-center py-12 text-slate-400">
                     <Award className="w-12 h-12 mx-auto mb-3 text-slate-300" />
-                    <p className="text-sm font-medium">No certificates found</p>
-                    <p className="text-xs text-slate-400 mt-1">Generate your first certificate to get started.</p>
+                    <p className="text-sm font-medium">No certificates issued yet</p>
                   </td>
                 </tr>
               ) : (
-                certificates.map((cert) => {
-                  const certId = cert._id || cert.id;
-                  return (
-                    <tr key={certId} className="border-b border-slate-50 hover:bg-slate-50/50 transition-colors">
-                      <td className="px-6 py-4">
-  <input
-    type="checkbox"
-    checked={selectedCertificates.includes(certId)}
-    onChange={() => toggleCertificateSelection(certId)}
-  />
-</td>
-                      <td className="px-6 py-4 text-sm text-slate-600 font-mono text-xs">
-                        {cert.certificateId || certId?.slice(-8)?.toUpperCase() || '—'}
-                      </td>
-                      <td className="px-6 py-4 text-sm text-slate-600 font-medium">{cert.issuedTo || cert.name}</td>
-                      <td className="px-6 py-4 text-sm text-slate-600">{cert.type}</td>
-                      <td className="px-6 py-4 text-sm text-slate-600">{cert.domain}</td>
-                      <td className="px-6 py-4 text-sm text-slate-600">
-                        {cert.issuedAt || cert.createdAt
-                          ? new Date(cert.issuedAt || cert.createdAt).toLocaleDateString('en-IN')
-                          : '—'}
-                      </td>
-                      <td className="px-6 py-4 text-sm">
-                        {cert.isValid !== false ? (
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700">
-                            Valid
-                          </span>
-                        ) : (
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-red-50 text-red-700">
-                            Revoked
-                          </span>
-                        )}
-                      </td>
-                      <td className="px-6 py-4 text-sm">
-                        <div className="flex gap-2">
-                          {cert.isValid !== false && (
-                            <button
-                              onClick={() => handleRevoke(certId)}
-                              disabled={actionLoading === certId}
-                              className="bg-red-50 text-red-700 hover:bg-red-100 px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors disabled:opacity-50"
-                            >
-                              Revoke
-                            </button>
-                          )}
-                               <button
-  onClick={() => downloadCertificate(cert._id)}
-  className="bg-slate-50 text-slate-600 hover:bg-slate-100 px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1"
->
-  <Download className="w-3 h-3" />
-  Download
-</button>
-                     
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })
+                certificates.map((cert) => (
+                  <tr key={cert._id} className="border-b border-slate-50 hover:bg-slate-50/50 transition-colors">
+                    <td className="px-6 py-4 text-sm text-slate-800 font-mono font-semibold">
+                      {cert.certificateId || '\u2014'}
+                    </td>
+                    <td className="px-6 py-4 text-sm text-slate-600 font-medium">{cert.issuedTo}</td>
+                    <td className="px-6 py-4 text-sm text-slate-600">{cert.type}</td>
+                    <td className="px-6 py-4 text-sm text-slate-600">{cert.domain || '\u2014'}</td>
+                    <td className="px-6 py-4 text-sm text-slate-600">
+                      {cert.issueDate || cert.createdAt
+                        ? new Date(cert.issueDate || cert.createdAt).toLocaleDateString('en-IN')
+                        : '\u2014'}
+                    </td>
+                    <td className="px-6 py-4 text-sm">
+                      {cert.isValid !== false ? (
+                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700">
+                          <CheckCircle className="w-3 h-3" /> Valid
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-red-50 text-red-700">
+                          <XCircle className="w-3 h-3" /> Revoked
+                        </span>
+                      )}
+                    </td>
+                    <td className="px-6 py-4 text-sm">
+                      <button
+                        onClick={() => downloadCertificate(cert._id)}
+                        className="bg-slate-50 text-slate-600 hover:bg-slate-100 px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1"
+                      >
+                        <Download className="w-3 h-3" />
+                        Download
+                      </button>
+                    </td>
+                  </tr>
+                ))
               )}
             </tbody>
           </table>
         </div>
       </div>
 
-      {/* Generate Certificate Modal */}
-      {showGenerateModal && (
+      {/* Verify Certificate Modal */}
+      {showVerifyModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 animate-[fadeIn_0.2s_ease-out]">
           <div className="bg-white rounded-2xl p-6 w-full max-w-md shadow-2xl animate-[slideUp_0.25s_ease-out]">
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-lg font-semibold text-slate-800">Generate Certificate</h2>
+              <h2 className="text-lg font-semibold text-slate-800">Verify Certificate</h2>
               <button
-                onClick={() => { setShowGenerateModal(false); setFormData(INITIAL_FORM); }}
-                className="text-slate-400 hover:text-slate-600 transition-colors"
+                onClick={() => setShowVerifyModal(false)}
+                className="text-slate-400 hover:text-slate-600 transition-colors text-xl"
               >
-                <X className="w-5 h-5" />
+                ✕
               </button>
             </div>
-            <form onSubmit={handleGenerate} className="space-y-4">
+
+            <form onSubmit={handleVerify} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Issued To <span className="text-red-500">*</span></label>
+                <label className="block text-sm font-medium text-slate-700 mb-1">Certificate ID</label>
                 <input
                   type="text"
-                  required
-                  value={formData.issuedTo}
-                  onChange={(e) => setFormData({ ...formData, issuedTo: e.target.value })}
-                  className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#56051a]/20 focus:border-[#56051a]/30"
-                  placeholder="Enter recipient name"
+                  value={verifyId}
+                  onChange={(e) => setVerifyId(e.target.value)}
+                  className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#56051a]/20 focus:border-[#56051a]/30 font-mono uppercase"
+                  placeholder="e.g. AF-2026-001"
                 />
               </div>
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Email <span className="text-red-500">*</span></label>
-                <input
-                  type="email"
-                  required
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#56051a]/20 focus:border-[#56051a]/30"
-                  placeholder="Enter email address"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Type</label>
-                <select
-                  value={formData.type}
-                  onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-                  className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#56051a]/20 focus:border-[#56051a]/30"
-                >
-                  {TYPE_OPTIONS.map((t) => (
-                    <option key={t} value={t}>{t}</option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Domain</label>
-                <select
-                  value={formData.domain}
-                  onChange={(e) => setFormData({ ...formData, domain: e.target.value })}
-                  className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#56051a]/20 focus:border-[#56051a]/30"
-                >
-                  {DOMAIN_OPTIONS.map((d) => (
-                    <option key={d} value={d}>{d}</option>
-                  ))}
-                </select>
-              </div>
-              <div className="flex gap-3 pt-2">
-                <button
-                  type="button"
-                  onClick={() => { setShowGenerateModal(false); setFormData(INITIAL_FORM); }}
-                  className="flex-1 px-4 py-2.5 border border-slate-200 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-50 transition-colors"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  disabled={submitting}
-                  className="flex-1 bg-[#56051a] hover:bg-[#7a1e3a] text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors disabled:opacity-50"
-                >
-                  {submitting ? 'Generating...' : 'Generate'}
-                </button>
-              </div>
+              <button
+                type="submit"
+                disabled={verifying}
+                className="w-full bg-[#56051a] hover:bg-[#7a1e3a] text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+              >
+                <Search className="w-4 h-4" />
+                {verifying ? 'Verifying...' : 'Verify'}
+              </button>
             </form>
+
+            {verifyResult && (
+              <div className="mt-6">
+                {verifyResult.success ? (
+                  <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4">
+                    <div className="flex items-center gap-2 mb-3">
+                      <CheckCircle className="w-5 h-5 text-emerald-600" />
+                      <span className="font-semibold text-emerald-800">Certificate Verified</span>
+                    </div>
+                    <div className="space-y-2 text-sm text-emerald-900">
+                      <p><span className="font-medium">ID:</span> {verifyResult.certificate.certificateId}</p>
+                      <p><span className="font-medium">Issued To:</span> {verifyResult.certificate.issuedTo}</p>
+                      <p><span className="font-medium">Type:</span> {verifyResult.certificate.type}</p>
+                      <p><span className="font-medium">Domain:</span> {verifyResult.certificate.domain || '\u2014'}</p>
+                      <p><span className="font-medium">Issue Date:</span> {new Date(verifyResult.certificate.issueDate).toLocaleDateString('en-IN')}</p>
+                      <p><span className="font-medium">Status:</span> {verifyResult.certificate.isValid ? '✅ Valid' : '❌ Revoked'}</p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="bg-red-50 border border-red-200 rounded-xl p-4">
+                    <div className="flex items-center gap-2">
+                      <XCircle className="w-5 h-5 text-red-600" />
+                      <span className="font-semibold text-red-800">Invalid Certificate</span>
+                    </div>
+                    <p className="text-sm text-red-700 mt-2">{verifyResult.message}</p>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
       )}

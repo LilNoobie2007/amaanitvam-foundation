@@ -112,9 +112,9 @@ export default function Sidebar() {
             <p className="px-4 pt-5 pb-1.5 text-xs font-semibold text-slate-500 uppercase tracking-wider">
               Reports
             </p>
-            <NavLink to="/intern-reports" className={navLinkClass}>
+            <NavLink to="/user-reports" className={navLinkClass}>
               <BarChart3 className="w-[18px] h-[18px] opacity-70" />
-              Intern Reports
+              All User Reports
             </NavLink>
           </>
         )}

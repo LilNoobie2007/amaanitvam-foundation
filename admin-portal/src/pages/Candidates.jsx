@@ -174,7 +174,7 @@ export default function Candidates() {
                     <td className="px-6 py-4 text-sm text-slate-600 font-medium">{candidate.name}</td>
                     <td className="px-6 py-4 text-sm text-slate-600">{candidate.email}</td>
                     <td className="px-6 py-4 text-sm text-slate-600">{candidate.phone || '—'}</td>
-                    <td className="px-6 py-4 text-sm text-slate-600">{candidate.domain}</td>
+                    <td className="px-6 py-4 text-sm text-slate-600">{candidate.track}</td>
                     <td className="px-6 py-4 text-sm">{getStatusBadge(candidate.status)}</td>
                     <td className="px-6 py-4 text-sm text-slate-600">
                       {candidate.createdAt ? new Date(candidate.createdAt).toLocaleDateString('en-IN') : '—'}

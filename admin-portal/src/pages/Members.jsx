@@ -33,7 +33,7 @@ const [editMember, setEditMember] = useState({
   const fetchMembers = async () => {
     setLoading(true);
     try {
-      const res = await api.get('/admin/members');
+      const res = await api.get(`/admin/members?t=${new Date().getTime()}`);
       setMembers(res.data.members || res.data || []);
     } catch (err) {
       toast.error('Failed to load members');
@@ -89,6 +89,7 @@ const [editMember, setEditMember] = useState({
     try {
       await api.put(`/admin/members/${id}/role`, { role: newRole });
       toast.success('Role updated successfully!');
+      setMembers(members => members.map(m => (m._id === id || m.id === id) ? { ...m, role: newRole } : m));
       fetchMembers();
     } catch (err) {
       toast.error(err.response?.data?.message || 'Failed to update role');
@@ -123,44 +124,41 @@ const [editMember, setEditMember] = useState({
       setActionLoading(null);
     }
   };
-  const handleEditMember = async (e) => {
-  e.preventDefault();
-
-  if (!editMember.name || !editMember.email) {
-    toast.error("Name and Email are required");
-    return;
-  }
-
-  setSubmitting(true);
-
-  try {
-    await api.put(`/admin/members/${editMember.id}`, {
-      name: editMember.name,
-      email: editMember.email,
-      phone: editMember.phone,
-      role: editMember.role,
-      department: editMember.department,
-    });
-
-    toast.success("Member updated successfully!");
-
-    setShowEditModal(false);
-
-    fetchMembers();
-  } catch (err) {
-    toast.error(
-      err.response?.data?.message || "Failed to update member"
-    );
-  } finally {
-    setSubmitting(false);
-  }
-};
+  const handleEditMember = async () => {
+    if (!editMember.name || !editMember.email) {
+      toast.error("Name and Email are required");
+      return;
+    }
+    setSubmitting(true);
+    try {
+      // Update general fields
+      await api.put(`/admin/members/${editMember.id}`, {
+        name: editMember.name,
+        email: editMember.email,
+        phone: editMember.phone,
+        department: editMember.department,
+      });
+      // Update role via the dedicated role endpoint
+      await api.put(`/admin/members/${editMember.id}/role`, {
+        role: editMember.role,
+      });
+      toast.success("Member updated successfully!");
+      setShowEditModal(false);
+      window.location.reload();
+    } catch (err) {
+      alert('API ERROR: ' + JSON.stringify(err.response?.data || err.message));
+      toast.error(err.response?.data?.message || "Failed to update member");
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   const getRoleBadge = (role) => {
     const styles = {
       admin: 'bg-indigo-50 text-indigo-700',
       member: 'bg-blue-50 text-blue-700',
       intern: 'bg-slate-100 text-slate-600',
+      volunteer: 'bg-amber-50 text-amber-700',
     };
     const label = role?.replace('_', ' ');
     return (
@@ -237,23 +235,14 @@ const [editMember, setEditMember] = useState({
                     <tr key={memberId} className="border-b border-slate-50 hover:bg-slate-50/50 transition-colors">
                       <td className="px-6 py-4 text-sm text-slate-600 font-medium">{member.name}</td>
                       <td className="px-6 py-4 text-sm text-slate-600">{member.email}</td>
-                      <td className="px-6 py-4 text-sm">{getRoleBadge(member.role)}</td>
+                      <td className="px-6 py-4 text-sm">{getRoleBadge(member.role || 'member')}</td>
                       <td className="px-6 py-4 text-sm">{getStatusBadge(member.status || 'active')}</td>
                       <td className="px-6 py-4 text-sm text-slate-600">
                         {member.createdAt ? new Date(member.createdAt).toLocaleDateString('en-IN') : '—'}
                       </td>
                       <td className="px-6 py-4 text-sm">
                         <div className="flex items-center gap-2">
-                          <select
-                            value={member.role}
-                            onChange={(e) => handleRoleChange(memberId, e.target.value)}
-                            disabled={actionLoading === memberId}
-                            className="px-2 py-1 text-xs border border-slate-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#56051a]/20 disabled:opacity-50"
-                          >
-                            <option value="intern">Intern</option>
-                            <option value="member">Member</option>
-                            <option value="admin">Admin</option>
-                          </select>
+
                           <button
   onClick={() => {
     setEditMember({
@@ -356,6 +345,7 @@ const [editMember, setEditMember] = useState({
                   <option value="intern">Intern</option>
                   <option value="member">Member</option>
                   <option value="admin">Admin</option>
+                  <option value="volunteer">Volunteer</option>
                 </select>
               </div>
               <div>
@@ -432,18 +422,13 @@ const [editMember, setEditMember] = useState({
             Email <span className="text-red-500">*</span>
           </label>
 
-          <input
-            type="email"
-            required
-            value={editMember.email}
-            onChange={(e) =>
-              setEditMember({
-                ...editMember,
-                email: e.target.value,
-              })
-            }
-            className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#56051a]/20 focus:border-[#56051a]/30"
-          />
+         <input
+  type="email"
+  required
+  disabled
+  value={editMember.email}
+  className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm bg-slate-100 text-slate-500 cursor-not-allowed"
+/>
         </div>
 
         <div>
@@ -482,6 +467,7 @@ const [editMember, setEditMember] = useState({
             <option value="intern">Intern</option>
             <option value="member">Member</option>
             <option value="admin">Admin</option>
+                            <option value="volunteer">Volunteer</option>
           </select>
         </div>
 
@@ -513,8 +499,9 @@ const [editMember, setEditMember] = useState({
           </button>
 
           <button
-            type="submit"
+            type="button"
             disabled={submitting}
+            onClick={handleEditMember}
             className="flex-1 bg-[#56051a] hover:bg-[#7a1e3a] text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors disabled:opacity-50"
           >
             {submitting ? "Saving..." : "Save Changes"}

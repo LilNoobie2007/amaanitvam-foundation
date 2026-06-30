@@ -2,7 +2,6 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
 import AdminLayout from './layouts/AdminLayout';
 import Login from './pages/Login';
-import Dashboard from './pages/Dashboard';
 import Candidates from './pages/Candidates';
 import Members from './pages/Members';
 import Donations from './pages/Donations';
@@ -15,6 +14,7 @@ import MyCertificates from './pages/MyCertificates';
 import Settings from './pages/Settings';
 import CMS from './pages/CMS';
 import Reports from "./pages/Reports";
+import Profile from './pages/Profile';
 
 export default function App() {
   return (
@@ -24,9 +24,7 @@ export default function App() {
         path="/"
         element={
           <ProtectedRoute>
-            <AdminLayout>
-              <Dashboard />
-            </AdminLayout>
+            <Navigate to="/candidates" replace />
           </ProtectedRoute>
         }
       />
@@ -146,6 +144,16 @@ export default function App() {
           <ProtectedRoute>
             <AdminLayout>
               <CMS />
+            </AdminLayout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute>
+            <AdminLayout>
+              <Profile />
             </AdminLayout>
           </ProtectedRoute>
         }

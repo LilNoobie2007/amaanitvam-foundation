@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, Users, UserCog, Heart, Award, Globe, LogOut, Shield, Image, BarChart3, Settings as SettingsIcon } from 'lucide-react';
+import { LayoutDashboard, Users, UserCog, Heart, Award, Globe, LogOut, Shield, Image, BarChart3, Settings as SettingsIcon, User } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { useState, useEffect } from 'react';
 import api from '../config/api';
@@ -52,15 +52,6 @@ export default function Sidebar() {
 
       {/* Navigation (Scrollbar hidden across all major browsers) */}
       <nav className="flex-1 overflow-y-auto py-6 px-4 space-y-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-        {/* OVERVIEW */}
-        <p className="inline-block px-4 mb-[0.85rem] text-[0.82rem] font-ui font-bold text-[var(--gold-dark,#B8860B)] uppercase tracking-[0.18em]">
-          Overview
-        </p>
-        <NavLink to="/" end className={navLinkClass}>
-          <LayoutDashboard className="w-4.5 h-4.5" />
-          <span className="font-ui">Dashboard</span>
-        </NavLink>
-
         {/* ADMIN ONLY SECTIONS */}
         {(userProfile?.role === 'admin' || userProfile?.role === 'super_admin') && (
           <>
@@ -126,14 +117,31 @@ export default function Sidebar() {
             </NavLink>
           </>
         )}
+
+        {/* ACCOUNT */}
+        <p className="inline-block px-4 pt-6 mb-[0.85rem] text-[0.82rem] font-ui font-bold text-[var(--gold-dark,#B8860B)] uppercase tracking-[0.18em]">
+          Account
+        </p>
+        <NavLink to="/profile" className={navLinkClass}>
+          <User className="w-4.5 h-4.5" />
+          <span className="font-ui">My Profile</span>
+        </NavLink>
       </nav>
 
       {/* Footer — User Info */}
       <div className="px-4 py-4 border-t border-gold/10 bg-primary/10">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-gold/20 border border-gold/30 rounded-full flex items-center justify-center text-gold text-sm font-bold shrink-0">
-            {userProfile?.name?.charAt(0)?.toUpperCase() || 'A'}
-          </div>
+          {userProfile?.profileImage ? (
+            <img 
+              src={userProfile.profileImage} 
+              alt="Profile" 
+              className="w-10 h-10 rounded-full object-cover border border-gold/30 shrink-0" 
+            />
+          ) : (
+            <div className="w-10 h-10 bg-gold/20 border border-gold/30 rounded-full flex items-center justify-center text-gold text-sm font-bold shrink-0">
+              {userProfile?.name?.charAt(0)?.toUpperCase() || 'A'}
+            </div>
+          )}
           <div className="flex-1 min-w-0">
             <p className="text-xs font-ui font-bold text-white truncate" title={userProfile?.name}>
               {userProfile?.name?.split(' ')[0] || 'Admin'}

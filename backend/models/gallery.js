@@ -10,6 +10,12 @@ const gallerySchema = new mongoose.Schema({
         required: true,
         trim: true
     },
+    imageBuffer: {
+        type: Buffer
+    },
+    contentType: {
+        type: String
+    },
     createdAt: {
         type: Date,
         default: Date.now

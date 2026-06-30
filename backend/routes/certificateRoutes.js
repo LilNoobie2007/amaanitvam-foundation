@@ -4,50 +4,33 @@ import Certificate from '../models/certificate.js';
 const router = express.Router();
 
 // GET /api/certificates/verify/:certificateId
-// PUBLIC route — no authentication required (mirrors amaanitvam-assignment logic)
+// PUBLIC route — no authentication required
 router.get('/verify/:certificateId', async (req, res) => {
     try {
-        const certId = req.params.certificateId.toUpperCase().trim();
-        const certificate = await Certificate.findOne({ certificateId: certId });
-
-        if (!certificate) {
-            return res.status(404).json({ valid: false, error: 'Certificate not found' });
+        const cert = await Certificate.findOne({ certificateId: req.params.certificateId.toUpperCase() });
+        if (!cert) {
+            return res.status(404).json({ success: false, message: 'Certificate not found. This certificate ID is invalid.' });
         }
-
-        if (!certificate.isValid) {
-            return res.status(200).json({
-                valid: false,
-                error: 'Certificate has been revoked',
-                certificate: {
-                    certificateId: certificate.certificateId,
-                    issuedTo: certificate.issuedTo,
-                    isValid: false,
-                    revokedAt: certificate.revokedAt,
-                    revokedReason: certificate.revokedReason
-                }
-            });
-        }
-
-        res.status(200).json({
-            valid: true,
+        res.json({
+            success: true,
             certificate: {
-                certificateId: certificate.certificateId,
-                issuedTo: certificate.issuedTo,
-                email: certificate.email,
-                phone: certificate.phone,
-                type: certificate.type,
-                domain: certificate.domain,
-                duration: certificate.duration,
-                startDate: certificate.startDate,
-                endDate: certificate.endDate,
-                issueDate: certificate.issueDate,
-                issuedBy: certificate.issuedBy,
-                isValid: certificate.isValid
+                certificateId: cert.certificateId,
+                issuedTo: cert.issuedTo,
+                email: cert.email,
+                type: cert.type,
+                domain: cert.domain,
+                duration: cert.duration,
+                startDate: cert.startDate,
+                endDate: cert.endDate,
+                issueDate: cert.issueDate,
+                issuedBy: cert.issuedBy,
+                isValid: cert.isValid,
+                revokedAt: cert.revokedAt,
+                revokedReason: cert.revokedReason
             }
         });
     } catch (error) {
-        console.error('Certificate verification error:', error);
-        res.status(500).json({ valid: false, error: 'Server error during verification.' });
+        res.status(500).json({ success: false, message: error.message });
     }
 });
 
