@@ -4,9 +4,9 @@ const trimValue = (value) => String(value ?? "").replace(/\u0000/g, "").trim();
 const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email).toLowerCase());
 
 const normalizeCampaignId = (body) => {
-  const raw = body?.campaignId ?? body?.campaign ?? body?.campaign_id ?? null;
+  const raw = body?.campaignId ?? body?.campaign ?? body?.campaign_id ?? body?.donationTarget ?? null;
   const value = trimValue(raw);
-  if (!value || ["null", "undefined", "organization", "general"].includes(value.toLowerCase())) {
+  if (!value || ["null", "undefined", "organization", "general", "direct"].includes(value.toLowerCase())) {
     return null;
   }
   return value;

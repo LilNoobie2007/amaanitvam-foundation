@@ -543,7 +543,7 @@ export const getReports = async (req, res) => {
         .select('name email phone role status department profileImage joinedAt createdAt')
         .sort({ createdAt: -1 }),
       InternshipApplication.countDocuments(),
-      Donation.find().sort({ createdAt: -1 })
+      Donation.find().populate('campaign', 'title status goalAmount raisedAmount').sort({ createdAt: -1 })
     ]);
 
     const roleCounts = users.reduce((acc, user) => {

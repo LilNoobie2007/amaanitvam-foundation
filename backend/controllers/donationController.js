@@ -1,4 +1,5 @@
 import crypto from "crypto";
+import mongoose from "mongoose";
 import Donation from "../models/donation.js";
 import Campaign from "../models/campaign.js";
 import { getRazorpayInstance, getRazorpayKeyId } from "../config/razorpay.js";
@@ -6,6 +7,12 @@ import { sendDonationReceiptEmail, sendDonationAdminEmail } from "../services/em
 import { sendWhatsAppNotification } from "../services/whatsappService.js";
 
 const buildReceiptId = () => `don_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`.slice(0, 40);
+
+const normalizeCampaignId = (value) => {
+  const id = String(value ?? "").trim();
+  if (!id || ["null", "undefined", "organization", "general", "direct"].includes(id.toLowerCase())) return null;
+  return mongoose.Types.ObjectId.isValid(id) ? id : null;
+};
 
 export const getActiveCampaigns = async (req, res) => {
   try {
@@ -17,10 +24,16 @@ export const getActiveCampaigns = async (req, res) => {
   }
 };
 
-// POST /api/donate/create-order
+export const getPublicCampaigns = getActiveCampaigns;
+
 export const createDonationOrder = async (req, res) => {
   try {
-    const { name, email, phone, amount, campaignId } = req.validatedDonation;
+    const validated = req.validatedDonation || {};
+    const name = validated.name || String(req.body?.name || "").trim();
+    const email = validated.email || String(req.body?.email || "").trim().toLowerCase();
+    const phone = validated.phone || String(req.body?.phone || "").trim();
+    const amount = Number(validated.amount || req.body?.amount || 0);
+    const campaignId = normalizeCampaignId(validated.campaignId ?? req.body?.campaignId ?? req.body?.campaign ?? req.body?.donationTarget);
 
     let campaign = null;
     if (campaignId) {
@@ -28,7 +41,7 @@ export const createDonationOrder = async (req, res) => {
       if (!campaign) {
         return res.status(404).json({ success: false, message: "Selected campaign was not found." });
       }
-      if (campaign.status !== "active") {
+      if (String(campaign.status).toLowerCase() !== "active") {
         return res.status(400).json({ success: false, message: "This campaign is not active for donations." });
       }
     }
@@ -48,7 +61,7 @@ export const createDonationOrder = async (req, res) => {
       },
     });
 
-    const donation = new Donation({
+    const donation = await Donation.create({
       name,
       email,
       phone,
@@ -57,12 +70,11 @@ export const createDonationOrder = async (req, res) => {
       donationType: campaign ? "campaign" : "organization",
       campaign: campaign?._id || null,
       campaignTitleSnapshot: campaign?.title || "",
+      campaignAmountAdded: false,
       razorpayOrderId: order.id,
       status: "created",
       submissionTimestamp: new Date(),
     });
-
-    await donation.save();
 
     res.status(201).json({
       success: true,
@@ -70,6 +82,7 @@ export const createDonationOrder = async (req, res) => {
       key: getRazorpayKeyId(),
       donor: { name, email, phone },
       donationType: donation.donationType,
+      donationId: donation._id,
       campaign: campaign
         ? {
             _id: campaign._id,
@@ -85,7 +98,6 @@ export const createDonationOrder = async (req, res) => {
   }
 };
 
-// POST /api/donate/verify
 export const verifyDonationPayment = async (req, res) => {
   try {
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
@@ -110,31 +122,58 @@ export const verifyDonationPayment = async (req, res) => {
       return res.status(400).json({ success: false, message: "Payment verification failed. Signature mismatch." });
     }
 
-    const wasAlreadyPaid = donation.status === "paid";
+    // Backfill campaign if an older frontend sent it during verify, or if Razorpay notes contain it.
+    if (!donation.campaign) {
+      let campaignId = normalizeCampaignId(req.body?.campaignId ?? req.body?.campaign ?? req.body?.donationTarget);
+      if (!campaignId) {
+        try {
+          const razorpay = getRazorpayInstance();
+          const order = await razorpay.orders.fetch(razorpay_order_id);
+          campaignId = normalizeCampaignId(order?.notes?.campaign_id);
+        } catch (orderFetchError) {
+          console.warn("Could not fetch Razorpay order notes for campaign backfill:", orderFetchError.message);
+        }
+      }
+
+      if (campaignId) {
+        const campaign = await Campaign.findById(campaignId);
+        if (campaign) {
+          donation.campaign = campaign._id;
+          donation.donationType = "campaign";
+          donation.campaignTitleSnapshot = campaign.title;
+        }
+      }
+    }
+
     donation.razorpayPaymentId = razorpay_payment_id;
     donation.razorpaySignature = razorpay_signature;
     donation.status = "paid";
-    await donation.save();
 
     let updatedCampaign = null;
-    if (!wasAlreadyPaid && donation.campaign) {
+    const shouldAddToCampaign = donation.campaign && !donation.campaignAmountAdded;
+
+    if (shouldAddToCampaign) {
       updatedCampaign = await Campaign.findByIdAndUpdate(
         donation.campaign,
-        { $inc: { raisedAmount: donation.amount } },
+        { $inc: { raisedAmount: Number(donation.amount || 0) } },
         { new: true }
       );
+      donation.campaignAmountAdded = true;
     }
+
+    await donation.save();
 
     res.status(200).json({
       success: true,
       message: donation.campaign
-        ? "Payment verified successfully. Thank you for supporting this campaign!"
+        ? "Payment verified successfully. Campaign funds updated."
         : "Payment verified successfully. Thank you for your donation!",
       donation: {
         id: donation._id,
         amount: donation.amount,
         donationType: donation.donationType,
         campaign: donation.campaign || null,
+        campaignAmountAdded: donation.campaignAmountAdded,
       },
       campaign: updatedCampaign,
     });

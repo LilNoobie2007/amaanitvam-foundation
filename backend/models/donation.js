@@ -42,6 +42,11 @@ const donationSchema = new mongoose.Schema(
       default: "",
       trim: true,
     },
+    campaignAmountAdded: {
+      type: Boolean,
+      default: false,
+      index: true,
+    },
     currency: {
       type: String,
       default: "INR",
