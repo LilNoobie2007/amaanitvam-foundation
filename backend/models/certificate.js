@@ -12,9 +12,10 @@ const certificateSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    pdfBuffer: {
-        type: Buffer
-    },
+   pdfBuffer: { type: Buffer },
+pdfContentType: { type: String, default: 'application/pdf' },
+pdfOriginalName: { type: String },
+pdfUploadedAt: { type: Date },
     email: {
         type: String,
         required: true,

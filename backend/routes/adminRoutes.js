@@ -17,6 +17,7 @@ import {
     updateMember,
     updateMemberRole,
     deactivateMember,
+    uploadCertificateFile,
     deleteMember,
     getDonations,
     getCertificates,
@@ -122,7 +123,43 @@ const storage = multer.diskStorage({
         cb(null, Date.now() + path.extname(file.originalname));
     }
 });
-const upload = multer({ storage: storage });
+const upload = multer({
+  storage,
+  limits: {
+    fileSize: 5 * 1024 * 1024, // 5MB per image
+  },
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype.startsWith('image/')) {
+      cb(null, true);
+    } else {
+      cb(new Error('Only image files are allowed.'));
+    }
+  },
+});
+
+
+const certificateUpload = multer({
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 10 * 1024 * 1024, // 10MB
+  },
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype === 'application/pdf') {
+      cb(null, true);
+    } else {
+      cb(new Error('Only PDF certificate files are allowed.'));
+    }
+  },
+});
+
+router.put(
+  '/certificates/:id/file',
+  requireAdmin,
+  requireAllowedIP,
+  certificateUpload.single('certificate'),
+  uploadCertificateFile
+);
+
 
 router.post('/gallery', requireAdmin, requireAllowedIP, upload.single('image'), async (req, res) => {
     try {
@@ -141,6 +178,62 @@ router.post('/gallery', requireAdmin, requireAllowedIP, upload.single('image'), 
         res.status(500).json({ success: false, message: error.message });
     }
 });
+
+
+router.post(
+  '/gallery/bulk',
+  requireAdmin,
+  requireAllowedIP,
+  upload.array('images', 30),
+  async (req, res) => {
+    try {
+      if (!req.files || req.files.length === 0) {
+        return res.status(400).json({
+          success: false,
+          message: 'No images uploaded',
+        });
+      }
+
+      const { title } = req.body;
+
+      if (!title) {
+        return res.status(400).json({
+          success: false,
+          message: 'Title is required',
+        });
+      }
+
+      const createdImages = [];
+
+      for (let i = 0; i < req.files.length; i++) {
+        const file = req.files[i];
+
+        const imageUrl = `/uploads/${file.filename}`;
+
+        const image = new Gallery({
+          imageUrl,
+          title: req.files.length === 1 ? title : `${title} ${i + 1}`,
+          contentType: file.mimetype,
+        });
+
+        await image.save();
+        createdImages.push(image);
+      }
+
+      res.status(201).json({
+        success: true,
+        message: `${createdImages.length} images uploaded successfully`,
+        images: createdImages,
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  }
+);
+
 
 router.delete('/gallery/:id', requireAdmin, requireAllowedIP, async (req, res) => {
     try {

@@ -10,7 +10,7 @@ export default function Gallery() {
   
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newTitle, setNewTitle] = useState('');
-  const [selectedFile, setSelectedFile] = useState(null);
+ const [selectedFiles, setSelectedFiles] = useState([]);
   
   // Edit state
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -36,41 +36,43 @@ export default function Gallery() {
   };
 
   const handleFileSelect = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      setSelectedFile(e.target.files[0]);
-    }
-  };
+  const files = Array.from(e.target.files || []);
+  setSelectedFiles(files);
+};
 
   const handleUpload = async (e) => {
-    e.preventDefault();
-    if (!selectedFile || !newTitle) {
-      setError('Please provide a title and select an image');
-      return;
-    }
+  e.preventDefault();
 
-    setUploading(true);
-    setError('');
+  if (!selectedFiles.length || !newTitle) {
+    setError('Please provide a title and select at least one image');
+    return;
+  }
 
-    const formData = new FormData();
-    formData.append('title', newTitle);
-    formData.append('image', selectedFile);
+  setUploading(true);
+  setError('');
 
-    try {
-      await api.post('/admin/gallery', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
-      setIsModalOpen(false);
-      setNewTitle('');
-      setSelectedFile(null);
-      fetchImages(); // Refresh the list
-    } catch (err) {
-      setError(err.response?.data?.message || 'Failed to upload image');
-    } finally {
-      setUploading(false);
-    }
-  };
+  const formData = new FormData();
+  formData.append('title', newTitle);
+
+  selectedFiles.forEach((file) => {
+    formData.append('images', file);
+  });
+
+  try {
+    await api.post('/admin/gallery/bulk', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+
+    setIsModalOpen(false);
+    setNewTitle('');
+    setSelectedFiles([]);
+    fetchImages();
+  } catch (err) {
+    setError(err.response?.data?.message || 'Failed to upload images');
+  } finally {
+    setUploading(false);
+  }
+};
 
   const handleEditClick = (img) => {
     setEditingImage(img);
@@ -175,7 +177,7 @@ export default function Gallery() {
                   alt={img.title} 
                   className="w-full h-full object-cover"
                 />
-                <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+<div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
                   <button 
                     onClick={() => setViewingImage(img)}
                     className="p-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg shadow-lg transition-colors"
@@ -285,17 +287,22 @@ export default function Gallery() {
                     <div className="space-y-1 text-center">
                       <Upload className="mx-auto h-8 w-8 text-slate-400" />
                       <div className="flex text-sm text-slate-600">
-                        <label htmlFor="file-upload" className="relative cursor-pointer rounded-md font-medium text-[#56051a] hover:text-[#56051a]/80 focus-within:outline-none">
-                          <span>{selectedFile ? selectedFile.name : 'Upload a file'}</span>
-                          <input 
-                            id="file-upload" 
-                            name="file-upload" 
-                            type="file" 
-                            className="sr-only" 
-                            accept="image/*"
-                            onChange={handleFileSelect}
-                            required
-                          />
+                        <label htmlFor="gallery-upload" className="relative cursor-pointer rounded-md font-medium text-[#56051a] hover:text-[#56051a]/80 focus-within:outline-none">
+                         <span>
+  {selectedFiles.length > 0
+    ? `${selectedFiles.length} image(s) selected`
+    : 'Upload one or more images'}
+</span>
+
+<input
+  id="gallery-upload"
+  name="gallery-upload"
+  type="file"
+  accept="image/*"
+  multiple
+  onChange={handleFileSelect}
+  className="sr-only"
+/>
                         </label>
                       </div>
                       <p className="text-xs text-slate-500">PNG, JPG, GIF up to 5MB</p>
@@ -315,11 +322,11 @@ export default function Gallery() {
                 </button>
                 <button
                   type="submit"
-                  disabled={uploading || !selectedFile || !newTitle}
+                 disabled={uploading || selectedFiles.length === 0 || !newTitle}
                   className="flex items-center gap-2 px-4 py-2 bg-[#56051a] text-white text-sm font-medium rounded-xl hover:bg-[#56051a]/90 disabled:opacity-50 transition-colors"
                 >
                   {uploading && <Loader2 className="w-4 h-4 animate-spin" />}
-                  {uploading ? 'Uploading...' : 'Save Image'}
+                 {uploading ? 'Uploading...' : selectedFiles.length > 1 ? 'Save Images' : 'Save Image'}
                 </button>
               </div>
             </form>
