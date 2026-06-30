@@ -67,6 +67,17 @@ export default function ProfilePage() {
             <h2 className="text-lg font-bold text-slate-900 mb-4">Edit Profile</h2>
             <form onSubmit={handleSave} className="space-y-4">
               <div>
+                <label className="block text-sm font-medium mb-1">Email</label>
+                <input
+                  type="email"
+                  value={userProfile?.email || ''}
+                  disabled
+                  readOnly
+                  className="w-full px-3 py-2 border rounded-xl text-sm bg-slate-100 text-slate-500 cursor-not-allowed"
+                />
+                <p className="text-xs text-slate-400 mt-1">Email address cannot be changed</p>
+              </div>
+              <div>
                 <label className="block text-sm font-medium mb-1">Name</label>
                 <input required value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full px-3 py-2 border rounded-xl text-sm" />
               </div>
