@@ -22,3 +22,10 @@ pnpm-debug.log*
 .DS_Store
 .vscode/
 .idea/
+
+# Optional
+coverage/
+**/coverage/
+
+*.tmp
+*.code-workspace
