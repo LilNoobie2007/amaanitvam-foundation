@@ -289,14 +289,76 @@ export const getDonations = async (req, res) => {
 
 // GET /api/admin/certificates
 export const getCertificates = async (req, res) => {
-    try {
-        const certificates = await Certificate.find().sort({ createdAt: -1 });
-        res.json({ success: true, certificates });
-    } catch (error) {
-        console.error('Certificates error:', error);
-        res.status(500).json({ success: false, message: 'Failed to fetch certificates.' });
-    }
+  try {
+    const certificates = await Certificate.find()
+      .select('-pdfBuffer')
+      .sort({ createdAt: -1 });
+
+    res.json({ success: true, certificates });
+  } catch (error) {
+    console.error('Certificates error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch certificates.',
+    });
+  }
 };
+
+export const uploadCertificateFile = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        message: 'Please upload a certificate PDF.',
+      });
+    }
+
+    if (req.file.mimetype !== 'application/pdf') {
+      return res.status(400).json({
+        success: false,
+        message: 'Only PDF certificate files are allowed.',
+      });
+    }
+
+    const certificate = await Certificate.findByIdAndUpdate(
+      req.params.id,
+      {
+        pdfBuffer: req.file.buffer,
+        pdfContentType: req.file.mimetype,
+        pdfOriginalName: req.file.originalname,
+        pdfUploadedAt: new Date(),
+      },
+      { new: true }
+    ).select('-pdfBuffer');
+
+    if (!certificate) {
+      return res.status(404).json({
+        success: false,
+        message: 'Certificate not found.',
+      });
+    }
+
+    await AuditLog.create({
+      userId: req.user._id,
+      action: 'upload_certificate_pdf',
+      details: `Uploaded PDF for certificate ${certificate.certificateId}`,
+      ipAddress: req.ip,
+    });
+
+    res.json({
+      success: true,
+      message: 'Certificate PDF uploaded successfully.',
+      certificate,
+    });
+  } catch (error) {
+    console.error('Upload certificate file error:', error);
+    res.status(500).json({
+      success: false,
+      message: error.message || 'Failed to upload certificate PDF.',
+    });
+  }
+};
+
 
 // POST /api/admin/certificates
 export const generateCertificate = async (req, res) => {
@@ -357,71 +419,30 @@ export const downloadCertificate = async (req, res) => {
     if (!certificate) {
       return res.status(404).json({
         success: false,
-        message: "Certificate not found",
+        message: 'Certificate not found.',
       });
     }
 
-    const doc = new PDFDocument({
-      size: "A4",
-      margin: 50,
-    });
+    if (!certificate.pdfBuffer) {
+      return res.status(404).json({
+        success: false,
+        message: 'No uploaded certificate PDF found for this record.',
+      });
+    }
 
+    const safeFileName = (
+      certificate.pdfOriginalName || `${certificate.certificateId}.pdf`
+    ).replace(/[^\w.\-() ]/g, '_');
+
+    res.setHeader('Content-Type', certificate.pdfContentType || 'application/pdf');
     res.setHeader(
-      "Content-Disposition",
-      `attachment; filename=${certificate.certificateId}.pdf`
+      'Content-Disposition',
+      `attachment; filename="${safeFileName}"`
     );
 
-    res.setHeader("Content-Type", "application/pdf");
-
-    doc.pipe(res);
-
-    doc
-      .fontSize(24)
-      .text("Amaanitvam Foundation", {
-        align: "center",
-      });
-
-    doc.moveDown();
-
-    doc
-      .fontSize(20)
-      .text("Certificate", {
-        align: "center",
-      });
-
-    doc.moveDown(2);
-
-    doc.fontSize(14).text(`Certificate ID: ${certificate.certificateId}`);
-
-    doc.moveDown();
-
-    doc.text(`Issued To: ${certificate.issuedTo}`);
-
-    doc.text(`Email: ${certificate.email}`);
-
-    doc.text(`Type: ${certificate.type}`);
-
-    doc.text(`Domain: ${certificate.domain || "-"}`);
-
-    doc.text(
-      `Issue Date: ${new Date(
-        certificate.issueDate
-      ).toLocaleDateString()}`
-    );
-
-    doc.moveDown(2);
-
-    doc.text(
-      "This certificate is issued by Amaanitvam Foundation.",
-      {
-        align: "center",
-      }
-    );
-
-    doc.end();
+    return res.send(certificate.pdfBuffer);
   } catch (error) {
-    console.error(error);
-
+    console.error('Download certificate error:', error);
     res.status(500).json({
       success: false,
       message: error.message,

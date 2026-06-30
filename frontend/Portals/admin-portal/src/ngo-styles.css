@@ -2222,26 +2222,42 @@ body[data-page="collaborations"] .partnership-box p {
 /* =====================================================
    13 FOOTER - ALL PAGES
    ===================================================== */
-.site-footer {
-  background: var(--primary) !important;
-  color: #fff !important;
-  padding: 60px 0 0;
-  font-family: var(--font-body);
-  margin-top: 0 !important;
-  position: relative !important;
-  z-index: 0 !important;
-}
 
 .footer-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 55px 30px;
-  display: grid;
-  grid-template-columns: 1.35fr .8fr .9fr 1.35fr;
-  gap: 38px;
-  align-items: flex-start;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 2rem !important; 
+    display: grid !important;
+    grid-template-columns: 1.4fr 1fr 1fr 1.3fr !important;
+    gap: 2rem !important;
+    align-items: start !important;
 }
 
+.site-footer {
+    background: var(--primary) !important;
+    color: #fff !important;
+    padding: 0 !important; /* Removes top padding */
+    font-family: var(--font-body);
+    margin-top: 0 !important;
+    position: relative !important;
+    z-index: 0 !important;
+}
+
+@media (max-width: 992px) {
+    .footer-container {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem !important;
+        margin: 0 !important;
+        padding: 0 1rem !important;
+    }
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 .footer-col {
   min-width: 0;
 }

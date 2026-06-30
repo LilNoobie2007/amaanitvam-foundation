@@ -211,21 +211,19 @@
     </div>
   </header>
   <main>
-    <section aria-labelledby="gallery-hero-title" class="page-hero has-image section" data-hero=""
-      style="position: relative; background-image: linear-gradient(135deg, rgba(86, 5, 26, 0.88), rgba(86, 5, 26, 0.6)), url('assets/images/hero.png'); background-size: cover; background-position: center; background-repeat: no-repeat; padding: 6rem 0; min-height: 480px; display: flex; align-items: center; overflow: hidden;">
-      <div class="container" style="display: flex; justify-content: center; text-align: center; width: 100%;">
-        <div style="max-width: 960px;">
-          <br><br><span class="section-label" style="color: var(--gold);">Visual Stories</span>
-          <h1 class="section-title" id="gallery-hero-title"
-            style="font-size: clamp(2.5rem, 6vw, 4rem); margin-bottom: 1.25rem; color: #ffffff !important; opacity: 1;">
-            Moments of Impact and <span style="color: #ffffff;">Community Transformation</span>
+    <section aria-labelledby="gallery-hero-title" class="page-hero has-image section moved-inline-style-final-001"
+      data-hero="">
+      <div class="container moved-inline-style-final-002">
+        <div class="moved-inline-style-final-003">
+          <br /><br /><span class="section-label moved-inline-style-final-004">Visual Stories</span>
+          <h1 class="section-title moved-inline-style-final-005" id="gallery-hero-title">
+            Moments of Impact and <span class="moved-inline-style-final-013">Community Transformation</span>
           </h1>
-          <p class="section-desc"
-            style="max-width: 960px; margin: 0 auto; color: #ffffff; opacity: 1; font-size: 1.25rem;">
+          <p class="section-desc moved-inline-style-final-006">
             Explore our visual journey of empowerment, education, and collective action. Every image tells a story of
             resilience and the positive change we build together.
           </p>
-          <div class="hero-actions" style="justify-content: center;">
+          <div class="hero-actions moved-inline-style-final-014">
             <a class="btn btn-primary" href="volunteer.html">
               <span aria-hidden="true" class="material-symbols-outlined icon-fill">volunteer_activism</span>
               Get Involved
@@ -245,48 +243,15 @@
         </div>
         <div class="gallery-grid" id="gallery-container">
           <!-- Dynamic images will be loaded here via JS -->
-          <p id="gallery-loading"
-            style="text-align: center; grid-column: 1 / -1; color: var(--text-muted); padding: 3rem;">Loading gallery
+          <p class="moved-inline-style-final-015" id="gallery-loading">Loading gallery
             images...</p>
         </div>
       </div>
     </section>
   </main>
 
-  <script>
-    const BACKEND_URL = window.location.hostname.includes('github.dev')
-      ? window.location.origin.replace(/-\d+\.github\.dev/, '-5000.github.dev')
-      : "http://localhost:5000";
 
-    async function loadGalleryImages() {
-      const container = document.getElementById('gallery-container');
-      try {
-        const response = await fetch(`${BACKEND_URL}/api/gallery`);
-        const data = await response.json();
 
-        if (data.success && data.images && data.images.length > 0) {
-          container.innerHTML = data.images.map(img => `
-            <figure class="gallery-item" style="content-visibility: auto; contain-intrinsic-size: 1px 280px; background: #f0f0f0;">
-              <img alt="${img.title}" src="${BACKEND_URL}${img.imageUrl}" loading="lazy" decoding="async" />
-              <div class="gallery-overlay">
-                <span>${img.title}</span>
-              </div>
-            </figure>
-          `).join('');
-        } else {
-          container.innerHTML = '<p style="text-align: center; grid-column: 1 / -1; color: var(--text-muted); padding: 3rem;">Images will appear here soon.</p>';
-        }
-      } catch (error) {
-        container.innerHTML = '<p style="text-align: center; grid-column: 1 / -1; color: #dc2626; padding: 3rem;">Failed to load gallery images.</p>';
-        console.error('Error fetching gallery:', error);
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', loadGalleryImages);
-  </script>
-  </div>
-  </section>
-  </main>
 
   <div id="footer"></div>
   <a class="floating-donate" href="contact.html#donate">
@@ -307,117 +272,9 @@
       <i class="fa-brands fa-linkedin-in"></i>
     </a>
   </div>
+
+
   <script src="assets/js/main.js"></script>
-  <script>
-    (function () {
-      const nav = document.getElementById('site-nav');
-      const menuToggle = document.getElementById('menu-toggle');
-      const mobileMenu = document.getElementById('mobile-menu');
-
-      if (nav) {
-        function onScroll() {
-          nav.classList.toggle('is-solid', window.scrollY > 60);
-        }
-        window.addEventListener('scroll', onScroll, { passive: true });
-        onScroll();
-      }
-
-      const pageMap = {
-        about: 0,
-        impact: 0,
-        programs: 0,
-        gallery: 0,
-        volunteer: 1,
-        internship: 1,
-        contact: 1,
-        collaborations: 2,
-        verify: 2,
-        faq: 2,
-        resources: 2,
-        guidelines: 2,
-        circulars: 2
-      };
-
-      const page = document.body.dataset.page;
-      if (page && pageMap[page] !== undefined) {
-        const triggers = document.querySelectorAll('.nav-link.dropdown-trigger');
-        if (triggers[pageMap[page]]) {
-          triggers[pageMap[page]].classList.add('is-active');
-        }
-      }
-
-      document.querySelectorAll('.nav-item.has-dropdown').forEach(function (item) {
-        const trigger = item.querySelector('.dropdown-trigger');
-        const menu = item.querySelector('.dropdown-menu');
-
-        function open() {
-          trigger.setAttribute('aria-expanded', 'true');
-          menu.classList.add('is-open');
-        }
-
-        function close() {
-          trigger.setAttribute('aria-expanded', 'false');
-          menu.classList.remove('is-open');
-        }
-
-        item.addEventListener('mouseenter', open);
-        item.addEventListener('mouseleave', close);
-
-        trigger.addEventListener('click', function () {
-          trigger.getAttribute('aria-expanded') === 'true' ? close() : open();
-        });
-
-        trigger.addEventListener('keydown', function (e) {
-          if (e.key === 'Escape') close();
-        });
-      });
-
-      if (menuToggle && mobileMenu) {
-        menuToggle.addEventListener('click', function () {
-          const isOpen = mobileMenu.classList.toggle('is-open');
-          menuToggle.setAttribute('aria-expanded', isOpen);
-          mobileMenu.setAttribute('aria-hidden', !isOpen);
-          menuToggle.classList.toggle('is-active', isOpen);
-        });
-      }
-
-      document.querySelectorAll('.mobile-group-toggle').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          const section = btn.closest('.mobile-section');
-          const links = section.querySelector('.mobile-group-links');
-          const isExpanded = btn.getAttribute('aria-expanded') === 'true';
-
-          document.querySelectorAll('.mobile-section').forEach(function (s) {
-            s.querySelector('.mobile-group-toggle').setAttribute('aria-expanded', 'false');
-            s.querySelector('.mobile-group-links').classList.remove('is-open');
-          });
-
-          if (!isExpanded) {
-            btn.setAttribute('aria-expanded', 'true');
-            links.classList.add('is-open');
-          }
-        });
-      });
-
-      document.addEventListener('click', function (e) {
-        if (!e.target.closest('.nav-item.has-dropdown')) {
-          document.querySelectorAll('.dropdown-trigger').forEach(function (t) {
-            t.setAttribute('aria-expanded', 'false');
-          });
-          document.querySelectorAll('.dropdown-menu').forEach(function (m) {
-            m.classList.remove('is-open');
-          });
-        }
-      });
-    })();
-
-    fetch('footer.html')
-      .then(function (response) { return response.text(); })
-      .then(function (data) {
-        const footer = document.getElementById('footer');
-        if (footer) footer.innerHTML = data;
-      });
-  </script>
 </body>
 
 </html>

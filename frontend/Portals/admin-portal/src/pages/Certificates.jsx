@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { Award, Search, Download, CheckCircle, XCircle, ShieldCheck } from 'lucide-react';
+import { Award, Search, Download, CheckCircle, XCircle, ShieldCheck, Upload } from 'lucide-react';
 import api from '../config/api';
 import toast from 'react-hot-toast';
 
 export default function Certificates() {
+  const [uploadingCertId, setUploadingCertId] = useState(null);
   const [certificates, setCertificates] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showVerifyModal, setShowVerifyModal] = useState(false);
@@ -64,6 +65,36 @@ export default function Certificates() {
       toast.error('Failed to download certificate');
     }
   };
+  
+  
+  const uploadCertificatePdf = async (id, file) => {
+  if (!file) return;
+
+  if (file.type !== 'application/pdf') {
+    toast.error('Please upload a PDF file only');
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append('certificate', file);
+
+  setUploadingCertId(id);
+
+  try {
+    await api.put(`/admin/certificates/${id}/file`, formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+
+    toast.success('Certificate PDF uploaded successfully');
+    fetchCertificates();
+  } catch (error) {
+    toast.error(error.response?.data?.message || 'Failed to upload certificate PDF');
+  } finally {
+    setUploadingCertId(null);
+  }
+};
+  
+  
 
   const SkeletonRow = () => (
     <tr className="border-b border-slate-50">
@@ -144,13 +175,34 @@ export default function Certificates() {
                       )}
                     </td>
                     <td className="px-6 py-4 text-sm">
-                      <button
-                        onClick={() => downloadCertificate(cert._id)}
-                        className="bg-slate-50 text-slate-600 hover:bg-slate-100 px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1"
-                      >
-                        <Download className="w-3 h-3" />
-                        Download
-                      </button>
+                      <div className="flex flex-wrap gap-2">
+  <label className="bg-blue-50 text-blue-700 hover:bg-blue-100 px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1 cursor-pointer">
+    <Upload className="w-3 h-3" />
+    {uploadingCertId === cert._id ? 'Uploading...' : 'Upload PDF'}
+
+    <input
+      type="file"
+      accept="application/pdf"
+      className="hidden"
+      disabled={uploadingCertId === cert._id}
+      onChange={(e) => uploadCertificatePdf(cert._id, e.target.files?.[0])}
+    />
+  </label>
+
+  <button
+    onClick={() => downloadCertificate(cert._id)}
+    className="bg-slate-50 text-slate-600 hover:bg-slate-100 px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1"
+  >
+    <Download className="w-3 h-3" />
+    Download
+  </button>
+
+  {cert.pdfUploadedAt && (
+    <span className="text-xs text-emerald-700 bg-emerald-50 px-2 py-1 rounded-lg">
+      PDF uploaded
+    </span>
+  )}
+</div>
                     </td>
                   </tr>
                 ))
