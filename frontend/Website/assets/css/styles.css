@@ -2896,16 +2896,21 @@ body[data-page="collaborations"] .partnership-box p {
   gap: 1.5rem;
 }
 
-.team-row-1 {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
-}
-
-.team-row-2 {
+.team-row {
   display: flex;
   justify-content: center;
-  gap: 1.5rem;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+.team-row-1 .card {
+  flex: 0 1 260px;
+}
+
+.team-row-2 .card,
+.team-row-3 .card {
+  flex: 0 1 280px;
 }
 
 .moved-inline-style-022 {
