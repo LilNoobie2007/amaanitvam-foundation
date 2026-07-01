@@ -128,37 +128,33 @@ export default function Sidebar() {
         </NavLink>
       </nav>
 
-      {/* Footer — User Info */}
+      {/* Footer — Admin Portal */}
       <div className="px-4 py-4 border-t border-gold/10 bg-primary/10">
         <div className="flex items-center gap-3">
-          {userProfile?.profileImage ? (
-            <img
-              src={userProfile.profileImage}
-              alt="Profile"
-              className="w-10 h-10 rounded-full object-cover border border-gold/30 shrink-0"
-            />
-          ) : (
-            <div className="w-10 h-10 bg-gold/20 border border-gold/30 rounded-full flex items-center justify-center text-gold text-sm font-bold shrink-0">
-              {userProfile?.name?.charAt(0)?.toUpperCase() || 'A'}
-            </div>
-          )}
+          <div className="w-10 h-10 bg-gold rounded-full flex items-center justify-center text-primary-dark font-bold text-sm shrink-0">
+            AP
+          </div>
+
           <div className="flex-1 min-w-0">
-            <p className="text-xs font-ui font-bold text-white truncate" title={userProfile?.name}>
-              {userProfile?.name?.split(' ')[0] || 'Admin'}
+            <p className="text-sm font-ui font-bold text-white truncate">
+              Admin Portal
             </p>
-            <span className="inline-block mt-0.5 px-2 py-0.5 text-[9px] font-ui font-bold uppercase tracking-wide bg-gold text-primary-dark rounded">
-              {userProfile?.role || 'admin'}
+
+            <span className="inline-block mt-1 px-2 py-0.5 text-[10px] font-ui font-bold uppercase tracking-wide bg-gold text-primary-dark rounded">
+              ADMIN
             </span>
           </div>
+
           <button
             onClick={handleLogout}
             title="Logout"
             className="p-2 text-gold/60 hover:text-gold hover:bg-gold/10 rounded-lg transition-colors duration-300"
           >
-            <LogOut className="w-4.5 h-4.5" />
+            <LogOut className="w-4 h-4" />
           </button>
         </div>
       </div>
     </aside>
   );
 }
+
