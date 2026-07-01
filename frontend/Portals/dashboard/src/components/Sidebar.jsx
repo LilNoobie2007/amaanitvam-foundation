@@ -140,16 +140,19 @@ export default function Sidebar() {
       <div className="px-4 py-4 border-t border-slate-700/50">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 bg-[#56051a] rounded-full flex items-center justify-center text-white text-sm font-semibold shrink-0">
-            {userProfile?.name?.charAt(0)?.toUpperCase() || 'U'}
+            DP
           </div>
+
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-semibold text-white truncate" title={userProfile?.name}>
-              {userProfile?.name ? userProfile.name.split(' ')[0] : 'User'}
+            <p className="text-sm font-semibold text-white truncate" title="Dashboard Panel">
+              Dashboard Panel
             </p>
+
             <span className="inline-block mt-0.5 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide bg-slate-700/60 text-slate-300 rounded-full">
-              {userProfile?.role || 'member'}
+              DASHBOARD
             </span>
           </div>
+
           <button
             onClick={handleLogout}
             title="Logout"
