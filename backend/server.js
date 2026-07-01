@@ -1,6 +1,7 @@
+import "dotenv/config";
+
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
 import helmet from "helmet";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -27,7 +28,14 @@ import cmsRoutes from "./routes/cmsRoutes.js";
 import activityRoutes from "./routes/activityRoutes.js";
 import searchRoutes from "./routes/searchRoutes.js";
 
-dotenv.config();
+// Catch anything that slips past route-level error handling instead of
+// crashing silently or leaving a request hanging with no response.
+process.on("unhandledRejection", (reason) => {
+    console.error("Unhandled Promise Rejection:", reason);
+});
+process.on("uncaughtException", (err) => {
+    console.error("Uncaught Exception:", err);
+});
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -40,31 +48,33 @@ app.set("trust proxy", 1);
 app.use(helmet({ crossOriginResourcePolicy: false }));
 
 const allowedOrigins = [
-  "http://127.0.0.1:5500",
-  "http://localhost:5500",
-  "http://localhost:5173",
-  "http://127.0.0.1:5173",
-  "http://localhost:5174",
-  "http://127.0.0.1:5174",
-  "https://amaanitvam.org",
-  "https://www.amaanitvam.org",
-  "https://admin.amaanitvam.org",
-  process.env.FRONTEND_URL,
-  process.env.ADMIN_URL,
+    "http://127.0.0.1:5500",
+    "http://localhost:5500",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "http://localhost:5174",
+    "http://127.0.0.1:5174",
+    "https://amaanitvam.org",
+    "https://www.amaanitvam.org",
+    "https://admin.amaanitvam.org",
+    process.env.FRONTEND_URL,
+    process.env.ADMIN_URL,
 ].filter(Boolean);
 
 app.use(
-  cors({
-    origin(origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        return callback(null, true);
-      }
-      return callback(new Error(`CORS blocked: ${origin}`));
-    },
-    credentials: true,
-  })
+    cors({
+        origin(origin, callback) {
+            if (!origin || allowedOrigins.includes(origin)) {
+                return callback(null, true);
+            }
+            return callback(new Error(`CORS blocked: ${origin}`));
+        },
+        credentials: true,
+    })
 );
 
+// Webhook route needs the raw body (for signature verification) and must be
+// registered BEFORE the global json/urlencoded parsers below.
 app.use("/api/webhook", express.raw({ type: "application/json" }), webhookRoutes);
 
 app.use(express.json({ limit: "100mb" }));
@@ -73,11 +83,11 @@ app.use(express.urlencoded({ extended: true, limit: "100mb" }));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.get("/", (req, res) => {
-  res.send("Backend Running");
+    res.send("Backend Running");
 });
 
 app.get("/health", (req, res) => {
-  res.json({ success: true, message: "OK" });
+    res.json({ success: true, message: "OK" });
 });
 
 app.use("/api/contact", contactRoutes);
@@ -100,34 +110,35 @@ app.use("/api/projects", projectRoutes);
 app.use("/api/notifications", notificationRoutes);
 
 app.use((req, res) => {
-  res.status(404).json({
-    success: false,
-    message: `Route not found: ${req.method} ${req.originalUrl}`,
-  });
+    res.status(404).json({
+        success: false,
+        message: `Route not found: ${req.method} ${req.originalUrl}`,
+    });
 });
 
+// eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
-  console.error("Server Error:", err.message);
+    console.error("Server Error:", err.message);
 
-  res.status(err.status || 500).json({
-    success: false,
-    message: err.message || "Internal Server Error",
-  });
+    res.status(err.status || 500).json({
+        success: false,
+        message: err.message || "Internal Server Error",
+    });
 });
 
 const PORT = process.env.PORT || 5000;
 
 const startServer = async () => {
-  try {
-    await connectDB();
+    try {
+        await connectDB();
 
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-    });
-  } catch (error) {
-    console.error("Failed to start server:", error.message);
-    process.exit(1);
-  }
+        app.listen(PORT, () => {
+            console.log(`Server running on port ${PORT}`);
+        });
+    } catch (error) {
+        console.error("Failed to start server:", error.message);
+        process.exit(1);
+    }
 };
 
 startServer();
