@@ -1742,7 +1742,7 @@ body[data-page="contact"] section[aria-labelledby="partnerships-heading"] {
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  margin: 0 0 12px;
+  margin: 8px !important;
 }
 
 .contact-grid {
@@ -2231,19 +2231,19 @@ body[data-page="collaborations"] .partnership-box p {
 .footer-heading {
   font-size: 1.8rem;
   line-height: 1.1;
-  margin: 0 0 18px;
+  margin: 0 0 10px;
   color: var(--gold) !important;
   text-transform: none;
   letter-spacing: .2px;
 }
 
 .footer-description {
-  margin: 0 0 12px;
+  margin: 8px !important;
 }
 
 .footer-link {
   display: block;
-  margin-bottom: 11px;
+  margin-bottom: 6px !important;
   transition: .2s;
 }
 
@@ -2264,7 +2264,7 @@ body[data-page="collaborations"] .partnership-box p {
 .footer-social-row {
   display: flex;
   gap: 10px;
-  margin-top: 16px;
+  margin-top: 10px !important;
   align-items: center;
 }
 
@@ -2308,14 +2308,35 @@ body[data-page="collaborations"] .partnership-box p {
 
 .footer-bottom {
   border-top: 1px solid rgba(255, 255, 255, .12);
-  padding: 1.5rem 2rem !important;
+  padding: 12px 2rem !important;
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 13px;
   width: 100% !important;
   max-width: 1280px !important;
-  margin: 0 auto !important;
+  margin: 10px !important;
+}
+
+.site-footer {
+    padding: 0 !important;
+}
+
+.footer-container {
+    padding-top: 1.5rem !important;
+    padding-bottom: 0.75rem !important;
+}
+
+.site-footer {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+    border-bottom: none !important;
+}
+
+.footer-bottom {
+    margin-bottom: 0 !important;
+    padding-bottom: 12px !important;
+    border-bottom: none !important;
 }
 
 .footer-bottom p {
@@ -4743,10 +4764,15 @@ body:has(.app-shell) .status.alert {
   }
 
   .footer-container {
-    grid-template-columns: 1fr 1fr;
-    padding: 0 28px 28px;
-    gap: 28px;
-  }
+  max-width: 1280px !important;
+  margin: 0 auto !important;
+  padding: 2rem 2rem 1rem !important;
+  display: grid !important;
+  grid-template-columns: 1.4fr 1fr 1fr 1.3fr !important;
+  gap: 2rem !important;
+  align-items: start !important;
+  width: 100% !important;
+}
 
   .footer-bottom {
     padding: 16px 28px;
@@ -4844,10 +4870,6 @@ body:has(.app-shell) .status.alert {
 @media (max-width:600px) {
   .container {
     padding: 0 1rem;
-  }
-
-  .footer-container {
-    grid-template-columns: 1fr;
   }
 
   .section-label {
@@ -5019,13 +5041,6 @@ body:has(.app-shell) .status.alert {
 @media (max-width: 400px) {
   body[data-page="programs"] .programs-5col {
     grid-template-columns: 1fr !important;
-  }
-}
-
-@media (max-width: 992px) {
-  .footer-container {
-    grid-template-columns: 1fr !important;
-    gap: 2rem !important;
   }
 }
 
