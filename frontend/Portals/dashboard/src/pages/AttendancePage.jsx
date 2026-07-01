@@ -1,12 +1,5 @@
-import { useCallback, useEffect, useState } from 'react';
-import {
-  CalendarCheck,
-  ClipboardList,
-  Eye,
-  Loader2,
-  Save,
-  Users,
-} from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { CalendarCheck, ClipboardList, Eye, Loader2, Save, Users } from 'lucide-react';
 import toast from 'react-hot-toast';
 import api from '../config/api';
 import { useAuth } from '../contexts/AuthContext';
@@ -29,11 +22,8 @@ const statusClasses = {
 
 export default function AttendancePage() {
   const { userProfile, loading: authLoading } = useAuth();
-
   const [activeTab, setActiveTab] = useState('view');
-  const [selectedDate, setSelectedDate] = useState(
-    new Date().toISOString().slice(0, 10)
-  );
+  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().slice(0, 10));
   const [selectedDepartmentId, setSelectedDepartmentId] = useState('');
   const [departmentOptions, setDepartmentOptions] = useState([]);
   const [attendanceRecords, setAttendanceRecords] = useState([]);
@@ -43,41 +33,58 @@ export default function AttendancePage() {
   const [savingUserId, setSavingUserId] = useState(null);
   const [drafts, setDrafts] = useState({});
 
-  const isAdmin =
-    userProfile?.role === 'admin' || userProfile?.role === 'super_admin';
-
-  const isDepartmentHead = ['department_head', 'head', 'departmentHead'].includes(
-    userProfile?.role
-  );
-
+  const isAdmin = userProfile?.role === 'admin' || userProfile?.role === 'super_admin';
+  const isDepartmentHead = ['department_head', 'head', 'departmentHead'].includes(userProfile?.role);
   const canRegister = isAdmin || isDepartmentHead;
   const isViewerOnly = !canRegister;
 
-  const loadDepartmentOptions = useCallback(async () => {
+  useEffect(() => {
+    if (authLoading || !userProfile) return;
+    if (isViewerOnly) {
+      setActiveTab('view');
+      loadMyAttendance(selectedDate);
+      return;
+    }
+
+    loadDepartmentOptions();
+  }, [authLoading, userProfile?.role]);
+
+  useEffect(() => {
+    if (isViewerOnly) {
+      loadMyAttendance(selectedDate);
+      return;
+    }
+
+    if (activeTab === 'view') {
+      loadDepartmentAttendance(selectedDepartmentId, selectedDate);
+    }
+
+    if (activeTab === 'register') {
+      if (!selectedDepartmentId) return;
+      loadDepartmentUsers(selectedDepartmentId);
+    }
+  }, [selectedDepartmentId, activeTab, selectedDate, isViewerOnly]);
+
+  const loadDepartmentOptions = async () => {
     try {
       setLoading(true);
-
       const { data } = await api.get('/attendance/users');
+      const { data: domainData } = await api.get('/projects/domains');
+
+      const domainOptions = (domainData.domains || []).map(d => ({
+        departmentId: d._id,
+        departmentName: d.departmentName,
+      }));
 
       if (data.isAdmin) {
         const options = [
-          { departmentId: 'all', departmentName: 'All Departments' },
-          ...(data.departments || []),
+          { departmentId: '', departmentName: 'All Departments' },
+          ...domainOptions,
         ];
-
         setDepartmentOptions(options);
-
-        if (options.length > 0) {
-          setSelectedDepartmentId((prev) => prev || options[0].departmentId);
-        }
+        setSelectedDepartmentId(prev => prev || '');
       } else {
-        const options = [
-          {
-            departmentId: data.departmentId || '',
-            departmentName: data.departmentName || 'Department',
-          },
-        ];
-
+        const options = [{ departmentId: data.departmentId, departmentName: data.departmentName }];
         setDepartmentOptions(options);
         setSelectedDepartmentId(data.departmentId || '');
       }
@@ -86,141 +93,62 @@ export default function AttendancePage() {
         setUsers(data.users);
       }
     } catch (error) {
-      console.error(error);
-      toast.error(
-        error.response?.data?.message || 'Unable to load attendance data'
-      );
+      toast.error(error.response?.data?.message || 'Unable to load attendance data');
     } finally {
       setLoading(false);
     }
-  }, []);
+  };
 
-  const loadDepartmentAttendance = useCallback(async (departmentId, date) => {
-    if (!departmentId) return;
-
+  const loadDepartmentAttendance = async (departmentId, date) => {
     try {
       setLoading(true);
-
-      const endpoint =
-        departmentId === 'all'
-          ? '/attendance/department/all'
-          : `/attendance/department/${departmentId}`;
-
-      const { data } = await api.get(endpoint, {
-        params: { date },
-      });
-
+      const endpoint = !departmentId
+        ? '/attendance/department/all'
+        : `/attendance/department/${departmentId}`;
+      const { data } = await api.get(endpoint, { params: { date } });
       setAttendanceRecords(data.attendance || []);
     } catch (error) {
-      console.error(error);
       toast.error(error.response?.data?.message || 'Unable to load attendance');
     } finally {
       setLoading(false);
     }
-  }, []);
+  };
 
-  const loadDepartmentUsers = useCallback(async (departmentId) => {
+  const loadDepartmentUsers = async (departmentId) => {
     if (!departmentId) return;
 
     try {
       setLoading(true);
-
-      const { data } = await api.get('/attendance/users', {
-        params: { departmentId },
-      });
-
-      const loadedUsers = data.users || [];
-      setUsers(loadedUsers);
-
+      const { data } = await api.get('/attendance/users', { params: { departmentId } });
+      setUsers(data.users || []);
       const nextDrafts = {};
-      loadedUsers.forEach((user) => {
+      (data.users || []).forEach((user) => {
         nextDrafts[user._id] = 'present';
       });
-
       setDrafts(nextDrafts);
     } catch (error) {
-      console.error(error);
       toast.error(error.response?.data?.message || 'Unable to load users');
     } finally {
       setLoading(false);
     }
-  }, []);
+  };
 
-  const loadMyAttendance = useCallback(async (date) => {
+  const loadMyAttendance = async (date) => {
     try {
       setLoading(true);
-
-      const { data } = await api.get('/attendance/me', {
-        params: { date },
-      });
-
+      const { data } = await api.get('/attendance/me', { params: { date } });
       setMyAttendance(data.attendance || []);
     } catch (error) {
-      console.error(error);
-      toast.error(
-        error.response?.data?.message || 'Unable to load your attendance'
-      );
+      toast.error(error.response?.data?.message || 'Unable to load your attendance');
     } finally {
       setLoading(false);
     }
-  }, []);
-
-  useEffect(() => {
-    if (authLoading || !userProfile) return;
-
-    if (isViewerOnly) {
-      setActiveTab('view');
-      loadMyAttendance(selectedDate);
-      return;
-    }
-
-    loadDepartmentOptions();
-  }, [
-    authLoading,
-    userProfile,
-    isViewerOnly,
-    selectedDate,
-    loadMyAttendance,
-    loadDepartmentOptions,
-  ]);
-
-  useEffect(() => {
-    if (authLoading || !userProfile) return;
-
-    if (isViewerOnly) {
-      loadMyAttendance(selectedDate);
-      return;
-    }
-
-    if (!selectedDepartmentId) return;
-
-    if (activeTab === 'view') {
-      loadDepartmentAttendance(selectedDepartmentId, selectedDate);
-    }
-
-    if (activeTab === 'register') {
-      loadDepartmentUsers(selectedDepartmentId);
-    }
-  }, [
-    authLoading,
-    userProfile,
-    selectedDepartmentId,
-    activeTab,
-    selectedDate,
-    isViewerOnly,
-    loadMyAttendance,
-    loadDepartmentAttendance,
-    loadDepartmentUsers,
-  ]);
+  };
 
   const handleSaveAttendance = async (userItem) => {
-    if (!userItem?._id) return;
-
     try {
       setSavingUserId(userItem._id);
-
       const status = drafts[userItem._id] || 'present';
-
       await api.post('/attendance/mark', {
         departmentId: selectedDepartmentId,
         userId: userItem._id,
@@ -229,17 +157,9 @@ export default function AttendancePage() {
         title: 'Attendance Register',
         remark: '',
       });
-
       toast.success(`${userItem.name || userItem.email} marked`);
-
-      setDrafts((prev) => ({
-        ...prev,
-        [userItem._id]: 'present',
-      }));
-
-      await loadDepartmentAttendance(selectedDepartmentId, selectedDate);
+      loadDepartmentAttendance(selectedDepartmentId, selectedDate);
     } catch (error) {
-      console.error(error);
       toast.error(error.response?.data?.message || 'Unable to save attendance');
     } finally {
       setSavingUserId(null);
@@ -248,9 +168,6 @@ export default function AttendancePage() {
 
   const handleDepartmentChange = (value) => {
     setSelectedDepartmentId(value);
-    setAttendanceRecords([]);
-    setUsers([]);
-    setDrafts({});
   };
 
   return (
@@ -258,42 +175,29 @@ export default function AttendancePage() {
       <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <div>
-            <h1 className="text-2xl font-semibold text-slate-800">
-              Attendance
-            </h1>
+            <h1 className="text-2xl font-semibold text-slate-800">Attendance</h1>
             <p className="mt-1 text-sm text-slate-500">
               View attendance records or register attendance for your department.
             </p>
           </div>
-
           {canRegister && (
             <div className="inline-flex rounded-full border border-slate-200 bg-slate-50 p-1">
               <button
                 onClick={() => setActiveTab('view')}
-                className={`rounded-full px-3 py-1.5 text-sm font-medium ${
-                  activeTab === 'view'
-                    ? 'bg-[#56051a] text-white'
-                    : 'text-slate-600'
-                }`}
+                className={`rounded-full px-3 py-1.5 text-sm font-medium ${activeTab === 'view' ? 'bg-[#56051a] text-white' : 'text-slate-600'}`}
               >
                 <Eye className="mr-1 inline h-4 w-4" />
                 View Attendance
               </button>
-
               <button
                 onClick={() => setActiveTab('register')}
-                className={`rounded-full px-3 py-1.5 text-sm font-medium ${
-                  activeTab === 'register'
-                    ? 'bg-[#56051a] text-white'
-                    : 'text-slate-600'
-                }`}
+                className={`rounded-full px-3 py-1.5 text-sm font-medium ${activeTab === 'register' ? 'bg-[#56051a] text-white' : 'text-slate-600'}`}
               >
                 <ClipboardList className="mr-1 inline h-4 w-4" />
                 Register Attendance
               </button>
             </div>
           )}
-
           {isViewerOnly && (
             <div className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-sm font-medium text-slate-600">
               Viewing only your attendance
@@ -354,9 +258,7 @@ export default function AttendancePage() {
         <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
           <div className="mb-4 flex items-center gap-2">
             <Users className="h-5 w-5 text-[#56051a]" />
-            <h2 className="text-lg font-semibold text-slate-800">
-              Register attendance
-            </h2>
+            <h2 className="text-lg font-semibold text-slate-800">Register attendance</h2>
           </div>
 
           {users.length === 0 ? (
@@ -366,28 +268,15 @@ export default function AttendancePage() {
           ) : (
             <div className="space-y-3">
               {users.map((userItem) => (
-                <div
-                  key={userItem._id}
-                  className="flex flex-col gap-3 rounded-xl border border-slate-200 p-4 md:flex-row md:items-center md:justify-between"
-                >
+                <div key={userItem._id} className="flex flex-col gap-3 rounded-xl border border-slate-200 p-4 md:flex-row md:items-center md:justify-between">
                   <div>
-                    <p className="font-medium text-slate-800">
-                      {userItem.name || userItem.email}
-                    </p>
-                    <p className="text-sm text-slate-500">
-                      {userItem.email} • {userItem.role}
-                    </p>
+                    <p className="font-medium text-slate-800">{userItem.name || userItem.email}</p>
+                    <p className="text-sm text-slate-500">{userItem.email} • {userItem.role}</p>
                   </div>
-
                   <div className="flex items-center gap-2">
                     <select
                       value={drafts[userItem._id] || 'present'}
-                      onChange={(e) =>
-                        setDrafts((prev) => ({
-                          ...prev,
-                          [userItem._id]: e.target.value,
-                        }))
-                      }
+                      onChange={(e) => setDrafts((prev) => ({ ...prev, [userItem._id]: e.target.value }))}
                       className="rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-[#56051a]"
                     >
                       {STATUS_OPTIONS.map((option) => (
@@ -396,17 +285,12 @@ export default function AttendancePage() {
                         </option>
                       ))}
                     </select>
-
                     <button
                       onClick={() => handleSaveAttendance(userItem)}
                       disabled={savingUserId === userItem._id}
-                      className="inline-flex items-center gap-2 rounded-lg bg-[#56051a] px-3 py-2 text-sm font-semibold text-white hover:bg-[#7a0622] disabled:cursor-not-allowed disabled:opacity-70"
+                      className="inline-flex items-center gap-2 rounded-lg bg-[#56051a] px-3 py-2 text-sm font-semibold text-white hover:bg-[#7a0622] disabled:opacity-70"
                     >
-                      {savingUserId === userItem._id ? (
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                      ) : (
-                        <Save className="h-4 w-4" />
-                      )}
+                      {savingUserId === userItem._id ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
                       Save
                     </button>
                   </div>
@@ -432,35 +316,16 @@ export default function AttendancePage() {
             ) : (
               <div className="space-y-3">
                 {attendanceRecords.map((record) => (
-                  <div
-                    key={record._id}
-                    className="flex flex-col gap-3 rounded-xl border border-slate-200 p-4 md:flex-row md:items-center md:justify-between"
-                  >
+                  <div key={record._id} className="flex flex-col gap-3 rounded-xl border border-slate-200 p-4 md:flex-row md:items-center md:justify-between">
                     <div>
-                      <p className="font-medium text-slate-800">
-                        {record.user?.name ||
-                          record.user?.email ||
-                          'Unknown user'}
-                      </p>
-                      <p className="text-sm text-slate-500">
-                        {record.user?.email || 'No email'} •{' '}
-                        {record.user?.role || 'member'}
-                      </p>
+                      <p className="font-medium text-slate-800">{record.user?.name || record.user?.email || 'Unknown user'}</p>
+                      <p className="text-sm text-slate-500">{record.user?.email} • {record.user?.role}</p>
                     </div>
-
                     <div className="flex items-center gap-3">
-                      <span
-                        className={`rounded-full px-3 py-1 text-sm font-semibold capitalize ${
-                          statusClasses[record.status] ||
-                          'bg-slate-100 text-slate-700'
-                        }`}
-                      >
+                      <span className={`rounded-full px-3 py-1 text-sm font-semibold capitalize ${statusClasses[record.status] || 'bg-slate-100 text-slate-700'}`}>
                         {record.status}
                       </span>
-
-                      <span className="text-sm text-slate-500">
-                        Marked by {record.markedBy?.name || 'admin'}
-                      </span>
+                      <span className="text-sm text-slate-500">Marked by {record.markedBy?.name || 'admin'}</span>
                     </div>
                   </div>
                 ))}
@@ -473,27 +338,12 @@ export default function AttendancePage() {
           ) : (
             <div className="space-y-3">
               {myAttendance.map((record) => (
-                <div
-                  key={record._id}
-                  className="flex flex-col gap-3 rounded-xl border border-slate-200 p-4 md:flex-row md:items-center md:justify-between"
-                >
+                <div key={record._id} className="flex flex-col gap-3 rounded-xl border border-slate-200 p-4 md:flex-row md:items-center md:justify-between">
                   <div>
-                    <p className="font-medium text-slate-800">
-                      {record.department?.departmentName || 'Department'}
-                    </p>
-                    <p className="text-sm text-slate-500">
-                      {record.date
-                        ? new Date(record.date).toLocaleDateString('en-IN')
-                        : 'N/A'}
-                    </p>
+                    <p className="font-medium text-slate-800">{record.department?.departmentName || 'Department'}</p>
+                    <p className="text-sm text-slate-500">{new Date(record.date).toLocaleDateString()}</p>
                   </div>
-
-                  <span
-                    className={`rounded-full px-3 py-1 text-sm font-semibold capitalize ${
-                      statusClasses[record.status] ||
-                      'bg-slate-100 text-slate-700'
-                    }`}
-                  >
+                  <span className={`rounded-full px-3 py-1 text-sm font-semibold capitalize ${statusClasses[record.status] || 'bg-slate-100 text-slate-700'}`}>
                     {record.status}
                   </span>
                 </div>
