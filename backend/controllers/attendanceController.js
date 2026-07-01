@@ -219,16 +219,19 @@ export const getAttendanceUsers = async (req, res) => {
       return res.status(403).json({ success: false, message: 'Only department heads can access attendance register.' });
     }
 
-    const users = department.members
-      .filter((member) => member.user && member.user._id.toString() !== req.user._id.toString())
-      .map((member) => ({
-        _id: member.user._id,
-        name: member.user.name,
-        email: member.user.email,
-        role: member.role || member.user.role || 'member',
-        departmentId: department._id,
-        departmentName: department.departmentName,
-      }));
+    // SAFE FIX: Filter out rows missing unpopulated user profiles to handle removed accounts safely
+    const activeMembers = department.members.filter(
+      (member) => member.user && member.user._id && member.user._id.toString() !== req.user._id.toString()
+    );
+
+    const users = activeMembers.map((member) => ({
+      _id: member.user._id,
+      name: member.user.name || 'N/A',
+      email: member.user.email || 'N/A',
+      role: member.role || member.user.role || 'member',
+      departmentId: department._id,
+      departmentName: department.departmentName,
+    }));
 
     res.json({
       success: true,
