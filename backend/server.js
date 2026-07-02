@@ -16,6 +16,7 @@ import volunteerRoutes from "./routes/volunteerRoutes.js";
 import webhookRoutes from "./routes/webhookRoutes.js";
 import donationRoutes from "./routes/donationRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
 import certificateRoutes from "./routes/certificateRoutes.js";
 import galleryRoutes from "./routes/galleryRoutes.js";
 import meetingRoutes from "./routes/meetingRoutes.js";
@@ -30,6 +31,7 @@ import cmsRoutes from "./routes/cmsRoutes.js";
 import activityRoutes from "./routes/activityRoutes.js";
 import searchRoutes from "./routes/searchRoutes.js";
 
+import galleryMongoMediaFixRoutes from "./routes/galleryMongoMediaFixRoutes.js";
 process.on("unhandledRejection", (reason) => {
     console.error("Unhandled Promise Rejection:", reason);
 });
@@ -85,6 +87,9 @@ app.use("/api/contact", contactRoutes);
 app.use("/api/internship", internshipRoutes);
 app.use("/api/volunteer", volunteerRoutes);
 app.use("/api/donate", donationRoutes);
+app.use("/api", galleryMongoMediaFixRoutes);
+app.use("/api/auth", authRoutes);
+
 app.use("/api/admin", adminRoutes);
 app.use("/api/certificates", certificateRoutes);
 app.use("/api/gallery", galleryRoutes);
