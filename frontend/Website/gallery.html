@@ -276,7 +276,7 @@
 
 
   <script src="assets/js/main.js"></script>
-  <script src="assets/js/gallery-albums.js?v=album-cover-valid-first-photo-20260702"></script>
+  <script src="assets/js/gallery-albums.js?v=no-uncategorized-album-20260702"></script>
 
 
 
@@ -486,7 +486,7 @@
       render(items);
     } catch (err) {
       console.error('Mongo gallery load error:', err);
-      container.innerHTML = '<p id="gallery-loading">Gallery failed to load. Start backend on port 5000 and refresh.</p>';
+      container.innerHTML = '<p id="gallery-album-loading">Gallery failed to load. Start backend on port 5000 and refresh.</p>';
     }
   }
 
