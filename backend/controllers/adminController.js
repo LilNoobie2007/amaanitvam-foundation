@@ -9,7 +9,6 @@ import AuditLog from '../models/auditLog.js';
 import Department from '../models/department.js';
 
 // GET /api/admin/me
-// GET /api/admin/me
 export const getMe = async (req, res) => {
     try {
         const user = await User.findById(req.user._id);
@@ -45,7 +44,7 @@ export const getDashboardStats = async (req, res) => {
     }
 };
 
-// GET /api/admin/candidates
+// ✅ CHANGED: non-admins only see candidates from their own department/domain
 export const getCandidates = async (req, res) => {
     try {
         const { search, domain, status, page = 1, limit = 20 } = req.query;
@@ -59,6 +58,15 @@ export const getCandidates = async (req, res) => {
         }
         if (domain) query.track = domain;
         if (status) query.status = status;
+
+        // 🔒 Scope by department for non-admins
+        if (!['super_admin', 'admin'].includes(req.user.role)) {
+            if (req.user.department) {
+                query.track = req.user.department;
+            } else {
+                return res.json({ success: true, candidates: [], total: 0, totalPages: 0, domains: [] });
+            }
+        }
 
         const skip = (Number(page) - 1) * Number(limit);
         const [candidates, total, departmentDomains] = await Promise.all([
@@ -105,7 +113,6 @@ export const updateCandidateStatus = async (req, res) => {
                 details: `Rejected candidate ${candidate.email}`,
                 ipAddress: req.ip
             });
-
             return res.json({ success: true, message: 'Candidate rejected and deleted.' });
         }
 
@@ -114,7 +121,6 @@ export const updateCandidateStatus = async (req, res) => {
             if (!candidate) {
                 return res.status(404).json({ success: false, message: 'Candidate not found.' });
             }
-
             const existingUser = await User.findOne({ email: candidate.email });
             if (!existingUser) {
                 const newIntern = new User({
@@ -133,21 +139,17 @@ export const updateCandidateStatus = async (req, res) => {
                 details: `Shortlisted candidate ${candidate.email}`,
                 ipAddress: req.ip
             });
-
             return res.json({ success: true, message: 'Candidate shortlisted and moved to interns.' });
         }
 
-        // For any other status updates (like 'accepted' or reverting to 'pending' if ever needed)
         const candidate = await InternshipApplication.findByIdAndUpdate(
             req.params.id,
             { status },
             { returnDocument: 'after' }
         );
-
         if (!candidate) {
             return res.status(404).json({ success: false, message: 'Candidate not found.' });
         }
-
         res.json({ success: true, candidate });
     } catch (error) {
         console.error('Update candidate error:', error);
@@ -155,10 +157,21 @@ export const updateCandidateStatus = async (req, res) => {
     }
 };
 
-// GET /api/admin/members
+// ✅ CHANGED: non-admins only see members in their own department
 export const getMembers = async (req, res) => {
     try {
-        const members = await User.find().sort({ createdAt: -1 });
+        let query = {};
+
+        // 🔒 Scope by department for non-admins
+        if (!['super_admin', 'admin'].includes(req.user.role)) {
+            if (req.user.department) {
+                query.department = req.user.department;
+            } else {
+                return res.json({ success: true, members: [] });
+            }
+        }
+
+        const members = await User.find(query).sort({ createdAt: -1 });
         res.json({ success: true, members });
     } catch (error) {
         console.error('Members error:', error);
@@ -193,17 +206,13 @@ export const addMember = async (req, res) => {
     }
 };
 
-
 // PUT /api/admin/members/:id/role
 export const updateMemberRole = async (req, res) => {
   try {
     const { role } = req.body;
 
     if (!['super_admin', 'admin', 'member', 'intern', 'volunteer'].includes(role)) {
-      return res.status(400).json({
-        success: false,
-        message: 'Invalid role.'
-      });
+      return res.status(400).json({ success: false, message: 'Invalid role.' });
     }
 
     const member = await User.findByIdAndUpdate(
@@ -213,10 +222,7 @@ export const updateMemberRole = async (req, res) => {
     );
 
     if (!member) {
-      return res.status(404).json({
-        success: false,
-        message: 'Member not found.'
-      });
+      return res.status(404).json({ success: false, message: 'Member not found.' });
     }
 
     await AuditLog.create({
@@ -229,10 +235,7 @@ export const updateMemberRole = async (req, res) => {
     res.json({ success: true, member });
   } catch (error) {
     console.error('Update role error:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Failed to update role.'
-    });
+    res.status(500).json({ success: false, message: 'Failed to update role.' });
   }
 };
 
@@ -244,7 +247,6 @@ export const deactivateMember = async (req, res) => {
             { status: 'inactive' },
             { returnDocument: 'after' }
         );
-
         if (!member) return res.status(404).json({ success: false, message: 'Member not found.' });
 
         await AuditLog.create({
@@ -286,7 +288,6 @@ export const getDonations = async (req, res) => {
     try {
         const donations = await Donation.find({ status: 'paid' }).populate('campaign', 'title status goalAmount raisedAmount').sort({ createdAt: -1 });
         const totalAmount = donations.reduce((sum, d) => sum + d.amount, 0);
-
         res.json({ success: true, donations, totalAmount });
     } catch (error) {
         console.error('Donations error:', error);
@@ -294,37 +295,33 @@ export const getDonations = async (req, res) => {
     }
 };
 
-// GET /api/admin/certificates
+// ✅ CHANGED: non-admins only see their own certificates
 export const getCertificates = async (req, res) => {
   try {
-    const certificates = await Certificate.find()
+    // 🔒 Scope by email for non-admins
+    let query = {};
+    if (!['super_admin', 'admin'].includes(req.user.role)) {
+      query = { email: req.user.email };
+    }
+
+    const certificates = await Certificate.find(query)
       .select('-pdfBuffer')
       .sort({ createdAt: -1 });
 
     res.json({ success: true, certificates });
   } catch (error) {
     console.error('Certificates error:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Failed to fetch certificates.',
-    });
+    res.status(500).json({ success: false, message: 'Failed to fetch certificates.' });
   }
 };
 
 export const uploadCertificateFile = async (req, res) => {
   try {
     if (!req.file) {
-      return res.status(400).json({
-        success: false,
-        message: 'Please upload a certificate PDF.',
-      });
+      return res.status(400).json({ success: false, message: 'Please upload a certificate PDF.' });
     }
-
     if (req.file.mimetype !== 'application/pdf') {
-      return res.status(400).json({
-        success: false,
-        message: 'Only PDF certificate files are allowed.',
-      });
+      return res.status(400).json({ success: false, message: 'Only PDF certificate files are allowed.' });
     }
 
     const certificate = await Certificate.findByIdAndUpdate(
@@ -339,10 +336,7 @@ export const uploadCertificateFile = async (req, res) => {
     ).select('-pdfBuffer');
 
     if (!certificate) {
-      return res.status(404).json({
-        success: false,
-        message: 'Certificate not found.',
-      });
+      return res.status(404).json({ success: false, message: 'Certificate not found.' });
     }
 
     await AuditLog.create({
@@ -352,46 +346,24 @@ export const uploadCertificateFile = async (req, res) => {
       ipAddress: req.ip,
     });
 
-    res.json({
-      success: true,
-      message: 'Certificate PDF uploaded successfully.',
-      certificate,
-    });
+    res.json({ success: true, message: 'Certificate PDF uploaded successfully.', certificate });
   } catch (error) {
     console.error('Upload certificate file error:', error);
-    res.status(500).json({
-      success: false,
-      message: error.message || 'Failed to upload certificate PDF.',
-    });
+    res.status(500).json({ success: false, message: error.message || 'Failed to upload certificate PDF.' });
   }
 };
-
 
 // POST /api/admin/certificates
 export const generateCertificate = async (req, res) => {
   try {
     const {
-      issuedTo,
-      email,
-      phone,
-      type = 'Internship',
-      domain,
-      duration,
-      startDate,
-      endDate,
-      issueDate,
-      isValid,
+      issuedTo, email, phone, type = 'Internship', domain,
+      duration, startDate, endDate, issueDate, isValid,
     } = req.body;
 
-    if (!issuedTo?.trim()) {
-      return res.status(400).json({ success: false, message: 'Intern name is required.' });
-    }
-    if (!email?.trim()) {
-      return res.status(400).json({ success: false, message: 'Intern email is required.' });
-    }
-    if (!domain?.trim()) {
-      return res.status(400).json({ success: false, message: 'Internship domain is required.' });
-    }
+    if (!issuedTo?.trim()) return res.status(400).json({ success: false, message: 'Intern name is required.' });
+    if (!email?.trim()) return res.status(400).json({ success: false, message: 'Intern email is required.' });
+    if (!domain?.trim()) return res.status(400).json({ success: false, message: 'Internship domain is required.' });
     if (!['Internship', 'Volunteer', 'Appreciation', 'Achievement'].includes(type)) {
       return res.status(400).json({ success: false, message: 'Invalid certificate type.' });
     }
@@ -400,32 +372,23 @@ export const generateCertificate = async (req, res) => {
     }
 
     const year = new Date().getFullYear();
-    const existingCount = await Certificate.countDocuments({
-      certificateId: { $regex: `^AF-${year}-` },
-    });
+    const existingCount = await Certificate.countDocuments({ certificateId: { $regex: `^AF-${year}-` } });
 
     let certificateId;
     for (let attempt = 1; attempt <= 100; attempt += 1) {
       const serial = String(existingCount + attempt).padStart(4, '0');
       const candidateId = `AF-${year}-${serial}`;
       const exists = await Certificate.exists({ certificateId: candidateId });
-      if (!exists) {
-        certificateId = candidateId;
-        break;
-      }
+      if (!exists) { certificateId = candidateId; break; }
     }
-
-    if (!certificateId) {
-      certificateId = `AF-${year}-${Date.now().toString().slice(-6)}`;
-    }
+    if (!certificateId) certificateId = `AF-${year}-${Date.now().toString().slice(-6)}`;
 
     const certificateData = {
       certificateId,
       issuedTo: issuedTo.trim(),
       email: email.trim().toLowerCase(),
       phone: phone?.trim() || '',
-      type,
-      domain: domain.trim(),
+      type, domain: domain.trim(),
       duration: duration?.trim() || '',
       startDate: startDate || undefined,
       endDate: endDate || undefined,
@@ -472,7 +435,6 @@ export const revokeCertificate = async (req, res) => {
             { isValid: false, revokedAt: new Date(), revokedReason: reason || 'No reason provided' },
             { returnDocument: 'after' }
         );
-
         if (!certificate) return res.status(404).json({ success: false, message: 'Certificate not found.' });
 
         await AuditLog.create({
@@ -488,74 +450,44 @@ export const revokeCertificate = async (req, res) => {
         res.status(500).json({ success: false, message: 'Failed to revoke certificate.' });
     }
 };
+
 // GET /api/admin/certificates/:id/download
 export const downloadCertificate = async (req, res) => {
   try {
     const certificate = await Certificate.findById(req.params.id);
+    if (!certificate) return res.status(404).json({ success: false, message: 'Certificate not found.' });
+    if (!certificate.pdfBuffer) return res.status(404).json({ success: false, message: 'No uploaded certificate PDF found for this record.' });
 
-    if (!certificate) {
-      return res.status(404).json({
-        success: false,
-        message: 'Certificate not found.',
-      });
+    // 🔒 Non-admins can only download their own certificate
+    if (!['super_admin', 'admin'].includes(req.user.role)) {
+      if (certificate.email !== req.user.email) {
+        return res.status(403).json({ success: false, message: 'Access denied.' });
+      }
     }
 
-    if (!certificate.pdfBuffer) {
-      return res.status(404).json({
-        success: false,
-        message: 'No uploaded certificate PDF found for this record.',
-      });
-    }
-
-    const safeFileName = (
-      certificate.pdfOriginalName || `${certificate.certificateId}.pdf`
-    ).replace(/[^\w.\-() ]/g, '_');
-
+    const safeFileName = (certificate.pdfOriginalName || `${certificate.certificateId}.pdf`).replace(/[^\w.\-() ]/g, '_');
     res.setHeader('Content-Type', certificate.pdfContentType || 'application/pdf');
-    res.setHeader(
-      'Content-Disposition',
-      `attachment; filename="${safeFileName}"`
-    );
-
+    res.setHeader('Content-Disposition', `attachment; filename="${safeFileName}"`);
     return res.send(certificate.pdfBuffer);
   } catch (error) {
     console.error('Download certificate error:', error);
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
+    res.status(500).json({ success: false, message: error.message });
   }
 };
-
 
 // PUT /api/admin/members/:id
 export const updateMember = async (req, res) => {
   try {
     const { name, phone, department } = req.body;
-
     const member = await User.findByIdAndUpdate(
       req.params.id,
       { name, phone, department },
       { new: true, runValidators: true }
     );
-
-    if (!member) {
-      return res.status(404).json({
-        success: false,
-        message: "Member not found"
-      });
-    }
-
-    res.json({
-      success: true,
-      member
-    });
-
+    if (!member) return res.status(404).json({ success: false, message: 'Member not found' });
+    res.json({ success: true, member });
   } catch (err) {
-    res.status(500).json({
-      success: false,
-      message: err.message
-    });
+    res.status(500).json({ success: false, message: err.message });
   }
 };
 
@@ -563,9 +495,7 @@ export const updateMember = async (req, res) => {
 export const getSettings = async (req, res) => {
     try {
         let settings = await Setting.findOne();
-        if (!settings) {
-            settings = await Setting.create({});
-        }
+        if (!settings) settings = await Setting.create({});
         res.json({ success: true, settings });
     } catch (error) {
         console.error('Get settings error:', error);
@@ -577,15 +507,9 @@ export const getSettings = async (req, res) => {
 export const updateSettings = async (req, res) => {
     try {
         let settings = await Setting.findOne();
-        if (!settings) {
-            settings = await Setting.create({});
-        }
-        
-        const updated = await Setting.findByIdAndUpdate(
-            settings._id,
-            req.body,
-            { new: true }
-        );
+        if (!settings) settings = await Setting.create({});
+
+        const updated = await Setting.findByIdAndUpdate(settings._id, req.body, { new: true });
 
         await AuditLog.create({
             userId: req.user._id,
@@ -638,20 +562,12 @@ export const getReports = async (req, res) => {
     const monthlyMap = users.reduce((acc, user) => {
       const rawDate = user.createdAt || user.joinedAt;
       if (!rawDate) return acc;
-
       const date = new Date(rawDate);
       if (Number.isNaN(date.getTime())) return acc;
-
       const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
       if (!acc[key]) {
-        acc[key] = {
-          key,
-          month: date.toLocaleString('en-IN', { month: 'short', year: '2-digit' }),
-          members: 0,
-          active: 0
-        };
+        acc[key] = { key, month: date.toLocaleString('en-IN', { month: 'short', year: '2-digit' }), members: 0, active: 0 };
       }
-
       acc[key].members += 1;
       if ((user.status || 'active') === 'active') acc[key].active += 1;
       return acc;
@@ -678,8 +594,6 @@ export const getReports = async (req, res) => {
         statusCounts,
         growthData,
         recentMembers: users.slice(0, 10),
-
-        // Kept for backwards compatibility with any existing widgets.
         totalCandidates: candidates,
         totalDonations,
         totalTransactions: donations.length
@@ -691,9 +605,6 @@ export const getReports = async (req, res) => {
 };
 
 // PUT /api/admin/me
-// Lets a logged-in user update their own profile.
-// Email is intentionally excluded — even if a client sends "email" in
-// the body, it is never read or applied, so it cannot reach the database.
 export const updateMe = async (req, res) => {
   try {
     const { name, phone, department, profileImage } = req.body;
@@ -712,15 +623,8 @@ export const updateMe = async (req, res) => {
       updateData.profileImage = profileImage;
     }
 
-    const member = await User.findByIdAndUpdate(
-      req.user._id,
-      updateData,
-      { new: true, runValidators: true }
-    );
-
-    if (!member) {
-      return res.status(404).json({ success: false, message: 'User not found' });
-    }
+    const member = await User.findByIdAndUpdate(req.user._id, updateData, { new: true, runValidators: true });
+    if (!member) return res.status(404).json({ success: false, message: 'User not found' });
 
     res.json({ success: true, user: member });
   } catch (err) {
