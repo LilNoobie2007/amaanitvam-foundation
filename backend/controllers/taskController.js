@@ -56,10 +56,12 @@ export const createTask = async(req, res) => {
     }
 };
 
-// Get All Tasks
+// Get All Tasks — non-admins see only their own
 export const getTasks = async(req, res) => {
     try {
-        const tasks = await taskModel.find().populate("assignedTo", "name email");
+        const isAdmin = req.user.role === 'admin' || req.user.role === 'super_admin';
+        const query = isAdmin ? {} : { assignedTo: req.user._id };
+        const tasks = await taskModel.find(query).populate("assignedTo", "name email");
         res.status(200).json({ success: true, tasks });
     } catch (error) {
         console.log("Get Tasks Error:", error);
@@ -67,13 +69,20 @@ export const getTasks = async(req, res) => {
     }
 };
 
-// Get Single Task by ID
+// Get Single Task — non-admins can only see their own
 export const getTaskById = async(req, res) => {
     try {
         const task = await taskModel.findById(req.params.id).populate("assignedTo", "name email");
 
         if (!task) {
             return res.status(404).json({ success: false, message: "Task not found" });
+        }
+
+        const isAdmin = req.user.role === 'admin' || req.user.role === 'super_admin';
+        const isAssigned = task.assignedTo?._id?.toString() === req.user._id.toString();
+
+        if (!isAdmin && !isAssigned) {
+            return res.status(403).json({ success: false, message: "Access denied. This task is not assigned to you." });
         }
 
         res.status(200).json({ success: true, task });
@@ -83,11 +92,11 @@ export const getTaskById = async(req, res) => {
     }
 };
 
-// Get Tasks by Status
+// Get Tasks by Status — non-admins scoped to their own
 export const getTasksByStatus = async(req, res) => {
     try {
         const { status } = req.params;
-        const validStatuses = ["open", "inProgress", "completed"];
+        const validStatuses = ["open", "inProgress", "completed", "pending_approval"];
 
         if (!validStatuses.includes(status)) {
             return res.status(400).json({ 
@@ -96,14 +105,15 @@ export const getTasksByStatus = async(req, res) => {
             });
         }
 
-        const tasks = await taskModel.find({ status }).populate("assignedTo", "name email");
+        const isAdmin = req.user.role === 'admin' || req.user.role === 'super_admin';
+        const query = isAdmin ? { status } : { status, assignedTo: req.user._id };
+        const tasks = await taskModel.find(query).populate("assignedTo", "name email");
         res.status(200).json({ success: true, tasks });
     } catch (error) {
         console.log("Get Tasks by Status Error:", error);
         res.status(500).json({ success: false, message: error.message });
     }
 };
-
 // Get Tasks Assigned to User
 export const getTasksByUser = async(req, res) => {
     try {
