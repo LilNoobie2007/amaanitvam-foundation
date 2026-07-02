@@ -3484,7 +3484,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function renderAlbums() {
-    setIntro('Browse Gallery Albums', 'Open an album to view images and videos grouped by the same folders created in the admin portal.');
+    setIntro('Browse Gallery Albums', 'Open an album to view images and videos grouped by the same folders');
     container.className = 'gallery-grid gallery-albums-grid';
 
     const albums = [...currentFolders];
