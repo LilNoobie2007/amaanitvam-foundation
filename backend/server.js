@@ -45,7 +45,7 @@ const app = express();
 app.disable("x-powered-by");
 app.set("trust proxy", 1);
 
-app.use(helmet({ crossOriginResourcePolicy: false }));
+
 
 const allowedOrigins = [
     "http://127.0.0.1:5500",
@@ -60,7 +60,7 @@ const allowedOrigins = [
     process.env.FRONTEND_URL,
     process.env.ADMIN_URL,
 ].filter(Boolean);
-
+app.use(helmet({ crossOriginResourcePolicy: false }));
 app.use(
     cors({
         origin(origin, callback) {
@@ -91,7 +91,7 @@ app.use("/api/gallery", galleryRoutes);
 app.use("/api/meetings", meetingRoutes);
 app.use("/api/tasks", taskRoutes);
 app.use("/api/announcements", announcementRoutes);
-app.use("/api/departments", departmentRoutes);
+app.use('/api/departments', departmentRoutes);
 app.use("/api/attendance", attendanceRoutes);
 app.use("/api/cms", cmsRoutes);
 app.use("/api/activities", activityRoutes);
