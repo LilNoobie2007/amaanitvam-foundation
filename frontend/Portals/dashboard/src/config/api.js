@@ -16,7 +16,6 @@ api.interceptors.request.use(
     if (currentUser) {
       try {
         const token = await currentUser.getIdToken();
-
         config.headers.Authorization = `Bearer ${token}`;
       } catch (err) {
         console.error('Failed to get Firebase token:', err);
@@ -30,7 +29,6 @@ api.interceptors.request.use(
 
 api.interceptors.response.use(
   (response) => response,
-
   (error) => {
     if (error.response?.status === 401) {
       localStorage.clear();
