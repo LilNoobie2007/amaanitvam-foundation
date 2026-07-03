@@ -18,8 +18,10 @@ export function AuthProvider({ children }) {
           const res = await api.get('/admin/me');
           setUserProfile(res.data.user);
         } catch {
-          setUserProfile(null);
-        }
+      setUserProfile(null);
+      await signOut(auth);
+      setUser(null);
+    }
       } else {
         setUser(null);
         setUserProfile(null);
@@ -29,9 +31,40 @@ export function AuthProvider({ children }) {
     return unsubscribe;
   }, []);
 
-  const login = (email, password) => signInWithEmailAndPassword(auth, email, password);
+  const verifyPortalEmail = async (email, purpose = 'login') => {
+    const normalizedEmail = String(email || '').trim().toLowerCase();
+
+    if (!normalizedEmail) {
+      throw new Error('Email is required.');
+    }
+
+    try {
+      await api.post('/auth/verify-email', {
+        email: normalizedEmail,
+        portal: 'admin',
+        purpose,
+      });
+    } catch (error) {
+      const message =
+        error?.response?.data?.message ||
+        'This email is not registered or active for this portal.';
+      throw new Error(message);
+    }
+
+    return normalizedEmail;
+  };
+
+  const login = async (email, password) => {
+    const verifiedEmail = await verifyPortalEmail(email, 'login');
+    return signInWithEmailAndPassword(auth, verifiedEmail, password);
+  };
+
   const logout = () => signOut(auth);
-  const resetPassword = (email) => sendPasswordResetEmail(auth, email);
+
+  const resetPassword = async (email) => {
+    const verifiedEmail = await verifyPortalEmail(email, 'password_reset');
+    return sendPasswordResetEmail(auth, verifiedEmail);
+  };
 
   const value = { user, userProfile, setUserProfile, loading, login, logout, resetPassword };
 
