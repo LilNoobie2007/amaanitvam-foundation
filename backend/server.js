@@ -31,6 +31,7 @@ import activityRoutes from "./routes/activityRoutes.js";
 import searchRoutes from "./routes/searchRoutes.js";
 
 import galleryMongoMediaFixRoutes from "./routes/galleryMongoMediaFixRoutes.js";
+
 process.on("unhandledRejection", (reason) => {
     console.error("Unhandled Promise Rejection:", reason);
 });
@@ -46,8 +47,6 @@ const app = express();
 app.disable("x-powered-by");
 app.set("trust proxy", 1);
 
-
-
 const allowedOrigins = [
     "http://127.0.0.1:5500",
     "http://localhost:5500",
@@ -61,6 +60,7 @@ const allowedOrigins = [
     process.env.FRONTEND_URL,
     process.env.ADMIN_URL,
 ].filter(Boolean);
+
 app.use(helmet({ crossOriginResourcePolicy: false }));
 app.use(
     cors({
@@ -85,7 +85,22 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/api/contact", contactRoutes);
 app.use("/api/internship", internshipRoutes);
 app.use("/api/volunteer", volunteerRoutes);
+
+// 1. This is your existing donation line (Leave it as it is)
 app.use("/api/donate", donationRoutes);
+
+// 2. 🛡️ PLACE THE PROXY LAYER RIGHT HERE:
+app.use("/api", donationRoutes); 
+
+// 3. 🟢 PLACE THE BASE HEALTH CHECK RIGHT HERE:
+app.get("/api", (req, res) => {
+    res.status(200).json({
+        success: true,
+        message: "Amaanitvam Foundation Core API Gateway is fully operational and online.",
+        timestamp: new Date()
+    });
+}); 
+
 app.use("/api", galleryMongoMediaFixRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/certificates", certificateRoutes);
