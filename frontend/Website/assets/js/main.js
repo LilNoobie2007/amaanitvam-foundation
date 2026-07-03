@@ -1,14 +1,5 @@
-/* =====================================================
-   COMPLETE WEBSITE JS + DASHBOARD JS
-   Website interactions first, dashboard module logic second.
-   ===================================================== */
-/* =====================================================
-   COMPLETE WEBSITE JS + DASHBOARD JS
-   Website interactions first, dashboard module logic second.
-   ===================================================== */
+const API_BASE_URL = 'https://amaanitvam-foundation.onrender.com/api';
 
-   const API_BASE_URL = 'https://amaanitvam-foundation.onrender.com/api';
-   
 (function () {
   'use strict';
 
@@ -151,7 +142,7 @@
     ].join('');
   }
 
-  /* Navbar logic for grouped nav markup, including pages that still need upgrading. */
+
   if (hasGroupedNavbar || needsNavbarUpgrade) {
     document.querySelectorAll('[data-nav]').forEach(function (link) {
       if (link.dataset.nav === currentPage) {
@@ -268,7 +259,7 @@
     });
   }
 
-  /* FAQ accordion */
+  
   document.querySelectorAll('.faq-question').forEach(function (btn) {
     btn.addEventListener('click', function () {
       const item = btn.closest('.faq-item');
@@ -277,7 +268,7 @@
     });
   });
 
-  /* Contact form */
+
   const contactForm = document.getElementById('contactForm');
   const contactStatus = document.getElementById('contact-status');
   const whatsappInviteUrl = 'https://chat.whatsapp.com/DhebPGMO2JILFfja86gybF';
@@ -348,7 +339,6 @@
     });
   }
 
-  /* Certificate verification demo */
   const verifyForm = document.getElementById('verify-form');
   if (verifyForm) {
     verifyForm.addEventListener('submit', function (e) {
@@ -392,11 +382,6 @@ const socialBar = `
 if (document.body && !document.querySelector(".floating-socials")) {
   document.body.insertAdjacentHTML("beforeend", socialBar);
 }
-
-/* =====================================================
-   DASHBOARD MODULE LOGIC
-   Runs only when dashboard elements exist.
-   ===================================================== */
 
 const modules = [
   {
@@ -2976,9 +2961,9 @@ document.addEventListener('DOMContentLoaded', function () {
         <h2>Support a live campaign</h2>
         <div class="campaign-preview-grid">
           ${activeCampaigns.map((campaign) => {
-            const id = campaign._id || campaign.id;
-            const pct = progress(campaign);
-            return `
+      const id = campaign._id || campaign.id;
+      const pct = progress(campaign);
+      return `
               <article class="campaign-preview-card">
                 <h3>${escapeHtml(campaign.title)}</h3>
                 <p>${escapeHtml(campaign.description || 'Support this active campaign.')}</p>
@@ -2986,7 +2971,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="campaign-meta">${rupees(campaign.raisedAmount)} raised / ${rupees(campaign.goalAmount)} goal</div>
                 <a class="campaign-donate-link" href="contact.html?campaign=${encodeURIComponent(id)}">Donate to this campaign</a>
               </article>`;
-          }).join('')}
+    }).join('')}
         </div>
       </div>`;
   }
@@ -3563,12 +3548,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const grid = media.length
       ? `<div class="gallery-album-media-grid">
           ${media.map((item) => {
-            const title = item.title || item.originalName || item.filename || 'Gallery media';
-            return `<figure class="gallery-media-card gallery-card reveal-card">
+        const title = item.title || item.originalName || item.filename || 'Gallery media';
+        return `<figure class="gallery-media-card gallery-card reveal-card">
               <div class="gallery-media-frame">${mediaThumb(item, 'gallery-media-file')}</div>
               <figcaption>${escapeHtml(title)}</figcaption>
             </figure>`;
-          }).join('')}
+      }).join('')}
         </div>`
       : `<div class="gallery-state">No media has been uploaded in this album yet.</div>`;
 
