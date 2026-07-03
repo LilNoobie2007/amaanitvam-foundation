@@ -283,7 +283,11 @@
       const submitButton = contactForm.querySelector('button[type="submit"]');
       const originalButtonHtml = submitButton ? submitButton.innerHTML : '';
       const formData = new FormData(contactForm);
+<<<<<<< HEAD
       const apiUrl = contactForm.dataset.apiUrl || 'https://amaanitvam-platform.onrender.com/api/contact';
+=======
+      const apiUrl = contactForm.dataset.apiUrl || 'http://localhost:5000/api/contact';
+>>>>>>> e1a4c38033c5d1aa16286c929191b3e1a88a859a
 
       if (contactStatus) {
         contactStatus.innerHTML = '<p style="margin:0;">Sending your message...</p>';
@@ -1333,7 +1337,11 @@ fetch('footer.html')
 
       try {
 
+<<<<<<< HEAD
         var response = await fetch('https://amaanitvam-platform.onrender.com/api/donate/create-order', {
+=======
+        var response = await fetch('http://localhost:5000/api/donate/create-order', {
+>>>>>>> e1a4c38033c5d1aa16286c929191b3e1a88a859a
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ name: name, email: email, phone: phone, amount: selectedAmount })
@@ -1366,7 +1374,11 @@ fetch('footer.html')
           handler: async function (paymentResponse) {
 
             try {
+<<<<<<< HEAD
               var verifyRes = await fetch('https://amaanitvam-platform.onrender.com/api/donate/verify', {
+=======
+              var verifyRes = await fetch('http://localhost:5000/api/donate/verify', {
+>>>>>>> e1a4c38033c5d1aa16286c929191b3e1a88a859a
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -1797,7 +1809,11 @@ document.getElementById('internshipForm')?.addEventListener('submit', async func
   const formData = new FormData(this);
 
   try {
+<<<<<<< HEAD
     const response = await fetch('https://amaanitvam-platform.onrender.com/api/internship/apply', {
+=======
+    const response = await fetch('http://localhost:5000/api/internship/apply', {
+>>>>>>> e1a4c38033c5d1aa16286c929191b3e1a88a859a
       method: 'POST',
       body: formData
     });
@@ -2629,7 +2645,11 @@ document.getElementById('volunteerForm')?.addEventListener('submit', async funct
   const data = Object.fromEntries(formData.entries());
 
   try {
+<<<<<<< HEAD
     const response = await fetch('https://amaanitvam-platform.onrender.com/api/volunteer/apply', {
+=======
+    const response = await fetch('http://localhost:5000/api/volunteer/apply', {
+>>>>>>> e1a4c38033c5d1aa16286c929191b3e1a88a859a
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
