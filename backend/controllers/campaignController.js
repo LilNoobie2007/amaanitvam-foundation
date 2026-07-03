@@ -65,7 +65,7 @@ export const deleteCampaign = async (req, res) => {
   try {
     const campaign = await Campaign.findByIdAndUpdate(
       req.params.id,
-      { status: { $regex: /^inactive$/i } },
+      { status: "inactive" },
       { new: true }
     );
 
