@@ -9,6 +9,7 @@ import {
 
 const router = express.Router();
 
+router.get("/active", getPublicCampaigns);
 router.get("/public", getPublicCampaigns);
 router.get("/", getCampaigns);
 router.post("/", createCampaign);
