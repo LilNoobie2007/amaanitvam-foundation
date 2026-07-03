@@ -30,6 +30,8 @@ import cmsRoutes from "./routes/cmsRoutes.js";
 import activityRoutes from "./routes/activityRoutes.js";
 import searchRoutes from "./routes/searchRoutes.js";
 
+// 🛡️ MOUNTED AUTHENTICATION IMPORT (Fixes Uncaught Exception: ReferenceError)
+import authRoutes from "./routes/authRoutes.js"; 
 import galleryMongoMediaFixRoutes from "./routes/galleryMongoMediaFixRoutes.js";
 
 process.on("unhandledRejection", (reason) => {
@@ -85,14 +87,12 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/api/contact", contactRoutes);
 app.use("/api/internship", internshipRoutes);
 app.use("/api/volunteer", volunteerRoutes);
-
-// 1. This is your existing donation line (Leave it as it is)
 app.use("/api/donate", donationRoutes);
 
-// 2. 🛡️ PLACE THE PROXY LAYER RIGHT HERE:
-app.use("/api", donationRoutes); 
+// 🛡️ AUTHENTICATION INTERFACE ROUTER
+app.use("/api/auth", authRoutes);
 
-// 3. 🟢 PLACE THE BASE HEALTH CHECK RIGHT HERE:
+// 🟢 BASE API GATEWAY HEALTH CHECK
 app.get("/api", (req, res) => {
     res.status(200).json({
         success: true,
@@ -100,6 +100,9 @@ app.get("/api", (req, res) => {
         timestamp: new Date()
     });
 }); 
+
+// 🏁 CAMPAIGNS GATEWAY FALLBACK OVERRIDE PROXY LAYER
+app.use("/api", donationRoutes); 
 
 app.use("/api", galleryMongoMediaFixRoutes);
 app.use("/api/admin", adminRoutes);
