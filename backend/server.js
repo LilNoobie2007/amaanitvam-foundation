@@ -56,6 +56,7 @@ const allowedOrigins = [
     "http://127.0.0.1:5173",
     "http://localhost:5174",
     "http://127.0.0.1:5174",
+    "https://amaanitvam-foundation-one.vercel.app",
     "https://amaanitvam.org",
     "https://www.amaanitvam.org",
     "https://admin.amaanitvam.org",
