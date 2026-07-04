@@ -61,6 +61,8 @@ const allowedOrigins = [
   "https://www.amaanitvam.org",
   "https://admin.amaanitvam.org",
   "https://amaanitvam-foundation-five.vercel.app",
+  "https://amaanitvam-admin.onrender.com",
+  "https://amaanitvam-dashboard.onrender.com",
   process.env.FRONTEND_URL,
   process.env.ADMIN_URL,
 ].filter(Boolean);
