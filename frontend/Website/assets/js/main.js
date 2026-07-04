@@ -259,7 +259,7 @@ const API_BASE_URL = 'https://amaanitvam-foundation.onrender.com/api';
     });
   }
 
-  
+
   document.querySelectorAll('.faq-question').forEach(function (btn) {
     btn.addEventListener('click', function () {
       const item = btn.closest('.faq-item');
@@ -2849,19 +2849,17 @@ document.addEventListener('DOMContentLoaded', function () {
     const list = [];
     if (configured) list.push(configured.replace(/\/$/, ''));
 
-    // Your backend is on 5000. Do not try 5001 or Live Server 5500, because that creates noisy console errors.
-    if (isLocalHost()) {
-      list.push(API_BASE_URL);
-    }
+    // Always try the real backend first — on localhost AND in production.
+    list.push(API_BASE_URL);
 
-    // Only use same-origin /api when this is not VS Code Live Server.
+    // Same-origin /api as a fallback only when not VS Code Live Server.
     if (!['5500', '5501'].includes(window.location.port) && window.location.protocol !== 'file:') {
       list.push('/api');
     }
 
     return [...new Set(list.filter(Boolean))];
   }
-
+  
   async function fetchJson(path, options = {}) {
     const bases = workingApiBase ? [workingApiBase, ...apiCandidates()] : apiCandidates();
     let lastError;
