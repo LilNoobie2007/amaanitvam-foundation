@@ -6677,13 +6677,6 @@ body[data-page="faq"] .faq-item.is-open .faq-icon {
   flex: 0 1 280px;
 }
 
-/* ===== Gallery Albums - grouped folder view ===== */
-.gallery-albums-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
-}
-
 .gallery-album-card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -6713,17 +6706,6 @@ body[data-page="faq"] .faq-item.is-open .faq-icon {
   height: 100%;
   object-fit: cover;
   display: block;
-}
-
-.gallery-album-placeholder {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--card);
-  color: var(--muted);
-  font-size: 2.5rem;
 }
 
 .gallery-album-count {
@@ -6759,93 +6741,4 @@ body[data-page="faq"] .faq-item.is-open .faq-icon {
   color: var(--gold-dark);
   font-weight: 700;
   font-size: .88rem;
-}
-
-.gallery-album-toolbar {
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
-  margin-bottom: 1.75rem;
-}
-
-.gallery-back-button {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  padding: .6rem 1.1rem;
-  font-weight: 700;
-  color: var(--primary);
-  cursor: pointer;
-}
-
-.gallery-back-button:hover {
-  background: var(--border);
-}
-
-.gallery-album-kicker {
-  display: block;
-  font-size: .8rem;
-  font-weight: 700;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--gold-dark);
-  margin-bottom: .2rem;
-}
-
-.gallery-album-toolbar h3 {
-  font-size: 1.6rem;
-  color: var(--primary);
-  margin: 0;
-}
-
-.gallery-album-media-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 1.25rem;
-}
-
-.gallery-media-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  box-shadow: var(--shadow);
-}
-
-.gallery-media-frame {
-  aspect-ratio: 4/3;
-  background: var(--card);
-  overflow: hidden;
-}
-
-.gallery-media-file {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.gallery-media-card figcaption {
-  padding: .75rem 1rem;
-  font-size: .9rem;
-  color: var(--muted);
-}
-
-.gallery-state {
-  grid-column: 1 / -1;
-  text-align: center;
-  padding: 3rem 1rem;
-  color: var(--muted);
-}
-
-.gallery-state-error {
-  color: #b91c1c;
-}
-
-@media (max-width: 640px) {
-
-  .gallery-albums-grid,
-  .gallery-album-media-grid {
-    grid-template-columns: 1fr;
-  }
 }
