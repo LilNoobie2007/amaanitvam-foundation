@@ -2859,7 +2859,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     return [...new Set(list.filter(Boolean))];
   }
-  
+
   async function fetchJson(path, options = {}) {
     const bases = workingApiBase ? [workingApiBase, ...apiCandidates()] : apiCandidates();
     let lastError;
@@ -3236,12 +3236,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (window.location.hostname.includes('github.dev')) {
       candidates.push(window.location.origin.replace(/-\d+\.github\.dev$/, '-5000.github.dev'));
     }
-
-    if (isLocalWebsiteHost()) {
-      candidates.push('https://amaanitvam-foundation.onrender.com');
-    }
-
-    // Production/staging fallback: use same origin only when not running through Live Server.
+    candidates.push('https://amaanitvam-foundation.onrender.com');
     if (!['5500', '5501'].includes(window.location.port) && window.location.protocol !== 'file:') {
       candidates.push(window.location.origin);
     }
