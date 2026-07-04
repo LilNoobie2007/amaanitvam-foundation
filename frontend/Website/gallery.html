@@ -279,48 +279,6 @@
 
   <script src="assets/js/main.js"></script>
 
-  <!-- GALLERY_MONGO_FULL_STACK_FIX_START -->
-  <style>
-    /* Only layout sizing. Existing gallery animation/hover rules from assets/css/styles.css stay untouched. */
-    #gallery-container.gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 24px;
-      align-items: stretch;
-    }
-
-    #gallery-container .gallery-card {
-      min-width: 0;
-      width: 100%;
-      overflow: hidden;
-    }
-
-    #gallery-container .gallery-card img,
-    #gallery-container .gallery-card video,
-    #gallery-container .gallery-image {
-      width: 100%;
-      height: 260px;
-      object-fit: cover;
-      display: block;
-    }
-
-    #gallery-container #gallery-loading {
-      grid-column: 1 / -1;
-      text-align: center;
-    }
-
-    @media (max-width: 900px) {
-      #gallery-container.gallery-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 560px) {
-      #gallery-container.gallery-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
   <script>
     (function () {
       'use strict';

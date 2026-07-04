@@ -6586,7 +6586,7 @@ body[data-page="faq"] .page-hero {
   display: block !important;
 }
 
-body[data-page="faq"] main#main-content > section:not(.page-hero) {
+body[data-page="faq"] main#main-content>section:not(.page-hero) {
   padding: 72px 0 !important;
 }
 
@@ -6660,21 +6660,58 @@ body[data-page="faq"] .faq-item.is-open .faq-icon {
   transform: rotate(180deg) !important;
 }
 
-.team-row{
-    display:flex;
-    justify-content:center;
-    gap:24px;
-    flex-wrap:wrap;
-    margin-bottom:32px;
+.team-row {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
 }
 
-.team-row-1 .card{
-    flex:0 1 260px;
+.team-row-1 .card {
+  flex: 0 1 260px;
 }
 
 .team-row-2 .card,
-.team-row-3 .card{
-    flex:0 1 280px;
+.team-row-3 .card {
+  flex: 0 1 280px;
 }
 
+#gallery-container.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  align-items: stretch;
+}
 
+#gallery-container .gallery-card {
+  min-width: 0;
+  width: 100%;
+  overflow: hidden;
+}
+
+#gallery-container .gallery-card img,
+#gallery-container .gallery-card video,
+#gallery-container .gallery-image {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  display: block;
+}
+
+#gallery-container #gallery-loading {
+  grid-column: 1 / -1;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  #gallery-container.gallery-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  #gallery-container.gallery-grid {
+    grid-template-columns: 1fr;
+  }
+}
