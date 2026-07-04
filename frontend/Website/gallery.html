@@ -242,7 +242,7 @@
           <p class="section-desc">From education programs to volunteer drives — browse highlights from across our
             initiatives.</p>
         </div>
-        <div class="gallery-grid" id="gallery-album-container" data-gallery-api-base="https://amaanitvam-foundation.onrender.com/api/gallery/folders/1" data-gallery-albums="true">
+        <div class="gallery-grid" id="gallery-container">
           <!-- Dynamic images will be loaded here via JS -->
           <p class="moved-inline-style-final-015" id="gallery-album-loading">Loading gallery
             images...</p>
@@ -274,232 +274,195 @@
     </a>
   </div>
 
-
   <script src="assets/js/main.js"></script>
-  <script src="assets/js/gallery-albums.js?v=no-uncategorized-album-20260702"></script>
 
+  <script>
+    (function () {
+      'use strict';
 
+      const API_BASE = (
+        window.API_BASE_URL ||
+        window.BACKEND_URL ||
+        'https://amaanitvam-foundation.onrender.com'
+      ).replace(/\/$/, '');
 
-<!-- GALLERY_MONGO_FULL_STACK_FIX_START -->
-<style>
-  /* Only layout sizing. Existing gallery animation/hover rules from assets/css/styles.css stay untouched. */
-  #gallery-container.gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 24px;
-    align-items: stretch;
-  }
-  #gallery-container .gallery-card {
-    min-width: 0;
-    width: 100%;
-    overflow: hidden;
-  }
-  #gallery-container .gallery-card img,
-  #gallery-container .gallery-card video,
-  #gallery-container .gallery-image {
-    width: 100%;
-    height: 260px;
-    object-fit: cover;
-    display: block;
-  }
-  #gallery-container #gallery-loading {
-    grid-column: 1 / -1;
-    text-align: center;
-  }
-  @media (max-width: 900px) {
-    #gallery-container.gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  }
-  @media (max-width: 560px) {
-    #gallery-container.gallery-grid { grid-template-columns: 1fr; }
-  }
-</style>
-<script>
-(function () {
-  'use strict';
+      const container = document.getElementById('gallery-container');
+      if (!container) return;
 
-  const API_BASE = (
-    window.API_BASE_URL ||
-    window.BACKEND_URL ||
-    ((location.hostname === 'localhost' || location.hostname === '127.0.0.1') ? 'https://amaanitvam-foundation.onrender.com/api/gallery/folders/1' : location.origin)
-  ).replace(/\/$/, '');
-
-  const container = document.getElementById('gallery-container');
-  if (!container) return;
-
-  function cleanId(value) {
-    if (!value) return '';
-    if (typeof value === 'object') {
-      if (value.$oid) return String(value.$oid);
-      if (value._id) return cleanId(value._id);
-      if (value.id) return cleanId(value.id);
-      return '';
-    }
-    return String(value).trim();
-  }
-
-  function pickArray(data) {
-    if (Array.isArray(data)) return data;
-    if (!data || typeof data !== 'object') return [];
-    const keys = ['media', 'images', 'items', 'gallery', 'galleries', 'files', 'data'];
-    for (const key of keys) {
-      if (Array.isArray(data[key])) return data[key];
-      if (data.data && Array.isArray(data.data[key])) return data.data[key];
-    }
-    return [];
-  }
-
-  function normalizeMedia(data) {
-    const arr = pickArray(data);
-    const out = [];
-    arr.forEach(function (item) {
-      if (!item || typeof item !== 'object') return;
-      const childKeys = ['media', 'images', 'items', 'files'];
-      let usedChildren = false;
-      childKeys.forEach(function (key) {
-        if (Array.isArray(item[key])) {
-          usedChildren = true;
-          item[key].forEach(function (child) { out.push(child); });
+      function cleanId(value) {
+        if (!value) return '';
+        if (typeof value === 'object') {
+          if (value.$oid) return String(value.$oid);
+          if (value._id) return cleanId(value._id);
+          if (value.id) return cleanId(value.id);
+          return '';
         }
-      });
-      if (!usedChildren) out.push(item);
-    });
-    return out;
-  }
+        return String(value).trim();
+      }
 
-  async function getJson(path) {
-    const res = await fetch(API_BASE + path, { cache: 'no-store' });
-    const data = await res.json().catch(function () { return {}; });
-    if (!res.ok) throw new Error(path + ' returned HTTP ' + res.status);
-    return data;
-  }
+      function pickArray(data) {
+        if (Array.isArray(data)) return data;
+        if (!data || typeof data !== 'object') return [];
+        const keys = ['media', 'images', 'items', 'gallery', 'galleries', 'files', 'data'];
+        for (const key of keys) {
+          if (Array.isArray(data[key])) return data[key];
+          if (data.data && Array.isArray(data.data[key])) return data.data[key];
+        }
+        return [];
+      }
 
-  function mediaId(item) {
-    const direct = cleanId(item.fileId || item.gridFsFileId || item.gridfsFileId || item.mediaId || item.imageId || item.file_id);
-    if (direct) return direct;
+      function normalizeMedia(data) {
+        const arr = pickArray(data);
+        const out = [];
+        arr.forEach(function (item) {
+          if (!item || typeof item !== 'object') return;
+          const childKeys = ['media', 'images', 'items', 'files'];
+          let usedChildren = false;
+          childKeys.forEach(function (key) {
+            if (Array.isArray(item[key])) {
+              usedChildren = true;
+              item[key].forEach(function (child) { out.push(child); });
+            }
+          });
+          if (!usedChildren) out.push(item);
+        });
+        return out;
+      }
 
-    const url = String(item.mediaUrl || item.imageUrl || item.url || item.src || item.path || '');
-    const match = url.match(/\/api\/gallery\/media\/([^/?#]+)/i);
-    if (match && match[1]) return decodeURIComponent(match[1]);
+      async function getJson(path) {
+        const res = await fetch(API_BASE + path, { cache: 'no-store' });
+        const data = await res.json().catch(function () { return {}; });
+        if (!res.ok) throw new Error(path + ' returned HTTP ' + res.status);
+        return data;
+      }
 
-    return cleanId(item._id || item.id);
-  }
+      function mediaId(item) {
+        const direct = cleanId(item.fileId || item.gridFsFileId || item.gridfsFileId || item.mediaId || item.imageId || item.file_id);
+        if (direct) return direct;
 
-  function mediaSrc(item) {
-    const id = mediaId(item);
-    return id ? API_BASE + '/api/gallery/media/' + encodeURIComponent(id) : '';
-  }
+        const url = String(item.mediaUrl || item.imageUrl || item.url || item.src || item.path || '');
+        const match = url.match(/\/api\/gallery\/media\/([^/?#]+)/i);
+        if (match && match[1]) return decodeURIComponent(match[1]);
 
-  function titleOf(item) {
-    return item.title || item.name || item.caption || item.originalName || item.filename || 'Gallery media';
-  }
+        return cleanId(item._id || item.id);
+      }
 
-  function isVideo(item) {
-    const type = String(item.contentType || item.mimeType || item.mimetype || item.mediaType || item.type || '').toLowerCase();
-    const name = String(item.originalName || item.filename || item.name || item.title || '').toLowerCase();
-    return type.indexOf('video') !== -1 || /\.(mp4|mov|webm|mkv|avi)$/i.test(name);
-  }
+      function mediaSrc(item) {
+        const id = mediaId(item);
+        return id ? API_BASE + '/api/gallery/media/' + encodeURIComponent(id) : '';
+      }
 
-  function render(items) {
-    container.classList.add('gallery-grid');
-    container.innerHTML = '';
+      function titleOf(item) {
+        return item.title || item.name || item.caption || item.originalName || item.filename || 'Gallery media';
+      }
 
-    const valid = items.map(function (item) {
-      return { item: item, src: mediaSrc(item) };
-    }).filter(function (entry) {
-      return Boolean(entry.src);
-    });
+      function isVideo(item) {
+        const type = String(item.contentType || item.mimeType || item.mimetype || item.mediaType || item.type || '').toLowerCase();
+        const name = String(item.originalName || item.filename || item.name || item.title || '').toLowerCase();
+        return type.indexOf('video') !== -1 || /\.(mp4|mov|webm|mkv|avi)$/i.test(name);
+      }
 
-    if (!valid.length) {
-      container.innerHTML = '<p id="gallery-album-loading">No valid MongoDB gallery media found.</p>';
-      return;
-    }
+      function render(items) {
+        container.classList.add('gallery-grid');
+        container.innerHTML = '';
 
-    let failed = 0;
+        const valid = items.map(function (item) {
+          return { item: item, src: mediaSrc(item) };
+        }).filter(function (entry) {
+          return Boolean(entry.src);
+        });
 
-    valid.forEach(function (entry, index) {
-      const item = entry.item;
-      const src = entry.src;
-      const title = titleOf(item);
+        if (!valid.length) {
+          container.innerHTML = '<p id="gallery-album-loading">No valid MongoDB gallery media found.</p>';
+          return;
+        }
 
-      const card = document.createElement('article');
-      card.className = 'gallery-card reveal-card reveal-item scroll-reveal';
-      card.setAttribute('data-reveal', 'fade-up');
-      card.setAttribute('data-animate', 'fade-up');
-      card.style.animationDelay = (index * 70) + 'ms';
-      card.style.setProperty('--delay', (index * 70) + 'ms');
+        let failed = 0;
 
-      const media = document.createElement(isVideo(item) ? 'video' : 'img');
-      media.className = 'gallery-image';
-      media.src = src;
-      media.title = title;
+        valid.forEach(function (entry, index) {
+          const item = entry.item;
+          const src = entry.src;
+          const title = titleOf(item);
 
-      if (media.tagName === 'IMG') {
-        media.alt = title;
-        media.loading = 'lazy';
-        media.decoding = 'async';
+          const card = document.createElement('article');
+          card.className = 'gallery-card reveal-card reveal-item scroll-reveal';
+          card.setAttribute('data-reveal', 'fade-up');
+          card.setAttribute('data-animate', 'fade-up');
+          card.style.animationDelay = (index * 70) + 'ms';
+          card.style.setProperty('--delay', (index * 70) + 'ms');
+
+          const media = document.createElement(isVideo(item) ? 'video' : 'img');
+          media.className = 'gallery-image';
+          media.src = src;
+          media.title = title;
+
+          if (media.tagName === 'IMG') {
+            media.alt = title;
+            media.loading = 'lazy';
+            media.decoding = 'async';
+          } else {
+            media.controls = true;
+            media.preload = 'metadata';
+          }
+
+          media.addEventListener('error', function () {
+            failed += 1;
+            console.error('Gallery media failed from backend:', src, item);
+            card.remove();
+            if (failed >= valid.length) {
+              container.innerHTML = '<p id="gallery-album-loading">Gallery records loaded, but the backend did not stream the image binaries. Re-upload the gallery images once from admin after this fix.</p>';
+            }
+          });
+
+          const caption = document.createElement('p');
+          caption.textContent = title;
+
+          card.appendChild(media);
+          card.appendChild(caption);
+          container.appendChild(card);
+        });
+
+        requestAnimationFrame(function () {
+          window.dispatchEvent(new Event('scroll'));
+          document.dispatchEvent(new CustomEvent('gallery:loaded'));
+        });
+      }
+
+      async function loadMongoGallery() {
+        container.innerHTML = '<p id="gallery-album-loading">Loading gallery images...</p>';
+        try {
+          let items = normalizeMedia(await getJson('/api/gallery'));
+
+          if (!items.length) {
+            const foldersData = await getJson('/api/gallery/folders').catch(function () { return {}; });
+            const folders = pickArray(foldersData);
+            const all = [];
+            for (const folder of folders) {
+              const folderId = cleanId(folder._id || folder.id);
+              if (!folderId) continue;
+              const mediaData = await getJson('/api/gallery/folders/' + encodeURIComponent(folderId) + '/media').catch(function () { return {}; });
+              normalizeMedia(mediaData).forEach(function (item) { all.push(item); });
+            }
+            items = all;
+          }
+
+          render(items);
+        } catch (err) {
+          console.error('Mongo gallery load error:', err);
+          container.innerHTML = '<p id="gallery-album-loading">Gallery failed to load. Start backend on port 5000 and refresh.</p>';
+        }
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', loadMongoGallery);
       } else {
-        media.controls = true;
-        media.preload = 'metadata';
+        loadMongoGallery();
       }
 
-      media.addEventListener('error', function () {
-        failed += 1;
-        console.error('Gallery media failed from backend:', src, item);
-        card.remove();
-        if (failed >= valid.length) {
-          container.innerHTML = '<p id="gallery-album-loading">Gallery records loaded, but the backend did not stream the image binaries. Re-upload the gallery images once from admin after this fix.</p>';
-        }
-      });
-
-      const caption = document.createElement('p');
-      caption.textContent = title;
-
-      card.appendChild(media);
-      card.appendChild(caption);
-      container.appendChild(card);
-    });
-
-    requestAnimationFrame(function () {
-      window.dispatchEvent(new Event('scroll'));
-      document.dispatchEvent(new CustomEvent('gallery:loaded'));
-    });
-  }
-
-  async function loadMongoGallery() {
-    container.innerHTML = '<p id="gallery-album-loading">Loading gallery images...</p>';
-    try {
-      let items = normalizeMedia(await getJson('/api/gallery'));
-
-      if (!items.length) {
-        const foldersData = await getJson('/api/gallery/folders').catch(function () { return {}; });
-        const folders = pickArray(foldersData);
-        const all = [];
-        for (const folder of folders) {
-          const folderId = cleanId(folder._id || folder.id);
-          if (!folderId) continue;
-          const mediaData = await getJson('/api/gallery/folders/' + encodeURIComponent(folderId) + '/media').catch(function () { return {}; });
-          normalizeMedia(mediaData).forEach(function (item) { all.push(item); });
-        }
-        items = all;
-      }
-
-      render(items);
-    } catch (err) {
-      console.error('Mongo gallery load error:', err);
-      container.innerHTML = '<p id="gallery-album-loading">Gallery failed to load. Start backend on port 5000 and refresh.</p>';
-    }
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', loadMongoGallery);
-  } else {
-    loadMongoGallery();
-  }
-
-  window.loadMongoGallery = loadMongoGallery;
-})();
-</script>
-<!-- GALLERY_MONGO_FULL_STACK_FIX_END -->
+      window.loadMongoGallery = loadMongoGallery;
+    })();
+  </script>
+  <!-- GALLERY_MONGO_FULL_STACK_FIX_END -->
 
 </body>
 
