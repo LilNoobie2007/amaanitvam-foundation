@@ -339,27 +339,63 @@ const API_BASE_URL = 'https://amaanitvam-foundation.onrender.com/api';
     });
   }
 
-  const verifyForm = document.getElementById('verify-form');
+  const verifyForm = document.getElementById("verify-form");
+
   if (verifyForm) {
-    verifyForm.addEventListener('submit', function (e) {
+    verifyForm.addEventListener("submit", async function (e) {
       e.preventDefault();
-      const id = document.getElementById('cert-id').value.trim();
-      const result = document.getElementById('verify-result');
+
+      const id = document.getElementById("cert-id").value.trim().toUpperCase();
+      const result = document.getElementById("verify-result");
+
       if (!id) return;
+
       result.hidden = false;
-      result.className = 'mt-6 p-6 rounded-xl border ';
-      if (id.toUpperCase().startsWith('AF-')) {
-        result.className += 'border-green-200 bg-green-50';
-        result.innerHTML = '<div class="flex items-start gap-3"><span class="material-symbols-outlined text-green-600 icon-fill">verified</span><div><p class="font-semibold text-green-800">Certificate Verified</p><p class="text-sm text-green-700 mt-1">This certificate is authentic and was issued by Amaanitvam Foundation.</p></div></div>';
-      } else {
-        result.className += 'border-red-200 bg-red-50';
-        result.innerHTML = '<div class="flex items-start gap-3"><span class="material-symbols-outlined text-red-600">cancel</span><div><p class="font-semibold text-red-800">Not Found</p><p class="text-sm text-red-700 mt-1">No matching certificate found. Please check the ID and try again.</p></div></div>';
+      result.innerHTML = "Verifying...";
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/certificates/verify/${encodeURIComponent(id)}`);
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+          throw new Error(data.message || "Certificate not found");
+        }
+
+        const cert = data.certificate;
+
+        result.className = "mt-6 p-6 rounded-xl border border-green-200 bg-green-50";
+        result.innerHTML = `
+        <div class="flex items-start gap-3">
+          <span class="material-symbols-outlined text-green-600 icon-fill">verified</span>
+          <div>
+            <p class="font-semibold text-green-800">Certificate Verified</p>
+
+            <p><strong>Name:</strong> ${cert.issuedTo}</p>
+            <p><strong>Certificate ID:</strong> ${cert.certificateId}</p>
+            <p><strong>Type:</strong> ${cert.type}</p>
+            <p><strong>Domain:</strong> ${cert.domain}</p>
+            <p><strong>Issued By:</strong> ${cert.issuedBy}</p>
+          </div>
+        </div>
+      `;
+
+      } catch (err) {
+
+        result.className = "mt-6 p-6 rounded-xl border border-red-200 bg-red-50";
+        result.innerHTML = `
+        <div class="flex items-start gap-3">
+          <span class="material-symbols-outlined text-red-600">cancel</span>
+          <div>
+            <p class="font-semibold text-red-800">Certificate Not Found</p>
+            <p>${err.message}</p>
+          </div>
+        </div>
+      `;
       }
     });
   }
-})();
 
-const socialBar = `
+  const socialBar = `
 <div class="floating-socials">
     <a href="https://www.facebook.com/people/Amaanitvam-Foundation/61583427622759/" target="_blank">
         <i class="fa-brands fa-facebook-f"></i>
@@ -379,114 +415,114 @@ const socialBar = `
 </div>
 `;
 
-if (document.body && !document.querySelector(".floating-socials")) {
-  document.body.insertAdjacentHTML("beforeend", socialBar);
-}
-
-// Load common footer on all pages
-document.addEventListener("DOMContentLoaded", function () {
-  const footer = document.getElementById("footer");
-
-  if (footer) {
-    fetch("footer.html")
-      .then(function (response) {
-        return response.text();
-      })
-      .then(function (data) {
-        footer.innerHTML = data;
-      })
-      .catch(function (error) {
-        console.error("Footer load error:", error);
-      });
-  }
-});
-
-
-/* ===== Campaign Donations + Funds Fix: single safe block ===== */
-(function () {
-  if (window.__amaanitvamCampaignFundsFixLoaded) return;
-  window.__amaanitvamCampaignFundsFixLoaded = true;
-
-  const MIN_AMOUNT = 10;
-  let activeCampaigns = [];
-  let selectedCampaignId = 'organization';
-  let workingApiBase = null;
-
-  function isLocalHost() {
-    return ['localhost', '127.0.0.1', ''].includes(window.location.hostname) || window.location.protocol === 'file:';
+  if (document.body && !document.querySelector(".floating-socials")) {
+    document.body.insertAdjacentHTML("beforeend", socialBar);
   }
 
-  function apiCandidates() {
-    const configured =
-      window.AMAANITVAM_API_BASE ||
-      document.body?.dataset?.apiBase ||
-      document.querySelector('meta[name="amaanitvam-api-base"]')?.content ||
-      '';
+  // Load common footer on all pages
+  document.addEventListener("DOMContentLoaded", function () {
+    const footer = document.getElementById("footer");
 
-    const list = [];
-    if (configured) list.push(configured.replace(/\/$/, ''));
+    if (footer) {
+      fetch("footer.html")
+        .then(function (response) {
+          return response.text();
+        })
+        .then(function (data) {
+          footer.innerHTML = data;
+        })
+        .catch(function (error) {
+          console.error("Footer load error:", error);
+        });
+    }
+  });
 
-    // Always try the real backend first — on localhost AND in production.
-    list.push(API_BASE_URL);
 
-    // Same-origin /api as a fallback only when not VS Code Live Server.
-    if (!['5500', '5501'].includes(window.location.port) && window.location.protocol !== 'file:') {
-      list.push('/api');
+  /* ===== Campaign Donations + Funds Fix: single safe block ===== */
+  (function () {
+    if (window.__amaanitvamCampaignFundsFixLoaded) return;
+    window.__amaanitvamCampaignFundsFixLoaded = true;
+
+    const MIN_AMOUNT = 10;
+    let activeCampaigns = [];
+    let selectedCampaignId = 'organization';
+    let workingApiBase = null;
+
+    function isLocalHost() {
+      return ['localhost', '127.0.0.1', ''].includes(window.location.hostname) || window.location.protocol === 'file:';
     }
 
-    return [...new Set(list.filter(Boolean))];
-  }
+    function apiCandidates() {
+      const configured =
+        window.AMAANITVAM_API_BASE ||
+        document.body?.dataset?.apiBase ||
+        document.querySelector('meta[name="amaanitvam-api-base"]')?.content ||
+        '';
 
-  async function fetchJson(path, options = {}) {
-    const bases = workingApiBase ? [workingApiBase, ...apiCandidates()] : apiCandidates();
-    let lastError;
+      const list = [];
+      if (configured) list.push(configured.replace(/\/$/, ''));
 
-    for (const base of [...new Set(bases)]) {
-      try {
-        const controller = new AbortController();
-        const timer = setTimeout(() => controller.abort(), 8000);
-        const response = await fetch(`${base}${path}`, {
-          ...options,
-          signal: controller.signal,
-        }).finally(() => clearTimeout(timer));
+      // Always try the real backend first — on localhost AND in production.
+      list.push(API_BASE_URL);
 
-        const data = await response.json().catch(() => ({}));
-        if (!response.ok) throw new Error(data.message || `Request failed: ${response.status}`);
-        workingApiBase = base;
-        return data;
-      } catch (error) {
-        lastError = error;
+      // Same-origin /api as a fallback only when not VS Code Live Server.
+      if (!['5500', '5501'].includes(window.location.port) && window.location.protocol !== 'file:') {
+        list.push('/api');
       }
+
+      return [...new Set(list.filter(Boolean))];
     }
 
-    throw lastError || new Error('Backend API is not reachable on port 5000.');
-  }
+    async function fetchJson(path, options = {}) {
+      const bases = workingApiBase ? [workingApiBase, ...apiCandidates()] : apiCandidates();
+      let lastError;
 
-  function escapeHtml(value) {
-    return String(value ?? '')
-      .replaceAll('&', '&amp;')
-      .replaceAll('<', '&lt;')
-      .replaceAll('>', '&gt;')
-      .replaceAll('"', '&quot;')
-      .replaceAll("'", '&#039;');
-  }
+      for (const base of [...new Set(bases)]) {
+        try {
+          const controller = new AbortController();
+          const timer = setTimeout(() => controller.abort(), 8000);
+          const response = await fetch(`${base}${path}`, {
+            ...options,
+            signal: controller.signal,
+          }).finally(() => clearTimeout(timer));
 
-  function rupees(value) {
-    return `₹${Number(value || 0).toLocaleString('en-IN')}`;
-  }
+          const data = await response.json().catch(() => ({}));
+          if (!response.ok) throw new Error(data.message || `Request failed: ${response.status}`);
+          workingApiBase = base;
+          return data;
+        } catch (error) {
+          lastError = error;
+        }
+      }
 
-  function progress(campaign) {
-    const goal = Number(campaign.goalAmount || 0);
-    const raised = Number(campaign.raisedAmount || 0);
-    if (!goal) return 0;
-    return Math.min(100, Math.max(0, Math.round((raised / goal) * 100)));
-  }
+      throw lastError || new Error('Backend API is not reachable on port 5000.');
+    }
 
-  function injectStyles() {
-    if (document.getElementById('amaanitvam-campaign-funds-style')) return;
-    const style = document.createElement('style');
-    style.id = 'amaanitvam-campaign-funds-style';
-    style.textContent = `
+    function escapeHtml(value) {
+      return String(value ?? '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    }
+
+    function rupees(value) {
+      return `₹${Number(value || 0).toLocaleString('en-IN')}`;
+    }
+
+    function progress(campaign) {
+      const goal = Number(campaign.goalAmount || 0);
+      const raised = Number(campaign.raisedAmount || 0);
+      if (!goal) return 0;
+      return Math.min(100, Math.max(0, Math.round((raised / goal) * 100)));
+    }
+
+    function injectStyles() {
+      if (document.getElementById('amaanitvam-campaign-funds-style')) return;
+      const style = document.createElement('style');
+      style.id = 'amaanitvam-campaign-funds-style';
+      style.textContent = `
       .campaign-donation-selector,.campaign-preview-section{margin:1.25rem 0}
       .campaign-selector-title,.campaign-eyebrow{color:#56051a;font-weight:800;letter-spacing:.02em}
       .campaign-selector-subtitle{color:#6b7280;margin:.25rem 0 1rem}
@@ -506,39 +542,39 @@ document.addEventListener("DOMContentLoaded", function () {
       .campaign-donate-link{display:inline-block;margin-top:.9rem;padding:.7rem 1rem;border-radius:999px;background:#56051a;color:#fff;text-decoration:none;font-weight:800}
       .campaign-error{color:#b91c1c;background:#fee2e2;border:1px solid #fecaca;border-radius:12px;padding:.85rem}
     `;
-    document.head.appendChild(style);
-  }
+      document.head.appendChild(style);
+    }
 
-  async function loadCampaigns() {
-    const data = await fetchJson('/donate/campaigns');
-    activeCampaigns = Array.isArray(data) ? data : Array.isArray(data.campaigns) ? data.campaigns : [];
-    return activeCampaigns;
-  }
+    async function loadCampaigns() {
+      const data = await fetchJson('/donate/campaigns');
+      activeCampaigns = Array.isArray(data) ? data : Array.isArray(data.campaigns) ? data.campaigns : [];
+      return activeCampaigns;
+    }
 
-  function renderHomeCampaigns() {
-    const container = document.getElementById('homeCampaigns');
-    if (!container) return;
+    function renderHomeCampaigns() {
+      const container = document.getElementById('homeCampaigns');
+      if (!container) return;
 
-    if (!activeCampaigns.length) {
-      container.innerHTML = `
+      if (!activeCampaigns.length) {
+        container.innerHTML = `
         <div class="campaign-preview-inner">
           <p class="campaign-eyebrow">Active Fundraising Campaigns</p>
           <h2>Support Amaanitvam Foundation</h2>
           <p>No active campaigns are live right now. You can still make a direct organization donation.</p>
           <a class="campaign-donate-link" href="contact.html">Donate Now</a>
         </div>`;
-      return;
-    }
+        return;
+      }
 
-    container.innerHTML = `
+      container.innerHTML = `
       <div class="campaign-preview-inner">
         <p class="campaign-eyebrow">Active Fundraising Campaigns</p>
         <h2>Support a live campaign</h2>
         <div class="campaign-preview-grid">
           ${activeCampaigns.map((campaign) => {
-      const id = campaign._id || campaign.id;
-      const pct = progress(campaign);
-      return `
+        const id = campaign._id || campaign.id;
+        const pct = progress(campaign);
+        return `
               <article class="campaign-preview-card">
                 <h3>${escapeHtml(campaign.title)}</h3>
                 <p>${escapeHtml(campaign.description || 'Support this active campaign.')}</p>
@@ -546,26 +582,26 @@ document.addEventListener("DOMContentLoaded", function () {
                 <div class="campaign-meta">${rupees(campaign.raisedAmount)} raised / ${rupees(campaign.goalAmount)} goal</div>
                 <a class="campaign-donate-link" href="contact.html?campaign=${encodeURIComponent(id)}">Donate to this campaign</a>
               </article>`;
-    }).join('')}
+      }).join('')}
         </div>
       </div>`;
-  }
-
-  function renderCampaignSelector() {
-    const container = document.getElementById('campaignDonationSelector');
-    if (!container) return;
-
-    const requested = new URLSearchParams(window.location.search).get('campaign');
-    if (requested && activeCampaigns.some((c) => String(c._id || c.id) === String(requested))) {
-      selectedCampaignId = requested;
     }
 
-    const campaignCards = activeCampaigns.map((campaign) => {
-      const id = campaign._id || campaign.id;
-      const checked = String(selectedCampaignId) === String(id) ? 'checked' : '';
-      const selected = checked ? ' is-selected' : '';
-      const pct = progress(campaign);
-      return `
+    function renderCampaignSelector() {
+      const container = document.getElementById('campaignDonationSelector');
+      if (!container) return;
+
+      const requested = new URLSearchParams(window.location.search).get('campaign');
+      if (requested && activeCampaigns.some((c) => String(c._id || c.id) === String(requested))) {
+        selectedCampaignId = requested;
+      }
+
+      const campaignCards = activeCampaigns.map((campaign) => {
+        const id = campaign._id || campaign.id;
+        const checked = String(selectedCampaignId) === String(id) ? 'checked' : '';
+        const selected = checked ? ' is-selected' : '';
+        const pct = progress(campaign);
+        return `
         <label class="campaign-option${selected}">
           <input type="radio" name="donationTarget" value="${escapeHtml(id)}" ${checked}>
           <span class="campaign-option-title">${escapeHtml(campaign.title)}</span>
@@ -573,9 +609,9 @@ document.addEventListener("DOMContentLoaded", function () {
           <div class="campaign-progress"><span style="width:${pct}%"></span></div>
           <div class="campaign-meta">${rupees(campaign.raisedAmount)} raised / ${rupees(campaign.goalAmount)} goal</div>
         </label>`;
-    }).join('');
+      }).join('');
 
-    container.innerHTML = `
+      container.innerHTML = `
       <div class="campaign-selector-title">Choose where your donation should go</div>
       <p class="campaign-selector-subtitle">Donate directly to the organization or select an active campaign.</p>
       <div class="campaign-options">
@@ -587,478 +623,478 @@ document.addEventListener("DOMContentLoaded", function () {
         ${campaignCards || '<div class="campaign-option"><span class="campaign-option-title">No active campaigns right now</span><p class="campaign-option-desc">Direct organization donation is available.</p></div>'}
       </div>`;
 
-    container.querySelectorAll('input[name="donationTarget"]').forEach((input) => {
-      input.addEventListener('change', () => {
-        selectedCampaignId = input.value || 'organization';
-        container.querySelectorAll('.campaign-option').forEach((card) => card.classList.remove('is-selected'));
-        input.closest('.campaign-option')?.classList.add('is-selected');
-      });
-    });
-  }
-
-  function currentAmount() {
-    const activeBtn = document.querySelector('.amount-btn.active');
-    const customAmount = document.getElementById('customAmount');
-    const amount = Number(customAmount?.value || activeBtn?.dataset?.amount || 0);
-    return Number.isFinite(amount) ? amount : 0;
-  }
-
-  function setupAmountButtons() {
-    const customAmount = document.getElementById('customAmount');
-    document.querySelectorAll('.amount-btn').forEach((btn) => {
-      if (btn.dataset.campaignFundsBound === 'true') return;
-      btn.dataset.campaignFundsBound = 'true';
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.amount-btn').forEach((b) => b.classList.remove('active'));
-        btn.classList.add('active');
-        if (customAmount) customAmount.value = '';
-      });
-    });
-    if (customAmount && customAmount.dataset.campaignFundsBound !== 'true') {
-      customAmount.dataset.campaignFundsBound = 'true';
-      customAmount.addEventListener('input', () => {
-        document.querySelectorAll('.amount-btn').forEach((b) => b.classList.remove('active'));
+      container.querySelectorAll('input[name="donationTarget"]').forEach((input) => {
+        input.addEventListener('change', () => {
+          selectedCampaignId = input.value || 'organization';
+          container.querySelectorAll('.campaign-option').forEach((card) => card.classList.remove('is-selected'));
+          input.closest('.campaign-option')?.classList.add('is-selected');
+        });
       });
     }
-  }
 
-  function status(message, color) {
-    const el = document.getElementById('donate-status');
-    if (!el) return;
-    el.textContent = message || '';
-    el.style.color = color || '';
-  }
+    function currentAmount() {
+      const activeBtn = document.querySelector('.amount-btn.active');
+      const customAmount = document.getElementById('customAmount');
+      const amount = Number(customAmount?.value || activeBtn?.dataset?.amount || 0);
+      return Number.isFinite(amount) ? amount : 0;
+    }
 
-  function loadRazorpay() {
-    return new Promise((resolve, reject) => {
-      if (window.Razorpay) return resolve();
-      const existing = document.querySelector('script[src="https://checkout.razorpay.com/v1/checkout.js"]');
-      if (existing) {
-        existing.addEventListener('load', resolve, { once: true });
-        existing.addEventListener('error', reject, { once: true });
-        return;
+    function setupAmountButtons() {
+      const customAmount = document.getElementById('customAmount');
+      document.querySelectorAll('.amount-btn').forEach((btn) => {
+        if (btn.dataset.campaignFundsBound === 'true') return;
+        btn.dataset.campaignFundsBound = 'true';
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.amount-btn').forEach((b) => b.classList.remove('active'));
+          btn.classList.add('active');
+          if (customAmount) customAmount.value = '';
+        });
+      });
+      if (customAmount && customAmount.dataset.campaignFundsBound !== 'true') {
+        customAmount.dataset.campaignFundsBound = 'true';
+        customAmount.addEventListener('input', () => {
+          document.querySelectorAll('.amount-btn').forEach((b) => b.classList.remove('active'));
+        });
       }
-      const script = document.createElement('script');
-      script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-      script.onload = resolve;
-      script.onerror = reject;
-      document.head.appendChild(script);
-    });
-  }
-
-  function resetForm() {
-    ['donorName', 'donorEmail', 'donorPhone'].forEach((id) => {
-      const input = document.getElementById(id);
-      if (input) input.value = '';
-    });
-    const customAmount = document.getElementById('customAmount');
-    if (customAmount) customAmount.value = '';
-    document.querySelectorAll('.amount-btn').forEach((btn) => btn.classList.remove('active'));
-    selectedCampaignId = 'organization';
-    renderCampaignSelector();
-  }
-
-  async function payNow(button) {
-    const name = document.getElementById('donorName')?.value.trim() || '';
-    const email = document.getElementById('donorEmail')?.value.trim() || '';
-    const phone = document.getElementById('donorPhone')?.value.trim() || '';
-    const amount = currentAmount();
-    const campaignId = selectedCampaignId === 'organization' ? null : selectedCampaignId;
-
-    if (!name || !email) return status('Please enter your name and email.', 'red');
-    if (amount < MIN_AMOUNT) return status('Minimum donation amount is ₹10.', 'red');
-
-    const originalText = button.textContent;
-    button.disabled = true;
-    button.textContent = 'Processing...';
-    status('', '');
-
-    try {
-      await loadRazorpay();
-      const data = await fetchJson('/donate/create-order', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, phone, amount, campaignId }),
-      });
-
-      const options = {
-        key: data.key,
-        amount: data.order.amount,
-        currency: data.order.currency || 'INR',
-        name: 'Amaanitvam Foundation',
-        description: data.campaign?.title ? `Donation for ${data.campaign.title}` : 'Donation to Amaanitvam Foundation',
-        order_id: data.order.id,
-        prefill: { name, email, contact: phone },
-        theme: { color: '#56051a' },
-        modal: {
-          ondismiss: () => {
-            button.disabled = false;
-            button.textContent = originalText || 'Proceed to Pay Securely';
-          },
-        },
-        handler: async (paymentResponse) => {
-          try {
-            const verifyData = await fetchJson('/donate/verify', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                razorpay_order_id: paymentResponse.razorpay_order_id,
-                razorpay_payment_id: paymentResponse.razorpay_payment_id,
-                razorpay_signature: paymentResponse.razorpay_signature,
-                campaignId,
-              }),
-            });
-
-            status('✅ ' + (verifyData.message || 'Payment successful. Thank you!'), '#16a34a');
-            resetForm();
-            await loadCampaigns();
-            renderCampaignSelector();
-            renderHomeCampaigns();
-          } catch (error) {
-            status(error.message || 'Payment verification failed. Please contact support.', 'red');
-          } finally {
-            button.disabled = false;
-            button.textContent = originalText || 'Proceed to Pay Securely';
-          }
-        },
-      };
-
-      new window.Razorpay(options).open();
-    } catch (error) {
-      status(error.message || 'Donation failed. Please try again.', 'red');
-      button.disabled = false;
-      button.textContent = originalText || 'Proceed to Pay Securely';
     }
-  }
 
-  async function boot() {
-    const hasCampaignArea = document.getElementById('homeCampaigns') || document.getElementById('campaignDonationSelector');
-    const payButton = document.getElementById('payButton');
-    if (!hasCampaignArea && !payButton) return;
+    function status(message, color) {
+      const el = document.getElementById('donate-status');
+      if (!el) return;
+      el.textContent = message || '';
+      el.style.color = color || '';
+    }
 
-    injectStyles();
-    setupAmountButtons();
+    function loadRazorpay() {
+      return new Promise((resolve, reject) => {
+        if (window.Razorpay) return resolve();
+        const existing = document.querySelector('script[src="https://checkout.razorpay.com/v1/checkout.js"]');
+        if (existing) {
+          existing.addEventListener('load', resolve, { once: true });
+          existing.addEventListener('error', reject, { once: true });
+          return;
+        }
+        const script = document.createElement('script');
+        script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+      });
+    }
 
-    try {
-      await loadCampaigns();
-      renderHomeCampaigns();
+    function resetForm() {
+      ['donorName', 'donorEmail', 'donorPhone'].forEach((id) => {
+        const input = document.getElementById(id);
+        if (input) input.value = '';
+      });
+      const customAmount = document.getElementById('customAmount');
+      if (customAmount) customAmount.value = '';
+      document.querySelectorAll('.amount-btn').forEach((btn) => btn.classList.remove('active'));
+      selectedCampaignId = 'organization';
       renderCampaignSelector();
-    } catch (error) {
-      const message = `Could not load active campaigns from the API. ${escapeHtml(error.message || '')}`;
-      const home = document.getElementById('homeCampaigns');
-      const selector = document.getElementById('campaignDonationSelector');
-      if (home) home.innerHTML = `<div class="campaign-preview-inner"><div class="campaign-error">${message}</div></div>`;
-      if (selector) selector.innerHTML = `<div class="campaign-error">${message}</div>`;
-      console.error('Campaign loading failed:', error);
     }
 
-    if (payButton && document.getElementById('donorName') && document.getElementById('donorEmail')) {
-      // Remove old duplicate click handlers that may have been bound earlier in main.js.
-      const cleanButton = payButton.cloneNode(true);
-      payButton.parentNode.replaceChild(cleanButton, payButton);
-      cleanButton.addEventListener('click', (event) => {
-        event.preventDefault();
-        event.stopImmediatePropagation();
-        payNow(cleanButton);
-      }, true);
-    }
-  }
+    async function payNow(button) {
+      const name = document.getElementById('donorName')?.value.trim() || '';
+      const email = document.getElementById('donorEmail')?.value.trim() || '';
+      const phone = document.getElementById('donorPhone')?.value.trim() || '';
+      const amount = currentAmount();
+      const campaignId = selectedCampaignId === 'organization' ? null : selectedCampaignId;
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', boot);
-  } else {
-    boot();
-  }
-})();
+      if (!name || !email) return status('Please enter your name and email.', 'red');
+      if (amount < MIN_AMOUNT) return status('Minimum donation amount is ₹10.', 'red');
 
-/* ===== Amaanitvam Gallery Album Loader - merged into main.js =====
-   Mirrors admin-created gallery folders on frontend/Website/gallery.html.
-   Important: this page intentionally shows ONLY real admin-created albums.
-   Unassigned/uncategorized media is NOT shown as a separate public album.
-   Do not move this into a separate JS file unless project policy changes.
-*/
-(function () {
-  'use strict';
+      const originalText = button.textContent;
+      button.disabled = true;
+      button.textContent = 'Processing...';
+      status('', '');
 
-  const container = document.getElementById('gallery-album-container');
-  const isGalleryPage = document.body?.dataset?.page === 'gallery' || /gallery\.html?$/i.test(window.location.pathname);
-  if (!container || !isGalleryPage) return;
-
-  let activeApiBase = cleanBase(
-    container.dataset.galleryApiBase ||
-    window.GALLERY_API_BASE ||
-    (typeof API_BASE_URL !== 'undefined' ? API_BASE_URL.replace(/\/api$/, '') : '') ||
-    localStorage.getItem('GALLERY_API_BASE') ||
-    localStorage.getItem('API_BASE_URL') ||
-    localStorage.getItem('backendUrl') ||
-    ''
-  );
-
-  let currentFolders = [];
-  const folderMediaCache = new Map();
-
-  function cleanBase(value) {
-    return String(value || '').trim().replace(/\/+$/, '');
-  }
-
-  function isLocalWebsiteHost() {
-    return ['localhost', '127.0.0.1', ''].includes(window.location.hostname) || window.location.protocol === 'file:';
-  }
-
-  function apiBaseCandidates() {
-    const candidates = [];
-
-    if (activeApiBase) candidates.push(activeApiBase);
-
-    if (window.location.hostname.includes('github.dev')) {
-      candidates.push(window.location.origin.replace(/-\d+\.github\.dev$/, '-5000.github.dev'));
-    }
-    candidates.push('https://amaanitvam-foundation.onrender.com');
-    if (!['5500', '5501'].includes(window.location.port) && window.location.protocol !== 'file:') {
-      candidates.push(window.location.origin);
-    }
-
-    return [...new Set(candidates.map(cleanBase).filter(Boolean))];
-  }
-
-  function backendBase() {
-    const candidates = apiBaseCandidates();
-    return cleanBase(activeApiBase || candidates[0] || 'https://amaanitvam-foundation.onrender.com');
-  }
-
-  async function fetchGalleryJson(path) {
-    let lastError = null;
-
-    for (const base of apiBaseCandidates()) {
       try {
-        const controller = new AbortController();
-        const timeout = window.setTimeout(() => controller.abort(), 10000);
-        const response = await fetch(`${base}${path}`, { signal: controller.signal }).finally(() => window.clearTimeout(timeout));
-        const data = await response.json().catch(() => ({}));
+        await loadRazorpay();
+        const data = await fetchJson('/donate/create-order', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, phone, amount, campaignId }),
+        });
 
-        if (!response.ok || data.success === false) {
-          throw new Error(data.message || `Gallery request failed: ${response.status}`);
-        }
+        const options = {
+          key: data.key,
+          amount: data.order.amount,
+          currency: data.order.currency || 'INR',
+          name: 'Amaanitvam Foundation',
+          description: data.campaign?.title ? `Donation for ${data.campaign.title}` : 'Donation to Amaanitvam Foundation',
+          order_id: data.order.id,
+          prefill: { name, email, contact: phone },
+          theme: { color: '#56051a' },
+          modal: {
+            ondismiss: () => {
+              button.disabled = false;
+              button.textContent = originalText || 'Proceed to Pay Securely';
+            },
+          },
+          handler: async (paymentResponse) => {
+            try {
+              const verifyData = await fetchJson('/donate/verify', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  razorpay_order_id: paymentResponse.razorpay_order_id,
+                  razorpay_payment_id: paymentResponse.razorpay_payment_id,
+                  razorpay_signature: paymentResponse.razorpay_signature,
+                  campaignId,
+                }),
+              });
 
-        activeApiBase = base;
-        return data;
+              status('✅ ' + (verifyData.message || 'Payment successful. Thank you!'), '#16a34a');
+              resetForm();
+              await loadCampaigns();
+              renderCampaignSelector();
+              renderHomeCampaigns();
+            } catch (error) {
+              status(error.message || 'Payment verification failed. Please contact support.', 'red');
+            } finally {
+              button.disabled = false;
+              button.textContent = originalText || 'Proceed to Pay Securely';
+            }
+          },
+        };
+
+        new window.Razorpay(options).open();
       } catch (error) {
-        lastError = error;
+        status(error.message || 'Donation failed. Please try again.', 'red');
+        button.disabled = false;
+        button.textContent = originalText || 'Proceed to Pay Securely';
       }
     }
 
-    throw lastError || new Error('Gallery backend is not reachable. Start backend with npm run dev.');
-  }
+    async function boot() {
+      const hasCampaignArea = document.getElementById('homeCampaigns') || document.getElementById('campaignDonationSelector');
+      const payButton = document.getElementById('payButton');
+      if (!hasCampaignArea && !payButton) return;
 
-  function escapeHtml(value) {
-    return String(value ?? '')
-      .replaceAll('&', '&amp;')
-      .replaceAll('<', '&lt;')
-      .replaceAll('>', '&gt;')
-      .replaceAll('"', '&quot;')
-      .replaceAll("'", '&#039;');
-  }
+      injectStyles();
+      setupAmountButtons();
 
-  function getId(value) {
-    if (!value) return '';
-    if (typeof value === 'string') return value;
-    return value._id || value.id || value.mediaId || value.fileId || value.gridFsId || '';
-  }
+      try {
+        await loadCampaigns();
+        renderHomeCampaigns();
+        renderCampaignSelector();
+      } catch (error) {
+        const message = `Could not load active campaigns from the API. ${escapeHtml(error.message || '')}`;
+        const home = document.getElementById('homeCampaigns');
+        const selector = document.getElementById('campaignDonationSelector');
+        if (home) home.innerHTML = `<div class="campaign-preview-inner"><div class="campaign-error">${message}</div></div>`;
+        if (selector) selector.innerHTML = `<div class="campaign-error">${message}</div>`;
+        console.error('Campaign loading failed:', error);
+      }
 
-  function rawMediaUrl(media) {
-    if (!media) return '';
-    if (typeof media === 'string') return media;
-    return media.imageUrl || media.url || media.secure_url || media.src || media.path || media.fileUrl || media.mediaUrl || '';
-  }
-
-  function normalizeMediaUrl(media) {
-    const raw = String(rawMediaUrl(media) || '').trim();
-    const id = getId(media);
-    const base = backendBase();
-
-    if (!raw && id) return `${base}/api/gallery/media/${encodeURIComponent(id)}`;
-    if (!raw) return '';
-
-    // Convert Live Server URLs like http://127.0.0.1:5500/api/gallery/media/id back to backend.
-    try {
-      const parsed = new URL(raw, window.location.origin);
-      if (parsed.pathname.startsWith('/api/')) return `${base}${parsed.pathname}${parsed.search}`;
-    } catch (_) {
-      // Continue with string fallbacks below.
+      if (payButton && document.getElementById('donorName') && document.getElementById('donorEmail')) {
+        // Remove old duplicate click handlers that may have been bound earlier in main.js.
+        const cleanButton = payButton.cloneNode(true);
+        payButton.parentNode.replaceChild(cleanButton, payButton);
+        cleanButton.addEventListener('click', (event) => {
+          event.preventDefault();
+          event.stopImmediatePropagation();
+          payNow(cleanButton);
+        }, true);
+      }
     }
 
-    if (/^(data:|blob:)/i.test(raw)) return raw;
-    if (/^https?:\/\//i.test(raw) && !raw.includes(':5500/api/')) return raw;
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', boot);
+    } else {
+      boot();
+    }
+  })();
 
-    if (raw.startsWith('/api/')) return `${base}${raw}`;
-    if (raw.startsWith('api/')) return `${base}/${raw}`;
+  /* ===== Amaanitvam Gallery Album Loader - merged into main.js =====
+     Mirrors admin-created gallery folders on frontend/Website/gallery.html.
+     Important: this page intentionally shows ONLY real admin-created albums.
+     Unassigned/uncategorized media is NOT shown as a separate public album.
+     Do not move this into a separate JS file unless project policy changes.
+  */
+  (function () {
+    'use strict';
 
-    if (raw.startsWith('/uploads/') || raw.startsWith('/gallery/') || raw.startsWith('/media/')) return `${base}${raw}`;
-    if (raw.startsWith('uploads/') || raw.startsWith('gallery/') || raw.startsWith('media/')) return `${base}/${raw}`;
+    const container = document.getElementById('gallery-album-container');
+    const isGalleryPage = document.body?.dataset?.page === 'gallery' || /gallery\.html?$/i.test(window.location.pathname);
+    if (!container || !isGalleryPage) return;
 
-    return raw;
-  }
+    let activeApiBase = cleanBase(
+      container.dataset.galleryApiBase ||
+      window.GALLERY_API_BASE ||
+      (typeof API_BASE_URL !== 'undefined' ? API_BASE_URL.replace(/\/api$/, '') : '') ||
+      localStorage.getItem('GALLERY_API_BASE') ||
+      localStorage.getItem('API_BASE_URL') ||
+      localStorage.getItem('backendUrl') ||
+      ''
+    );
 
-  function isVideo(media) {
-    const url = normalizeMediaUrl(media);
-    return media?.mediaType === 'video'
-      || String(media?.contentType || '').startsWith('video/')
-      || /\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(url);
-  }
+    let currentFolders = [];
+    const folderMediaCache = new Map();
 
-  function isImage(media) {
-    if (!media) return false;
-    if (media.mediaType === 'image') return true;
-    if (String(media.contentType || '').startsWith('image/')) return true;
-    return !isVideo(media);
-  }
+    function cleanBase(value) {
+      return String(value || '').trim().replace(/\/+$/, '');
+    }
 
-  function timestampValue(item) {
-    const value = Date.parse(item?.createdAt || item?.uploadedAt || item?.updatedAt || '');
-    return Number.isFinite(value) ? value : 0;
-  }
+    function isLocalWebsiteHost() {
+      return ['localhost', '127.0.0.1', ''].includes(window.location.hostname) || window.location.protocol === 'file:';
+    }
 
-  function sortByUploadOrder(mediaItems) {
-    return [...(mediaItems || [])].sort((a, b) => {
-      const byDate = timestampValue(a) - timestampValue(b);
-      if (byDate !== 0) return byDate;
-      return String(getId(a)).localeCompare(String(getId(b)));
-    });
-  }
+    function apiBaseCandidates() {
+      const candidates = [];
 
-  function pickFolderCover(folder) {
-    return folder?.__coverMedia || folder?.coverMedia || folder?.coverImage || folder?.coverUrl || folder?.thumbnail || folder?.cover || null;
-  }
+      if (activeApiBase) candidates.push(activeApiBase);
 
-  async function getFolderMedia(folderId) {
-    if (folderMediaCache.has(folderId)) return folderMediaCache.get(folderId);
+      if (window.location.hostname.includes('github.dev')) {
+        candidates.push(window.location.origin.replace(/-\d+\.github\.dev$/, '-5000.github.dev'));
+      }
+      candidates.push('https://amaanitvam-foundation.onrender.com');
+      if (!['5500', '5501'].includes(window.location.port) && window.location.protocol !== 'file:') {
+        candidates.push(window.location.origin);
+      }
 
-    const data = await fetchGalleryJson(`/api/gallery/folders/${encodeURIComponent(folderId)}/media`);
-    const media = Array.isArray(data.images) ? data.images : Array.isArray(data.media) ? data.media : [];
-    const ordered = sortByUploadOrder(media);
-    folderMediaCache.set(folderId, ordered);
-    return ordered;
-  }
+      return [...new Set(candidates.map(cleanBase).filter(Boolean))];
+    }
 
-  async function hydrateFolderCovers() {
-    const foldersToCheck = currentFolders.filter((folder) => {
-      const id = getId(folder);
-      return id && Number(folder.mediaCount || 0) > 0;
-    });
+    function backendBase() {
+      const candidates = apiBaseCandidates();
+      return cleanBase(activeApiBase || candidates[0] || 'https://amaanitvam-foundation.onrender.com');
+    }
 
-    // Resolve every album cover from backend folder media.
-    // Future admin-created albums automatically get the first valid uploaded photo as cover.
-    const batchSize = 4;
-    for (let index = 0; index < foldersToCheck.length; index += batchSize) {
-      const batch = foldersToCheck.slice(index, index + batchSize);
-      await Promise.all(batch.map(async (folder) => {
+    async function fetchGalleryJson(path) {
+      let lastError = null;
+
+      for (const base of apiBaseCandidates()) {
         try {
-          const existingCover = pickFolderCover(folder);
-          const media = await getFolderMedia(getId(folder));
-          const photoCandidates = sortByUploadOrder(media).filter(isImage);
-          folder.__coverCandidates = photoCandidates;
-          folder.__coverMedia = existingCover || photoCandidates[0] || media[0] || null;
-        } catch (error) {
-          console.warn('Could not resolve gallery album cover:', folder?.name || folder?._id, error);
-          folder.__coverMedia = pickFolderCover(folder);
-          folder.__coverCandidates = folder.__coverMedia ? [folder.__coverMedia] : [];
-        }
-      }));
-    }
-  }
+          const controller = new AbortController();
+          const timeout = window.setTimeout(() => controller.abort(), 10000);
+          const response = await fetch(`${base}${path}`, { signal: controller.signal }).finally(() => window.clearTimeout(timeout));
+          const data = await response.json().catch(() => ({}));
 
-  function placeholderMarkup(extraClass = '') {
-    return `<div class="gallery-album-placeholder ${extraClass}" aria-hidden="true">
+          if (!response.ok || data.success === false) {
+            throw new Error(data.message || `Gallery request failed: ${response.status}`);
+          }
+
+          activeApiBase = base;
+          return data;
+        } catch (error) {
+          lastError = error;
+        }
+      }
+
+      throw lastError || new Error('Gallery backend is not reachable. Start backend with npm run dev.');
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    }
+
+    function getId(value) {
+      if (!value) return '';
+      if (typeof value === 'string') return value;
+      return value._id || value.id || value.mediaId || value.fileId || value.gridFsId || '';
+    }
+
+    function rawMediaUrl(media) {
+      if (!media) return '';
+      if (typeof media === 'string') return media;
+      return media.imageUrl || media.url || media.secure_url || media.src || media.path || media.fileUrl || media.mediaUrl || '';
+    }
+
+    function normalizeMediaUrl(media) {
+      const raw = String(rawMediaUrl(media) || '').trim();
+      const id = getId(media);
+      const base = backendBase();
+
+      if (!raw && id) return `${base}/api/gallery/media/${encodeURIComponent(id)}`;
+      if (!raw) return '';
+
+      // Convert Live Server URLs like http://127.0.0.1:5500/api/gallery/media/id back to backend.
+      try {
+        const parsed = new URL(raw, window.location.origin);
+        if (parsed.pathname.startsWith('/api/')) return `${base}${parsed.pathname}${parsed.search}`;
+      } catch (_) {
+        // Continue with string fallbacks below.
+      }
+
+      if (/^(data:|blob:)/i.test(raw)) return raw;
+      if (/^https?:\/\//i.test(raw) && !raw.includes(':5500/api/')) return raw;
+
+      if (raw.startsWith('/api/')) return `${base}${raw}`;
+      if (raw.startsWith('api/')) return `${base}/${raw}`;
+
+      if (raw.startsWith('/uploads/') || raw.startsWith('/gallery/') || raw.startsWith('/media/')) return `${base}${raw}`;
+      if (raw.startsWith('uploads/') || raw.startsWith('gallery/') || raw.startsWith('media/')) return `${base}/${raw}`;
+
+      return raw;
+    }
+
+    function isVideo(media) {
+      const url = normalizeMediaUrl(media);
+      return media?.mediaType === 'video'
+        || String(media?.contentType || '').startsWith('video/')
+        || /\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(url);
+    }
+
+    function isImage(media) {
+      if (!media) return false;
+      if (media.mediaType === 'image') return true;
+      if (String(media.contentType || '').startsWith('image/')) return true;
+      return !isVideo(media);
+    }
+
+    function timestampValue(item) {
+      const value = Date.parse(item?.createdAt || item?.uploadedAt || item?.updatedAt || '');
+      return Number.isFinite(value) ? value : 0;
+    }
+
+    function sortByUploadOrder(mediaItems) {
+      return [...(mediaItems || [])].sort((a, b) => {
+        const byDate = timestampValue(a) - timestampValue(b);
+        if (byDate !== 0) return byDate;
+        return String(getId(a)).localeCompare(String(getId(b)));
+      });
+    }
+
+    function pickFolderCover(folder) {
+      return folder?.__coverMedia || folder?.coverMedia || folder?.coverImage || folder?.coverUrl || folder?.thumbnail || folder?.cover || null;
+    }
+
+    async function getFolderMedia(folderId) {
+      if (folderMediaCache.has(folderId)) return folderMediaCache.get(folderId);
+
+      const data = await fetchGalleryJson(`/api/gallery/folders/${encodeURIComponent(folderId)}/media`);
+      const media = Array.isArray(data.images) ? data.images : Array.isArray(data.media) ? data.media : [];
+      const ordered = sortByUploadOrder(media);
+      folderMediaCache.set(folderId, ordered);
+      return ordered;
+    }
+
+    async function hydrateFolderCovers() {
+      const foldersToCheck = currentFolders.filter((folder) => {
+        const id = getId(folder);
+        return id && Number(folder.mediaCount || 0) > 0;
+      });
+
+      // Resolve every album cover from backend folder media.
+      // Future admin-created albums automatically get the first valid uploaded photo as cover.
+      const batchSize = 4;
+      for (let index = 0; index < foldersToCheck.length; index += batchSize) {
+        const batch = foldersToCheck.slice(index, index + batchSize);
+        await Promise.all(batch.map(async (folder) => {
+          try {
+            const existingCover = pickFolderCover(folder);
+            const media = await getFolderMedia(getId(folder));
+            const photoCandidates = sortByUploadOrder(media).filter(isImage);
+            folder.__coverCandidates = photoCandidates;
+            folder.__coverMedia = existingCover || photoCandidates[0] || media[0] || null;
+          } catch (error) {
+            console.warn('Could not resolve gallery album cover:', folder?.name || folder?._id, error);
+            folder.__coverMedia = pickFolderCover(folder);
+            folder.__coverCandidates = folder.__coverMedia ? [folder.__coverMedia] : [];
+          }
+        }));
+      }
+    }
+
+    function placeholderMarkup(extraClass = '') {
+      return `<div class="gallery-album-placeholder ${extraClass}" aria-hidden="true">
       <span class="material-symbols-outlined">photo_library</span>
     </div>`;
-  }
-
-  function mediaThumb(media, extraClass = '') {
-    const url = normalizeMediaUrl(media);
-    const title = escapeHtml(media?.title || media?.originalName || media?.filename || media?.name || 'Gallery media');
-
-    if (!url) return placeholderMarkup(extraClass);
-
-    if (isVideo(media)) {
-      return `<video class="${extraClass}" src="${escapeHtml(url)}" controls playsinline preload="metadata" aria-label="${title}"></video>`;
     }
 
-    return `<img class="${extraClass}" src="${escapeHtml(url)}" alt="${title}" loading="lazy" decoding="async" />`;
-  }
+    function mediaThumb(media, extraClass = '') {
+      const url = normalizeMediaUrl(media);
+      const title = escapeHtml(media?.title || media?.originalName || media?.filename || media?.name || 'Gallery media');
 
-  function albumCoverMarkup(folder) {
-    const id = getId(folder);
-    const cover = pickFolderCover(folder);
-    const url = normalizeMediaUrl(cover);
-    const title = escapeHtml(cover?.title || cover?.originalName || folder?.name || 'Gallery album cover');
+      if (!url) return placeholderMarkup(extraClass);
 
-    if (!url) return placeholderMarkup('gallery-album-cover-media');
+      if (isVideo(media)) {
+        return `<video class="${extraClass}" src="${escapeHtml(url)}" controls playsinline preload="metadata" aria-label="${title}"></video>`;
+      }
 
-    if (isVideo(cover)) {
-      return `<video class="gallery-album-cover-media" src="${escapeHtml(url)}" muted playsinline preload="metadata" aria-label="${title}"></video>`;
+      return `<img class="${extraClass}" src="${escapeHtml(url)}" alt="${title}" loading="lazy" decoding="async" />`;
     }
 
-    return `<img class="gallery-album-cover-media" src="${escapeHtml(url)}" alt="${title}" loading="lazy" decoding="async" data-folder-id="${escapeHtml(id)}" data-cover-index="0" />`;
-  }
-
-  function attachCoverFallbacks() {
-    container.querySelectorAll('img.gallery-album-cover-media[data-folder-id]').forEach((img) => {
-      img.addEventListener('error', () => {
-        const folderId = img.dataset.folderId;
-        const folder = currentFolders.find((item) => String(getId(item)) === String(folderId));
-        const candidates = folder?.__coverCandidates || [];
-        let nextIndex = Number(img.dataset.coverIndex || 0) + 1;
-
-        while (nextIndex < candidates.length) {
-          const nextUrl = normalizeMediaUrl(candidates[nextIndex]);
-          if (nextUrl && nextUrl !== img.src) {
-            img.dataset.coverIndex = String(nextIndex);
-            img.src = nextUrl;
-            img.alt = candidates[nextIndex]?.title || candidates[nextIndex]?.originalName || folder?.name || 'Gallery album cover';
-            return;
-          }
-          nextIndex += 1;
-        }
-
-        img.replaceWith(document.createRange().createContextualFragment(placeholderMarkup('gallery-album-cover-media')));
-      });
-    });
-  }
-
-  function setIntro(title, description) {
-    const heading = document.getElementById('gallery-grid-title');
-    const introText = document.querySelector('.gallery-intro .section-desc');
-    if (heading) heading.textContent = title;
-    if (introText && description) introText.textContent = description;
-  }
-
-  function albumCountLabel(count) {
-    const total = Number(count || 0);
-    return `${total} ${total === 1 ? 'media item' : 'media items'}`;
-  }
-
-  function renderMessage(message, tone = 'info') {
-    container.className = 'gallery-album-shell';
-    container.innerHTML = `<div class="gallery-state gallery-state-${tone}">${escapeHtml(message)}</div>`;
-  }
-
-  function renderAlbums() {
-    setIntro('Browse Gallery Albums', 'Open an album to view images and videos grouped by the same folders');
-    container.className = 'gallery-grid gallery-albums-grid';
-
-    const albums = [...currentFolders];
-
-    if (!albums.length) {
-      renderMessage('No gallery albums are available yet. Albums uploaded from the admin portal will appear here automatically.');
-      return;
-    }
-
-    container.innerHTML = albums.map((folder) => {
+    function albumCoverMarkup(folder) {
       const id = getId(folder);
-      const name = folder.name || folder.title || 'Untitled Album';
-      const description = folder.description || 'View photos and videos from this album.';
+      const cover = pickFolderCover(folder);
+      const url = normalizeMediaUrl(cover);
+      const title = escapeHtml(cover?.title || cover?.originalName || folder?.name || 'Gallery album cover');
 
-      return `<article class="gallery-album-card gallery-card reveal-card" data-folder-id="${escapeHtml(id)}" tabindex="0" role="button" aria-label="Open ${escapeHtml(name)} album">
+      if (!url) return placeholderMarkup('gallery-album-cover-media');
+
+      if (isVideo(cover)) {
+        return `<video class="gallery-album-cover-media" src="${escapeHtml(url)}" muted playsinline preload="metadata" aria-label="${title}"></video>`;
+      }
+
+      return `<img class="gallery-album-cover-media" src="${escapeHtml(url)}" alt="${title}" loading="lazy" decoding="async" data-folder-id="${escapeHtml(id)}" data-cover-index="0" />`;
+    }
+
+    function attachCoverFallbacks() {
+      container.querySelectorAll('img.gallery-album-cover-media[data-folder-id]').forEach((img) => {
+        img.addEventListener('error', () => {
+          const folderId = img.dataset.folderId;
+          const folder = currentFolders.find((item) => String(getId(item)) === String(folderId));
+          const candidates = folder?.__coverCandidates || [];
+          let nextIndex = Number(img.dataset.coverIndex || 0) + 1;
+
+          while (nextIndex < candidates.length) {
+            const nextUrl = normalizeMediaUrl(candidates[nextIndex]);
+            if (nextUrl && nextUrl !== img.src) {
+              img.dataset.coverIndex = String(nextIndex);
+              img.src = nextUrl;
+              img.alt = candidates[nextIndex]?.title || candidates[nextIndex]?.originalName || folder?.name || 'Gallery album cover';
+              return;
+            }
+            nextIndex += 1;
+          }
+
+          img.replaceWith(document.createRange().createContextualFragment(placeholderMarkup('gallery-album-cover-media')));
+        });
+      });
+    }
+
+    function setIntro(title, description) {
+      const heading = document.getElementById('gallery-grid-title');
+      const introText = document.querySelector('.gallery-intro .section-desc');
+      if (heading) heading.textContent = title;
+      if (introText && description) introText.textContent = description;
+    }
+
+    function albumCountLabel(count) {
+      const total = Number(count || 0);
+      return `${total} ${total === 1 ? 'media item' : 'media items'}`;
+    }
+
+    function renderMessage(message, tone = 'info') {
+      container.className = 'gallery-album-shell';
+      container.innerHTML = `<div class="gallery-state gallery-state-${tone}">${escapeHtml(message)}</div>`;
+    }
+
+    function renderAlbums() {
+      setIntro('Browse Gallery Albums', 'Open an album to view images and videos grouped by the same folders');
+      container.className = 'gallery-grid gallery-albums-grid';
+
+      const albums = [...currentFolders];
+
+      if (!albums.length) {
+        renderMessage('No gallery albums are available yet. Albums uploaded from the admin portal will appear here automatically.');
+        return;
+      }
+
+      container.innerHTML = albums.map((folder) => {
+        const id = getId(folder);
+        const name = folder.name || folder.title || 'Untitled Album';
+        const description = folder.description || 'View photos and videos from this album.';
+
+        return `<article class="gallery-album-card gallery-card reveal-card" data-folder-id="${escapeHtml(id)}" tabindex="0" role="button" aria-label="Open ${escapeHtml(name)} album">
         <div class="gallery-album-cover">
           ${albumCoverMarkup(folder)}
           <span class="gallery-album-count">${escapeHtml(albumCountLabel(folder.mediaCount))}</span>
@@ -1069,30 +1105,30 @@ document.addEventListener("DOMContentLoaded", function () {
           <span class="gallery-album-open">Open Album <span aria-hidden="true">→</span></span>
         </div>
       </article>`;
-    }).join('');
+      }).join('');
 
-    container.querySelectorAll('.gallery-album-card').forEach((card) => {
-      const folderId = card.dataset.folderId;
-      const open = () => openAlbum(folderId);
-      card.addEventListener('click', open);
-      card.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter' || event.key === ' ') {
-          event.preventDefault();
-          open();
-        }
+      container.querySelectorAll('.gallery-album-card').forEach((card) => {
+        const folderId = card.dataset.folderId;
+        const open = () => openAlbum(folderId);
+        card.addEventListener('click', open);
+        card.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            open();
+          }
+        });
       });
-    });
 
-    attachCoverFallbacks();
-  }
+      attachCoverFallbacks();
+    }
 
-  async function openAlbum(folderId) {
-    const folder = currentFolders.find((item) => String(getId(item)) === String(folderId));
-    if (!folder) return;
+    async function openAlbum(folderId) {
+      const folder = currentFolders.find((item) => String(getId(item)) === String(folderId));
+      if (!folder) return;
 
-    setIntro(folder.name || 'Gallery Album', folder.description || 'Browse images and videos from this album.');
-    container.className = 'gallery-album-shell';
-    container.innerHTML = `<div class="gallery-album-toolbar">
+      setIntro(folder.name || 'Gallery Album', folder.description || 'Browse images and videos from this album.');
+      container.className = 'gallery-album-shell';
+      container.innerHTML = `<div class="gallery-album-toolbar">
       <button class="gallery-back-button" type="button" id="galleryBackToAlbums">← Back to Albums</button>
       <div>
         <span class="gallery-album-kicker">Album</span>
@@ -1101,33 +1137,33 @@ document.addEventListener("DOMContentLoaded", function () {
     </div>
     <div class="gallery-state">Loading album media...</div>`;
 
-    document.getElementById('galleryBackToAlbums')?.addEventListener('click', renderAlbums);
+      document.getElementById('galleryBackToAlbums')?.addEventListener('click', renderAlbums);
 
-    try {
-      const media = await getFolderMedia(folderId);
-      renderAlbumMedia(folder, media);
-    } catch (error) {
-      renderMessage(error.message || 'Failed to load this album.', 'error');
+      try {
+        const media = await getFolderMedia(folderId);
+        renderAlbumMedia(folder, media);
+      } catch (error) {
+        renderMessage(error.message || 'Failed to load this album.', 'error');
+      }
     }
-  }
 
-  function renderAlbumMedia(folder, media) {
-    container.className = 'gallery-album-shell';
+    function renderAlbumMedia(folder, media) {
+      container.className = 'gallery-album-shell';
 
-    const count = albumCountLabel(media.length);
-    const grid = media.length
-      ? `<div class="gallery-album-media-grid">
+      const count = albumCountLabel(media.length);
+      const grid = media.length
+        ? `<div class="gallery-album-media-grid">
           ${media.map((item) => {
-        const title = item.title || item.originalName || item.filename || 'Gallery media';
-        return `<figure class="gallery-media-card gallery-card reveal-card">
+          const title = item.title || item.originalName || item.filename || 'Gallery media';
+          return `<figure class="gallery-media-card gallery-card reveal-card">
               <div class="gallery-media-frame">${mediaThumb(item, 'gallery-media-file')}</div>
               <figcaption>${escapeHtml(title)}</figcaption>
             </figure>`;
-      }).join('')}
+        }).join('')}
         </div>`
-      : `<div class="gallery-state">No media has been uploaded in this album yet.</div>`;
+        : `<div class="gallery-state">No media has been uploaded in this album yet.</div>`;
 
-    container.innerHTML = `<div class="gallery-album-toolbar">
+      container.innerHTML = `<div class="gallery-album-toolbar">
       <button class="gallery-back-button" type="button" id="galleryBackToAlbums">← Back to Albums</button>
       <div>
         <span class="gallery-album-kicker">${escapeHtml(count)}</span>
@@ -1136,30 +1172,31 @@ document.addEventListener("DOMContentLoaded", function () {
     </div>
     ${grid}`;
 
-    document.getElementById('galleryBackToAlbums')?.addEventListener('click', renderAlbums);
-  }
-
-  async function initAlbumGallery() {
-    renderMessage('Loading gallery albums...');
-
-    try {
-      const foldersData = await fetchGalleryJson('/api/gallery/folders');
-
-      // Show ONLY albums/folders that exist in admin portal.
-      // Do not call /api/gallery?uncategorized=true and do not create a fake Uncategorized album.
-      currentFolders = Array.isArray(foldersData.folders) ? foldersData.folders : [];
-
-      await hydrateFolderCovers();
-      renderAlbums();
-    } catch (error) {
-      renderMessage(error.message || 'Failed to load gallery albums.', 'error');
+      document.getElementById('galleryBackToAlbums')?.addEventListener('click', renderAlbums);
     }
-  }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initAlbumGallery, { once: true });
-  } else {
-    initAlbumGallery();
-  }
+    async function initAlbumGallery() {
+      renderMessage('Loading gallery albums...');
+
+      try {
+        const foldersData = await fetchGalleryJson('/api/gallery/folders');
+
+        // Show ONLY albums/folders that exist in admin portal.
+        // Do not call /api/gallery?uncategorized=true and do not create a fake Uncategorized album.
+        currentFolders = Array.isArray(foldersData.folders) ? foldersData.folders : [];
+
+        await hydrateFolderCovers();
+        renderAlbums();
+      } catch (error) {
+        renderMessage(error.message || 'Failed to load gallery albums.', 'error');
+      }
+    }
+
+       if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initAlbumGallery, { once: true });
+    } else {
+      initAlbumGallery();
+    }
+  })();
+
 })();
-/* ===== End Amaanitvam Gallery Album Loader ===== */
