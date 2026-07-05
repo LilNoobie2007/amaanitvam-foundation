@@ -1,5 +1,10 @@
-const API_BASE_URL = 'https://amaanitvam-foundation.onrender.com/api';
-
+const API_BASE_URL =
+  window.location.hostname === 'localhost' ||
+  window.location.hostname === '127.0.0.1' ||
+  window.location.protocol === 'file:'
+    ? 'http://localhost:5000/api'
+    : 'https://amaanitvam-foundation.onrender.com/api';
+    
 (function () {
   'use strict';
 
@@ -443,7 +448,7 @@ const API_BASE_URL = 'https://amaanitvam-foundation.onrender.com/api';
     if (window.__amaanitvamCampaignFundsFixLoaded) return;
     window.__amaanitvamCampaignFundsFixLoaded = true;
 
-    const MIN_AMOUNT = 10;
+    const MIN_AMOUNT = 1;
     let activeCampaigns = [];
     let selectedCampaignId = 'organization';
     let workingApiBase = null;
@@ -464,11 +469,6 @@ const API_BASE_URL = 'https://amaanitvam-foundation.onrender.com/api';
 
       // Always try the real backend first — on localhost AND in production.
       list.push(API_BASE_URL);
-
-      // Same-origin /api as a fallback only when not VS Code Live Server.
-      if (!['5500', '5501'].includes(window.location.port) && window.location.protocol !== 'file:') {
-        list.push('/api');
-      }
 
       return [...new Set(list.filter(Boolean))];
     }
@@ -702,7 +702,7 @@ const API_BASE_URL = 'https://amaanitvam-foundation.onrender.com/api';
       const campaignId = selectedCampaignId === 'organization' ? null : selectedCampaignId;
 
       if (!name || !email) return status('Please enter your name and email.', 'red');
-      if (amount < MIN_AMOUNT) return status('Minimum donation amount is ₹10.', 'red');
+      if (amount < MIN_AMOUNT) return status('Minimum donation amount is ₹1.', 'red');
 
       const originalText = button.textContent;
       button.disabled = true;

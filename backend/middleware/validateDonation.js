@@ -27,8 +27,8 @@ export const validateDonation = (req, res, next) => {
     return res.status(400).json({ success: false, message: "Please provide a valid email address." });
   }
 
-  if (!Number.isFinite(amount) || amount < 10) {
-    return res.status(400).json({ success: false, message: "Minimum donation amount is ₹10." });
+  if (!Number.isFinite(amount) || amount < 1) {
+    return res.status(400).json({ success: false, message: "Minimum donation amount is ₹1." });
   }
 
   if (amount > 500000) {

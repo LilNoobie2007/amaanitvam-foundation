@@ -649,3 +649,19 @@ export const updateMe = async (req, res) => {
     res.status(500).json({ success: false, message: err.message });
   }
 };
+
+
+export const deleteCertificate = async (req, res) => {
+  try {
+    const certificate = await Certificate.findByIdAndDelete(req.params.id);
+
+    if (!certificate) {
+      return res.status(404).json({ message: "Certificate not found" });
+    }
+
+    res.json({ message: "Certificate deleted successfully" });
+  } catch (error) {
+    console.error("Delete certificate error:", error);
+    res.status(500).json({ message: "Failed to delete certificate" });
+  }
+};

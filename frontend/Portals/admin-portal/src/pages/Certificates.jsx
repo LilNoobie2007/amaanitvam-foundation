@@ -188,6 +188,30 @@ export default function Certificates() {
     }
   };
 
+
+  const handleDeleteCertificate = async (cert) => {
+    if (!cert?._id) {
+      toast.error('Certificate ID missing');
+      return;
+    }
+
+    const label = cert.certificateId || cert.issuedTo || 'this certificate';
+    const confirmed = window.confirm(
+      `Are you sure you want to delete ${label}? This will permanently remove it from the database.`
+    );
+
+    if (!confirmed) return;
+
+    try {
+      await api.delete(`/admin/certificates/${cert._id}`);
+      setCertificates((prev) => prev.filter((item) => item._id !== cert._id));
+      toast.success('Certificate deleted successfully');
+    } catch (error) {
+      console.error('Delete certificate error:', error);
+      toast.error(error.response?.data?.message || 'Failed to delete certificate');
+    }
+  };
+
   const uploadCertificatePdf = async (id, file) => {
     if (!file) return;
     if (file.type !== 'application/pdf') {
@@ -331,6 +355,14 @@ export default function Certificates() {
                             onChange={(e) => uploadCertificatePdf(cert._id, e.target.files?.[0])}
                           />
                         </label>
+
+                        <button
+                          type="button"
+                          onClick={() => handleDeleteCertificate(cert)}
+                          className="bg-red-50 text-red-700 hover:bg-red-100 px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors"
+                        >
+                          Delete
+                        </button>
                       </div>
                       {cert.pdfUploadedAt && (
                         <div className="text-[11px] text-slate-400 mt-1">
