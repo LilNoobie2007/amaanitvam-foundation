@@ -33,6 +33,9 @@ export const createDonationOrder = async (req, res) => {
     const email = validated.email || String(req.body?.email || "").trim().toLowerCase();
     const phone = validated.phone || String(req.body?.phone || "").trim();
     const amount = Number(validated.amount || req.body?.amount || 0);
+    if (!Number.isFinite(amount) || amount < 1) {
+      return res.status(400).json({ success: false, message: "Minimum donation amount is ₹1." });
+    }
     const campaignId = normalizeCampaignId(validated.campaignId ?? req.body?.campaignId ?? req.body?.campaign ?? req.body?.donationTarget);
 
     let campaign = null;
