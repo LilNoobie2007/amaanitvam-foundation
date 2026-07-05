@@ -129,7 +129,8 @@ export const updateCandidateStatus = async (req, res) => {
                     phone: candidate.phone,
                     role: 'intern',
                     department: candidate.track,
-                    status: 'active'
+                    status: 'active',
+                    memberId: `AFM-${Date.now()}`
                 });
                 await newIntern.save();
             }
@@ -189,7 +190,7 @@ export const addMember = async (req, res) => {
             return res.status(400).json({ success: false, message: 'User with this email already exists.' });
         }
 
-        const member = new User({ name, email, phone, role: role || 'member', department });
+        const member = new User({ name, email, phone, role: role || 'member', department, memberId: `AFM-${Date.now()}` });
         await member.save();
 
         await AuditLog.create({
@@ -616,8 +617,14 @@ export const getReports = async (req, res) => {
 // PUT /api/admin/me
 export const updateMe = async (req, res) => {
   try {
-    const { name, phone, department, profileImage } = req.body;
-
+    const {
+      name,
+      phone,
+      department,
+      designation,
+      domain,
+      profileImage
+    } = req.body;
     if (!name?.trim()) {
       return res.status(400).json({ success: false, message: 'Name is required' });
     }
@@ -625,7 +632,9 @@ export const updateMe = async (req, res) => {
     const updateData = {
       name: name.trim(),
       phone: phone?.trim() || '',
-      department: department?.trim() || ''
+      department: department?.trim() || '',
+      designation: designation?.trim() || '',
+      domain: domain?.trim() || ''
     };
 
     if (typeof profileImage === 'string' && profileImage.startsWith('data:image/')) {
