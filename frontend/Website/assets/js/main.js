@@ -470,11 +470,6 @@ const API_BASE_URL =
       // Always try the real backend first — on localhost AND in production.
       list.push(API_BASE_URL);
 
-      // Same-origin /api as a fallback only when not VS Code Live Server.
-      if (!['5500', '5501'].includes(window.location.port) && window.location.protocol !== 'file:') {
-        list.push('/api');
-      }
-
       return [...new Set(list.filter(Boolean))];
     }
 
