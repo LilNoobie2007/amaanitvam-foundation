@@ -30,6 +30,7 @@ import {
   getSettings,
   updateSettings,
   getAuditLogs,
+  deleteCertificate,
 } from '../controllers/adminController.js';
 
 const router = express.Router();
@@ -277,6 +278,7 @@ router.put('/certificates/:id/revoke', requireAdmin, requireAllowedIP, revokeCer
 router.get('/certificates/:id/download', requireAdmin, requireAllowedIP, downloadCertificate);
 router.post('/certificates', requireAdmin, requireAllowedIP, certificateUpload.single('certificate'), generateCertificate);
 router.put('/certificates/:id/file', requireAdmin, requireAllowedIP, certificateUpload.single('certificate'), uploadCertificateFile);
+router.delete('/certificates/:id', requireAdmin, requireAllowedIP, deleteCertificate);
 router.get('/settings', requireAdmin, requireAllowedIP, getSettings);
 router.put('/settings', requireAdmin, requireAllowedIP, updateSettings);
 router.get('/audit-logs', requireAdmin, requireAllowedIP, getAuditLogs);
