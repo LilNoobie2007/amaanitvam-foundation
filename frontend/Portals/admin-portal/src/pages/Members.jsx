@@ -6,7 +6,8 @@ import { firebaseConfig } from '../config/firebase';
 import api from '../config/api';
 import toast from 'react-hot-toast';
 
-const INITIAL_FORM = { name: '', email: '', phone: '', role: 'member', department: '' };
+const INITIAL_FORM = { name: '', email: '', phone: '', role: 'member', department: '', designation: '',
+  domain: '' };
 
 export default function Members() {
   const [members, setMembers] = useState([]);
@@ -20,7 +21,9 @@ const [editMember, setEditMember] = useState({
   email: '',
   phone: '',
   role: '',
-  department: ''
+  department: '',
+  designation: '',
+  domain: ''
 });
   const [newMember, setNewMember] = useState(INITIAL_FORM);
   const [submitting, setSubmitting] = useState(false);
@@ -190,6 +193,8 @@ const handleEditMember = async (e) => {
       name: editMember.name,
       phone: editMember.phone,
       department: editMember.department,
+      designation: editMember.designation,
+      domain: editMember.domain,
     });
 
     const roleRes = await api.put(`/admin/members/${editMember.id}/role`, {

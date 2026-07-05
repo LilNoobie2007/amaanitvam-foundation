@@ -36,6 +36,25 @@ const userSchema = new mongoose.Schema({
         type: String,
         trim: true
     },
+    designation: {
+        type: String,
+        trim: true,
+        default: ''
+    },
+
+    domain: {
+        type: String,
+        trim: true,
+        default: ''
+    },
+
+    memberId: {
+        type: String,
+        trim: true,
+        unique: true,
+        sparse: true
+    },
+
     profileImage: {
         type: String,
         default: ''
