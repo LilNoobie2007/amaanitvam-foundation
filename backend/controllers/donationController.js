@@ -181,18 +181,26 @@ export const verifyDonationPayment = async (req, res) => {
       campaign: updatedCampaign,
     });
 
-    Promise.all([
-      sendDonationReceiptEmail({ donation }),
-      sendDonationAdminEmail({ donation }),
-      sendWhatsAppNotification({
-        to: process.env.ADMIN_WHATSAPP_NUMBER || "919899923266",
-        templateName: "new_donation_received",
-        languageCode: "en",
-        parameters: [donation.name, donation.amount.toString()],
-      }),
-    ]).catch((notificationError) => {
-      console.error("Background donation notification delivery failed:", notificationError);
-    });
+    Promise.allSettled([
+        sendDonationReceiptEmail({ donation }),
+        sendDonationAdminEmail({ donation }),
+        sendWhatsAppNotification({
+          to: process.env.ADMIN_WHATSAPP_NUMBER || "919899923266",
+          templateName: "new_donation_received",
+          languageCode: "en",
+          parameters: [donation.name, donation.amount.toString()],
+        }),
+      ]).then((results) => {
+        const labels = ["donor receipt email", "admin donation email", "admin WhatsApp"];
+        results.forEach((result, index) => {
+          if (result.status === "rejected") {
+            console.error(
+              `Donation notification failed (${labels[index]}):`,
+              result.reason?.message || result.reason
+            );
+          }
+        });
+      });
   } catch (error) {
     console.error("Payment verification failed:", error);
     res.status(500).json({ success: false, message: "Payment verification encountered an error." });
