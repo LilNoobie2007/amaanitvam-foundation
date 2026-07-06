@@ -161,6 +161,44 @@ const unwrap = (input = {}, keys = []) => {
 
 const normalizeDonation = (input = {}) => {
   const donation = unwrap(input, ["donation", "data"]);
+
+  const rawDonationType = String(donation.donationType || donation.type || "").trim().toLowerCase();
+  const campaignObjectTitle = donation.campaign && typeof donation.campaign === "object"
+    ? donation.campaign.title || donation.campaign.name || ""
+    : "";
+
+  const campaignTitle = String(
+    donation.campaignTitleSnapshot ||
+    donation.campaignTitle ||
+    donation.campaignName ||
+    campaignObjectTitle ||
+    ""
+  ).trim();
+
+  const campaignId = donation.campaign && typeof donation.campaign === "object"
+    ? donation.campaign._id?.toString?.() || donation.campaign.id || ""
+    : donation.campaign?.toString?.() || "";
+
+  const ignoredCampaignValues = new Set([
+    "", "null", "undefined", "organization", "foundation", "general", "direct", "amaanitvam foundation"
+  ]);
+
+  const isCampaignDonation = rawDonationType === "campaign" ||
+    Boolean(campaignTitle) ||
+    Boolean(campaignId && !ignoredCampaignValues.has(String(campaignId).trim().toLowerCase()));
+
+  const destinationName = isCampaignDonation
+    ? (campaignTitle || "Selected Fundraising Campaign")
+    : "Amaanitvam Foundation";
+
+  const destinationType = isCampaignDonation
+    ? "Active Fundraising Campaign"
+    : "Direct Foundation Donation";
+
+  const destinationLabel = isCampaignDonation
+    ? `${destinationType} - ${destinationName}`
+    : `${destinationType} - ${destinationName}`;
+
   return {
     id: donation._id?.toString?.() || donation.id || donation.donationId || "N/A",
     name: donation.name || donation.donorName || donation.fullName || "Donor",
@@ -171,7 +209,13 @@ const normalizeDonation = (input = {}) => {
     paymentId: donation.razorpayPaymentId || donation.paymentId || donation.transactionId || "N/A",
     orderId: donation.razorpayOrderId || donation.orderId || "N/A",
     date: donation.updatedAt || donation.createdAt || donation.submissionTimestamp || donation.date || new Date(),
-    campaign: donation.campaignTitleSnapshot || donation.campaignTitle || donation.campaign || "Amaanitvam Foundation",
+    donationType: isCampaignDonation ? "campaign" : "organization",
+    campaign: isCampaignDonation ? destinationName : "",
+    campaignTitle: isCampaignDonation ? destinationName : "",
+    campaignId: isCampaignDonation ? campaignId : "",
+    destinationName,
+    destinationType,
+    destinationLabel,
   };
 };
 
@@ -263,10 +307,17 @@ const donationReceiptText = (donation) => {
     `Dear ${d.name},`,
     "Your donation has been received successfully. You're making a real difference in the lives of underprivileged children.",
     "",
+    "Donation Details:",
     `Amount Donated: ₹${formatAmount(d.amount)}`,
+    `Donated To: ${d.destinationLabel}`,
+    `Donation Category: ${d.destinationType}`,
     `Transaction ID: ${d.paymentId}`,
     `Order ID: ${d.orderId}`,
     `Date: ${formatDate(d.date)}`,
+    "",
+    d.donationType === "campaign"
+      ? `Your contribution has been added to the active campaign: ${d.destinationName}.`
+      : "Your contribution has been received directly by Amaanitvam Foundation for general foundation work.",
     "",
     "Your donation is eligible for tax deduction under Section 80G of the Income Tax Act. The official 80G certificate will be sent to you within 7 working days.",
     "",
@@ -279,131 +330,41 @@ const donationReceiptText = (donation) => {
 const donationReceiptHtml = (donation) => {
   const d = normalizeDonation(donation);
   const config = getMailConfig();
-  const amount = formatAmount(d.amount);
-  const donorName = escapeHtml(d.name);
-  const paymentId = escapeHtml(d.paymentId);
-  const orderId = escapeHtml(d.orderId);
-  const date = escapeHtml(formatDate(d.date));
-  const websiteUrl = escapeHtml(config.websiteUrl);
-  const impactUrl = escapeHtml(config.impactUrl);
-  const brandEmail = escapeHtml(config.publicContactEmail);
+  const destinationNote = d.donationType === "campaign"
+    ? `Your contribution has been added to the active campaign: <strong>${escapeHtml(d.destinationName)}</strong>.`
+    : "Your contribution has been received directly by Amaanitvam Foundation for general foundation work.";
 
-  return `<!doctype html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Donation Receipt</title>
-</head>
-<body style="margin:0;padding:0;background:#111111;font-family:Arial,Helvetica,sans-serif;color:#ffffff;">
-  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#111111;margin:0;padding:24px 0;">
-    <tr>
-      <td align="center" style="padding:0 12px;">
-        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width:650px;background:#151515;border:1px solid #242424;overflow:hidden;">
-          <tr>
-            <td align="center" style="background:#e45675;background-image:linear-gradient(135deg,#e45675,#dc4f70);padding:28px 20px;color:#ffffff;">
-              <div style="font-size:26px;font-weight:800;line-height:1.25;">🙏 Thank You for Your Generosity!</div>
-              <div style="font-size:16px;margin-top:8px;color:#ffe9ee;">Amaanitvam Foundation</div>
-            </td>
-          </tr>
+  const body = `
+    <p>Dear ${escapeHtml(d.name)},</p>
+    <p>Your donation has been received successfully. You're making a real difference in the lives of underprivileged children.</p>
 
-          <tr>
-            <td style="padding:30px 36px 18px 36px;background:#111111;color:#ffffff;">
-              <div style="text-align:center;margin-bottom:28px;">
-                <span style="display:inline-block;background:#19c385;color:#ffffff;border-radius:999px;padding:10px 24px;font-weight:700;font-size:14px;">✓ Payment Successful</span>
-              </div>
+    <h3 style="margin:24px 0 12px;color:#7a1238;">Donation Receipt</h3>
+    ${infoTable([
+      ["Amount Donated", `₹${formatAmount(d.amount)}`],
+      ["Donated To", d.destinationLabel],
+      ["Donation Category", d.destinationType],
+      ["Transaction ID", d.paymentId],
+      ["Order ID", d.orderId],
+      ["Date", formatDate(d.date)],
+    ])}
 
-              <p style="margin:0 0 18px 0;color:#ffffff;font-size:16px;line-height:1.6;"><b>Dear ${donorName},</b></p>
-              <p style="margin:0 0 24px 0;color:#d7d7d7;font-size:15px;line-height:1.8;">
-                Your donation has been received successfully. You're making a real difference in the lives of underprivileged children. Every rupee you contribute helps provide education, nutrition, and hope to those in need.
-              </p>
+    <p style="margin-top:18px;">${destinationNote}</p>
 
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#202020;border:1px solid #3a3a3a;border-radius:8px;margin:0 0 28px 0;">
-                <tr>
-                  <td style="padding:24px 26px;">
-                    <div style="font-size:17px;font-weight:800;letter-spacing:1.5px;color:#ffffff;margin-bottom:26px;">🧾 DONATION RECEIPT</div>
+    <div style="margin-top:20px;padding:14px 16px;border-left:4px solid #7a1238;background:#fff6f9;">
+      <strong>80G Tax Exemption Certificate</strong><br/>
+      Your donation is eligible for tax deduction under Section 80G of the Income Tax Act. The official 80G certificate will be sent to you within 7 working days.
+    </div>
 
-                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
-                      <tr>
-                        <td style="padding:0 0 20px 0;color:#bfbfbf;font-size:14px;">Amount Donated</td>
-                        <td align="right" style="padding:0 0 20px 0;color:#e45675;font-size:26px;font-weight:800;">₹${amount}</td>
-                      </tr>
-                      <tr>
-                        <td colspan="2" style="border-top:1px solid #3a3a3a;height:18px;line-height:18px;font-size:1px;">&nbsp;</td>
-                      </tr>
-                      <tr>
-                        <td style="padding:6px 0;color:#bfbfbf;font-size:14px;">Transaction ID</td>
-                        <td align="right" style="padding:6px 0;color:#ffffff;font-size:14px;font-weight:700;font-family:Courier New,monospace;word-break:break-all;">${paymentId}</td>
-                      </tr>
-                      <tr>
-                        <td style="padding:6px 0;color:#bfbfbf;font-size:14px;">Order ID</td>
-                        <td align="right" style="padding:6px 0;color:#ffffff;font-size:14px;font-weight:700;font-family:Courier New,monospace;word-break:break-all;">${orderId}</td>
-                      </tr>
-                      <tr>
-                        <td style="padding:6px 0;color:#bfbfbf;font-size:14px;">Date</td>
-                        <td align="right" style="padding:6px 0;color:#ffffff;font-size:14px;font-weight:700;">${date}</td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-              </table>
+    <p style="margin-top:22px;">Thank you for supporting Amaanitvam Foundation.</p>
+    <p><a href="${escapeHtml(config.impactUrl)}">See Your Impact →</a></p>
+  `;
 
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#1e2633;border-left:4px solid #2d8cff;border-radius:7px;margin:0 0 30px 0;">
-                <tr>
-                  <td style="padding:20px 22px;">
-                    <div style="font-size:15px;color:#cbd8ff;font-weight:800;margin-bottom:8px;">📋 80G Tax Exemption Certificate</div>
-                    <div style="font-size:14px;line-height:1.7;color:#dbe5ff;">
-                      Your donation is eligible for tax deduction under Section 80G of the Income Tax Act. The official 80G certificate will be sent to you within 7 working days.
-                    </div>
-                  </td>
-                </tr>
-              </table>
-
-              <div style="text-align:center;color:#cfcfcf;font-weight:700;font-size:15px;margin:0 0 22px 0;">Your contribution helps us:</div>
-
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin:0 0 30px 0;">
-                <tr>
-                  <td align="center" width="33.33%" style="color:#d7d7d7;font-size:13px;line-height:1.5;padding:0 4px;">
-                    <div style="font-size:30px;margin-bottom:8px;">📚</div>
-                    Provide Education
-                  </td>
-                  <td align="center" width="33.33%" style="color:#d7d7d7;font-size:13px;line-height:1.5;padding:0 4px;">
-                    <div style="font-size:30px;margin-bottom:8px;">🍱</div>
-                    Serve Nutritious Meals
-                  </td>
-                  <td align="center" width="33.33%" style="color:#d7d7d7;font-size:13px;line-height:1.5;padding:0 4px;">
-                    <div style="font-size:30px;margin-bottom:8px;">🏥</div>
-                    Healthcare Support
-                  </td>
-                </tr>
-              </table>
-
-              <div style="text-align:center;margin:0 0 28px 0;">
-                <a href="${impactUrl}" target="_blank" style="display:inline-block;background:#e45675;color:#ffffff;text-decoration:none;border-radius:6px;padding:16px 34px;font-weight:800;font-size:14px;">See Your Impact →</a>
-              </div>
-            </td>
-          </tr>
-
-          <tr>
-            <td align="center" style="background:#181818;padding:28px 30px 20px 30px;border-top:1px solid #202020;">
-              <div style="font-size:18px;color:#ffffff;font-weight:800;margin-bottom:10px;">Amaanitvam Foundation</div>
-              <div style="font-size:14px;color:#8f8f8f;margin-bottom:16px;">Empowering Children Through Education</div>
-              <div style="font-size:13px;color:#cfcfcf;line-height:1.8;">
-                📧 <a href="mailto:${brandEmail}" style="color:#cfcfcf;text-decoration:none;">${brandEmail}</a><br>
-                🌐 <a href="${websiteUrl}" target="_blank" style="color:#cfcfcf;text-decoration:none;">www.amaanitvam.org</a>
-              </div>
-              <div style="font-size:13px;color:#8f8f8f;margin-top:18px;">Twitter &nbsp;&nbsp;&nbsp; Facebook &nbsp;&nbsp;&nbsp; Instagram</div>
-              <div style="border-top:1px solid #2c2c2c;margin-top:24px;padding-top:18px;font-size:11px;color:#999999;line-height:1.6;">
-                This is an automated email. For queries, please reply to this email or contact us at the address above.
-              </div>
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
-</body>
-</html>`;
+  return baseHtml({
+    title: "Donation Receipt",
+    subtitle: "Thank You for Your Generosity!",
+    body,
+    accent: "#7a1238",
+  });
 };
 
 const adminDonationText = (donation) => {
@@ -414,6 +375,8 @@ const adminDonationText = (donation) => {
     `Email: ${d.email}`,
     `Phone: ${d.phone}`,
     `Amount: ₹${formatAmount(d.amount)}`,
+    `Donated To: ${d.destinationLabel}`,
+    `Donation Category: ${d.destinationType}`,
     `Transaction ID: ${d.paymentId}`,
     `Order ID: ${d.orderId}`,
     `Date: ${formatDate(d.date)}`,
@@ -423,12 +386,14 @@ const adminDonationText = (donation) => {
 const adminDonationHtml = (donation) => {
   const d = normalizeDonation(donation);
   return baseHtml({
-    title: "New Donation Received",
+    title: d.donationType === "campaign" ? "New Campaign Donation Received" : "New Direct Donation Received",
     body: infoTable([
       ["Name", d.name],
       ["Email", d.email],
       ["Phone", d.phone],
       ["Amount", `₹${formatAmount(d.amount)}`],
+      ["Donated To", d.destinationLabel],
+      ["Donation Category", d.destinationType],
       ["Transaction ID", d.paymentId],
       ["Order ID", d.orderId],
       ["Date", formatDate(d.date)],
@@ -480,7 +445,9 @@ export const sendDonationReceiptEmail = async ({ donation } = {}) => {
   }
 
   const config = getMailConfig();
-  const subject = `Thank You for Your Donation of ₹${formatAmount(d.amount)} - Amaanitvam Foundation`;
+  const subject = d.donationType === "campaign"
+    ? `Thank You for Supporting ${d.destinationName} - ₹${formatAmount(d.amount)}`
+    : `Thank You for Your Donation of ₹${formatAmount(d.amount)} - Amaanitvam Foundation`;
 
   const result = await sendMailSafely("donation receipt", {
     from: config.from,
@@ -491,14 +458,16 @@ export const sendDonationReceiptEmail = async ({ donation } = {}) => {
     html: donationReceiptHtml(donation),
   });
 
-  if (result.success) console.log(`[email] donation receipt delivered to ${maskEmail(d.email)}`);
+  if (result.success) console.log(`[email] donation receipt delivered to ${maskEmail(d.email)} for ${d.destinationLabel}`);
   return result;
 };
 
 export const sendDonationAdminEmail = async ({ donation } = {}) => {
   const d = normalizeDonation(donation);
   const config = getMailConfig();
-  const subject = `New Donation Received - ₹${formatAmount(d.amount)}`;
+  const subject = d.donationType === "campaign"
+    ? `New Campaign Donation - ${d.destinationName} - ₹${formatAmount(d.amount)}`
+    : `New Direct Foundation Donation - ₹${formatAmount(d.amount)}`;
 
   return sendMailSafely("admin donation notification", {
     from: config.from,

@@ -2,8 +2,6 @@ import Contact from "../models/contact.js";
 import { 
     sendAdminNotificationEmail, sendUserAutoReplyEmail 
 } from "../services/emailService.js";
-import { sendWhatsAppNotification } from "../services/whatsappService.js";
-
 export const createContact = async (req, res) => {
 
     try {
@@ -28,14 +26,7 @@ export const createContact = async (req, res) => {
         // Send emails and WhatsApp in the background
         Promise.all([
             sendUserAutoReplyEmail({ contact: newContact }),
-            sendAdminNotificationEmail({ contact: newContact }),
-            sendWhatsAppNotification({
-                to: process.env.ADMIN_WHATSAPP_NUMBER || "919899923266",
-                templateName: "new_contact_message",
-                languageCode: "en",
-                parameters: [newContact.name]
-            })
-        ]).catch((emailErr) => {
+            sendAdminNotificationEmail({ contact: newContact })        ]).catch((emailErr) => {
             console.error("Background notification delivery failed:", emailErr);
         });
 

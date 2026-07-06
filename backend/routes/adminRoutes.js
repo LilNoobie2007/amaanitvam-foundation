@@ -1,7 +1,8 @@
 import express from 'express';
 import multer from 'multer';
 import mongoose from 'mongoose';
-import { GridFSBucket, ObjectId } from 'mongodb';
+import {
+  GridFSBucket, ObjectId } from 'mongodb';
 import { verifyFirebaseToken, requireAdmin } from '../middleware/verifyFirebaseToken.js';
 import { requireAllowedIP } from '../middleware/ipRestriction.js';
 import User from '../models/user.js';
@@ -31,6 +32,7 @@ import {
   updateSettings,
   getAuditLogs,
   deleteCertificate,
+  updateCertificate,
 } from '../controllers/adminController.js';
 
 const router = express.Router();
@@ -77,8 +79,7 @@ const serializeGalleryItem = (item) => {
 const buildFolderSummary = async (folder) => {
   const [mediaCount, explicitCover] = await Promise.all([
     Gallery.countDocuments({ folderId: folder._id }),
-    folder.coverMediaId ? Gallery.findById(folder.coverMediaId) : null,
-  ]);
+    folder.coverMediaId ? Gallery.findById(folder.coverMediaId) : null]);
 
   const coverMedia = explicitCover || await Gallery.findOne({ folderId: folder._id }).sort({ createdAt: -1 });
   const doc = folder.toObject ? folder.toObject() : folder;
@@ -170,8 +171,7 @@ const galleryUpload = multer({
 const galleryMediaUpload = galleryUpload.fields([
   { name: 'media', maxCount: MAX_GALLERY_MEDIA_FILES },
   { name: 'images', maxCount: MAX_GALLERY_MEDIA_FILES },
-  { name: 'image', maxCount: 1 },
-]);
+  { name: 'image', maxCount: 1 }]);
 
 const getUploadedMediaFiles = (req) => [
   ...(req.files?.media || []),
@@ -274,6 +274,7 @@ router.post('/campaigns', requireAdmin, requireAllowedIP, createCampaign);
 router.put('/campaigns/:id', requireAdmin, requireAllowedIP, updateCampaign);
 router.delete('/campaigns/:id', requireAdmin, requireAllowedIP, deleteCampaign);
 router.get('/certificates', requireAdmin, requireAllowedIP, getCertificates);
+router.put('/certificates/:id', requireAdmin, requireAllowedIP, certificateUpload.single('certificate'), updateCertificate);
 router.put('/certificates/:id/revoke', requireAdmin, requireAllowedIP, revokeCertificate);
 router.get('/certificates/:id/download', requireAdmin, requireAllowedIP, downloadCertificate);
 router.post('/certificates', requireAdmin, requireAllowedIP, certificateUpload.single('certificate'), generateCertificate);

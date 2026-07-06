@@ -474,29 +474,48 @@ const API_BASE_URL =
     }
 
     async function fetchJson(path, options = {}) {
-      const bases = workingApiBase ? [workingApiBase, ...apiCandidates()] : apiCandidates();
-      let lastError;
+    const { timeoutMs = 45000, ...fetchOptions } = options || {};
+    const bases = workingApiBase ? [workingApiBase, ...apiCandidates()] : apiCandidates();
+    let lastError;
 
-      for (const base of [...new Set(bases)]) {
-        try {
-          const controller = new AbortController();
-          const timer = setTimeout(() => controller.abort(), 8000);
-          const response = await fetch(`${base}${path}`, {
-            ...options,
-            signal: controller.signal,
-          }).finally(() => clearTimeout(timer));
+    for (const base of [...new Set(bases)]) {
+      let timer;
+      const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
 
-          const data = await response.json().catch(() => ({}));
-          if (!response.ok) throw new Error(data.message || `Request failed: ${response.status}`);
-          workingApiBase = base;
-          return data;
-        } catch (error) {
+      try {
+        if (controller && timeoutMs && Number(timeoutMs) > 0) {
+          timer = setTimeout(() => {
+            try {
+              controller.abort(new Error('Request timed out.'));
+            } catch (_) {
+              controller.abort();
+            }
+          }, Number(timeoutMs));
+        }
+
+        const response = await fetch(`${base}${path}`, {
+          ...fetchOptions,
+          signal: controller ? controller.signal : fetchOptions.signal,
+        });
+
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(data.message || `Request failed: ${response.status}`);
+
+        workingApiBase = base;
+        return data;
+      } catch (error) {
+        if (error?.name === 'AbortError' || /aborted|timeout|timed out/i.test(error?.message || '')) {
+          lastError = new Error('Request timed out while confirming your payment. Please check the Donations admin panel before trying again.');
+        } else {
           lastError = error;
         }
+      } finally {
+        if (timer) clearTimeout(timer);
       }
-
-      throw lastError || new Error('Backend API is not reachable on port 5000.');
     }
+
+    throw lastError || new Error('Backend API is not reachable.');
+  }
 
     function escapeHtml(value) {
       return String(value ?? '')

@@ -77,8 +77,7 @@ export const getCandidates = async (req, res) => {
 
         const domainSet = new Set([
             ...candidates.map((candidate) => candidate?.track).filter(Boolean),
-            ...departmentDomains.filter(Boolean),
-        ]);
+            ...departmentDomains.filter(Boolean)]);
 
         res.json({
             success: true,
@@ -433,6 +432,110 @@ export const generateCertificate = async (req, res) => {
       return res.status(409).json({ success: false, message: 'Certificate ID already exists. Please try again.' });
     }
     res.status(500).json({ success: false, message: error.message || 'Failed to generate certificate.' });
+  }
+};
+
+
+// PUT /api/admin/certificates/:id
+export const updateCertificate = async (req, res) => {
+  try {
+    const allowedTypes = ['Internship', 'Volunteer', 'Appreciation', 'Achievement'];
+    const certificate = await Certificate.findById(req.params.id);
+
+    if (!certificate) {
+      return res.status(404).json({ success: false, message: 'Certificate not found.' });
+    }
+
+    const {
+      issuedTo,
+      email,
+      phone,
+      type,
+      domain,
+      duration,
+      startDate,
+      endDate,
+      issueDate,
+      isValid,
+      revokedReason,
+    } = req.body;
+
+    const updateData = {};
+
+    if (issuedTo !== undefined) {
+      if (!String(issuedTo).trim()) {
+        return res.status(400).json({ success: false, message: 'Intern name is required.' });
+      }
+      updateData.issuedTo = String(issuedTo).trim();
+    }
+
+    if (email !== undefined) {
+      if (!String(email).trim()) {
+        return res.status(400).json({ success: false, message: 'Intern email is required.' });
+      }
+      updateData.email = String(email).trim().toLowerCase();
+    }
+
+    if (phone !== undefined) updateData.phone = String(phone || '').trim();
+
+    if (type !== undefined) {
+      if (!allowedTypes.includes(type)) {
+        return res.status(400).json({ success: false, message: 'Invalid certificate type.' });
+      }
+      updateData.type = type;
+    }
+
+    if (domain !== undefined) updateData.domain = String(domain || '').trim();
+    if (duration !== undefined) updateData.duration = String(duration || '').trim();
+    if (startDate !== undefined) updateData.startDate = startDate ? new Date(startDate) : null;
+    if (endDate !== undefined) updateData.endDate = endDate ? new Date(endDate) : null;
+    if (issueDate !== undefined) updateData.issueDate = issueDate ? new Date(issueDate) : certificate.issueDate;
+
+    if (isValid !== undefined) {
+      const nextValid = !(isValid === false || isValid === 'false');
+      updateData.isValid = nextValid;
+      if (nextValid) {
+        updateData.revokedAt = null;
+        updateData.revokedReason = '';
+      } else {
+        updateData.revokedAt = certificate.revokedAt || new Date();
+        updateData.revokedReason = revokedReason || certificate.revokedReason || 'Revoked by admin update';
+      }
+    }
+
+    if (req.file) {
+      if (req.file.mimetype !== 'application/pdf') {
+        return res.status(400).json({ success: false, message: 'Only PDF certificate files are allowed.' });
+      }
+      updateData.pdfBuffer = req.file.buffer;
+      updateData.pdfContentType = req.file.mimetype;
+      updateData.pdfOriginalName = req.file.originalname;
+      updateData.pdfUploadedAt = new Date();
+    }
+
+    const updated = await Certificate.findByIdAndUpdate(req.params.id, updateData, {
+      new: true,
+      runValidators: true,
+    }).select('-pdfBuffer');
+
+    await AuditLog.create({
+      userId: req.user._id,
+      action: 'update_certificate',
+      details: `Updated certificate ${updated.certificateId} for ${updated.email}`,
+      ipAddress: req.ip,
+    });
+
+    const certificateObject = updated.toObject();
+    certificateObject.certificateUrl = `/api/certificates/${updated._id}/download`;
+
+    res.json({
+      success: true,
+      message: 'Certificate updated successfully.',
+      certificate: certificateObject,
+    });
+  } catch (error) {
+    console.error('Update certificate error:', error);
+    res.status(500).json({ success: false, message: error.message || 'Failed to update certificate.' });
   }
 };
 

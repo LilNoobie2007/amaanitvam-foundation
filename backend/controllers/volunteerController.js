@@ -4,8 +4,6 @@ import {
     sendVolunteerConfirmationEmail, sendVolunteerAdminEmail 
 } 
 from "../services/emailService.js";
-import { sendWhatsAppNotification } from "../services/whatsappService.js";
-
 export const createVolunteerApplication = async (req, res) => {
 
     try {
@@ -38,14 +36,7 @@ export const createVolunteerApplication = async (req, res) => {
         // Send emails and WhatsApp in the background
         Promise.all([
             sendVolunteerConfirmationEmail({ application: newApplication }),
-            sendVolunteerAdminEmail({ application: newApplication }),
-            sendWhatsAppNotification({
-                to: process.env.ADMIN_WHATSAPP_NUMBER || "919899923266",
-                templateName: "new_volunteer_registration",
-                languageCode: "en",
-                parameters: [newApplication.name, newApplication.role]
-            })
-        ]).catch((emailErr) => {
+            sendVolunteerAdminEmail({ application: newApplication })        ]).catch((emailErr) => {
             console.error("Background notification delivery failed:", emailErr);
         });
 
