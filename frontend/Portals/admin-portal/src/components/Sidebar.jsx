@@ -78,16 +78,26 @@ export default function Sidebar() {
   return (
     <aside className="w-64 bg-primary-dark fixed top-0 left-0 h-screen flex flex-col z-50 border-r border-gold/20">
       {/* Branding */}
-      <div className="px-6 py-6 border-b border-gold/10 bg-primary/20">
-        <div className="flex flex-col">
-          <h1 className="text-xl font-heading font-bold text-gold tracking-tight leading-tight">
-            {orgName.split(' ')[0] || 'Amaanitvam'}
-          </h1>
-          <p className="text-[10px] font-ui text-white/50 uppercase tracking-[0.2em] font-medium">
-            {orgName.split(' ').slice(1).join(' ') || 'Foundation'}
-          </p>
-        </div>
-      </div>
+     <div className="px-6 py-6 border-b border-gold/10 bg-primary/20">
+  <div className="flex items-center gap-4">
+    {/* Brand Logo */}
+    <img 
+      alt="Amaanitvam Foundation" 
+      className="brand-logo h-12 w-auto object-contain bg-white p-1 rounded-sm" 
+      src="assets/images/logo.jpg" 
+    />
+    
+    {/* Brand Typography */}
+    <div className="flex flex-col justify-center">
+      <h1 className="text-2xl font-heading font-bold text-gold tracking-tight leading-none uppercase">
+        {orgName.split(' ')[0] || 'Amaanitvam'}
+      </h1>
+      <p className="text-[11px] font-ui text-white/70 uppercase tracking-[0.25em] font-semibold mt-1 leading-none">
+        {orgName.split(' ').slice(1).join(' ') || 'Foundation'}
+      </p>
+    </div>
+  </div>
+</div>
 
       {/* Navigation */}
       <nav className="flex-1 overflow-y-auto py-6 px-4 space-y-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">

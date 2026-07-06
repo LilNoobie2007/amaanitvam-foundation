@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { Shield, User, Lock, Mail } from 'lucide-react';
+import { Shield, User, Lock, Mail, KeyRound } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import api from '../config/api';
 
@@ -70,6 +70,7 @@ export default function Login() {
     try {
       if (code2fa === '123456') { // Mock SMS verification code
         await login(tempCredentials.email, tempCredentials.password);
+        setShow2FA(false);
         navigate('/');
       } else {
         setError('Invalid verification code.');
@@ -107,15 +108,16 @@ export default function Login() {
           <div className="flex flex-row md:flex-col gap-4 md:gap-6 w-full z-10">
             <button
               type="button"
+              disabled={show2FA}
               onClick={() => { setShowReset(false); setError(''); setResetSuccess(''); }}
-              className={`text-sm md:text-base font-bold uppercase tracking-wider py-3 px-6 text-center md:text-right w-full cursor-pointer transition-all duration-300 relative ${
-                !showReset 
+              className={`text-sm md:text-base font-bold uppercase tracking-wider py-3 px-6 text-center md:text-right w-full cursor-pointer transition-all duration-300 relative disabled:opacity-40 ${
+                !showReset && !show2FA
                   ? 'text-black bg-white rounded-xl md:rounded-l-full md:rounded-r-none md:w-[75%] md:ml-auto shadow-md' 
                   : 'text-white/70 hover:text-white bg-transparent'
               }`}
             >
               Login
-              {!showReset && (
+              {!showReset && !show2FA && (
                 <>
                   <div className="hidden md:block absolute -top-5 right-0 w-5 h-5 bg-transparent rounded-br-2xl shadow-[5px_5px_0_0_#fff]" />
                   <div className="hidden md:block absolute -bottom-5 right-0 w-5 h-5 bg-transparent rounded-tr-2xl shadow-[5px_-5px_0_0_#fff]" />
@@ -125,15 +127,16 @@ export default function Login() {
 
             <button
               type="button"
+              disabled={show2FA}
               onClick={() => { setShowReset(true); setError(''); }}
-              className={`text-sm md:text-base font-bold uppercase tracking-wider py-3 px-6 text-center md:text-right w-full cursor-pointer transition-all duration-300 relative ${
-                showReset 
+              className={`text-sm md:text-base font-bold uppercase tracking-wider py-3 px-6 text-center md:text-right w-full cursor-pointer transition-all duration-300 relative disabled:opacity-40 ${
+                showReset && !show2FA
                   ? 'text-black bg-white rounded-xl md:rounded-l-full md:rounded-r-none md:w-[75%] md:ml-auto shadow-md' 
                   : 'text-white/70 hover:text-white bg-transparent'
               }`}
             >
               Reset
-              {showReset && (
+              {showReset && !show2FA && (
                 <>
                   <div className="hidden md:block absolute -top-5 right-0 w-5 h-5 bg-transparent rounded-br-2xl shadow-[5px_5px_0_0_#fff]" />
                   <div className="hidden md:block absolute -bottom-5 right-0 w-5 h-5 bg-transparent rounded-tr-2xl shadow-[5px_-5px_0_0_#fff]" />
@@ -146,12 +149,26 @@ export default function Login() {
         {/* Right Form Component Body */}
         <div className="flex-1 flex flex-col justify-between p-8 md:p-10">
           <div className="w-full flex flex-col items-center">
-            <div className="w-16 h-16 bg-linear-to-b from-white to-slate-50 rounded-full flex items-center justify-center mb-3 shadow-lg border border-[#6b1d44]/10">
-              <Shield className="w-7 h-7 text-[#8a164b]" />
-            </div>
             
-            <h2 className="text-[#6b1d44] text-xl font-extrabold tracking-widest uppercase mb-6">
-              {!showReset ? 'Login' : 'Reset Password'}
+            {/* Embedded Dynamic Foundation Branding Block */}
+            <div className="flex items-center gap-3 mb-6  bg-[#6b1d44] not-last:px-4 py-2.5 rounded-xl border border-[#6b1d44]/10 w-full max-w-[320px]">
+              <img 
+                alt="Amaanitvam Foundation" 
+                className="brand-logo h-10 w-auto object-contain bg-white p-1 rounded-md shadow-xs" 
+                src="assets/images/logo.jpg" 
+              />
+              <div className="flex flex-col justify-center">
+                <h1 className="text-base font-heading font-black text-white tracking-tight leading-none uppercase">
+                  {orgName.split(' ')[0] || 'Amaanitvam'}
+                </h1>
+                <p className="text-[9px] font-ui text-yellow-500 uppercase tracking-[0.2em] font-bold mt-1 leading-none">
+                  {orgName.split(' ').slice(1).join(' ') || 'Foundation'}
+                </p>
+              </div>
+            </div>
+
+            <h2 className="text-amber-950 text-bold text-l font-extrabold tracking-widest uppercase mb-4 opacity-60">
+              {show2FA ? 'Security Check' : !showReset ? 'Account Login' : 'Reset Password'}
             </h2>
 
             {error && (
@@ -165,7 +182,49 @@ export default function Login() {
               </div>
             )}
 
-            {!showReset ? (
+            {show2FA ? (
+              /* Two-Factor Authentication View (Fixes all warnings) */
+              <form onSubmit={handleVerify2FA} className="w-full max-w-[320px] flex flex-col items-center">
+                <div className="w-12 h-12 bg-amber-50 text-amber-600 rounded-full flex items-center justify-center mb-3 border border-amber-100">
+                  <Shield className="w-6 h-6" />
+                </div>
+                <p className="text-xs text-slate-500 text-center mb-4 leading-relaxed">
+                  Two-Factor Authentication is enabled. Please enter your verification code to proceed.
+                </p>
+                <div className="w-full relative mb-6">
+                  <KeyRound className="absolute left-1 bottom-2 text-slate-400 w-5 h-5" />
+                  <input
+                    id="code2fa"
+                    type="text"
+                    maxLength={6}
+                    value={code2fa}
+                    onChange={(e) => setCode2fa(e.target.value)}
+                    placeholder="Enter 6-digit code"
+                    required
+                    className="w-full border-b border-slate-200 py-2 pl-8 pr-2 text-sm text-center tracking-[0.3em] font-bold text-slate-800 outline-none focus:border-[#a94276] transition-colors bg-transparent"
+                  />
+                </div>
+
+                <div className="w-full flex justify-between items-center mt-2">
+                  <button
+                    type="button"
+                    onClick={() => { setShow2FA(false); setCode2fa(''); setError(''); }}
+                    className="text-xs text-slate-400 hover:text-[#690b31] bg-transparent transition-colors cursor-pointer"
+                  >
+                    Cancel
+                  </button>
+                  
+                  <button
+                    type="submit"
+                    disabled={isLoading}
+                    className="bg-linear-to-r from-[#8a164b] to-[#690b31] text-white text-xs font-bold uppercase tracking-wider py-2.5 px-6 rounded-full shadow-md hover:opacity-95 transition-all disabled:opacity-50 cursor-pointer"
+                  >
+                    {isLoading ? 'Verifying…' : 'Verify Code'}
+                  </button>
+                </div>
+              </form>
+            ) : !showReset ? (
+              /* Standard Login View */
               <form onSubmit={handleLogin} className="w-full max-w-[320px] flex flex-col items-center">
                 <div className="w-full relative mb-5">
                   <User className="absolute left-1 bottom-2 text-slate-400 w-5 h-5" />
@@ -212,6 +271,7 @@ export default function Login() {
                 </div>
               </form>
             ) : (
+              /* Password Reset View */
               <form onSubmit={handleResetPassword} className="w-full max-w-[320px] flex flex-col items-center">
                 <div className="w-full relative mb-6">
                   <Mail className="absolute left-1 bottom-2 text-slate-400 w-5 h-5" />
@@ -245,9 +305,6 @@ export default function Login() {
               </form>
             )}
           </div>
-
-          
-
         </div>
       </div>
     </div>
