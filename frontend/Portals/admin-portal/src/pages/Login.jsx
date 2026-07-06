@@ -101,11 +101,30 @@ export default function Login() {
       <div className="w-full max-w-195 h-auto md:h-120 bg-white rounded-2xl shadow-2xl flex flex-col md:flex-row overflow-hidden relative">
         
         {/* Left Sidebar Accent Controls */}
-        <div className="w-full md:w-[35%] bg-linear-to-br from-[#8a164b] to-[#690b31] relative flex flex-row md:flex-col justify-center items-center md:items-end overflow-hidden py-6 md:py-0">
+        <div className="w-full md:w-[38%] bg-linear-to-br from-[#8a164b] to-[#690b31] relative flex flex-col justify-between overflow-hidden py-6 md:py-0">
           <div className="absolute inset-0 bg-white/10 rotate-45 -top-1/2 -left-1/2 w-[200%] h-[200%] pointer-events-none"></div>
           <div className="absolute inset-0 bg-black/5 rotate-30 -top-1/2 left-[-80%] w-[200%] h-[200%] pointer-events-none"></div>
           
-          <div className="flex flex-row md:flex-col gap-4 md:gap-6 w-full z-10">
+          {/* Brand Header Container (Text placed on the right side of image) */}
+          <div className="px-6 py-6 border-b border-white/10 bg-black/10 z-10 w-full">
+            <div className="flex flex-row items-center gap-4">
+              <img 
+                alt="Amaanitvam Foundation" 
+                className="brand-logo h-12 w-12 object-contain bg-white p-1 rounded-xl shadow-md shrink-0" 
+                src="assets/images/logo.jpg" 
+              />
+              <div className="flex flex-col justify-center">
+                <h1 className="text-xl font-heading font-black text-white tracking-tight leading-none uppercase">
+                  {orgName.split(' ')[0] || 'Amaanitvam'}
+                </h1>
+                <p className="text-[10px] font-ui text-yellow-500 uppercase tracking-[0.2em] font-bold mt-1.5 leading-none">
+                  {orgName.split(' ').slice(1).join(' ') || 'Foundation'}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex flex-row md:flex-col gap-4 md:gap-6 w-full z-10 my-auto">
             <button
               type="button"
               disabled={show2FA}
@@ -144,32 +163,21 @@ export default function Login() {
               )}
             </button>
           </div>
+          
+          {/* Bottom balancing block */}
+          <div className="hidden md:block h-12" />
         </div>
 
         {/* Right Form Component Body */}
-        <div className="flex-1 flex flex-col justify-between p-8 md:p-10">
+        <div className="flex-1 flex flex-col justify-center p-8 md:p-10">
           <div className="w-full flex flex-col items-center">
             
-            {/* Embedded Dynamic Foundation Branding Block */}
-            <div className="flex items-center gap-3 mb-6  bg-[#6b1d44] not-last:px-4 py-2.5 rounded-xl border border-[#6b1d44]/10 w-full max-w-[320px]">
-              <img 
-                alt="Amaanitvam Foundation" 
-                className="brand-logo h-10 w-auto object-contain bg-white p-1 rounded-md shadow-xs" 
-                src="assets/images/logo.jpg" 
-              />
-              <div className="flex flex-col justify-center">
-                <h1 className="text-base font-heading font-black text-white tracking-tight leading-none uppercase">
-                  {orgName.split(' ')[0] || 'Amaanitvam'}
-                </h1>
-                <p className="text-[9px] font-ui text-yellow-500 uppercase tracking-[0.2em] font-bold mt-1 leading-none">
-                  {orgName.split(' ').slice(1).join(' ') || 'Foundation'}
-                </p>
-              </div>
+            {/* Highly Bolded Account Login Header */}
+            <div className="text-center mb-8">
+              <h2 className="text-[#690b31] text-2xl font-black tracking-widest uppercase">
+                {show2FA ? 'Security Check' : !showReset ? 'Account Login' : 'Reset Password'}
+              </h2>
             </div>
-
-            <h2 className="text-amber-950 text-bold text-l font-extrabold tracking-widest uppercase mb-4 opacity-60">
-              {show2FA ? 'Security Check' : !showReset ? 'Account Login' : 'Reset Password'}
-            </h2>
 
             {error && (
               <div className="w-full max-w-[320px] bg-red-50 text-red-600 text-xs p-2.5 rounded-lg border border-red-100 mb-4 text-center">
@@ -183,7 +191,7 @@ export default function Login() {
             )}
 
             {show2FA ? (
-              /* Two-Factor Authentication View (Fixes all warnings) */
+              /* Two-Factor Authentication View */
               <form onSubmit={handleVerify2FA} className="w-full max-w-[320px] flex flex-col items-center">
                 <div className="w-12 h-12 bg-amber-50 text-amber-600 rounded-full flex items-center justify-center mb-3 border border-amber-100">
                   <Shield className="w-6 h-6" />
