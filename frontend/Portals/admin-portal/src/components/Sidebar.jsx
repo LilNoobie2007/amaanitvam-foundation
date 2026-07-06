@@ -103,6 +103,9 @@ export default function Sidebar() {
       <nav className="flex-1 overflow-y-auto py-6 px-4 space-y-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         {(userProfile?.role === 'admin' || userProfile?.role === 'super_admin') && (
           <>
+          <p className="text-[10px] text-white/50 uppercase tracking-[0.22em] font-ui">
+              Admin Panel
+            </p>
             <p className="inline-block px-4 pt-6 mb-[0.85rem] text-[0.82rem] font-ui font-bold text-[var(--gold-dark,#B8860B)] uppercase tracking-[0.18em]">
               Management
             </p>

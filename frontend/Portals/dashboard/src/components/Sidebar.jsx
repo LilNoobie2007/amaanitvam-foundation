@@ -72,9 +72,6 @@ export default function Sidebar() {
       <p className="text-[11px] font-ui text-white/70 uppercase tracking-[0.25em] font-semibold mt-1 leading-none">
         {orgName.split(' ').slice(1).join(' ') || 'Foundation'}
       </p>
-      <p className="text-[10px] text-white/50 uppercase tracking-[0.22em] font-ui">
-              Dashboard Panel
-            </p>
     </div>
   </div>
 </div>
@@ -97,6 +94,9 @@ export default function Sidebar() {
 
       {/* Navigation */}
       <nav className="flex-1 overflow-y-auto py-5 px-4 space-y-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+       <p className="text-[10px] text-white/50 uppercase tracking-[0.22em] font-ui">
+              Dashboard Panel
+            </p>
         <p className="px-4 pt-2 pb-1 text-xs font-ui font-bold text-gold/70 uppercase tracking-[0.18em]">
           Overview
         </p>
