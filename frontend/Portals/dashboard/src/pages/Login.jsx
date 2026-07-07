@@ -4,6 +4,8 @@ import { LayoutDashboard, ShieldCheck, ArrowLeft } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import axios from 'axios';
 
+import MemberReportsPage from './MemberReportsPage';
+
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -98,6 +100,7 @@ export default function Login() {
       setError(err.message || 'Failed to send reset email.');
     }
   };
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-4 relative overflow-hidden">

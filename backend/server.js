@@ -11,7 +11,7 @@ import { fileURLToPath } from "url";
 import connectDB from "./config/db.js";
 
 import contactRoutes from "./routes/contactRoutes.js";
-import internshipRoutes from "./routes/internshipRoutes.js";
+import reportRoutes from "./routes/reportRoutes.js";
 import volunteerRoutes from "./routes/volunteerRoutes.js";
 import webhookRoutes from "./routes/webhookRoutes.js";
 import donationRoutes from "./routes/donationRoutes.js";
@@ -85,7 +85,7 @@ app.use(express.urlencoded({ extended: true, limit: "100mb" }));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use("/api/contact", contactRoutes);
-app.use("/api/internship", internshipRoutes);
+app.use("/api/reports", reportRoutes);
 app.use("/api/volunteer", volunteerRoutes);
 app.use("/api/donate", donationRoutes);
 
@@ -103,7 +103,6 @@ app.get("/api", (req, res) => {
 
 // 🏁 CAMPAIGNS GATEWAY FALLBACK OVERRIDE PROXY LAYER
 app.use("/api", donationRoutes); 
-
 app.use("/api", galleryMongoMediaFixRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/certificates", certificateRoutes);
@@ -119,6 +118,7 @@ app.use("/api/search", searchRoutes);
 app.use("/api/public", publicRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/notifications", notificationRoutes);
+
 
 app.use((req, res) => {
     res.status(404).json({
