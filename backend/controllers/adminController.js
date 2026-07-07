@@ -44,41 +44,48 @@ export const getDashboardStats = async (req, res) => {
     }
 };
 
-// ✅ CHANGED: non-admins only see candidates from their own department/domain
+// GET /api/admin/candidates
 export const getCandidates = async (req, res) => {
     try {
         const { search, domain, status, page = 1, limit = 20 } = req.query;
-        const query = {};
+        const internQuery = {};
+        const volunteerQuery = {};
 
         if (search) {
-            query.$or = [
+            const searchOr = [
                 { name: { $regex: search, $options: 'i' } },
                 { email: { $regex: search, $options: 'i' } }
             ];
+            internQuery.$or = searchOr;
+            volunteerQuery.$or = searchOr;
         }
-        if (domain) query.track = domain;
-        if (status) query.status = status;
-
-        // 🔒 Scope by department for non-admins
-        if (!['super_admin', 'admin'].includes(req.user.role)) {
-            if (req.user.department) {
-                query.track = req.user.department;
-            } else {
-                return res.json({ success: true, candidates: [], total: 0, totalPages: 0, domains: [] });
-            }
+        if (domain) {
+            internQuery.track = domain;
+            volunteerQuery.role = domain;
+        }
+        if (status) {
+            internQuery.status = status;
+            volunteerQuery.status = status;
         }
 
-        const skip = (Number(page) - 1) * Number(limit);
-        const [candidates, total, departmentDomains] = await Promise.all([
-            InternshipApplication.find(query).sort({ createdAt: -1 }).skip(skip).limit(Number(limit)),
-            InternshipApplication.countDocuments(query),
+        const [interns, volunteers, departmentDomains] = await Promise.all([
+            InternshipApplication.find(internQuery).sort({ createdAt: -1 }),
+            VolunteerApplication.find(volunteerQuery).sort({ createdAt: -1 }),
             Department.distinct('departmentName')
         ]);
 
+        const merged = [
+            ...interns.map((doc) => ({ ...doc.toObject(), applicationType: 'internship' })),
+            ...volunteers.map((doc) => ({ ...doc.toObject(), applicationType: 'volunteer', track: doc.role }))
+        ].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+        const total = merged.length;
+        const skip = (Number(page) - 1) * Number(limit);
+        const candidates = merged.slice(skip, skip + Number(limit));
+
         const domainSet = new Set([
-            ...candidates.map((candidate) => candidate?.track).filter(Boolean),
-            ...departmentDomains.filter(Boolean),
-        ]);
+            ...merged.map((candidate) => candidate?.track).filter(Boolean),
+            ...departmentDomains.filter(Boolean)]);
 
         res.json({
             success: true,
@@ -103,7 +110,10 @@ export const updateCandidateStatus = async (req, res) => {
         }
 
         if (status === 'rejected') {
-            const candidate = await InternshipApplication.findByIdAndDelete(req.params.id);
+            let candidate = await InternshipApplication.findByIdAndDelete(req.params.id);
+            if (!candidate) {
+                candidate = await VolunteerApplication.findByIdAndDelete(req.params.id);
+            }
             if (!candidate) {
                 return res.status(404).json({ success: false, message: 'Candidate not found.' });
             }
@@ -117,21 +127,29 @@ export const updateCandidateStatus = async (req, res) => {
         }
 
         if (status === 'shortlisted') {
-            const candidate = await InternshipApplication.findByIdAndDelete(req.params.id);
+            let candidate = await InternshipApplication.findByIdAndDelete(req.params.id);
+            let memberRole = 'intern';
+            let memberDepartment = candidate?.track;
+            if (!candidate) {
+                candidate = await VolunteerApplication.findByIdAndDelete(req.params.id);
+                memberRole = 'volunteer';
+                memberDepartment = candidate?.role;
+            }
             if (!candidate) {
                 return res.status(404).json({ success: false, message: 'Candidate not found.' });
             }
             const existingUser = await User.findOne({ email: candidate.email });
             if (!existingUser) {
-                const newIntern = new User({
+                const newMember = new User({
                     name: candidate.name,
                     email: candidate.email,
                     phone: candidate.phone,
-                    role: 'intern',
-                    department: candidate.track,
-                    status: 'active'
+                    role: memberRole,
+                    department: memberDepartment,
+                    status: 'active',
+                    memberId: `AFM-${Date.now()}`
                 });
-                await newIntern.save();
+                await newMember.save();
             }
             await AuditLog.create({
                 userId: req.user._id,
@@ -139,14 +157,21 @@ export const updateCandidateStatus = async (req, res) => {
                 details: `Shortlisted candidate ${candidate.email}`,
                 ipAddress: req.ip
             });
-            return res.json({ success: true, message: 'Candidate shortlisted and moved to interns.' });
+            return res.json({ success: true, message: `Candidate shortlisted and moved to ${memberRole}s.` });
         }
 
-        const candidate = await InternshipApplication.findByIdAndUpdate(
+        let candidate = await InternshipApplication.findByIdAndUpdate(
             req.params.id,
             { status },
             { returnDocument: 'after' }
         );
+        if (!candidate) {
+            candidate = await VolunteerApplication.findByIdAndUpdate(
+                req.params.id,
+                { status },
+                { returnDocument: 'after' }
+            );
+        }
         if (!candidate) {
             return res.status(404).json({ success: false, message: 'Candidate not found.' });
         }
@@ -157,21 +182,10 @@ export const updateCandidateStatus = async (req, res) => {
     }
 };
 
-// ✅ CHANGED: non-admins only see members in their own department
+// GET /api/admin/members
 export const getMembers = async (req, res) => {
     try {
-        let query = {};
-
-        // 🔒 Scope by department for non-admins
-        if (!['super_admin', 'admin'].includes(req.user.role)) {
-            if (req.user.department) {
-                query.department = req.user.department;
-            } else {
-                return res.json({ success: true, members: [] });
-            }
-        }
-
-        const members = await User.find(query).sort({ createdAt: -1 });
+        const members = await User.find().sort({ createdAt: -1 });
         res.json({ success: true, members });
     } catch (error) {
         console.error('Members error:', error);
@@ -189,7 +203,7 @@ export const addMember = async (req, res) => {
             return res.status(400).json({ success: false, message: 'User with this email already exists.' });
         }
 
-        const member = new User({ name, email, phone, role: role || 'member', department });
+        const member = new User({ name, email, phone, role: role || 'member', department, memberId: `AFM-${Date.now()}` });
         await member.save();
 
         await AuditLog.create({
@@ -435,6 +449,110 @@ export const generateCertificate = async (req, res) => {
   }
 };
 
+
+// PUT /api/admin/certificates/:id
+export const updateCertificate = async (req, res) => {
+  try {
+    const allowedTypes = ['Internship', 'Volunteer', 'Appreciation', 'Achievement'];
+    const certificate = await Certificate.findById(req.params.id);
+
+    if (!certificate) {
+      return res.status(404).json({ success: false, message: 'Certificate not found.' });
+    }
+
+    const {
+      issuedTo,
+      email,
+      phone,
+      type,
+      domain,
+      duration,
+      startDate,
+      endDate,
+      issueDate,
+      isValid,
+      revokedReason,
+    } = req.body;
+
+    const updateData = {};
+
+    if (issuedTo !== undefined) {
+      if (!String(issuedTo).trim()) {
+        return res.status(400).json({ success: false, message: 'Intern name is required.' });
+      }
+      updateData.issuedTo = String(issuedTo).trim();
+    }
+
+    if (email !== undefined) {
+      if (!String(email).trim()) {
+        return res.status(400).json({ success: false, message: 'Intern email is required.' });
+      }
+      updateData.email = String(email).trim().toLowerCase();
+    }
+
+    if (phone !== undefined) updateData.phone = String(phone || '').trim();
+
+    if (type !== undefined) {
+      if (!allowedTypes.includes(type)) {
+        return res.status(400).json({ success: false, message: 'Invalid certificate type.' });
+      }
+      updateData.type = type;
+    }
+
+    if (domain !== undefined) updateData.domain = String(domain || '').trim();
+    if (duration !== undefined) updateData.duration = String(duration || '').trim();
+    if (startDate !== undefined) updateData.startDate = startDate ? new Date(startDate) : null;
+    if (endDate !== undefined) updateData.endDate = endDate ? new Date(endDate) : null;
+    if (issueDate !== undefined) updateData.issueDate = issueDate ? new Date(issueDate) : certificate.issueDate;
+
+    if (isValid !== undefined) {
+      const nextValid = !(isValid === false || isValid === 'false');
+      updateData.isValid = nextValid;
+      if (nextValid) {
+        updateData.revokedAt = null;
+        updateData.revokedReason = '';
+      } else {
+        updateData.revokedAt = certificate.revokedAt || new Date();
+        updateData.revokedReason = revokedReason || certificate.revokedReason || 'Revoked by admin update';
+      }
+    }
+
+    if (req.file) {
+      if (req.file.mimetype !== 'application/pdf') {
+        return res.status(400).json({ success: false, message: 'Only PDF certificate files are allowed.' });
+      }
+      updateData.pdfBuffer = req.file.buffer;
+      updateData.pdfContentType = req.file.mimetype;
+      updateData.pdfOriginalName = req.file.originalname;
+      updateData.pdfUploadedAt = new Date();
+    }
+
+    const updated = await Certificate.findByIdAndUpdate(req.params.id, updateData, {
+      new: true,
+      runValidators: true,
+    }).select('-pdfBuffer');
+
+    await AuditLog.create({
+      userId: req.user._id,
+      action: 'update_certificate',
+      details: `Updated certificate ${updated.certificateId} for ${updated.email}`,
+      ipAddress: req.ip,
+    });
+
+    const certificateObject = updated.toObject();
+    certificateObject.certificateUrl = `/api/certificates/${updated._id}/download`;
+
+    res.json({
+      success: true,
+      message: 'Certificate updated successfully.',
+      certificate: certificateObject,
+    });
+  } catch (error) {
+    console.error('Update certificate error:', error);
+    res.status(500).json({ success: false, message: error.message || 'Failed to update certificate.' });
+  }
+};
+
 // PUT /api/admin/certificates/:id/revoke
 export const revokeCertificate = async (req, res) => {
     try {
@@ -616,8 +734,14 @@ export const getReports = async (req, res) => {
 // PUT /api/admin/me
 export const updateMe = async (req, res) => {
   try {
-    const { name, phone, department, profileImage } = req.body;
-
+    const {
+      name,
+      phone,
+      department,
+      designation,
+      domain,
+      profileImage
+    } = req.body;
     if (!name?.trim()) {
       return res.status(400).json({ success: false, message: 'Name is required' });
     }
@@ -625,7 +749,9 @@ export const updateMe = async (req, res) => {
     const updateData = {
       name: name.trim(),
       phone: phone?.trim() || '',
-      department: department?.trim() || ''
+      department: department?.trim() || '',
+      designation: designation?.trim() || '',
+      domain: domain?.trim() || ''
     };
 
     if (typeof profileImage === 'string' && profileImage.startsWith('data:image/')) {
@@ -638,5 +764,21 @@ export const updateMe = async (req, res) => {
     res.json({ success: true, user: member });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+
+export const deleteCertificate = async (req, res) => {
+  try {
+    const certificate = await Certificate.findByIdAndDelete(req.params.id);
+
+    if (!certificate) {
+      return res.status(404).json({ message: "Certificate not found" });
+    }
+
+    res.json({ message: "Certificate deleted successfully" });
+  } catch (error) {
+    console.error("Delete certificate error:", error);
+    res.status(500).json({ message: "Failed to delete certificate" });
   }
 };

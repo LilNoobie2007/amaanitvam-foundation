@@ -83,7 +83,8 @@ function firstValue(...values) {
 }
 
 function publicUrl(fileId) {
-  return `/api/gallery/media/${encodeURIComponent(cleanId(fileId))}`;
+  const base = process.env.BACKEND_URL || 'https://amaanitvam-foundation.onrender.com';
+  return `${base}/api/gallery/media/${encodeURIComponent(cleanId(fileId))}`;
 }
 
 function getFileId(doc) {

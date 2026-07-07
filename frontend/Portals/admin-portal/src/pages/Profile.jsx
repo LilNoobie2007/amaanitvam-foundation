@@ -6,7 +6,9 @@ import toast from 'react-hot-toast';
 
 export default function Profile() {
   const { userProfile, setUserProfile } = useAuth();
-  const [formData, setFormData] = useState({ name: '', phone: '', department: '' });
+  const [formData, setFormData] = useState({ name: '', phone: '', department: '', designation: '',
+  department: '',
+  domain: '', });
   const [profileImage, setProfileImage] = useState(null);
   const [previewUrl, setPreviewUrl] = useState('');
   const [saving, setSaving] = useState(false);
@@ -17,7 +19,9 @@ export default function Profile() {
       setFormData({
         name: userProfile.name || '',
         phone: userProfile.phone || '',
-        department: userProfile.department || ''
+        designation: userProfile?.designation || '',
+        department: userProfile.department || '',
+        domain: userProfile?.domain || '',
       });
       setPreviewUrl(userProfile.profileImage || '');
     }
@@ -100,7 +104,7 @@ export default function Profile() {
 
       <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
         {/* Profile Header */}
-        <div className="bg-gradient-to-r from-[#56051a] to-[#7a1e3a] px-6 py-8 flex items-center gap-6">
+        <div className="bg-linear-to-r from-[#56051a] to-[#7a1e3a] px-6 py-8 flex items-center gap-6">
           <div className="relative">
             <div className="w-24 h-24 rounded-full bg-white/20 flex items-center justify-center overflow-hidden border-4 border-white/30">
               {previewUrl ? (

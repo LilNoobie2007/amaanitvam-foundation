@@ -35,17 +35,6 @@ router.post('/verify-email', verifyEmailLimiter, async (req, res) => {
       });
     }
 
-    // 🛠️ DEVELOPMENT OVERRIDE FALLBACK: Bypass database check for local admin testing
-    if (email === 'tech.amaanitvam@gmail.com') {
-      console.log(`[Dev Environment] Overriding auth check for tech.amaanitvam@gmail.com on portal: ${portal}`);
-      return res.json({ 
-        success: true, 
-        message: 'Email is allowed (Development Bypass).',
-        user: { email, role: 'super_admin', status: 'active' }
-      });
-    }
-
-    // Standard production database lookups
     const user = await User.findOne({
       email,
       status: 'active',

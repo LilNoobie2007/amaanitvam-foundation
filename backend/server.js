@@ -1,25 +1,27 @@
 import dns from "dns";
 dns.setServers(["8.8.8.8", "8.8.4.4"]);
 dns.setDefaultResultOrder("ipv4first");
+
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import path from "path";
 import { fileURLToPath } from "url";
-
+import profileRoutes from "./routes/profileRoutes.js";
 import connectDB from "./config/db.js";
-
 import contactRoutes from "./routes/contactRoutes.js";
 import reportRoutes from "./routes/reportRoutes.js";
 import volunteerRoutes from "./routes/volunteerRoutes.js";
 import webhookRoutes from "./routes/webhookRoutes.js";
 import donationRoutes from "./routes/donationRoutes.js";
+import campaignRoutes from "./routes/campaignRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
 import certificateRoutes from "./routes/certificateRoutes.js";
 import galleryRoutes from "./routes/galleryRoutes.js";
 import meetingRoutes from "./routes/meetingRoutes.js";
-import taskRoutes from "./routes/TasksRoutes.js"; // Plural file mapping
+import taskRoutes from "./routes/TasksRoutes.js";
 import announcementRoutes from "./routes/announcementRoutes.js";
 import projectRoutes from "./routes/projectRoutes.js";
 import departmentRoutes from "./routes/departmentRoutes.js";
@@ -29,17 +31,7 @@ import publicRoutes from "./routes/publicRoutes.js";
 import cmsRoutes from "./routes/cmsRoutes.js";
 import activityRoutes from "./routes/activityRoutes.js";
 import searchRoutes from "./routes/searchRoutes.js";
-
-// 🛡️ MOUNTED AUTHENTICATION IMPORT (Fixes Uncaught Exception: ReferenceError)
-import authRoutes from "./routes/authRoutes.js"; 
 import galleryMongoMediaFixRoutes from "./routes/galleryMongoMediaFixRoutes.js";
-
-process.on("unhandledRejection", (reason) => {
-    console.error("Unhandled Promise Rejection:", reason);
-});
-process.on("uncaughtException", (err) => {
-    console.error("Uncaught Exception:", err);
-});
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -48,69 +40,35 @@ const app = express();
 
 app.disable("x-powered-by");
 app.set("trust proxy", 1);
+app.use(helmet({ crossOriginResourcePolicy: false }));
 
 const allowedOrigins = [
-    "http://127.0.0.1:5500",
-    "http://localhost:5500",
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-    "http://localhost:5174",
-    "http://127.0.0.1:5174",
-    "https://amaanitvam.org",
-    "https://www.amaanitvam.org",
-    "https://admin.amaanitvam.org",
-    process.env.FRONTEND_URL,
-    process.env.ADMIN_URL,
+  "http://localhost:5173",
+  "https://amaanitvam.org",
+  process.env.FRONTEND_URL,
+  process.env.ADMIN_URL,
 ].filter(Boolean);
 
-app.use(helmet({ crossOriginResourcePolicy: false }));
-app.use(
-    cors({
-        origin(origin, callback) {
-            if (!origin || allowedOrigins.includes(origin)) {
-                return callback(null, true);
-            }
-            return callback(new Error(`CORS blocked: ${origin}`));
-        },
-        credentials: true,
-    })
-);
-
-// Webhook payload integrity block
-app.use("/api/webhook", express.raw({ type: "application/json" }), webhookRoutes);
-
+app.use(cors({ origin: allowedOrigins, credentials: true }));
 app.use(express.json({ limit: "100mb" }));
-app.use(express.urlencoded({ extended: true, limit: "100mb" }));
-
+app.use("/api/profile", profileRoutes);
+app.use("/api/webhook", express.raw({ type: "application/json" }), webhookRoutes);
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-app.use("/api/contact", contactRoutes);
+// Standard Routing
+app.use("/api/auth", authRoutes);
 app.use("/api/reports", reportRoutes);
+app.use("/api/contact", contactRoutes);
 app.use("/api/volunteer", volunteerRoutes);
 app.use("/api/donate", donationRoutes);
-
-// 🛡️ AUTHENTICATION INTERFACE ROUTER
-app.use("/api/auth", authRoutes);
-
-// 🟢 BASE API GATEWAY HEALTH CHECK
-app.get("/api", (req, res) => {
-    res.status(200).json({
-        success: true,
-        message: "Amaanitvam Foundation Core API Gateway is fully operational and online.",
-        timestamp: new Date()
-    });
-}); 
-
-// 🏁 CAMPAIGNS GATEWAY FALLBACK OVERRIDE PROXY LAYER
-app.use("/api", donationRoutes); 
-app.use("/api", galleryMongoMediaFixRoutes);
+app.use("/api/campaigns", campaignRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/certificates", certificateRoutes);
 app.use("/api/gallery", galleryRoutes);
 app.use("/api/meetings", meetingRoutes);
 app.use("/api/tasks", taskRoutes);
 app.use("/api/announcements", announcementRoutes);
-app.use('/api/departments', departmentRoutes);
+app.use("/api/departments", departmentRoutes);
 app.use("/api/attendance", attendanceRoutes);
 app.use("/api/cms", cmsRoutes);
 app.use("/api/activities", activityRoutes);
@@ -119,34 +77,14 @@ app.use("/api/public", publicRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/notifications", notificationRoutes);
 
-
-app.use((req, res) => {
-    res.status(404).json({
-        success: false,
-        message: `Route not found: ${req.method} ${req.originalUrl}`,
-    });
-});
-
-app.use((err, req, res, next) => {
-    console.error("Server Error:", err.message);
-    res.status(err.status || 500).json({
-        success: false,
-        message: err.message || "Internal Server Error",
-    });
-});
-
-const PORT = process.env.PORT || 5000;
+app.use((req, res) => res.status(404).json({ success: false, message: "Route not found" }));
 
 const startServer = async () => {
-    try {
-        await connectDB();
-        app.listen(PORT, () => {
-            console.log(`Server running on port ${PORT}`);
-        });
-    } catch (error) {
-        console.error("Failed to start server:", error.message);
-        process.exit(1);
-    }
+  try {
+    await connectDB();
+    app.listen(process.env.PORT || 5000, () => console.log("Server running"));
+  } catch (err) {
+    process.exit(1);
+  }
 };
-
 startServer();

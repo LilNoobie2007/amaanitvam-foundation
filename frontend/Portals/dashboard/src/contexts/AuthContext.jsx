@@ -15,7 +15,7 @@ export function AuthProvider({ children }) {
       if (firebaseUser) {
         setUser(firebaseUser);
         try {
-          const res = await api.get('/admin/me');
+          const res = await api.get('/profile/me');
           setUserProfile(res.data.user);
         } catch {
       setUserProfile(null);
@@ -33,7 +33,7 @@ export function AuthProvider({ children }) {
 
   //  ADD THIS: re-fetches the latest user profile from DB and updates state
   const checkAuth = async () => {
-    const res = await api.get('/admin/me');
+    const res = await api.get('/profile/me');
     setUserProfile(res.data.user);
   };
 

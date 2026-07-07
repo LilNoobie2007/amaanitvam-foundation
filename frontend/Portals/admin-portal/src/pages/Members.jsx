@@ -6,7 +6,8 @@ import { firebaseConfig } from '../config/firebase';
 import api from '../config/api';
 import toast from 'react-hot-toast';
 
-const INITIAL_FORM = { name: '', email: '', phone: '', role: 'member', department: '' };
+const INITIAL_FORM = { name: '', email: '', phone: '', role: 'member', department: '', designation: '',
+  domain: '' };
 
 export default function Members() {
   const [members, setMembers] = useState([]);
@@ -20,15 +21,30 @@ const [editMember, setEditMember] = useState({
   email: '',
   phone: '',
   role: '',
-  department: ''
+  department: '',
+  designation: '',
+  domain: ''
 });
   const [newMember, setNewMember] = useState(INITIAL_FORM);
+  const [departments, setDepartments] = useState([]);
   const [submitting, setSubmitting] = useState(false);
   const [actionLoading, setActionLoading] = useState(null);
 
   useEffect(() => {
     fetchMembers();
+    fetchDepartments();
   }, []);
+
+  const fetchDepartments = async () => {
+    try {
+      const res = await api.get('/public/departments');
+      if (res.data && res.data.departments) {
+        setDepartments(res.data.departments);
+      }
+    } catch (err) {
+      console.error('Failed to load departments', err);
+    }
+  };
 
   const fetchMembers = async () => {
     setLoading(true);
@@ -190,6 +206,8 @@ const handleEditMember = async (e) => {
       name: editMember.name,
       phone: editMember.phone,
       department: editMember.department,
+      designation: editMember.designation,
+      domain: editMember.domain,
     });
 
     const roleRes = await api.put(`/admin/members/${editMember.id}/role`, {
@@ -420,13 +438,16 @@ const getRoleBadge = (role) => {
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Department</label>
-                <input
-                  type="text"
+                <select
                   value={newMember.department}
                   onChange={(e) => setNewMember({ ...newMember, department: e.target.value })}
                   className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#56051a]/20 focus:border-[#56051a]/30"
-                  placeholder="Enter department"
-                />
+                >
+                  <option value="">Select a department</option>
+                  {departments.map((dept) => (
+                    <option key={dept} value={dept}>{dept}</option>
+                  ))}
+                </select>
               </div>
               <div className="flex gap-3 pt-2">
                 <button
@@ -546,8 +567,7 @@ const getRoleBadge = (role) => {
             Department
           </label>
 
-          <input
-            type="text"
+          <select
             value={editMember.department}
             onChange={(e) =>
               setEditMember({
@@ -556,7 +576,12 @@ const getRoleBadge = (role) => {
               })
             }
             className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#56051a]/20 focus:border-[#56051a]/30"
-          />
+          >
+            <option value="">Select a department</option>
+            {departments.map((dept) => (
+              <option key={dept} value={dept}>{dept}</option>
+            ))}
+          </select>
         </div>
 
         <div className="flex gap-3 pt-2">

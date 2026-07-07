@@ -1,6 +1,11 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { auth } from '../config/firebase';
-import { onAuthStateChanged, signInWithEmailAndPassword, signOut, sendPasswordResetEmail } from 'firebase/auth';
+import {
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut,
+  sendPasswordResetEmail,
+} from 'firebase/auth';
 import api from '../config/api';
 
 const AuthContext = createContext(null);
@@ -17,11 +22,10 @@ export function AuthProvider({ children }) {
         try {
           const res = await api.get('/admin/me');
           setUserProfile(res.data.user);
-        } catch {
-      setUserProfile(null);
-      await signOut(auth);
-      setUser(null);
-    }
+        } catch (err) {
+          console.error('Failed to fetch admin profile:', err);
+          setUserProfile(null);
+        }
       } else {
         setUser(null);
         setUserProfile(null);
@@ -33,11 +37,7 @@ export function AuthProvider({ children }) {
 
   const verifyPortalEmail = async (email, purpose = 'login') => {
     const normalizedEmail = String(email || '').trim().toLowerCase();
-
-    if (!normalizedEmail) {
-      throw new Error('Email is required.');
-    }
-
+    if (!normalizedEmail) throw new Error('Email is required.');
     try {
       await api.post('/auth/verify-email', {
         email: normalizedEmail,
@@ -45,12 +45,9 @@ export function AuthProvider({ children }) {
         purpose,
       });
     } catch (error) {
-      const message =
-        error?.response?.data?.message ||
-        'This email is not registered or active for this portal.';
+      const message = error?.response?.data?.message || 'This email is not registered or active for this portal.';
       throw new Error(message);
     }
-
     return normalizedEmail;
   };
 
@@ -67,7 +64,6 @@ export function AuthProvider({ children }) {
   };
 
   const value = { user, userProfile, setUserProfile, loading, login, logout, resetPassword };
-
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
