@@ -57,12 +57,15 @@ const allowedOrigins = [
   "http://127.0.0.1:5173",
   "http://localhost:5174",
   "http://127.0.0.1:5174",
+
   "https://amaanitvam.org",
   "https://www.amaanitvam.org",
   "https://admin.amaanitvam.org",
+
   "https://amaanitvam-foundation-five.vercel.app",
   "https://amaanitvam-admin.onrender.com",
   "https://amaanitvam-dashboard.onrender.com",
+
   process.env.FRONTEND_URL,
   process.env.ADMIN_URL,
 ].filter(Boolean);
@@ -70,22 +73,27 @@ const allowedOrigins = [
 app.use(
   helmet({
     crossOriginResourcePolicy: false,
+    crossOriginEmbedderPolicy: false,
   })
 );
 
-app.use(
-  cors({
-    origin(origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        return callback(null, true);
-      }
+const corsOptions = {
+  origin(origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
 
-      console.error("CORS blocked:", origin);
-      return callback(new Error(`CORS blocked: ${origin}`));
-    },
-    credentials: true,
-  })
-);
+    console.error("CORS blocked:", origin);
+    return callback(new Error(`CORS blocked: ${origin}`));
+  },
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  optionsSuccessStatus: 204,
+};
+
+app.use(cors(corsOptions));
+app.options(/.*/, cors(corsOptions));
 
 app.use("/api/webhook", express.raw({ type: "application/json" }), webhookRoutes);
 
