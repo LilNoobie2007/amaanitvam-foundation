@@ -23,7 +23,7 @@ const donationSchema = new mongoose.Schema(
     amount: {
       type: Number,
       required: true,
-      min: 10,
+      min: 1,
     },
     donationType: {
       type: String,

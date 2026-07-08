@@ -6586,7 +6586,7 @@ body[data-page="faq"] .page-hero {
   display: block !important;
 }
 
-body[data-page="faq"] main#main-content>section:not(.page-hero) {
+body[data-page="faq"] main#main-content > section:not(.page-hero) {
   padding: 72px 0 !important;
 }
 
@@ -6660,6 +6660,24 @@ body[data-page="faq"] .faq-item.is-open .faq-icon {
   transform: rotate(180deg) !important;
 }
 
+<<<<<<< HEAD
+.team-row{
+    display:flex;
+    justify-content:center;
+    gap:24px;
+    flex-wrap:wrap;
+    margin-bottom:32px;
+}
+
+.team-row-1 .card{
+    flex:0 1 260px;
+}
+
+.team-row-2 .card,
+.team-row-3 .card{
+    flex:0 1 280px;
+}
+=======
 .team-row {
   display: flex;
   justify-content: center;
@@ -6742,3 +6760,174 @@ body[data-page="faq"] .faq-item.is-open .faq-icon {
   font-weight: 700;
   font-size: .88rem;
 }
+
+
+
+
+
+
+
+
+/* responsive fixes */
+
+@media (min-width: 601px) and (max-width: 992px) {
+  .footer-container {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 28px !important;
+  }
+}
+@media (max-width: 600px) {
+  .footer-container {
+    grid-template-columns: 1fr !important;
+  }
+
+
+@media (max-width: 900px) {
+  .project-showcase {
+    grid-template-columns: 1fr !important;
+    gap: 2.5rem !important;
+    margin: 50px 0 !important;
+  }
+  .project-image-wrapper {
+    position: relative !important;
+    top: 0 !important;
+    margin-bottom: 20px !important;
+  }
+  .project-content {
+    height: auto !important;
+    overflow: visible !important;
+    padding-right: 0 !important;
+  }
+  .project-image-caption {
+    position: relative !important;
+    bottom: auto !important;
+    width: 100% !important;
+    margin-top: -4px !important;
+  }
+}
+
+
+.team-row-1,
+.moved-inline-style-042,
+.moved-inline-style-085,
+.moved-inline-style-139 {
+  /* these were repeat(4, 1fr) */
+}
+@media (max-width: 900px) {
+  .team-row-1,
+  .moved-inline-style-042,
+  .moved-inline-style-085,
+  .moved-inline-style-139 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+@media (max-width: 480px) {
+  .team-row-1,
+  .moved-inline-style-042,
+  .moved-inline-style-085,
+  .moved-inline-style-139 {
+    grid-template-columns: 1fr !important;
+  }
+  .team-row-2 {
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+}
+
+.moved-inline-style-102 {
+  /* was repeat(4, 1fr) */
+}
+@media (max-width: 900px) {
+  .moved-inline-style-102 { grid-template-columns: repeat(2, 1fr) !important; }
+}
+@media (max-width: 480px) {
+  .moved-inline-style-102 { grid-template-columns: 1fr !important; }
+}
+
+.moved-inline-style-123 {
+  /* was repeat(5, 1fr) */
+}
+@media (max-width: 1024px) {
+  .moved-inline-style-123 { grid-template-columns: repeat(3, 1fr) !important; }
+}
+@media (max-width: 640px) {
+  .moved-inline-style-123 { grid-template-columns: repeat(2, 1fr) !important; }
+}
+@media (max-width: 400px) {
+  .moved-inline-style-123 { grid-template-columns: 1fr !important; }
+}
+
+/* ---------------------------------------------------
+   4. STATS GRID — 1 column on very small phones
+--------------------------------------------------- */
+@media (max-width: 420px) {
+  .stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ---------------------------------------------------
+   5. HERO BUTTONS — forced min-width overflowed on
+   narrow phones (two 190px buttons + gap > 320px screen)
+--------------------------------------------------- */
+@media (max-width: 480px) {
+  body[data-page="home"] .hero-actions .btn,
+  body:not([data-page]) .hero-actions .btn {
+    min-width: 150px !important;
+  }
+}
+@media (max-width: 380px) {
+  body[data-page="home"] .hero-actions .btn,
+  body:not([data-page]) .hero-actions .btn {
+    min-width: 100% !important;
+  }
+  .hero-actions {
+    flex-direction: column !important;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .donation-btn {
+    font-size: 1.05rem !important;
+    padding: 16px 32px !important;
+  }
+  .donate-section .btn-primary {
+    font-size: 1.2rem !important;
+    padding: 16px 28px !important;
+  }
+}
+
+
+@media (max-width: 380px) {
+  .card {
+    padding: 1.25rem !important;
+  }
+  .contact-card,
+  .partnership-box {
+    padding: 24px 16px !important;
+  }
+  .donation-card {
+    padding: 40px 18px !important;
+  }
+  .donate-section {
+    padding: 1.75rem 1rem !important;
+  }
+  #donate.donation-section {
+    padding: 20px !important;
+  }
+  .brand-name {
+    font-size: 1.05rem !important;
+    letter-spacing: 1.5px !important;
+  }
+}
+
+
+@media (min-width: 1600px) {
+  .donation-card p,
+  .partnership-box p,
+  .contact-hero .section-desc {
+    max-width: 900px !important;
+  }
+}
+>>>>>>> upstream/main

@@ -99,7 +99,7 @@ export default function ProfilePage() {
       </div>
 
       <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
-        <div className="bg-gradient-to-r from-[#56051a] to-[#7a1e3a] px-6 py-8 text-center">
+        <div className="bg-linear-to-r from-[#56051a] to-[#7a1e3a] px-6 py-8 text-center">
           <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto text-white text-3xl font-bold">
             {userProfile?.name?.charAt(0)?.toUpperCase() || 'U'}
           </div>
@@ -114,22 +114,80 @@ export default function ProfilePage() {
         </div>
 
         <div className="p-6 space-y-4">
-          <ProfileRow icon={Mail} label="Email" value={userProfile?.email || 'N/A'} />
-          <ProfileRow icon={Phone} label="Phone" value={userProfile?.phone || 'Not set'} />
-          <ProfileRow icon={Building} label="Department" value={getDepartmentName()} />
           <ProfileRow
-            icon={Calendar}
-            label="Joined"
-            value={
-              userProfile?.joinedAt
-                ? new Date(userProfile.joinedAt).toLocaleDateString('en-IN', {
-                  day: 'numeric',
-                  month: 'long',
-                  year: 'numeric',
-                })
-                : 'N/A'
-            }
+            icon={Mail}
+            label="Email"
+            value={userProfile?.email || "N/A"}
           />
+
+          <ProfileRow
+            icon={Phone}
+            label="Phone"
+            value={userProfile?.phone || "Not set"}
+          /> 
+
+          <ProfileRow
+            icon={Building}
+            label="Designation"
+            value={userProfile?.designation || "Not assigned"}
+          />
+
+          <ProfileRow
+            icon={Building}
+            label="Department"
+            value={userProfile?.department || "Not assigned"}
+          />
+
+          <ProfileRow
+            icon={Building}
+            label="Domain"
+            value={userProfile?.domain || "Not assigned"}
+          />
+
+          <ProfileRow
+            icon={Building}
+            label="Member ID"
+            value={userProfile?.memberId || "Not assigned"}
+          />
+
+          <ProfileRow
+            icon={Building}
+            label="Designation"
+            value={userProfile?.designation || "Not assigned"}
+          />
+
+  <ProfileRow
+    icon={Building}
+    label="Department"
+    value={userProfile?.department || "Not assigned"}
+  />
+
+  <ProfileRow
+    icon={Building}
+    label="Domain"
+    value={userProfile?.domain || "Not assigned"}
+  />
+
+  <ProfileRow
+    icon={Building}
+    label="Member ID"
+    value={userProfile?.memberId || "Not assigned"}
+  />
+
+  <ProfileRow
+    icon={Calendar}
+    label="Joined"
+    value={
+      userProfile?.joinedAt
+        ? new Date(userProfile.joinedAt).toLocaleDateString("en-IN", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          })
+        : "N/A"
+    }
+  />
+
         </div>
       </div>
 
@@ -218,7 +276,7 @@ function ProfileRow({ icon: Icon, label, value }) {
 
       <div className="min-w-0">
         <p className="text-xs text-slate-500 font-medium">{label}</p>
-        <p className="text-sm text-slate-800 font-medium break-words">
+        <p className="text-sm text-slate-800 font-medium wrap-break-word">
           {value || 'N/A'}
         </p>
       </div>
