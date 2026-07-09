@@ -194,3 +194,24 @@
     transform: translateY(0);
   }
 }
+
+.admin-sidebar header,
+.admin-sidebar .brand,
+.admin-sidebar .logo,
+.admin-sidebar h1,
+.admin-sidebar h2,
+.admin-sidebar h3,
+.admin-sidebar p,
+.admin-sidebar span {
+  color: #ffffff !important;
+}
+
+.admin-sidebar .brand-title,
+.admin-sidebar .brand-name {
+  color: #d8a15f !important;
+}
+
+.admin-sidebar .brand-subtitle {
+  color: rgba(255, 255, 255, 0.85) !important;
+  letter-spacing: 0.22em;
+}
