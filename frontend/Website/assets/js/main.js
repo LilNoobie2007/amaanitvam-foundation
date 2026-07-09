@@ -1,152 +1,48 @@
 const API_BASE_URL =
   window.location.hostname === 'localhost' ||
-  window.location.hostname === '127.0.0.1' ||
-  window.location.protocol === 'file:'
+    window.location.hostname === '127.0.0.1' ||
+    window.location.protocol === 'file:'
     ? 'http://localhost:5000/api'
     : 'https://amaanitvam-foundation.onrender.com/api';
-    
+
+// Shared utility function for escaping HTML to prevent XSS attacks
+function escapeHtml(value) {
+  return String(value ?? '')
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#039;');
+}
+
 (function () {
   'use strict';
 
-  const nav = document.getElementById('site-nav');
-  const menuToggle = document.getElementById('menu-toggle');
-  const mobileMenu = document.getElementById('mobile-menu');
-  const currentPage = document.body.dataset.page || '';
-  const navLinks = document.getElementById('nav-links');
-  const hasGroupedNavbar = !!document.querySelector('.nav-item.has-dropdown');
-  const needsNavbarUpgrade = !!nav && !!navLinks && !!mobileMenu && !hasGroupedNavbar;
+  function initNavbar() {
+    const nav = document.getElementById('site-nav');
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const currentPage = document.body.dataset.page || '';
+    const navLinks = document.getElementById('nav-links');
+    const hasGroupedNavbar = !!document.querySelector('.nav-item.has-dropdown');
+    const needsNavbarUpgrade = false;
 
-  const pageMap = {
-    about: 0,
-    impact: 0,
-    gallery: 0,
-    volunteer: 1,
-    internship: 1,
-    contact: 1,
-    collaborations: 1,
-    resources: 2,
-    verify: 2,
-    faq: 2
-  };
+    const pageMap = {
+      about: 0,
+      impact: 0,
+      programs: 0,
+      gallery: 0,
 
-  if (needsNavbarUpgrade) {
-    navLinks.innerHTML = [
-      '<a href="index.html" class="nav-link" data-nav="home">Home</a>',
-      '<div class="nav-item has-dropdown">',
-      '  <button class="nav-link dropdown-trigger" aria-haspopup="true" aria-expanded="false">',
-      '    About Us',
-      '    <span class="nav-chevron" aria-hidden="true">',
-      '      <svg width="12" height="7" viewBox="0 0 12 7" fill="none"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-      '    </span>',
-      '  </button>',
-      '  <div class="dropdown-menu" role="menu">',
-      '    <a href="about.html" class="dropdown-item" role="menuitem">',
-      '      <span class="dropdown-icon"><span class="material-symbols-outlined" aria-hidden="true">info</span></span>',
-      '      <span class="dropdown-text"><strong>About Foundation</strong><small>Our story &amp; values</small></span>',
-      '    </a>',
-      '    <a href="impact.html" class="dropdown-item" role="menuitem">',
-      '      <span class="dropdown-icon"><span class="material-symbols-outlined" aria-hidden="true">bar_chart</span></span>',
-      '      <span class="dropdown-text"><strong>Impact</strong><small>What we\'ve achieved</small></span>',
-      '    </a>',
-      '    <a href="programs.html" class="dropdown-item" role="menuitem">',
-      '      <span class="dropdown-icon"><span class="material-symbols-outlined" aria-hidden="true">school</span></span>',
-      '      <span class="dropdown-text"><strong>Programs</strong><small>Our initiatives and projects</small></span>',
-      '    </a>',
-      '    <a href="gallery.html" class="dropdown-item" role="menuitem">',
-      '      <span class="dropdown-icon"><span class="material-symbols-outlined" aria-hidden="true">photo_library</span></span>',
-      '      <span class="dropdown-text"><strong>Gallery</strong><small>Photos &amp; moments</small></span>',
-      '    </a>',
-      '  </div>',
-      '</div>',
-      '<div class="nav-item has-dropdown">',
-      '  <button class="nav-link dropdown-trigger" aria-haspopup="true" aria-expanded="false">',
-      '    Get Involved',
-      '    <span class="nav-chevron" aria-hidden="true">',
-      '      <svg width="12" height="7" viewBox="0 0 12 7" fill="none"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-      '    </span>',
-      '  </button>',
-      '  <div class="dropdown-menu" role="menu">',
-      '    <a href="volunteer.html" class="dropdown-item" role="menuitem">',
-      '      <span class="dropdown-icon"><span class="material-symbols-outlined" aria-hidden="true">volunteer_activism</span></span>',
-      '      <span class="dropdown-text"><strong>Volunteer</strong><small>Join our volunteer network</small></span>',
-      '    </a>',
-      '    <a href="internship.html" class="dropdown-item" role="menuitem">',
-      '      <span class="dropdown-icon"><span class="material-symbols-outlined" aria-hidden="true">work</span></span>',
-      '      <span class="dropdown-text"><strong>Internship</strong><small>Apply for internship</small></span>',
-      '    </a>',
-      '    <a href="contact.html" class="dropdown-item" role="menuitem">',
-      '      <span class="dropdown-icon"><span class="material-symbols-outlined" aria-hidden="true">mail</span></span>',
-      '      <span class="dropdown-text"><strong>Contact Us</strong><small>Get in touch</small></span>',
-      '    </a>',
-      '    <a href="collaborations.html" class="dropdown-item" role="menuitem">',
-      '      <span class="dropdown-icon"><span class="material-symbols-outlined" aria-hidden="true">handshake</span></span>',
-      '      <span class="dropdown-text"><strong>Collaborations &amp; Partnerships</strong><small>Partner with our mission</small></span>',
-      '    </a>',
-      '  </div>',
-      '</div>',
-      '<div class="nav-item has-dropdown">',
-      '  <button class="nav-link dropdown-trigger" aria-haspopup="true" aria-expanded="false">',
-      '    Resources',
-      '    <span class="nav-chevron" aria-hidden="true">',
-      '      <svg width="12" height="7" viewBox="0 0 12 7" fill="none"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-      '    </span>',
-      '  </button>',
-      '  <div class="dropdown-menu" role="menu">',
-      '    <a href="resources.html" class="dropdown-item" role="menuitem">',
-      '      <span class="dropdown-icon"><span class="material-symbols-outlined" aria-hidden="true">library_books</span></span>',
-      '      <span class="dropdown-text"><strong>Resources</strong><small>Guidelines, tools &amp; documents</small></span>',
-      '    </a>',
-      '    <a href="faq.html" class="dropdown-item" role="menuitem">',
-      '      <span class="dropdown-icon"><span class="material-symbols-outlined" aria-hidden="true">help</span></span>',
-      '      <span class="dropdown-text"><strong>FAQ</strong><small>Common questions answered</small></span>',
-      '    </a>',
-      '    <a href="verify.html" class="dropdown-item" role="menuitem">',
-      '      <span class="dropdown-icon"><span class="material-symbols-outlined" aria-hidden="true">verified</span></span>',
-      '      <span class="dropdown-text"><strong>Verify Certificate</strong><small>Check your certificate</small></span>',
-      '    </a>',
-      '  </div>',
-      '</div>'
-    ].join('');
+      volunteer: 1,
+      internship: 1,
+      contact: 1,
 
-    mobileMenu.innerHTML = [
-      '<div class="mobile-menu-inner">',
-      '  <a href="index.html" class="mobile-link" class="mobile-link mobile-home-link">Home</a>',
-      '  <div class="mobile-section">',
-      '    <button class="mobile-group-toggle" aria-expanded="false">',
-      '      About Us <span class="material-symbols-outlined" aria-hidden="true">expand_more</span>',
-      '    </button>',
-      '    <div class="mobile-group-links">',
-      '      <a href="about.html" class="mobile-link">About Foundation</a>',
-      '      <a href="impact.html" class="mobile-link">Impact</a>',
-      '      <a href="programs.html" class="mobile-link">Programs</a>',
-      '      <a href="gallery.html" class="mobile-link">Gallery</a>',
-      '    </div>',
-      '  </div>',
-      '  <div class="mobile-section">',
-      '    <button class="mobile-group-toggle" aria-expanded="false">',
-      '      Get Involved <span class="material-symbols-outlined" aria-hidden="true">expand_more</span>',
-      '    </button>',
-      '    <div class="mobile-group-links">',
-      '      <a href="volunteer.html" class="mobile-link">Volunteer</a>',
-      '      <a href="internship.html" class="mobile-link">Internship</a>',
-      '      <a href="contact.html" class="mobile-link">Contact Us</a>',
-      '      <a href="collaborations.html" class="mobile-link">Collaborations &amp; Partnerships</a>',
-      '    </div>',
-      '  </div>',
-      '  <div class="mobile-section">',
-      '    <button class="mobile-group-toggle" aria-expanded="false">',
-      '      Resources <span class="material-symbols-outlined" aria-hidden="true">expand_more</span>',
-      '    </button>',
-      '    <div class="mobile-group-links">',
-      '      <a href="resources.html" class="mobile-link">Resources</a>',
-      '      <a href="faq.html" class="mobile-link">FAQ</a>',
-      '      <a href="verify.html" class="mobile-link">Verify Certificate</a>',
-      '    </div>',
-      '  </div>',
-      '</div>'
-    ].join('');
-  }
+      "digital-library": 2,
+      courses: 2,
+      webinars: 2,
+      "webinars-competitions": 2,
 
+<<<<<<< HEAD
   if (hasGroupedNavbar || needsNavbarUpgrade) {
     document.querySelectorAll('[data-nav]').forEach(function (link) {
       if (link.dataset.nav === currentPage) {
@@ -154,116 +50,159 @@ const API_BASE_URL =
         link.setAttribute('aria-current', 'page');
       }
     });
+=======
+      resources: 3,
+      verify: 3,
+      faq: 3,
+      collaborations: 3,
 
-    if (currentPage && pageMap[currentPage] !== undefined) {
-      const triggers = document.querySelectorAll('.nav-link.dropdown-trigger');
-      const activeTrigger = triggers[pageMap[currentPage]];
+      portal: 4,
+      admin: 4,
+      dashboard: 4
+    };
+>>>>>>> f1213e072d3c398a0523d6ce983a334762075435
 
-      if (activeTrigger) {
-        activeTrigger.classList.add('is-active');
-      }
-    }
-
-    function updateNav() {
-      if (!nav) return;
-      const hero = document.querySelector('[data-hero]');
-      const scrolled = window.scrollY > 40;
-      const hasHero = hero && hero.getBoundingClientRect().bottom > 80;
-
-      if (hasHero && !scrolled) {
-        nav.classList.add('is-transparent');
-        nav.classList.remove('is-solid');
-      } else {
-        nav.classList.remove('is-transparent');
-        nav.classList.add('is-solid');
-      }
-    }
-
-    window.addEventListener('scroll', updateNav, { passive: true });
-    updateNav();
-
-    if (menuToggle && mobileMenu) {
-      menuToggle.addEventListener('click', function () {
-        const open = mobileMenu.classList.toggle('is-open');
-        menuToggle.setAttribute('aria-expanded', open);
-        menuToggle.classList.toggle('is-active', open);
-        mobileMenu.setAttribute('aria-hidden', String(!open));
-        document.body.style.overflow = open ? 'hidden' : '';
+    if (hasGroupedNavbar || needsNavbarUpgrade) {
+      document.querySelectorAll('[data-nav]').forEach(function (link) {
+        if (link.dataset.nav === currentPage) {
+          link.classList.add('is-active');
+          link.setAttribute('aria-current', 'page');
+        }
       });
 
-      mobileMenu.querySelectorAll('.mobile-group-toggle').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          const section = btn.closest('.mobile-section');
-          const links = section ? section.querySelector('.mobile-group-links') : null;
-          const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+      if (currentPage && pageMap[currentPage] !== undefined) {
+        const triggers = document.querySelectorAll('.nav-link.dropdown-trigger');
+        const activeTrigger = triggers[pageMap[currentPage]];
 
-          mobileMenu.querySelectorAll('.mobile-section').forEach(function (item) {
-            const toggle = item.querySelector('.mobile-group-toggle');
-            const panel = item.querySelector('.mobile-group-links');
+        if (activeTrigger) {
+          activeTrigger.classList.add('is-active');
+        }
+      }
 
-            if (toggle) toggle.setAttribute('aria-expanded', 'false');
-            if (panel) panel.classList.remove('is-open');
+      function updateNav() {
+        if (!nav) return;
+        const hero = document.querySelector('[data-hero]');
+        const scrolled = window.scrollY > 40;
+        const hasHero = hero && hero.getBoundingClientRect().bottom > 80;
+
+        if (hasHero && !scrolled) {
+          nav.classList.add('is-transparent');
+          nav.classList.remove('is-solid');
+        } else {
+          nav.classList.remove('is-transparent');
+          nav.classList.add('is-solid');
+        }
+      }
+
+      window.addEventListener('scroll', updateNav, { passive: true });
+      updateNav();
+
+      if (menuToggle && mobileMenu) {
+        menuToggle.addEventListener('click', function () {
+          const open = mobileMenu.classList.toggle('is-open');
+          menuToggle.setAttribute('aria-expanded', open);
+          menuToggle.classList.toggle('is-active', open);
+          mobileMenu.setAttribute('aria-hidden', String(!open));
+          document.body.style.overflow = open ? 'hidden' : '';
+        });
+
+        mobileMenu.querySelectorAll('.mobile-group-toggle').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            const section = btn.closest('.mobile-section');
+            const links = section ? section.querySelector('.mobile-group-links') : null;
+            const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+
+            mobileMenu.querySelectorAll('.mobile-section').forEach(function (item) {
+              const toggle = item.querySelector('.mobile-group-toggle');
+              const panel = item.querySelector('.mobile-group-links');
+
+              if (toggle) toggle.setAttribute('aria-expanded', 'false');
+              if (panel) panel.classList.remove('is-open');
+            });
+
+            if (!isExpanded && links) {
+              btn.setAttribute('aria-expanded', 'true');
+              links.classList.add('is-open');
+            }
           });
+        });
 
-          if (!isExpanded && links) {
-            btn.setAttribute('aria-expanded', 'true');
-            links.classList.add('is-open');
-          }
+        mobileMenu.querySelectorAll('a').forEach(function (link) {
+          link.addEventListener('click', function () {
+            mobileMenu.classList.remove('is-open');
+            mobileMenu.setAttribute('aria-hidden', 'true');
+            menuToggle.setAttribute('aria-expanded', 'false');
+            menuToggle.classList.remove('is-active');
+            document.body.style.overflow = '';
+          });
+        });
+      }
+
+      document.querySelectorAll('.nav-item.has-dropdown').forEach(function (item) {
+        const trigger = item.querySelector('.dropdown-trigger');
+        const menu = item.querySelector('.dropdown-menu');
+
+        if (!trigger || !menu) return;
+
+        function openMenu() {
+          trigger.setAttribute('aria-expanded', 'true');
+          menu.classList.add('is-open');
+        }
+
+        function closeMenu() {
+          trigger.setAttribute('aria-expanded', 'false');
+          menu.classList.remove('is-open');
+        }
+
+        item.addEventListener('mouseenter', openMenu);
+        item.addEventListener('mouseleave', closeMenu);
+
+        trigger.addEventListener('click', function () {
+          trigger.getAttribute('aria-expanded') === 'true' ? closeMenu() : openMenu();
+        });
+
+        trigger.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') closeMenu();
         });
       });
 
-      mobileMenu.querySelectorAll('a').forEach(function (link) {
-        link.addEventListener('click', function () {
-          mobileMenu.classList.remove('is-open');
-          mobileMenu.setAttribute('aria-hidden', 'true');
-          menuToggle.setAttribute('aria-expanded', 'false');
-          menuToggle.classList.remove('is-active');
-          document.body.style.overflow = '';
-        });
+      document.addEventListener('click', function (e) {
+        if (!e.target.closest('.nav-item.has-dropdown')) {
+          document.querySelectorAll('.dropdown-trigger').forEach(function (trigger) {
+            trigger.setAttribute('aria-expanded', 'false');
+          });
+          document.querySelectorAll('.dropdown-menu').forEach(function (menu) {
+            menu.classList.remove('is-open');
+          });
+        }
       });
     }
 
-    document.querySelectorAll('.nav-item.has-dropdown').forEach(function (item) {
-      const trigger = item.querySelector('.dropdown-trigger');
-      const menu = item.querySelector('.dropdown-menu');
 
-      if (!trigger || !menu) return;
-
-      function openMenu() {
-        trigger.setAttribute('aria-expanded', 'true');
-        menu.classList.add('is-open');
-      }
-
-      function closeMenu() {
-        trigger.setAttribute('aria-expanded', 'false');
-        menu.classList.remove('is-open');
-      }
-
-      item.addEventListener('mouseenter', openMenu);
-      item.addEventListener('mouseleave', closeMenu);
-
-      trigger.addEventListener('click', function () {
-        trigger.getAttribute('aria-expanded') === 'true' ? closeMenu() : openMenu();
-      });
-
-      trigger.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') closeMenu();
-      });
-    });
-
-    document.addEventListener('click', function (e) {
-      if (!e.target.closest('.nav-item.has-dropdown')) {
-        document.querySelectorAll('.dropdown-trigger').forEach(function (trigger) {
-          trigger.setAttribute('aria-expanded', 'false');
-        });
-        document.querySelectorAll('.dropdown-menu').forEach(function (menu) {
-          menu.classList.remove('is-open');
-        });
-      }
-    });
   }
 
+<<<<<<< HEAD
   // FAQ Handlers
+=======
+  document.addEventListener("DOMContentLoaded", function () {
+    const navbarPlaceholder =
+      document.getElementById("navbar") ||
+      document.getElementById("navbar-placeholder");
+
+    if (navbarPlaceholder) {
+      fetch("components/navbar.html")
+        .then(function (res) { return res.text(); })
+        .then(function (data) {
+          navbarPlaceholder.innerHTML = data;
+          initNavbar();
+        })
+        .catch(function (err) { console.error("Navbar load error:", err); });
+    } else {
+      initNavbar();
+    }
+  });
+
+>>>>>>> f1213e072d3c398a0523d6ce983a334762075435
   document.querySelectorAll('.faq-question').forEach(function (btn) {
     btn.addEventListener('click', function () {
       const item = btn.closest('.faq-item');
@@ -373,11 +312,11 @@ const API_BASE_URL =
           <div>
             <p class="font-semibold text-green-800">Certificate Verified</p>
 
-            <p><strong>Name:</strong> ${cert.issuedTo}</p>
-            <p><strong>Certificate ID:</strong> ${cert.certificateId}</p>
-            <p><strong>Type:</strong> ${cert.type}</p>
-            <p><strong>Domain:</strong> ${cert.domain}</p>
-            <p><strong>Issued By:</strong> ${cert.issuedBy}</p>
+            <p><strong>Name:</strong> ${escapeHtml(cert.issuedTo)}</p>
+            <p><strong>Certificate ID:</strong> ${escapeHtml(cert.certificateId)}</p>
+            <p><strong>Type:</strong> ${escapeHtml(cert.type)}</p>
+            <p><strong>Domain:</strong> ${escapeHtml(cert.domain)}</p>
+            <p><strong>Issued By:</strong> ${escapeHtml(cert.issuedBy)}</p>
           </div>
         </div>
       `;
@@ -390,7 +329,7 @@ const API_BASE_URL =
           <span class="material-symbols-outlined text-red-600">cancel</span>
           <div>
             <p class="font-semibold text-red-800">Certificate Not Found</p>
-            <p>${err.message}</p>
+            <p>${escapeHtml(err.message)}</p>
           </div>
         </div>
       `;
@@ -427,7 +366,7 @@ const API_BASE_URL =
     const footer = document.getElementById("footer");
 
     if (footer) {
-      fetch("footer.html")
+      fetch("components/footer.html")
         .then(function (response) {
           return response.text();
         })
@@ -1002,7 +941,10 @@ const API_BASE_URL =
       localStorage.getItem('backendUrl') ||
       ''
     );
+<<<<<<< HEAD
 
+=======
+>>>>>>> f1213e072d3c398a0523d6ce983a334762075435
     let currentFolders = [];
     const folderMediaCache = new Map();
 
@@ -1354,7 +1296,7 @@ const API_BASE_URL =
       }
     }
 
-       if (document.readyState === 'loading') {
+    if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', initAlbumGallery, { once: true });
     } else {
       initAlbumGallery();
