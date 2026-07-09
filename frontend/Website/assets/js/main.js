@@ -5,6 +5,16 @@ const API_BASE_URL =
     ? 'http://localhost:5000/api'
     : 'https://amaanitvam-foundation.onrender.com/api';
 
+// Shared utility function for escaping HTML to prevent XSS attacks
+function escapeHtml(value) {
+  return String(value ?? '')
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#039;');
+}
+
 (function () {
   'use strict';
 
@@ -289,11 +299,11 @@ const API_BASE_URL =
           <div>
             <p class="font-semibold text-green-800">Certificate Verified</p>
 
-            <p><strong>Name:</strong> ${cert.issuedTo}</p>
-            <p><strong>Certificate ID:</strong> ${cert.certificateId}</p>
-            <p><strong>Type:</strong> ${cert.type}</p>
-            <p><strong>Domain:</strong> ${cert.domain}</p>
-            <p><strong>Issued By:</strong> ${cert.issuedBy}</p>
+            <p><strong>Name:</strong> ${escapeHtml(cert.issuedTo)}</p>
+            <p><strong>Certificate ID:</strong> ${escapeHtml(cert.certificateId)}</p>
+            <p><strong>Type:</strong> ${escapeHtml(cert.type)}</p>
+            <p><strong>Domain:</strong> ${escapeHtml(cert.domain)}</p>
+            <p><strong>Issued By:</strong> ${escapeHtml(cert.issuedBy)}</p>
           </div>
         </div>
       `;
@@ -306,7 +316,7 @@ const API_BASE_URL =
           <span class="material-symbols-outlined text-red-600">cancel</span>
           <div>
             <p class="font-semibold text-red-800">Certificate Not Found</p>
-            <p>${err.message}</p>
+            <p>${escapeHtml(err.message)}</p>
           </div>
         </div>
       `;
