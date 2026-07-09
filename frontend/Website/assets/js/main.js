@@ -941,10 +941,7 @@ function escapeHtml(value) {
       localStorage.getItem('backendUrl') ||
       ''
     );
-<<<<<<< HEAD
-
-=======
->>>>>>> f1213e072d3c398a0523d6ce983a334762075435
+    
     let currentFolders = [];
     const folderMediaCache = new Map();
 

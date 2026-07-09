@@ -111,7 +111,6 @@ app.use("/api/projects", projectRoutes);
 app.use("/api/notifications", notificationRoutes);
 app.use("/api", galleryMongoMediaFixRoutes);
 
-<<<<<<< HEAD
 // Serve Frontend Static Files (Dashboard)
 const dashboardBuildPath = path.join(__dirname, "../frontend/Portals/dashboard/dist");
 app.use(express.static(dashboardBuildPath));
@@ -126,28 +125,6 @@ app.get(/(.*)/, (req, res, next) => {
 });
 
 // 404 API Handler
-=======
-// --- START: "NOT FOUND AFTER REFRESH" FIX ---
-
-// 1. Serve Frontend Static Files (Point to your React build folder)
-const dashboardBuildPath = path.join(__dirname, "../frontend/Portals/dashboard/dist");
-app.use(express.static(dashboardBuildPath));
-
-// 2. CATCH-ALL Route: Redirect non-API requests to the React app's index.html
-// (Using Regex /(.*)/ instead of "*" to prevent path-to-regexp crash)
-app.get(/(.*)/, (req, res, next) => {
-  // If it is an API request that wasn't found above, skip down to the 404 handler
-  if (req.originalUrl.startsWith("/api")) {
-    return next();
-  }
-  // Otherwise, let React Router handle the URL
-  res.sendFile(path.join(dashboardBuildPath, "index.html"));
-});
-
-// --- END FIX ---
-
-// 404 API Handler (Only reaches here if an /api/... route is completely invalid)
->>>>>>> f1213e072d3c398a0523d6ce983a334762075435
 app.use((req, res) => res.status(404).json({ success: false, message: "Route not found" }));
 
 // Start Database and Server
