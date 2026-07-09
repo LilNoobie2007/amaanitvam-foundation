@@ -1,9 +1,3 @@
-/* =====================================================
-   COMPLETE WEBSITE CSS - FIXED
-   Merge conflict resolved, duplicate declarations removed,
-   invalid conflict markers removed, existing design preserved.
-   ===================================================== */
-
 @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap");
 
 :root {
@@ -6885,5 +6879,98 @@ body[data-page="faq"] .faq-item.is-open .faq-icon {
   .partnership-box p,
   .contact-hero .section-desc {
     max-width: 900px !important;
+  }
+}
+
+/* ===========================
+   WEBINARS PAGE
+=========================== */
+
+.webinar-hero {
+  position: relative;
+  background-image:
+    linear-gradient(135deg, rgba(93, 15, 45, 0.9), rgba(74, 11, 35, 0.75)),
+    url("../images/hero.png");
+  background-size: cover;
+  background-position: center;
+  padding: 5rem 0;
+  min-height: 380px;
+  display: flex;
+  align-items: center;
+}
+
+.webinar-hero-container {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+}
+
+.webinar-hero-content {
+  max-width: 960px;
+}
+
+.webinar-hero .hero-label {
+  color: var(--gold, #d8a15f) !important;
+}
+
+.webinar-hero .section-title {
+  font-size: clamp(2.5rem, 6vw, 4rem) !important;
+  margin-bottom: 1rem;
+  color: #ffffff !important;
+}
+
+.webinar-hero .section-desc {
+  max-width: 750px;
+  margin: 0 auto;
+  color: #ffffff !important;
+  opacity: 0.95;
+  font-size: 1.2rem;
+}
+
+.webinar-inquire-btn {
+  width: 100%;
+  text-align: center;
+}
+
+.webinar-registration-container {
+  max-width: 900px;
+}
+
+.webinar-registration-form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.webinar-form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.webinar-form-group-full {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+}
+
+.required-star {
+  color: #c0392b;
+}
+
+.webinar-submit-btn {
+  grid-column: 1 / -1;
+  justify-self: center;
+}
+
+.registration-status {
+  grid-column: 1 / -1;
+  text-align: center;
+  margin-top: 12px;
+}
+
+@media (max-width: 768px) {
+  .webinar-registration-form {
+    grid-template-columns: 1fr;
   }
 }
