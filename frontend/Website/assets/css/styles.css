@@ -243,7 +243,7 @@ button {
 .nav-links {
   display: none;
   align-items: center;
-  gap: 2.5rem;
+  gap: 1rem;
   margin-left: auto;
   flex: 1;
   justify-content: flex-end;
