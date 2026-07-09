@@ -34,6 +34,7 @@ import cmsRoutes from "./routes/cmsRoutes.js";
 import activityRoutes from "./routes/activityRoutes.js";
 import searchRoutes from "./routes/searchRoutes.js";
 import galleryMongoMediaFixRoutes from "./routes/galleryMongoMediaFixRoutes.js";
+import internshipRoutes from "./routes/internshipRoutes.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -51,6 +52,8 @@ const allowedOrigins = [
   "http://127.0.0.1:5173",
   "http://localhost:5174",
   "http://127.0.0.1:5174",
+  "http://localhost:5500",
+  "http://127.0.0.1:5500",
 
   "https://amaanitvam.org",
   "https://www.amaanitvam.org",
@@ -107,6 +110,7 @@ app.use("/api/search", searchRoutes);
 app.use("/api/public", publicRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/notifications", notificationRoutes);
+app.use("/api/internship", internshipRoutes);
 app.use("/api", galleryMongoMediaFixRoutes);
 
 // --- START: "NOT FOUND AFTER REFRESH" FIX ---
