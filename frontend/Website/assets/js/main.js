@@ -1276,3 +1276,340 @@ document.getElementById('volunteerForm')?.addEventListener('submit', async funct
     loadDepartments();
   }
 })();
+
+/* ===== Gallery Album Loader - Common JS ===== */
+(function () {
+  'use strict';
+
+  const container = document.getElementById('gallery-album-container');
+  const isGalleryPage =
+    document.body?.dataset?.page === 'gallery' ||
+    /gallery\.html?$/i.test(window.location.pathname);
+
+  if (!container || !isGalleryPage) return;
+
+  let activeApiBase = (
+    container.dataset.galleryApiBase ||
+    window.GALLERY_API_BASE ||
+    'https://amaanitvam-foundation.onrender.com'
+  ).replace(/\/+$/, '');
+
+  let currentFolders = [];
+  const folderMediaCache = new Map();
+
+  function escapeHtml(value) {
+    return String(value ?? '')
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&#039;');
+  }
+
+  function getId(value) {
+    if (!value) return '';
+    if (typeof value === 'string') return value;
+    return value._id || value.id || value.mediaId || value.fileId || value.gridFsId || '';
+  }
+
+  async function fetchGalleryJson(path) {
+    const response = await fetch(`${activeApiBase}${path}`, { cache: 'no-store' });
+    const data = await response.json().catch(() => ({}));
+
+    if (!response.ok || data.success === false) {
+      throw new Error(data.message || `Gallery request failed: ${response.status}`);
+    }
+
+    return data;
+  }
+
+  function normalizeMediaUrl(media) {
+    if (!media) return '';
+
+    const raw =
+      media.imageUrl ||
+      media.url ||
+      media.secure_url ||
+      media.src ||
+      media.path ||
+      media.fileUrl ||
+      media.mediaUrl ||
+      '';
+
+    const id = getId(media);
+
+    if (!raw && id) {
+      return `${activeApiBase}/api/gallery/media/${encodeURIComponent(id)}`;
+    }
+
+    if (!raw) return '';
+
+    if (/^(data:|blob:|https?:\/\/)/i.test(raw)) return raw;
+
+    if (raw.startsWith('/api/')) return `${activeApiBase}${raw}`;
+    if (raw.startsWith('api/')) return `${activeApiBase}/${raw}`;
+
+    return raw;
+  }
+
+  function isVideo(media) {
+    const url = normalizeMediaUrl(media);
+    return (
+      media?.mediaType === 'video' ||
+      String(media?.contentType || '').startsWith('video/') ||
+      /\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(url)
+    );
+  }
+
+  function isImage(media) {
+    if (!media) return false;
+    if (media.mediaType === 'image') return true;
+    if (String(media.contentType || '').startsWith('image/')) return true;
+    return !isVideo(media);
+  }
+
+  function timestampValue(item) {
+    const value = Date.parse(item?.createdAt || item?.uploadedAt || item?.updatedAt || '');
+    return Number.isFinite(value) ? value : 0;
+  }
+
+  function sortByUploadOrder(mediaItems) {
+    return [...(mediaItems || [])].sort((a, b) => {
+      const byDate = timestampValue(a) - timestampValue(b);
+      if (byDate !== 0) return byDate;
+      return String(getId(a)).localeCompare(String(getId(b)));
+    });
+  }
+
+  async function getFolderMedia(folderId) {
+    if (folderMediaCache.has(folderId)) {
+      return folderMediaCache.get(folderId);
+    }
+
+    const data = await fetchGalleryJson(`/api/gallery/folders/${encodeURIComponent(folderId)}/media`);
+    const media = Array.isArray(data.images)
+      ? data.images
+      : Array.isArray(data.media)
+        ? data.media
+        : [];
+
+    const ordered = sortByUploadOrder(media);
+    folderMediaCache.set(folderId, ordered);
+    return ordered;
+  }
+
+  async function hydrateFolderCovers() {
+    const foldersToCheck = currentFolders.filter(folder => {
+      const id = getId(folder);
+      return id && Number(folder.mediaCount || 0) > 0;
+    });
+
+    for (const folder of foldersToCheck) {
+      try {
+        const media = await getFolderMedia(getId(folder));
+        const photoCandidates = sortByUploadOrder(media).filter(isImage);
+        folder.__coverMedia =
+          folder.coverMedia ||
+          folder.coverImage ||
+          folder.coverUrl ||
+          folder.thumbnail ||
+          photoCandidates[0] ||
+          media[0] ||
+          null;
+      } catch (error) {
+        console.warn('Could not resolve gallery album cover:', folder?.name, error);
+      }
+    }
+  }
+
+  function placeholderMarkup() {
+    return `
+      <div class="gallery-album-placeholder" aria-hidden="true">
+        <span class="material-symbols-outlined">photo_library</span>
+      </div>
+    `;
+  }
+
+  function mediaThumb(media, className = '') {
+    const url = normalizeMediaUrl(media);
+    const title = escapeHtml(
+      media?.title ||
+      media?.originalName ||
+      media?.filename ||
+      media?.name ||
+      'Gallery media'
+    );
+
+    if (!url) return placeholderMarkup();
+
+    if (isVideo(media)) {
+      return `<video class="${className}" src="${escapeHtml(url)}" controls playsinline preload="metadata" aria-label="${title}"></video>`;
+    }
+
+    return `<img class="${className}" src="${escapeHtml(url)}" alt="${title}" loading="lazy" decoding="async" />`;
+  }
+
+  function albumCoverMarkup(folder) {
+    const cover = folder.__coverMedia;
+    const url = normalizeMediaUrl(cover);
+    const title = escapeHtml(cover?.title || cover?.originalName || folder?.name || 'Gallery album cover');
+
+    if (!url) return placeholderMarkup();
+
+    if (isVideo(cover)) {
+      return `<video class="gallery-album-cover-media" src="${escapeHtml(url)}" muted playsinline preload="metadata" aria-label="${title}"></video>`;
+    }
+
+    return `<img class="gallery-album-cover-media" src="${escapeHtml(url)}" alt="${title}" loading="lazy" decoding="async" />`;
+  }
+
+  function setIntro(title, description) {
+    const heading = document.getElementById('gallery-grid-title');
+    const introText = document.querySelector('.gallery-intro .section-desc');
+
+    if (heading) heading.textContent = title;
+    if (introText && description) introText.textContent = description;
+  }
+
+  function albumCountLabel(count) {
+    const total = Number(count || 0);
+    return `${total} ${total === 1 ? 'media item' : 'media items'}`;
+  }
+
+  function renderMessage(message, tone = 'info') {
+    container.className = 'gallery-album-shell';
+    container.innerHTML = `<div class="gallery-state gallery-state-${tone}">${escapeHtml(message)}</div>`;
+  }
+
+  function renderAlbums() {
+    setIntro(
+      'Browse Gallery Albums',
+      'Open an album to view images and videos grouped by the same folders'
+    );
+
+    container.className = 'gallery-grid gallery-albums-grid';
+
+    if (!currentFolders.length) {
+      renderMessage('No gallery albums are available yet. Albums uploaded from the admin portal will appear here automatically.');
+      return;
+    }
+
+    container.innerHTML = currentFolders.map(folder => {
+      const id = getId(folder);
+      const name = folder.name || folder.title || 'Untitled Album';
+      const description = folder.description || 'View photos and videos from this album.';
+
+      return `
+        <article class="gallery-album-card gallery-card reveal-card" data-folder-id="${escapeHtml(id)}" tabindex="0" role="button" aria-label="Open ${escapeHtml(name)} album">
+          <div class="gallery-album-cover">
+            ${albumCoverMarkup(folder)}
+            <span class="gallery-album-count">${escapeHtml(albumCountLabel(folder.mediaCount))}</span>
+          </div>
+          <div class="gallery-album-body">
+            <h3>${escapeHtml(name)}</h3>
+            <p>${escapeHtml(description)}</p>
+            <span class="gallery-album-open">Open Album <span aria-hidden="true">→</span></span>
+          </div>
+        </article>
+      `;
+    }).join('');
+
+    container.querySelectorAll('.gallery-album-card').forEach(card => {
+      const folderId = card.dataset.folderId;
+
+      const open = () => openAlbum(folderId);
+
+      card.addEventListener('click', open);
+      card.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          open();
+        }
+      });
+    });
+  }
+
+  async function openAlbum(folderId) {
+    const folder = currentFolders.find(item => String(getId(item)) === String(folderId));
+    if (!folder) return;
+
+    setIntro(folder.name || 'Gallery Album', folder.description || 'Browse images and videos from this album.');
+
+    container.className = 'gallery-album-shell';
+    container.innerHTML = `
+      <div class="gallery-album-toolbar">
+        <button class="gallery-back-button" type="button" id="galleryBackToAlbums">← Back to Albums</button>
+        <div>
+          <span class="gallery-album-kicker">Album</span>
+          <h3>${escapeHtml(folder.name || 'Gallery Album')}</h3>
+        </div>
+      </div>
+      <div class="gallery-state">Loading album media...</div>
+    `;
+
+    document.getElementById('galleryBackToAlbums')?.addEventListener('click', renderAlbums);
+
+    try {
+      const media = await getFolderMedia(folderId);
+      renderAlbumMedia(folder, media);
+    } catch (error) {
+      renderMessage(error.message || 'Failed to load this album.', 'error');
+    }
+  }
+
+  function renderAlbumMedia(folder, media) {
+    container.className = 'gallery-album-shell';
+
+    const grid = media.length
+      ? `
+        <div class="gallery-album-media-grid">
+          ${media.map(item => {
+        const title = item.title || item.originalName || item.filename || 'Gallery media';
+
+        return `
+              <figure class="gallery-media-card gallery-card reveal-card">
+                <div class="gallery-media-frame">
+                  ${mediaThumb(item, 'gallery-media-file')}
+                </div>
+                <figcaption>${escapeHtml(title)}</figcaption>
+              </figure>
+            `;
+      }).join('')}
+        </div>
+      `
+      : `<div class="gallery-state">No media has been uploaded in this album yet.</div>`;
+
+    container.innerHTML = `
+      <div class="gallery-album-toolbar">
+        <button class="gallery-back-button" type="button" id="galleryBackToAlbums">← Back to Albums</button>
+        <div>
+          <span class="gallery-album-kicker">${escapeHtml(albumCountLabel(media.length))}</span>
+          <h3>${escapeHtml(folder.name || 'Gallery Album')}</h3>
+        </div>
+      </div>
+      ${grid}
+    `;
+
+    document.getElementById('galleryBackToAlbums')?.addEventListener('click', renderAlbums);
+  }
+
+  async function initAlbumGallery() {
+    renderMessage('Loading gallery albums...');
+
+    try {
+      const foldersData = await fetchGalleryJson('/api/gallery/folders');
+      currentFolders = Array.isArray(foldersData.folders) ? foldersData.folders : [];
+
+      await hydrateFolderCovers();
+      renderAlbums();
+    } catch (error) {
+      renderMessage(error.message || 'Failed to load gallery albums.', 'error');
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAlbumGallery, { once: true });
+  } else {
+    initAlbumGallery();
+  }
+})();
