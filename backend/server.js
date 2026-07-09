@@ -51,14 +51,16 @@ const allowedOrigins = [
   "http://127.0.0.1:5173",
   "http://localhost:5174",
   "http://127.0.0.1:5174",
+
   "https://amaanitvam.org",
   "https://www.amaanitvam.org",
   "https://admin.amaanitvam.org",
+  "https://dashboard.amaanitvam.org",
   "https://amaanitvam-foundation-five.vercel.app",
-  "https://amaanitvam-admin.onrender.com",
-  "https://amaanitvam-dashboard.onrender.com",
+
   process.env.FRONTEND_URL,
   process.env.ADMIN_URL,
+  process.env.DASHBOARD_URL,
 ].filter(Boolean);
 
 // CORS Configuration

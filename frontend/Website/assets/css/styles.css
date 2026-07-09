@@ -6974,3 +6974,135 @@ body[data-page="faq"] .faq-item.is-open .faq-icon {
     grid-template-columns: 1fr;
   }
 }
+
+/* Contact Page Clean Layout */
+
+.contact-layout {
+  display: flex;
+  gap: 2.5rem;
+  align-items: stretch;
+}
+
+.contact-left {
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-right {
+  flex: 0.8;
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-section-header {
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.contact-title-reset {
+  margin-left: 0;
+}
+
+.contact-form-card {
+  margin: 0;
+  padding: 2.5rem;
+  flex: 1;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group-message {
+  margin-bottom: 0;
+}
+
+.contact-textarea {
+  resize: none;
+}
+
+.contact-submit-btn {
+  width: 100%;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.contact-status {
+  margin-top: 1rem;
+}
+
+.contact-spacer {
+  visibility: hidden;
+  pointer-events: none;
+  margin-bottom: 1.5rem;
+}
+
+.contact-info-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  margin: 0;
+  flex: 1;
+}
+
+.contact-info-card {
+  margin: 0;
+  padding: 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex: 1;
+}
+
+.contact-info-icon {
+  margin-bottom: 0.75rem;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contact-icon-symbol {
+  font-size: 20px;
+}
+
+.contact-info-title {
+  margin-bottom: 0.2rem;
+  font-size: 1.1rem;
+}
+
+.contact-info-text {
+  margin-bottom: 0.2rem;
+  font-size: 0.85rem;
+}
+
+.contact-info-link {
+  font-size: 0.95rem;
+}
+
+@media (max-width: 900px) {
+  .contact-layout {
+    flex-direction: column;
+  }
+
+  .contact-spacer {
+    display: none;
+  }
+
+  .contact-form-card {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 520px) {
+
+  .contact-form-card,
+  .contact-info-card {
+    padding: 1.5rem;
+  }
+}
