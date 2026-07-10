@@ -18,191 +18,61 @@ function escapeHtml(value) {
 (function () {
   'use strict';
 
-  function initNavbar() {
+function initNavbar() {
     const nav = document.getElementById('site-nav');
     const menuToggle = document.getElementById('menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
     const currentPage = document.body.dataset.page || '';
-    const navLinks = document.getElementById('nav-links');
     const hasGroupedNavbar = !!document.querySelector('.nav-item.has-dropdown');
-    const needsNavbarUpgrade = false;
 
-    const pageMap = {
-      about: 0,
-      impact: 0,
-      programs: 0,
-      gallery: 0,
-
-      volunteer: 1,
-      internship: 1,
-      contact: 1,
-
-      "digital-library": 2,
-      courses: 2,
-      webinars: 2,
-      "webinars-competitions": 2,
-
-<<<<<<< HEAD
-  if (hasGroupedNavbar || needsNavbarUpgrade) {
+    // 1. Highlight active links
     document.querySelectorAll('[data-nav]').forEach(function (link) {
       if (link.dataset.nav === currentPage) {
         link.classList.add('is-active');
         link.setAttribute('aria-current', 'page');
       }
     });
-=======
-      resources: 3,
-      verify: 3,
-      faq: 3,
-      collaborations: 3,
 
-      portal: 4,
-      admin: 4,
-      dashboard: 4
-    };
->>>>>>> f1213e072d3c398a0523d6ce983a334762075435
+    // 2. Navbar transparency scroll effect
+    function updateNav() {
+      if (!nav) return;
+      const hero = document.querySelector('[data-hero]');
+      const scrolled = window.scrollY > 40;
+      const hasHero = hero && hero.getBoundingClientRect().bottom > 80;
 
-    if (hasGroupedNavbar || needsNavbarUpgrade) {
-      document.querySelectorAll('[data-nav]').forEach(function (link) {
-        if (link.dataset.nav === currentPage) {
-          link.classList.add('is-active');
-          link.setAttribute('aria-current', 'page');
-        }
-      });
-
-      if (currentPage && pageMap[currentPage] !== undefined) {
-        const triggers = document.querySelectorAll('.nav-link.dropdown-trigger');
-        const activeTrigger = triggers[pageMap[currentPage]];
-
-        if (activeTrigger) {
-          activeTrigger.classList.add('is-active');
-        }
+      if (hasHero && !scrolled) {
+        nav.classList.add('is-transparent');
+        nav.classList.remove('is-solid');
+      } else {
+        nav.classList.remove('is-transparent');
+        nav.classList.add('is-solid');
       }
+    }
 
-      function updateNav() {
-        if (!nav) return;
-        const hero = document.querySelector('[data-hero]');
-        const scrolled = window.scrollY > 40;
-        const hasHero = hero && hero.getBoundingClientRect().bottom > 80;
+    window.addEventListener('scroll', updateNav, { passive: true });
+    updateNav();
 
-        if (hasHero && !scrolled) {
-          nav.classList.add('is-transparent');
-          nav.classList.remove('is-solid');
-        } else {
-          nav.classList.remove('is-transparent');
-          nav.classList.add('is-solid');
-        }
-      }
-
-      window.addEventListener('scroll', updateNav, { passive: true });
-      updateNav();
-
-      if (menuToggle && mobileMenu) {
-        menuToggle.addEventListener('click', function () {
-          const open = mobileMenu.classList.toggle('is-open');
-          menuToggle.setAttribute('aria-expanded', open);
-          menuToggle.classList.toggle('is-active', open);
-          mobileMenu.setAttribute('aria-hidden', String(!open));
-          document.body.style.overflow = open ? 'hidden' : '';
-        });
-
-        mobileMenu.querySelectorAll('.mobile-group-toggle').forEach(function (btn) {
-          btn.addEventListener('click', function () {
-            const section = btn.closest('.mobile-section');
-            const links = section ? section.querySelector('.mobile-group-links') : null;
-            const isExpanded = btn.getAttribute('aria-expanded') === 'true';
-
-            mobileMenu.querySelectorAll('.mobile-section').forEach(function (item) {
-              const toggle = item.querySelector('.mobile-group-toggle');
-              const panel = item.querySelector('.mobile-group-links');
-
-              if (toggle) toggle.setAttribute('aria-expanded', 'false');
-              if (panel) panel.classList.remove('is-open');
-            });
-
-            if (!isExpanded && links) {
-              btn.setAttribute('aria-expanded', 'true');
-              links.classList.add('is-open');
-            }
-          });
-        });
-
-        mobileMenu.querySelectorAll('a').forEach(function (link) {
-          link.addEventListener('click', function () {
-            mobileMenu.classList.remove('is-open');
-            mobileMenu.setAttribute('aria-hidden', 'true');
-            menuToggle.setAttribute('aria-expanded', 'false');
-            menuToggle.classList.remove('is-active');
-            document.body.style.overflow = '';
-          });
-        });
-      }
-
-      document.querySelectorAll('.nav-item.has-dropdown').forEach(function (item) {
-        const trigger = item.querySelector('.dropdown-trigger');
-        const menu = item.querySelector('.dropdown-menu');
-
-        if (!trigger || !menu) return;
-
-        function openMenu() {
-          trigger.setAttribute('aria-expanded', 'true');
-          menu.classList.add('is-open');
-        }
-
-        function closeMenu() {
-          trigger.setAttribute('aria-expanded', 'false');
-          menu.classList.remove('is-open');
-        }
-
-        item.addEventListener('mouseenter', openMenu);
-        item.addEventListener('mouseleave', closeMenu);
-
-        trigger.addEventListener('click', function () {
-          trigger.getAttribute('aria-expanded') === 'true' ? closeMenu() : openMenu();
-        });
-
-        trigger.addEventListener('keydown', function (e) {
-          if (e.key === 'Escape') closeMenu();
-        });
-      });
-
-      document.addEventListener('click', function (e) {
-        if (!e.target.closest('.nav-item.has-dropdown')) {
-          document.querySelectorAll('.dropdown-trigger').forEach(function (trigger) {
-            trigger.setAttribute('aria-expanded', 'false');
-          });
-          document.querySelectorAll('.dropdown-menu').forEach(function (menu) {
-            menu.classList.remove('is-open');
-          });
-        }
+    // 3. Mobile Menu Logic
+    if (menuToggle && mobileMenu) {
+      menuToggle.addEventListener('click', function () {
+        const open = mobileMenu.classList.toggle('is-open');
+        menuToggle.setAttribute('aria-expanded', open);
+        document.body.style.overflow = open ? 'hidden' : '';
       });
     }
 
+    // 4. Dropdown Menu Logic
+    document.querySelectorAll('.nav-item.has-dropdown').forEach(function (item) {
+      const trigger = item.querySelector('.dropdown-trigger');
+      const menu = item.querySelector('.dropdown-menu');
+      if (!trigger || !menu) return;
 
+      item.addEventListener('mouseenter', () => { trigger.setAttribute('aria-expanded', 'true'); menu.classList.add('is-open'); });
+      item.addEventListener('mouseleave', () => { trigger.setAttribute('aria-expanded', 'false'); menu.classList.remove('is-open'); });
+    });
   }
 
-<<<<<<< HEAD
   // FAQ Handlers
-=======
-  document.addEventListener("DOMContentLoaded", function () {
-    const navbarPlaceholder =
-      document.getElementById("navbar") ||
-      document.getElementById("navbar-placeholder");
-
-    if (navbarPlaceholder) {
-      fetch("components/navbar.html")
-        .then(function (res) { return res.text(); })
-        .then(function (data) {
-          navbarPlaceholder.innerHTML = data;
-          initNavbar();
-        })
-        .catch(function (err) { console.error("Navbar load error:", err); });
-    } else {
-      initNavbar();
-    }
-  });
-
->>>>>>> f1213e072d3c398a0523d6ce983a334762075435
   document.querySelectorAll('.faq-question').forEach(function (btn) {
     btn.addEventListener('click', function () {
       const item = btn.closest('.faq-item');
@@ -761,72 +631,51 @@ function escapeHtml(value) {
     }
   })();
 
-  /* ===== Internship application form (internship.html) ===== */
-  document.getElementById('internshipForm')?.addEventListener('submit', async function (e) {
-    e.preventDefault();
-    const btn = document.getElementById('int-submit-btn');
-    const btnText = btn.querySelector('.submit-btn-text');
-    const btnSpinner = btn.querySelector('.submit-btn-spinner');
-    const btnSuccess = btn.querySelector('.submit-btn-success');
-    const status = document.getElementById('int-status');
+/* ===== Internship application form (internship.html) ===== */
+document.getElementById('internshipForm')?.addEventListener('submit', async function (e) {
+  e.preventDefault(); 
+  
+  const btn = document.getElementById('int-submit-btn');
+  const status = document.getElementById('int-status');
 
-    btn.classList.remove('is-success', 'is-error');
-    status.textContent = '';
-    status.className = '';
-    status.style.color = '';
+  // Show processing state
+  btn.disabled = true;
+  status.textContent = "Submitting application...";
+  status.style.color = "var(--navy)";
 
-    btnText.style.display = 'none';
-    btnSpinner.style.display = 'inline-flex';
-    btnSuccess.style.display = 'none';
-    btn.classList.add('is-loading');
+  const formData = new FormData(this);
 
-    const formData = new FormData(this);
-
-    try {
-      const response = await fetch(API_BASE_URL + '/internship/apply', {
-        method: 'POST',
-        // NO 'Content-Type' header here, FormData handles it automatically for files
-        body: formData
-      });
+  try {
+    const response = await fetch(API_BASE_URL + '/internship/apply', {
+      method: 'POST',
+      body: formData
+    });
+    
+    const result = await response.json();
+    
+    if (response.ok) {
+      // 1. Show the success message immediately
+      status.textContent = "Application submitted successfully!";
+      status.style.color = "green";
+      alert("Success! Your internship application has been submitted.");
       
-      const result = await response.json();
+      // 2. Add a delay before resetting the form
+      setTimeout(() => {
+        this.reset(); 
+        status.textContent = ""; // Clear message after 3 seconds
+        btn.disabled = false;
+      }, 3000); 
       
-      if (response.ok) {
-        btnSpinner.style.display = 'none';
-        btnSuccess.style.display = 'inline-flex';
-        btn.classList.remove('is-loading');
-        btn.classList.add('is-success');
-        status.textContent = result.message || "Application submitted successfully!";
-        status.style.color = "#22c55e";
-        status.className = 'show';
-        this.reset();
-        
-        setTimeout(() => {
-          btnSuccess.style.display = 'none';
-          btnText.style.display = 'inline';
-          btn.classList.remove('is-success');
-        }, 3000);
-      } else {
-        btnSpinner.style.display = 'none';
-        btnText.style.display = 'inline';
-        btn.classList.remove('is-loading');
-        btn.classList.add('is-error');
-        status.textContent = result.message || "Error submitting application.";
-        status.style.color = "red";
-        status.className = 'show';
-        setTimeout(() => btn.classList.remove('is-error'), 600);
-      }
-    } catch (err) {
-      btnSpinner.style.display = 'none';
-      btnText.style.display = 'inline';
-      btn.classList.remove('is-loading');
-      btn.classList.add('is-error');
-      status.textContent = "Failed to connect to the server.";
-      status.style.color = "red";
-      status.className = 'show';
-      setTimeout(() => btn.classList.remove('is-error'), 600);
+    } else {
+      throw new Error(result.message || "Submission failed.");
     }
-  });
+  } catch (err) {
+    alert("Error: " + err.message);
+    status.textContent = err.message;
+    status.style.color = "red";
+    btn.disabled = false;
+  }
+});
 
   /* ===== Volunteer application form (volunteer.html) ===== */
   document.getElementById('volunteerForm')?.addEventListener('submit', async function (e) {
@@ -1299,5 +1148,4 @@ function escapeHtml(value) {
       initAlbumGallery();
     }
   })();
-
-})(); 
+})();
