@@ -5,160 +5,185 @@ const API_BASE_URL =
     ? 'http://localhost:5000/api'
     : 'https://amaanitvam-foundation.onrender.com/api';
 
+// Shared utility function for escaping HTML to prevent XSS attacks
+function escapeHtml(value) {
+  return String(value ?? '')
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#039;');
+}
+
 (function () {
   'use strict';
 
   function initNavbar() {
-  const nav = document.getElementById('site-nav');
-  const menuToggle = document.getElementById('menu-toggle');
-  const mobileMenu = document.getElementById('mobile-menu');
-  const currentPage = document.body.dataset.page || '';
-  const navLinks = document.getElementById('nav-links');
-  const hasGroupedNavbar = !!document.querySelector('.nav-item.has-dropdown');
-  const needsNavbarUpgrade = false;
+    const nav = document.getElementById('site-nav');
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const currentPage = document.body.dataset.page || '';
+    const navLinks = document.getElementById('nav-links');
+    const hasGroupedNavbar = !!document.querySelector('.nav-item.has-dropdown');
+    const needsNavbarUpgrade = false;
 
-  const pageMap = {
-    about: 0,
-    impact: 0,
-    gallery: 0,
-    volunteer: 1,
-    internship: 1,
-    contact: 1,
-    collaborations: 1,
-    resources: 2,
-    verify: 2,
-    faq: 2
-  };
+    const pageMap = {
+      about: 0,
+      impact: 0,
+      programs: 0,
+      gallery: 0,
 
-  if (hasGroupedNavbar || needsNavbarUpgrade) {
-    document.querySelectorAll('[data-nav]').forEach(function (link) {
-      if (link.dataset.nav === currentPage) {
-        link.classList.add('is-active');
-        link.setAttribute('aria-current', 'page');
-      }
-    });
+      volunteer: 1,
+      internship: 1,
+      contact: 1,
 
-    if (currentPage && pageMap[currentPage] !== undefined) {
-      const triggers = document.querySelectorAll('.nav-link.dropdown-trigger');
-      const activeTrigger = triggers[pageMap[currentPage]];
+      "digital-library": 2,
+      courses: 2,
+      webinars: 2,
+      "webinars-competitions": 2,
 
-      if (activeTrigger) {
-        activeTrigger.classList.add('is-active');
-      }
-    }
+      resources: 3,
+      verify: 3,
+      faq: 3,
+      collaborations: 3,
 
-    function updateNav() {
-      if (!nav) return;
-      const hero = document.querySelector('[data-hero]');
-      const scrolled = window.scrollY > 40;
-      const hasHero = hero && hero.getBoundingClientRect().bottom > 80;
+      portal: 4,
+      admin: 4,
+      dashboard: 4
+    };
 
-      if (hasHero && !scrolled) {
-        nav.classList.add('is-transparent');
-        nav.classList.remove('is-solid');
-      } else {
-        nav.classList.remove('is-transparent');
-        nav.classList.add('is-solid');
-      }
-    }
-
-    window.addEventListener('scroll', updateNav, { passive: true });
-    updateNav();
-
-    if (menuToggle && mobileMenu) {
-      menuToggle.addEventListener('click', function () {
-        const open = mobileMenu.classList.toggle('is-open');
-        menuToggle.setAttribute('aria-expanded', open);
-        menuToggle.classList.toggle('is-active', open);
-        mobileMenu.setAttribute('aria-hidden', String(!open));
-        document.body.style.overflow = open ? 'hidden' : '';
+    if (hasGroupedNavbar || needsNavbarUpgrade) {
+      document.querySelectorAll('[data-nav]').forEach(function (link) {
+        if (link.dataset.nav === currentPage) {
+          link.classList.add('is-active');
+          link.setAttribute('aria-current', 'page');
+        }
       });
 
-      mobileMenu.querySelectorAll('.mobile-group-toggle').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          const section = btn.closest('.mobile-section');
-          const links = section ? section.querySelector('.mobile-group-links') : null;
-          const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+      if (currentPage && pageMap[currentPage] !== undefined) {
+        const triggers = document.querySelectorAll('.nav-link.dropdown-trigger');
+        const activeTrigger = triggers[pageMap[currentPage]];
 
-          mobileMenu.querySelectorAll('.mobile-section').forEach(function (item) {
-            const toggle = item.querySelector('.mobile-group-toggle');
-            const panel = item.querySelector('.mobile-group-links');
+        if (activeTrigger) {
+          activeTrigger.classList.add('is-active');
+        }
+      }
 
-            if (toggle) toggle.setAttribute('aria-expanded', 'false');
-            if (panel) panel.classList.remove('is-open');
+      function updateNav() {
+        if (!nav) return;
+        const hero = document.querySelector('[data-hero]');
+        const scrolled = window.scrollY > 40;
+        const hasHero = hero && hero.getBoundingClientRect().bottom > 80;
+
+        if (hasHero && !scrolled) {
+          nav.classList.add('is-transparent');
+          nav.classList.remove('is-solid');
+        } else {
+          nav.classList.remove('is-transparent');
+          nav.classList.add('is-solid');
+        }
+      }
+
+      window.addEventListener('scroll', updateNav, { passive: true });
+      updateNav();
+
+      if (menuToggle && mobileMenu) {
+        menuToggle.addEventListener('click', function () {
+          const open = mobileMenu.classList.toggle('is-open');
+          menuToggle.setAttribute('aria-expanded', open);
+          menuToggle.classList.toggle('is-active', open);
+          mobileMenu.setAttribute('aria-hidden', String(!open));
+          document.body.style.overflow = open ? 'hidden' : '';
+        });
+
+        mobileMenu.querySelectorAll('.mobile-group-toggle').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            const section = btn.closest('.mobile-section');
+            const links = section ? section.querySelector('.mobile-group-links') : null;
+            const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+
+            mobileMenu.querySelectorAll('.mobile-section').forEach(function (item) {
+              const toggle = item.querySelector('.mobile-group-toggle');
+              const panel = item.querySelector('.mobile-group-links');
+
+              if (toggle) toggle.setAttribute('aria-expanded', 'false');
+              if (panel) panel.classList.remove('is-open');
+            });
+
+            if (!isExpanded && links) {
+              btn.setAttribute('aria-expanded', 'true');
+              links.classList.add('is-open');
+            }
           });
+        });
 
-          if (!isExpanded && links) {
-            btn.setAttribute('aria-expanded', 'true');
-            links.classList.add('is-open');
-          }
+        mobileMenu.querySelectorAll('a').forEach(function (link) {
+          link.addEventListener('click', function () {
+            mobileMenu.classList.remove('is-open');
+            mobileMenu.setAttribute('aria-hidden', 'true');
+            menuToggle.setAttribute('aria-expanded', 'false');
+            menuToggle.classList.remove('is-active');
+            document.body.style.overflow = '';
+          });
+        });
+      }
+
+      document.querySelectorAll('.nav-item.has-dropdown').forEach(function (item) {
+        const trigger = item.querySelector('.dropdown-trigger');
+        const menu = item.querySelector('.dropdown-menu');
+
+        if (!trigger || !menu) return;
+
+        function openMenu() {
+          trigger.setAttribute('aria-expanded', 'true');
+          menu.classList.add('is-open');
+        }
+
+        function closeMenu() {
+          trigger.setAttribute('aria-expanded', 'false');
+          menu.classList.remove('is-open');
+        }
+
+        item.addEventListener('mouseenter', openMenu);
+        item.addEventListener('mouseleave', closeMenu);
+
+        trigger.addEventListener('click', function () {
+          trigger.getAttribute('aria-expanded') === 'true' ? closeMenu() : openMenu();
+        });
+
+        trigger.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') closeMenu();
         });
       });
 
-      mobileMenu.querySelectorAll('a').forEach(function (link) {
-        link.addEventListener('click', function () {
-          mobileMenu.classList.remove('is-open');
-          mobileMenu.setAttribute('aria-hidden', 'true');
-          menuToggle.setAttribute('aria-expanded', 'false');
-          menuToggle.classList.remove('is-active');
-          document.body.style.overflow = '';
-        });
+      document.addEventListener('click', function (e) {
+        if (!e.target.closest('.nav-item.has-dropdown')) {
+          document.querySelectorAll('.dropdown-trigger').forEach(function (trigger) {
+            trigger.setAttribute('aria-expanded', 'false');
+          });
+          document.querySelectorAll('.dropdown-menu').forEach(function (menu) {
+            menu.classList.remove('is-open');
+          });
+        }
       });
     }
-
-    document.querySelectorAll('.nav-item.has-dropdown').forEach(function (item) {
-      const trigger = item.querySelector('.dropdown-trigger');
-      const menu = item.querySelector('.dropdown-menu');
-
-      if (!trigger || !menu) return;
-
-      function openMenu() {
-        trigger.setAttribute('aria-expanded', 'true');
-        menu.classList.add('is-open');
-      }
-
-      function closeMenu() {
-        trigger.setAttribute('aria-expanded', 'false');
-        menu.classList.remove('is-open');
-      }
-
-      item.addEventListener('mouseenter', openMenu);
-      item.addEventListener('mouseleave', closeMenu);
-
-      trigger.addEventListener('click', function () {
-        trigger.getAttribute('aria-expanded') === 'true' ? closeMenu() : openMenu();
-      });
-
-      trigger.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') closeMenu();
-      });
-    });
-
-    document.addEventListener('click', function (e) {
-      if (!e.target.closest('.nav-item.has-dropdown')) {
-        document.querySelectorAll('.dropdown-trigger').forEach(function (trigger) {
-          trigger.setAttribute('aria-expanded', 'false');
-        });
-        document.querySelectorAll('.dropdown-menu').forEach(function (menu) {
-          menu.classList.remove('is-open');
-        });
-      }
-    });
-  }
 
 
   }
 
   document.addEventListener("DOMContentLoaded", function () {
-    const navbarPlaceholder = document.getElementById("navbar-placeholder");
+    const navbarPlaceholder =
+      document.getElementById("navbar") ||
+      document.getElementById("navbar-placeholder");
+
     if (navbarPlaceholder) {
       fetch("components/navbar.html")
-        .then(function(res) { return res.text(); })
-        .then(function(data) {
-          navbarPlaceholder.outerHTML = data;
+        .then(function (res) { return res.text(); })
+        .then(function (data) {
+          navbarPlaceholder.innerHTML = data;
           initNavbar();
         })
-        .catch(function(err) { console.error("Navbar load error:", err); });
+        .catch(function (err) { console.error("Navbar load error:", err); });
     } else {
       initNavbar();
     }
@@ -274,11 +299,11 @@ const API_BASE_URL =
           <div>
             <p class="font-semibold text-green-800">Certificate Verified</p>
 
-            <p><strong>Name:</strong> ${cert.issuedTo}</p>
-            <p><strong>Certificate ID:</strong> ${cert.certificateId}</p>
-            <p><strong>Type:</strong> ${cert.type}</p>
-            <p><strong>Domain:</strong> ${cert.domain}</p>
-            <p><strong>Issued By:</strong> ${cert.issuedBy}</p>
+            <p><strong>Name:</strong> ${escapeHtml(cert.issuedTo)}</p>
+            <p><strong>Certificate ID:</strong> ${escapeHtml(cert.certificateId)}</p>
+            <p><strong>Type:</strong> ${escapeHtml(cert.type)}</p>
+            <p><strong>Domain:</strong> ${escapeHtml(cert.domain)}</p>
+            <p><strong>Issued By:</strong> ${escapeHtml(cert.issuedBy)}</p>
           </div>
         </div>
       `;
@@ -291,7 +316,7 @@ const API_BASE_URL =
           <span class="material-symbols-outlined text-red-600">cancel</span>
           <div>
             <p class="font-semibold text-red-800">Certificate Not Found</p>
-            <p>${err.message}</p>
+            <p>${escapeHtml(err.message)}</p>
           </div>
         </div>
       `;
@@ -1262,6 +1287,7 @@ document.getElementById('volunteerForm')?.addEventListener('submit', async funct
   }
 })();
 
+<<<<<<< HEAD
 
 
 
@@ -1411,3 +1437,341 @@ document.addEventListener('DOMContentLoaded', () => {
     // Execute first configuration pipeline pass
     renderLibraryGrid(libraryItems);
 });
+=======
+/* ===== Gallery Album Loader - Common JS ===== */
+(function () {
+  'use strict';
+
+  const container = document.getElementById('gallery-album-container');
+  const isGalleryPage =
+    document.body?.dataset?.page === 'gallery' ||
+    /gallery\.html?$/i.test(window.location.pathname);
+
+  if (!container || !isGalleryPage) return;
+
+  let activeApiBase = (
+    container.dataset.galleryApiBase ||
+    window.GALLERY_API_BASE ||
+    'https://amaanitvam-foundation.onrender.com'
+  ).replace(/\/+$/, '');
+
+  let currentFolders = [];
+  const folderMediaCache = new Map();
+
+  function escapeHtml(value) {
+    return String(value ?? '')
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&#039;');
+  }
+
+  function getId(value) {
+    if (!value) return '';
+    if (typeof value === 'string') return value;
+    return value._id || value.id || value.mediaId || value.fileId || value.gridFsId || '';
+  }
+
+  async function fetchGalleryJson(path) {
+    const response = await fetch(`${activeApiBase}${path}`, { cache: 'no-store' });
+    const data = await response.json().catch(() => ({}));
+
+    if (!response.ok || data.success === false) {
+      throw new Error(data.message || `Gallery request failed: ${response.status}`);
+    }
+
+    return data;
+  }
+
+  function normalizeMediaUrl(media) {
+    if (!media) return '';
+
+    const raw =
+      media.imageUrl ||
+      media.url ||
+      media.secure_url ||
+      media.src ||
+      media.path ||
+      media.fileUrl ||
+      media.mediaUrl ||
+      '';
+
+    const id = getId(media);
+
+    if (!raw && id) {
+      return `${activeApiBase}/api/gallery/media/${encodeURIComponent(id)}`;
+    }
+
+    if (!raw) return '';
+
+    if (/^(data:|blob:|https?:\/\/)/i.test(raw)) return raw;
+
+    if (raw.startsWith('/api/')) return `${activeApiBase}${raw}`;
+    if (raw.startsWith('api/')) return `${activeApiBase}/${raw}`;
+
+    return raw;
+  }
+
+  function isVideo(media) {
+    const url = normalizeMediaUrl(media);
+    return (
+      media?.mediaType === 'video' ||
+      String(media?.contentType || '').startsWith('video/') ||
+      /\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(url)
+    );
+  }
+
+  function isImage(media) {
+    if (!media) return false;
+    if (media.mediaType === 'image') return true;
+    if (String(media.contentType || '').startsWith('image/')) return true;
+    return !isVideo(media);
+  }
+
+  function timestampValue(item) {
+    const value = Date.parse(item?.createdAt || item?.uploadedAt || item?.updatedAt || '');
+    return Number.isFinite(value) ? value : 0;
+  }
+
+  function sortByUploadOrder(mediaItems) {
+    return [...(mediaItems || [])].sort((a, b) => {
+      const byDate = timestampValue(a) - timestampValue(b);
+      if (byDate !== 0) return byDate;
+      return String(getId(a)).localeCompare(String(getId(b)));
+    });
+  }
+
+  async function getFolderMedia(folderId) {
+    if (folderMediaCache.has(folderId)) {
+      return folderMediaCache.get(folderId);
+    }
+
+    const data = await fetchGalleryJson(`/api/gallery/folders/${encodeURIComponent(folderId)}/media`);
+    const media = Array.isArray(data.images)
+      ? data.images
+      : Array.isArray(data.media)
+        ? data.media
+        : [];
+
+    const ordered = sortByUploadOrder(media);
+    folderMediaCache.set(folderId, ordered);
+    return ordered;
+  }
+
+  async function hydrateFolderCovers() {
+    const foldersToCheck = currentFolders.filter(folder => {
+      const id = getId(folder);
+      return id && Number(folder.mediaCount || 0) > 0;
+    });
+
+    for (const folder of foldersToCheck) {
+      try {
+        const media = await getFolderMedia(getId(folder));
+        const photoCandidates = sortByUploadOrder(media).filter(isImage);
+        folder.__coverMedia =
+          folder.coverMedia ||
+          folder.coverImage ||
+          folder.coverUrl ||
+          folder.thumbnail ||
+          photoCandidates[0] ||
+          media[0] ||
+          null;
+      } catch (error) {
+        console.warn('Could not resolve gallery album cover:', folder?.name, error);
+      }
+    }
+  }
+
+  function placeholderMarkup() {
+    return `
+      <div class="gallery-album-placeholder" aria-hidden="true">
+        <span class="material-symbols-outlined">photo_library</span>
+      </div>
+    `;
+  }
+
+  function mediaThumb(media, className = '') {
+    const url = normalizeMediaUrl(media);
+    const title = escapeHtml(
+      media?.title ||
+      media?.originalName ||
+      media?.filename ||
+      media?.name ||
+      'Gallery media'
+    );
+
+    if (!url) return placeholderMarkup();
+
+    if (isVideo(media)) {
+      return `<video class="${className}" src="${escapeHtml(url)}" controls playsinline preload="metadata" aria-label="${title}"></video>`;
+    }
+
+    return `<img class="${className}" src="${escapeHtml(url)}" alt="${title}" loading="lazy" decoding="async" />`;
+  }
+
+  function albumCoverMarkup(folder) {
+    const cover = folder.__coverMedia;
+    const url = normalizeMediaUrl(cover);
+    const title = escapeHtml(cover?.title || cover?.originalName || folder?.name || 'Gallery album cover');
+
+    if (!url) return placeholderMarkup();
+
+    if (isVideo(cover)) {
+      return `<video class="gallery-album-cover-media" src="${escapeHtml(url)}" muted playsinline preload="metadata" aria-label="${title}"></video>`;
+    }
+
+    return `<img class="gallery-album-cover-media" src="${escapeHtml(url)}" alt="${title}" loading="lazy" decoding="async" />`;
+  }
+
+  function setIntro(title, description) {
+    const heading = document.getElementById('gallery-grid-title');
+    const introText = document.querySelector('.gallery-intro .section-desc');
+
+    if (heading) heading.textContent = title;
+    if (introText && description) introText.textContent = description;
+  }
+
+  function albumCountLabel(count) {
+    const total = Number(count || 0);
+    return `${total} ${total === 1 ? 'media item' : 'media items'}`;
+  }
+
+  function renderMessage(message, tone = 'info') {
+    container.className = 'gallery-album-shell';
+    container.innerHTML = `<div class="gallery-state gallery-state-${tone}">${escapeHtml(message)}</div>`;
+  }
+
+  function renderAlbums() {
+    setIntro(
+      'Browse Gallery Albums',
+      'Open an album to view images and videos grouped by the same folders'
+    );
+
+    container.className = 'gallery-grid gallery-albums-grid';
+
+    if (!currentFolders.length) {
+      renderMessage('No gallery albums are available yet. Albums uploaded from the admin portal will appear here automatically.');
+      return;
+    }
+
+    container.innerHTML = currentFolders.map(folder => {
+      const id = getId(folder);
+      const name = folder.name || folder.title || 'Untitled Album';
+      const description = folder.description || 'View photos and videos from this album.';
+
+      return `
+        <article class="gallery-album-card gallery-card reveal-card" data-folder-id="${escapeHtml(id)}" tabindex="0" role="button" aria-label="Open ${escapeHtml(name)} album">
+          <div class="gallery-album-cover">
+            ${albumCoverMarkup(folder)}
+            <span class="gallery-album-count">${escapeHtml(albumCountLabel(folder.mediaCount))}</span>
+          </div>
+          <div class="gallery-album-body">
+            <h3>${escapeHtml(name)}</h3>
+            <p>${escapeHtml(description)}</p>
+            <span class="gallery-album-open">Open Album <span aria-hidden="true">→</span></span>
+          </div>
+        </article>
+      `;
+    }).join('');
+
+    container.querySelectorAll('.gallery-album-card').forEach(card => {
+      const folderId = card.dataset.folderId;
+
+      const open = () => openAlbum(folderId);
+
+      card.addEventListener('click', open);
+      card.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          open();
+        }
+      });
+    });
+  }
+
+  async function openAlbum(folderId) {
+    const folder = currentFolders.find(item => String(getId(item)) === String(folderId));
+    if (!folder) return;
+
+    setIntro(folder.name || 'Gallery Album', folder.description || 'Browse images and videos from this album.');
+
+    container.className = 'gallery-album-shell';
+    container.innerHTML = `
+      <div class="gallery-album-toolbar">
+        <button class="gallery-back-button" type="button" id="galleryBackToAlbums">← Back to Albums</button>
+        <div>
+          <span class="gallery-album-kicker">Album</span>
+          <h3>${escapeHtml(folder.name || 'Gallery Album')}</h3>
+        </div>
+      </div>
+      <div class="gallery-state">Loading album media...</div>
+    `;
+
+    document.getElementById('galleryBackToAlbums')?.addEventListener('click', renderAlbums);
+
+    try {
+      const media = await getFolderMedia(folderId);
+      renderAlbumMedia(folder, media);
+    } catch (error) {
+      renderMessage(error.message || 'Failed to load this album.', 'error');
+    }
+  }
+
+  function renderAlbumMedia(folder, media) {
+    container.className = 'gallery-album-shell';
+
+    const grid = media.length
+      ? `
+        <div class="gallery-album-media-grid">
+          ${media.map(item => {
+        const title = item.title || item.originalName || item.filename || 'Gallery media';
+
+        return `
+              <figure class="gallery-media-card gallery-card reveal-card">
+                <div class="gallery-media-frame">
+                  ${mediaThumb(item, 'gallery-media-file')}
+                </div>
+                <figcaption>${escapeHtml(title)}</figcaption>
+              </figure>
+            `;
+      }).join('')}
+        </div>
+      `
+      : `<div class="gallery-state">No media has been uploaded in this album yet.</div>`;
+
+    container.innerHTML = `
+      <div class="gallery-album-toolbar">
+        <button class="gallery-back-button" type="button" id="galleryBackToAlbums">← Back to Albums</button>
+        <div>
+          <span class="gallery-album-kicker">${escapeHtml(albumCountLabel(media.length))}</span>
+          <h3>${escapeHtml(folder.name || 'Gallery Album')}</h3>
+        </div>
+      </div>
+      ${grid}
+    `;
+
+    document.getElementById('galleryBackToAlbums')?.addEventListener('click', renderAlbums);
+  }
+
+  async function initAlbumGallery() {
+    renderMessage('Loading gallery albums...');
+
+    try {
+      const foldersData = await fetchGalleryJson('/api/gallery/folders');
+      currentFolders = Array.isArray(foldersData.folders) ? foldersData.folders : [];
+
+      await hydrateFolderCovers();
+      renderAlbums();
+    } catch (error) {
+      renderMessage(error.message || 'Failed to load gallery albums.', 'error');
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAlbumGallery, { once: true });
+  } else {
+    initAlbumGallery();
+  }
+})();
+>>>>>>> c4881dd6ce7626b359f24138e8dc7cf7f1e99f36
