@@ -9,9 +9,8 @@ import TasksPage from './pages/TasksPage';
 import AnnouncementsPage from './pages/AnnouncementsPage';
 import ProjectsPage from './pages/ProjectsPage';
 import ProfilePage from './pages/ProfilePage';
-import MemberReportsPage from './pages/MemberReportsPage'; // 👈 Updated naming convention
+import MemberReportsPage from './pages/ReportsPage'; 
 import AttendancePage from './pages/AttendancePage';
-import MyCertificatesPage from './pages/MyCertificatesPage';
 import DepartmentsPage from './pages/DepartmentsPage';
 
 function DashPage({ children }) {
