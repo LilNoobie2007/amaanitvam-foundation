@@ -6882,11 +6882,6 @@ body[data-page="faq"] .faq-item.is-open .faq-icon {
   }
 }
 
-<<<<<<< HEAD
-
-
-
-
 
 /* ==========================================================================
    PREMIUM DIGITAL LIBRARY EXTENSION MODULE
@@ -7295,7 +7290,9 @@ body[data-page="faq"] .faq-item.is-open .faq-icon {
   .library-toolbar {
     flex-direction: column;
     align-items: stretch;
-=======
+  }
+}
+
 /* ===========================
    WEBINARS PAGE
 =========================== */
@@ -7518,6 +7515,5 @@ body[data-page="faq"] .faq-item.is-open .faq-icon {
   .contact-form-card,
   .contact-info-card {
     padding: 1.5rem;
->>>>>>> c4881dd6ce7626b359f24138e8dc7cf7f1e99f36
   }
 }
