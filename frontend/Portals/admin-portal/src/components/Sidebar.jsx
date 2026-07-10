@@ -19,7 +19,7 @@ import api from '../config/api';
 export default function Sidebar() {
   const { user, userProfile, logout } = useAuth();
   const navigate = useNavigate();
-  const [orgName, setOrgName] = useState('Amaanitvam');
+  const [orgName, setOrgName] = useState('Amaanitvam Foundation');
   const [profileImageFailed, setProfileImageFailed] = useState(false);
 
   const displayName =
@@ -49,6 +49,21 @@ export default function Sidebar() {
     setProfileImageFailed(false);
   }, [profileImage]);
 
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const res = await api.get('/admin/settings');
+        if (res.data.settings?.orgName) {
+          setOrgName(res.data.settings.orgName);
+        }
+      } catch {
+        console.error('Failed to load org name');
+      }
+    };
+
+    fetchSettings();
+  }, []);
+
   const handleLogout = async () => {
     try {
       await logout();
@@ -58,163 +73,145 @@ export default function Sidebar() {
     }
   };
 
-  useEffect(() => {
-    const fetchSettings = async () => {
-      try {
-        const res = await api.get('/admin/settings');
-        if (res.data.settings?.orgName) {
-          setOrgName(res.data.settings.orgName);
-        }
-      } catch (err) {
-        console.error('Failed to load org name');
-      }
-    };
+  const navLinkClass = ({ isActive }) =>
+    `sidebar-nav-link ${isActive ? 'active' : ''}`;
 
-    fetchSettings();
-  }, []);
-
-  const navLinkClass = ({ isActive }) => `sidebar-nav-link ${isActive ? 'active' : ''}`;
+  const firstWord = orgName.split(' ')[0] || 'Amaanitvam';
+  const restWords = orgName.split(' ').slice(1).join(' ') || 'Foundation';
 
   return (
-    <aside className="w-64 bg-primary-dark fixed top-0 left-0 h-screen flex flex-col z-50 border-r border-gold/20">
-      {/* Branding */}
-     <div className="px-6 py-6 border-b border-gold/10 bg-primary/20">
-  <div className="flex items-center gap-4">
-    {/* Brand Logo */}
-    <img 
-      alt="Amaanitvam Foundation" 
-      className="brand-logo h-12 w-auto object-contain bg-white p-1 rounded-sm" 
-      src="assets/images/logo.jpg" 
-    />
-    
-    {/* Brand Typography */}
-    <div className="flex flex-col justify-center">
-      <h1 className="text-2xl font-heading font-bold text-gold tracking-tight leading-none uppercase">
-        {orgName.split(' ')[0] || 'Amaanitvam'}
-      </h1>
-      <p className="text-[11px] font-ui text-white/70 uppercase tracking-[0.25em] font-semibold mt-1 leading-none">
-        {orgName.split(' ').slice(1).join(' ') || 'Foundation'}
-      </p>
-    </div>
-  </div>
-</div>
+    <aside className="admin-sidebar fixed top-0 left-0 z-50 flex h-screen w-64 flex-col">
+      <div className="px-6 py-6 border-b border-white/10 bg-white/0">
+        <div className="flex items-center gap-4">
+          <img
+            alt="Amaanitvam Foundation"
+            className="h-12 w-12 rounded bg-white object-contain p-1"
+            src="/assets/images/logo.jpg"
+          />
 
-      {/* Navigation */}
+          <div className="flex flex-col justify-center">
+            <h1 className="brand-title text-2xl font-bold tracking-tight leading-none uppercase">
+              {firstWord}
+            </h1>
+            <p className="brand-subtitle text-[11px] uppercase tracking-[0.25em] font-semibold mt-1 leading-none">
+              {restWords}
+            </p>
+          </div>
+        </div>
+      </div>
+
       <nav className="flex-1 overflow-y-auto py-6 px-4 space-y-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         {(userProfile?.role === 'admin' || userProfile?.role === 'super_admin') && (
           <>
-          <p className="text-[10px] text-white/50 uppercase tracking-[0.22em] font-ui">
-              Admin Panel
-            </p>
-            <p className="inline-block px-4 pt-6 mb-[0.85rem] text-[0.82rem] font-ui font-bold text-[var(--gold-dark,#B8860B)] uppercase tracking-[0.18em]">
-              Management
-            </p>
+            <p className="admin-panel-label px-1 pb-4">Admin Panel</p>
+
+            <p className="sidebar-section-title px-4 pt-2 mb-3">Management</p>
 
             <NavLink to="/candidates" className={navLinkClass}>
-              <Users className="w-4.5 h-4.5" />
-              <span className="font-ui">Candidates</span>
+              <Users className="w-[18px] h-[18px]" />
+              <span>Candidates</span>
             </NavLink>
 
             <NavLink to="/members" className={navLinkClass}>
-              <UserCog className="w-4.5 h-4.5" />
-              <span className="font-ui">Members</span>
+              <UserCog className="w-[18px] h-[18px]" />
+              <span>Members</span>
             </NavLink>
 
             <NavLink to="/donations" className={navLinkClass}>
-              <Heart className="w-4.5 h-4.5" />
-              <span className="font-ui">Donations</span>
+              <Heart className="w-[18px] h-[18px]" />
+              <span>Donations</span>
             </NavLink>
 
-            <p className="inline-block px-4 pt-6 mb-[0.85rem] text-[0.82rem] font-ui font-bold text-[var(--gold-dark,#B8860B)] uppercase tracking-[0.18em]">
-              Tools
-            </p>
+            <p className="sidebar-section-title px-4 pt-6 mb-3">Tools</p>
 
             <NavLink to="/certificates" className={navLinkClass}>
-              <Award className="w-4.5 h-4.5" />
-              <span className="font-ui">Certificates</span>
+              <Award className="w-[18px] h-[18px]" />
+              <span>Certificates</span>
             </NavLink>
 
             <NavLink to="/cms" className={navLinkClass}>
-              <Globe className="w-4.5 h-4.5" />
-              <span className="font-ui">Website CMS</span>
+              <Globe className="w-[18px] h-[18px]" />
+              <span>Website CMS</span>
             </NavLink>
 
             <NavLink to="/gallery" className={navLinkClass}>
-              <Image className="w-4.5 h-4.5 opacity-70" />
-              <span className="font-ui">Gallery Media</span>
+              <Image className="w-[18px] h-[18px]" />
+              <span>Gallery Media</span>
+            </NavLink>
+
+            <NavLink to="/attendance" className={navLinkClass}>
+               <Users className="w-[18px] h-[18px]" />
+              <span>Attendance</span>
             </NavLink>
 
             <NavLink to="/reports" className={navLinkClass}>
-              <BarChart3 className="w-4.5 h-4.5 opacity-70" />
-              <span className="font-ui">Reports</span>
+              <BarChart3 className="w-[18px] h-[18px]" />
+              <span>Reports</span>
             </NavLink>
 
             <NavLink to="/settings" className={navLinkClass}>
-              <SettingsIcon className="w-4.5 h-4.5 opacity-70" />
-              <span className="font-ui">System Settings</span>
+              <SettingsIcon className="w-[18px] h-[18px]" />
+              <span>System Settings</span>
             </NavLink>
           </>
         )}
 
         {(userProfile?.role === 'member' || userProfile?.role === 'intern') && (
           <>
-            <p className="inline-block px-4 pt-6 mb-[0.85rem] text-[0.82rem] font-ui font-bold text-[var(--gold-dark,#B8860B)] uppercase tracking-[0.18em]">
-              My Workspace
-            </p>
+            <p className="sidebar-section-title px-4 pt-6 mb-3">My Workspace</p>
 
             <NavLink to="/tasks" className={navLinkClass}>
-              <Award className="w-4.5 h-4.5" />
-              <span className="font-ui">My Tasks</span>
+              <Award className="w-[18px] h-[18px]" />
+              <span>My Tasks</span>
             </NavLink>
 
             <NavLink to="/attendance" className={navLinkClass}>
-              <Users className="w-4.5 h-4.5" />
-              <span className="font-ui">Attendance</span>
+              <Users className="w-[18px] h-[18px]" />
+              <span>Attendance</span>
             </NavLink>
 
             <NavLink to="/my-certificates" className={navLinkClass}>
-              <Shield className="w-4.5 h-4.5" />
-              <span className="font-ui">My Certificates</span>
+              <Shield className="w-[18px] h-[18px]" />
+              <span>My Certificates</span>
             </NavLink>
           </>
         )}
 
-        <p className="inline-block px-4 pt-6 mb-[0.85rem] text-[0.82rem] font-ui font-bold text-[var(--gold-dark,#B8860B)] uppercase tracking-[0.18em]">
-          Account
-        </p>
+        <p className="sidebar-section-title px-4 pt-6 mb-3">Account</p>
 
         <NavLink to="/profile" className={navLinkClass}>
-          <User className="w-4.5 h-4.5" />
-          <span className="font-ui">My Profile</span>
+          <User className="w-[18px] h-[18px]" />
+          <span>My Profile</span>
         </NavLink>
       </nav>
 
-      {/* Footer — Logged-in user */}
-      <div className="px-4 py-4 border-t border-gold/10 bg-primary/10">
+      <div className="border-t border-white/10 px-4 py-4 bg-white/0">
         <div className="flex items-center gap-3">
           {profileImage && !profileImageFailed ? (
             <img
               src={profileImage}
               alt={displayName}
               onError={() => setProfileImageFailed(true)}
-              className="w-10 h-10 rounded-full object-cover border border-gold/30 shrink-0 bg-gold/10"
+              className="h-10 w-10 shrink-0 rounded-full border border-[#d8a15f]/40 bg-[#d8a15f]/10 object-cover"
             />
           ) : (
-            <div className="w-10 h-10 bg-gold rounded-full flex items-center justify-center text-primary-dark font-bold text-sm shrink-0">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#d8a15f] text-sm font-bold text-[#5d0f2d]">
               {initials}
             </div>
           )}
 
-          <div className="flex-1 min-w-0">
-            <p className="text-sm font-ui font-bold text-white truncate" title={displayName}>
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-sm font-bold text-white" title={displayName}>
               {displayName}
             </p>
+
             {displayEmail && (
-              <p className="text-[11px] font-ui text-white/50 truncate" title={displayEmail}>
+              <p className="truncate text-[11px] text-white/55" title={displayEmail}>
                 {displayEmail}
               </p>
             )}
-            <span className="inline-block mt-1 px-2 py-0.5 text-[10px] font-ui font-bold uppercase tracking-wide bg-gold text-primary-dark rounded">
+
+            <span className="mt-1 inline-block rounded bg-[#d8a15f] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-[#5d0f2d]">
               {displayRole}
             </span>
           </div>
@@ -222,9 +219,9 @@ export default function Sidebar() {
           <button
             onClick={handleLogout}
             title="Logout"
-            className="p-2 text-gold/60 hover:text-gold hover:bg-gold/10 rounded-lg transition-colors duration-300"
+            className="rounded-lg p-2 text-[#d8a15f]/70 transition-colors duration-300 hover:bg-[#d8a15f]/10 hover:text-[#d8a15f]"
           >
-            <LogOut className="w-4 h-4" />
+            <LogOut className="h-4 w-4" />
           </button>
         </div>
       </div>
