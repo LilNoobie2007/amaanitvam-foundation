@@ -7517,3 +7517,148 @@ body[data-page="faq"] .faq-item.is-open .faq-icon {
     padding: 1.5rem;
   }
 }
+
+/* COURSES MODULE */
+
+.course-hero-stats{
+    margin-top:-70px;
+    position:relative;
+    z-index:20;
+}
+
+.course-hero-stats .container{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:24px;
+}
+
+.hero-stat-card{
+    background:#fff;
+    border-radius:18px;
+    padding:30px;
+    text-align:center;
+    box-shadow:0 18px 45px rgba(93,15,45,.10);
+    transition:.35s;
+    border:1px solid rgba(196,107,135,.12);
+}
+
+.hero-stat-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 24px 60px rgba(93,15,45,.18);
+}
+
+.hero-stat-card .material-symbols-outlined{
+    font-size:42px;
+    color:var(--primary);
+    margin-bottom:14px;
+}
+
+.hero-stat-card h3{
+    font-size:34px;
+    color:var(--primary);
+    margin-bottom:8px;
+    font-weight:700;
+}
+
+.hero-stat-card p{
+    color:var(--muted);
+    margin:0;
+}
+
+.courses-toolbar{
+    padding:70px 0 40px;
+}
+
+.featured-courses{
+    padding: 0px 0;
+}
+
+.courses-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:35px;
+    margin-top:45px;
+}
+
+.course-card{
+    background:#fff;
+    border-radius:24px;
+    overflow:hidden;
+    transition:.35s;
+    box-shadow:0 15px 40px rgba(93,15,45,.08);
+    border:1px solid rgba(196,107,135,.12);
+}
+
+.course-card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 25px 60px rgba(93,15,45,.18);
+}
+
+.course-image{
+    height:220px;
+    overflow:hidden;
+}
+
+.course-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:.45s;
+}
+
+.course-card:hover img{
+    transform:scale(1.08);
+}
+
+.course-content{
+    padding:30px;
+}
+
+.course-tag{
+    display:inline-block;
+    background:rgba(196,107,135,.12);
+    color:var(--primary);
+    padding:6px 14px;
+    border-radius:30px;
+    font-size:13px;
+    font-weight:700;
+    margin-bottom:18px;
+}
+
+.course-content h3{
+    margin-bottom:12px;
+    color:var(--primary);
+}
+
+.course-meta{
+    display:flex;
+    justify-content:space-between;
+    margin:20px 0;
+    color:var(--muted);
+    font-size:14px;
+}
+
+.course-rating{
+    display:flex;
+    gap:3px;
+    color:#f8b400;
+    margin-bottom:20px;
+}
+
+.course-progress{
+    margin:20px 0;
+}
+
+.course-progress .progress{
+    height:10px;
+    background:#eee;
+    border-radius:30px;
+    overflow:hidden;
+}
+
+.course-progress .progress span{
+    display:block;
+    height:100%;
+    background:linear-gradient(90deg,var(--primary),var(--secondary));
+    border-radius:30px;
+}

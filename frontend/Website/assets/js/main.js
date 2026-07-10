@@ -1794,3 +1794,234 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     }
 });
+
+/* COURSES MODULE */
+
+if (window.location.pathname.includes("courses.html")) {
+
+const courses = [
+
+{
+title:"HTML & CSS Fundamentals",
+category:"technical",
+domain:"Web Development",
+instructor:"Technical Team",
+duration:"4 Weeks",
+difficulty:"Beginner",
+rating:5,
+progress:72,
+image:"assets/images/course-web.jpg"
+},
+
+{
+title:"JavaScript Essentials",
+category:"technical",
+domain:"Web Development",
+instructor:"Technical Team",
+duration:"6 Weeks",
+difficulty:"Intermediate",
+rating:5,
+progress:0,
+image:"assets/images/course-js.jpg"
+},
+
+{
+title:"React Fundamentals",
+category:"technical",
+domain:"Web Development",
+instructor:"Technical Team",
+duration:"8 Weeks",
+difficulty:"Intermediate",
+rating:5,
+progress:0,
+image:"assets/images/course-react.jpg"
+},
+
+{
+title:"UI / UX Design",
+category:"technical",
+domain:"UI/UX",
+instructor:"Design Team",
+duration:"5 Weeks",
+difficulty:"Beginner",
+rating:4,
+progress:45,
+image:"assets/images/course-uiux.jpg"
+},
+
+{
+title:"Graphic Design with Canva",
+category:"technical",
+domain:"Graphic Design",
+instructor:"Creative Team",
+duration:"4 Weeks",
+difficulty:"Beginner",
+rating:5,
+progress:0,
+image:"assets/images/course-graphic.jpg"
+},
+
+{
+title:"Content Writing Masterclass",
+category:"nontechnical",
+domain:"Content Writing",
+instructor:"Content Team",
+duration:"3 Weeks",
+difficulty:"Beginner",
+rating:5,
+progress:0,
+image:"assets/images/course-writing.jpg"
+},
+
+{
+title:"Social Media Management",
+category:"nontechnical",
+domain:"Social Media",
+instructor:"Media Team",
+duration:"5 Weeks",
+difficulty:"Intermediate",
+rating:4,
+progress:0,
+image:"assets/images/course-social.jpg"
+},
+
+{
+title:"Human Resource Management",
+category:"nontechnical",
+domain:"HR",
+instructor:"HR Team",
+duration:"4 Weeks",
+difficulty:"Intermediate",
+rating:5,
+progress:0,
+image:"assets/images/course-hr.jpg"
+},
+
+{
+title:"Leadership & Management",
+category:"leadership",
+domain:"Leadership",
+instructor:"Executive Team",
+duration:"6 Weeks",
+difficulty:"Advanced",
+rating:5,
+progress:0,
+image:"assets/images/course-leadership.jpg"
+},
+
+{
+title:"Interview Preparation",
+category:"leadership",
+domain:"Career",
+instructor:"Mentorship Team",
+duration:"2 Weeks",
+difficulty:"Beginner",
+rating:4,
+progress:0,
+image:"assets/images/course-interview.jpg"
+},
+
+{
+title:"NGO Orientation",
+category:"orientation",
+domain:"Foundation",
+instructor:"Amaanitvam",
+duration:"2 Weeks",
+difficulty:"Beginner",
+rating:5,
+progress:0,
+image:"assets/images/course-orientation.jpg"
+},
+
+{
+title:"CSR Fundamentals",
+category:"orientation",
+domain:"CSR",
+instructor:"CSR Team",
+duration:"3 Weeks",
+difficulty:"Intermediate",
+rating:5,
+progress:0,
+image:"assets/images/course-csr.jpg"
+}
+
+];
+
+const featuredContainer=document.getElementById("coursesContainer");
+const popularContainer=document.getElementById("popularCourses");
+
+function getStars(count){
+let stars="";
+for(let i=0;i<count;i++){
+stars+=`<span class="material-symbols-outlined">star</span>`;
+}
+
+return stars;
+}
+
+
+function createCourseCard(course){
+return `
+
+<div class="course-card" data-category="${course.category}">
+<div class="course-image">
+<img src="${course.image}" alt="${course.title}">
+</div>
+
+<div class="course-content">
+
+<span class="course-tag">
+${course.domain}
+</span>
+
+<h3>${course.title}</h3>
+<div class="course-meta">
+
+<span>${course.instructor}</span>
+<span>${course.duration}</span>
+</div>
+<div class="course-rating">
+${getStars(course.rating)}
+
+</div>
+<div class="course-progress">
+<div class="progress">
+<span style="width:${course.progress}%"></span>
+</div>
+</div>
+<button class="btn btn-primary">
+${course.progress>0?"Continue Learning":"Enroll Now"}
+</button>
+</div>
+</div>
+`;
+}
+
+
+function renderFeatured(){
+if(!featuredContainer) return;
+featuredContainer.innerHTML="";
+courses.forEach(course=>{
+featuredContainer.innerHTML+=createCourseCard(course);
+
+});
+}
+
+
+function renderPopular(){
+if(!popularContainer) return;
+popularContainer.innerHTML="";
+
+courses.slice(0,6).forEach(course=>{
+
+popularContainer.innerHTML+=createCourseCard(course);
+});
+}
+
+
+renderFeatured();
+renderPopular();
+
+} 
+
+console.log("Courses Module Loaded Successfully");
