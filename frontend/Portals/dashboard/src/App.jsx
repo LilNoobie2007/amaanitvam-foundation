@@ -9,7 +9,7 @@ import TasksPage from './pages/TasksPage';
 import AnnouncementsPage from './pages/AnnouncementsPage';
 import ProjectsPage from './pages/ProjectsPage';
 import ProfilePage from './pages/ProfilePage';
-import MemberReportsPage from './pages/Reports'; 
+import Reports from './pages/Reports'; 
 import AttendancePage from './pages/AttendancePage';
 import DepartmentsPage from './pages/DepartmentsPage';
 
