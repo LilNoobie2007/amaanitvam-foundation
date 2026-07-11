@@ -35,7 +35,6 @@ function getViewportSize() {
     const mobileMenu = document.getElementById('mobile-menu');
     const currentPage = document.body.dataset.page || '';
 
-    // Navbar fetch hone se pehle ya duplicate initialize hone se bachata hai
     if (
       !nav ||
       !menuToggle ||
@@ -1330,6 +1329,8 @@ function getViewportSize() {
     }
   })();
 
+  window.initAmaanitvamNavbar = initNavbar;
+
   // Lazy loading initialization for images
   if ('IntersectionObserver' in window) {
     const imageObserver = new IntersectionObserver((entries, observer) => {
@@ -1974,12 +1975,15 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 })();
 
+// navbar
 document.addEventListener("DOMContentLoaded", function () {
   const navbarPlaceholder =
     document.getElementById("navbar-placeholder");
 
   if (!navbarPlaceholder) {
-    initNavbar();
+    if (typeof window.initAmaanitvamNavbar === "function") {
+      window.initAmaanitvamNavbar();
+    }
     return;
   }
 
@@ -1993,13 +1997,17 @@ document.addEventListener("DOMContentLoaded", function () {
     })
     .then(function (data) {
       navbarPlaceholder.innerHTML = data;
-      initNavbar();
+
+      if (typeof window.initAmaanitvamNavbar === "function") {
+        window.initAmaanitvamNavbar();
+      } else {
+        console.error("Navbar initializer was not found.");
+      }
     })
     .catch(function (error) {
       console.error("Error loading the navbar:", error);
     });
 });
-
 if (window.location.pathname.includes("courses.html")) {
 
   const courses = [
