@@ -34,7 +34,18 @@ function getViewportSize() {
     const menuToggle = document.getElementById('menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
     const currentPage = document.body.dataset.page || '';
-    const hasGroupedNavbar = !!document.querySelector('.nav-item.has-dropdown');
+
+    // Navbar fetch hone se pehle ya duplicate initialize hone se bachata hai
+    if (
+      !nav ||
+      !menuToggle ||
+      !mobileMenu ||
+      nav.dataset.initialized === 'true'
+    ) {
+      return;
+    }
+
+    nav.dataset.initialized = 'true';
 
     // 1. Highlight active links
     document.querySelectorAll('[data-nav]').forEach(function (link) {
@@ -64,46 +75,124 @@ function getViewportSize() {
     updateNav();
 
     // 3. Mobile Menu Logic with enhanced close behavior
-    if (menuToggle && mobileMenu) {
-      function closeMenu() {
-        mobileMenu.classList.remove('is-open');
-        menuToggle.setAttribute('aria-expanded', 'false');
-        document.body.style.overflow = '';
-      }
+    // 3. Mobile Menu Logic
+    function closeMenu() {
+      mobileMenu.classList.remove('is-open');
+      mobileMenu.setAttribute('aria-hidden', 'true');
 
-      function toggleMenu() {
-        const open = mobileMenu.classList.toggle('is-open');
-        menuToggle.setAttribute('aria-expanded', open);
-        document.body.style.overflow = open ? 'hidden' : '';
-      }
+      menuToggle.classList.remove('is-active');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      menuToggle.setAttribute('aria-label', 'Open navigation menu');
 
-      menuToggle.addEventListener('click', toggleMenu);
+      document.body.style.overflow = '';
 
-      // Close menu when clicking mobile menu links
-      mobileMenu.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', closeMenu);
+      // Saare mobile dropdown close
+      mobileMenu
+        .querySelectorAll('.mobile-group-links.is-open')
+        .forEach(function (group) {
+          group.classList.remove('is-open');
+        });
+
+      mobileMenu
+        .querySelectorAll('.mobile-group-toggle[aria-expanded="true"]')
+        .forEach(function (button) {
+          button.setAttribute('aria-expanded', 'false');
+        });
+    }
+
+    function toggleMenu(event) {
+      event.stopPropagation();
+
+      const isOpen = !mobileMenu.classList.contains('is-open');
+
+      mobileMenu.classList.toggle('is-open', isOpen);
+      mobileMenu.setAttribute('aria-hidden', String(!isOpen));
+
+      menuToggle.classList.toggle('is-active', isOpen);
+      menuToggle.setAttribute('aria-expanded', String(isOpen));
+      menuToggle.setAttribute(
+        'aria-label',
+        isOpen ? 'Close navigation menu' : 'Open navigation menu'
+      );
+
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    }
+
+    menuToggle.addEventListener('click', toggleMenu);
+
+    // About, Get Involved, Learning Hub etc. dropdown
+    mobileMenu
+      .querySelectorAll('.mobile-group-toggle')
+      .forEach(function (button) {
+        button.addEventListener('click', function () {
+          const group = button.nextElementSibling;
+
+          if (
+            !group ||
+            !group.classList.contains('mobile-group-links')
+          ) {
+            return;
+          }
+
+          const willOpen = !group.classList.contains('is-open');
+
+          // Ek time par sirf ek dropdown open
+          mobileMenu
+            .querySelectorAll('.mobile-group-links.is-open')
+            .forEach(function (otherGroup) {
+              if (otherGroup !== group) {
+                otherGroup.classList.remove('is-open');
+
+                const otherButton = otherGroup.previousElementSibling;
+
+                if (otherButton) {
+                  otherButton.setAttribute('aria-expanded', 'false');
+                }
+              }
+            });
+
+          group.classList.toggle('is-open', willOpen);
+          button.setAttribute('aria-expanded', String(willOpen));
+        });
       });
 
-      // Close menu on resize to desktop
-      let resizeTimeout;
-      window.addEventListener('resize', function () {
-        clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(function () {
-          if (!getViewportSize().isMobile) {
-            closeMenu();
-          }
-        }, 250);
-      }, { passive: true });
+    // Kisi link par click hone par menu close
+    mobileMenu.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', closeMenu);
+    });
 
-      // Close menu when clicking outside
-      document.addEventListener('click', function (e) {
-        if (mobileMenu.classList.contains('is-open') &&
-          !menuToggle.contains(e.target) &&
-          !mobileMenu.contains(e.target)) {
+    // Desktop width par menu close
+    window.addEventListener(
+      'resize',
+      function () {
+        if (window.innerWidth >= 1181) {
           closeMenu();
         }
-      });
-    }
+      },
+      { passive: true }
+    );
+
+    // Bahar click karne par menu close
+    document.addEventListener('click', function (event) {
+      if (
+        mobileMenu.classList.contains('is-open') &&
+        !menuToggle.contains(event.target) &&
+        !mobileMenu.contains(event.target)
+      ) {
+        closeMenu();
+      }
+    });
+
+    // Escape key par close
+    document.addEventListener('keydown', function (event) {
+      if (
+        event.key === 'Escape' &&
+        mobileMenu.classList.contains('is-open')
+      ) {
+        closeMenu();
+        menuToggle.focus();
+      }
+    });
 
     // 4. Dropdown Menu Logic with touch support
     document.querySelectorAll('.nav-item.has-dropdown').forEach(function (item) {
@@ -1248,9 +1337,6 @@ function getViewportSize() {
     }
   })();
 
-  // Initialize navbar on page load
-  document.addEventListener("DOMContentLoaded", initNavbar, { once: true });
-
   // Lazy loading initialization for images
   if ('IntersectionObserver' in window) {
     const imageObserver = new IntersectionObserver((entries, observer) => {
@@ -1895,30 +1981,31 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 })();
 
-
-
-// navbar
 document.addEventListener("DOMContentLoaded", function () {
-  const navbarPlaceholder = document.getElementById("navbar-placeholder");
+  const navbarPlaceholder =
+    document.getElementById("navbar-placeholder");
 
-  if (navbarPlaceholder) {
-    fetch("components/navbar.html")
-      .then(response => {
-        if (!response.ok) {
-          throw new Error("Failed to load navbar");
-        }
-        return response.text();
-      })
-      .then(data => {
-        navbarPlaceholder.innerHTML = data;
-      })
-      .catch(error => {
-        console.error("Error loading the navbar:", error);
-      });
+  if (!navbarPlaceholder) {
+    initNavbar();
+    return;
   }
-});
 
-/* COURSES MODULE */
+  fetch("components/navbar.html")
+    .then(function (response) {
+      if (!response.ok) {
+        throw new Error("Failed to load navbar");
+      }
+
+      return response.text();
+    })
+    .then(function (data) {
+      navbarPlaceholder.innerHTML = data;
+      initNavbar();
+    })
+    .catch(function (error) {
+      console.error("Error loading the navbar:", error);
+    });
+});
 
 if (window.location.pathname.includes("courses.html")) {
 
