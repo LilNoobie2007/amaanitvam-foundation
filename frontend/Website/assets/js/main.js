@@ -221,13 +221,6 @@ function getViewportSize() {
         trigger.setAttribute('aria-expanded', isOpen);
       });
 
-      // Touch support
-      trigger.addEventListener('touchend', function (e) {
-        e.preventDefault();
-        const isOpen = menu.classList.toggle('is-open');
-        trigger.setAttribute('aria-expanded', isOpen);
-      }, { passive: false });
-
       // Close dropdown when clicking menu items
       menu.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', () => {
