@@ -6,9 +6,7 @@ import {
   Award,
   Globe,
   LogOut,
-  Shield,
   Image,
-  BarChart3,
   Settings as SettingsIcon,
   User,
 } from 'lucide-react';
@@ -139,16 +137,6 @@ export default function Sidebar() {
               <span>Gallery Media</span>
             </NavLink>
 
-            <NavLink to="/attendance" className={navLinkClass}>
-               <Users className="w-[18px] h-[18px]" />
-              <span>Attendance</span>
-            </NavLink>
-
-            <NavLink to="/reports" className={navLinkClass}>
-              <BarChart3 className="w-[18px] h-[18px]" />
-              <span>Reports</span>
-            </NavLink>
-
             <NavLink to="/settings" className={navLinkClass}>
               <SettingsIcon className="w-[18px] h-[18px]" />
               <span>System Settings</span>
@@ -165,15 +153,6 @@ export default function Sidebar() {
               <span>My Tasks</span>
             </NavLink>
 
-            <NavLink to="/attendance" className={navLinkClass}>
-              <Users className="w-[18px] h-[18px]" />
-              <span>Attendance</span>
-            </NavLink>
-
-            <NavLink to="/my-certificates" className={navLinkClass}>
-              <Shield className="w-[18px] h-[18px]" />
-              <span>My Certificates</span>
-            </NavLink>
           </>
         )}
 
