@@ -1,17 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import {
-  LayoutDashboard,
-  CalendarDays,
-  ClipboardList,
-  Megaphone,
-  FolderKanban,
-  CalendarCheck,
-  Shield,
-  UserCircle,
-  LogOut,
-  BarChart3,
-  Building2,
-} from 'lucide-react';
+
 
 import { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
@@ -170,14 +158,6 @@ export default function Sidebar() {
             >
               <CalendarCheck />
               <span>Attendance</span>
-            </NavLink>
-
-            <NavLink
-              to="/my-certificates"
-              className={navLinkClass}
-            >
-              <Shield />
-              <span>My Certificates</span>
             </NavLink>
           </>
         )}
