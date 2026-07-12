@@ -35,6 +35,7 @@ import activityRoutes from "./routes/activityRoutes.js";
 import searchRoutes from "./routes/searchRoutes.js";
 import galleryMongoMediaFixRoutes from "./routes/galleryMongoMediaFixRoutes.js";
 import internshipRoutes from "./routes/internshipRoutes.js";
+import learningHubRoutes from "./routes/learningHubRoutes.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -111,6 +112,7 @@ app.use("/api/public", publicRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/notifications", notificationRoutes);
 app.use("/api/internship", internshipRoutes);
+app.use("/api/learning-hub", learningHubRoutes);
 app.use("/api", galleryMongoMediaFixRoutes);
 
 // Serve Frontend Static Files (Dashboard)

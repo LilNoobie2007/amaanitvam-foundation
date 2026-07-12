@@ -1869,3 +1869,48 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error("Error loading the navbar:", error);
     });
 });
+
+// Webinar & Competitions Registration Handler
+document.addEventListener('DOMContentLoaded', () => {
+  const registrationForm = document.getElementById('registrationForm');
+  const regStatus = document.getElementById('reg-status');
+
+  if (registrationForm) {
+    registrationForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const submitBtn = registrationForm.querySelector('button[type="submit"]');
+      const originalText = submitBtn.innerText;
+      submitBtn.innerText = 'Submitting...';
+      submitBtn.disabled = true;
+
+      const formData = new FormData(registrationForm);
+      const data = Object.fromEntries(formData.entries());
+
+      try {
+        // We will send this to a new learning-hub route
+        const response = await fetch('http://localhost:5000/api/learning-hub/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          regStatus.innerHTML = '<span style="color: green;">Registration successful!</span>';
+          registrationForm.reset();
+        } else {
+          regStatus.innerHTML = `<span style="color: red;">Error: ${result.message || 'Registration failed'}</span>`;
+        }
+      } catch (error) {
+        regStatus.innerHTML = '<span style="color: red;">Network error. Please try again later.</span>';
+      } finally {
+        submitBtn.innerText = originalText;
+        submitBtn.disabled = false;
+      }
+    });
+  }
+});

@@ -40,3 +40,14 @@ export const createContact = async (req, res) => {
         });
     }
 };
+
+export const getContacts = async (req, res) => {
+    try {
+        // Fetches all messages, newest first
+        const contacts = await Contact.find().sort({ submissionTimestamp: -1 });
+        res.status(200).json({ success: true, data: contacts });
+    } catch (error) {
+        console.error("Failed to fetch contacts:", error);
+        res.status(500).json({ success: false, message: "Failed to fetch contacts." });
+    }
+};

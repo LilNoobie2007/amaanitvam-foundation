@@ -12,6 +12,8 @@ import Tasks from './pages/Tasks';
 import Settings from './pages/Settings';
 import CMS from './pages/CMS';
 import Profile from './pages/Profile';
+import LearningHub from './pages/LearningHub';
+
 
 export default function App() {
   return (
@@ -61,6 +63,16 @@ export default function App() {
           <ProtectedRoute>
             <AdminLayout>
               <Certificates />
+            </AdminLayout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/learning-hub"
+        element={
+          <ProtectedRoute>
+            <AdminLayout>
+              <LearningHub />
             </AdminLayout>
           </ProtectedRoute>
         }
