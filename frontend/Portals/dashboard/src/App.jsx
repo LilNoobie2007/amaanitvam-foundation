@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
 import DashboardLayout from './layouts/DashboardLayout';
-
+import Reports from './pages/Reports';
 import Login from './pages/Login';
 import DashboardHome from './pages/DashboardHome';
 import MeetingsPage from './pages/MeetingsPage';
@@ -10,6 +10,7 @@ import AnnouncementsPage from './pages/AnnouncementsPage';
 import ProjectsPage from './pages/ProjectsPage';
 import ProfilePage from './pages/ProfilePage';
 import Reports from './pages/Reports'; 
+import MemberReportsPage from './pages/MemberReportsPage'; 
 import AttendancePage from './pages/AttendancePage';
 import DepartmentsPage from './pages/DepartmentsPage';
 
@@ -38,6 +39,12 @@ export default function App() {
       
       <Route path="/attendance" element={<DashPage><AttendancePage /></DashPage>} />
       <Route path="/departments" element={<DashPage><DepartmentsPage /></DashPage>} />
+      
+      {/* 
+        Reports is now properly wrapped in DashPage so it 
+        gets the Sidebar and authentication checks! 
+      */}
+      <Route path="/reports" element={<DashPage><Reports /></DashPage>} />
 
       <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>

@@ -85,6 +85,7 @@ app.use(express.urlencoded({ extended: true, limit: "100mb" }));
 
 // Static Uploads Directory
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/uploads", (req, res) => res.status(404).send("File no longer exists on this server."));
 
 // Standard API Routing
 app.use("/api/profile", profileRoutes);
@@ -118,13 +119,12 @@ app.use(express.static(dashboardBuildPath));
 
 // CATCH-ALL: Redirect non-API requests to the React app
 app.get(/(.*)/, (req, res, next) => {
-  // If it's an API request that wasn't found, skip to the 404 handler
-  if (req.originalUrl.startsWith("/api")) {
+  // Ignore both API and Uploads requests, send them straight to 404
+  if (req.originalUrl.startsWith("/api") || req.originalUrl.startsWith("/uploads")) {
     return next();
   }
   res.sendFile(path.join(dashboardBuildPath, "index.html"));
 });
-
 // 404 API Handler
 app.use((req, res) => res.status(404).json({ success: false, message: "Route not found" }));
 
