@@ -56,44 +56,52 @@ export default function Sidebar() {
     `sidebar-nav-link ${isActive ? 'active' : ''}`;
 
   return (
-    <aside className="dashboard-sidebar fixed top-0 left-0 z-50 flex h-screen w-64 flex-col">
-      <div className="dashboard-sidebar__brand px-6 py-6 border-b border-white/10">
+    <aside className="dashboard-sidebar fixed top-0 left-0 h-screen w-64 flex flex-col z-50 bg-[#56051a] border-r border-[#d8a15f]/20 shadow-xl">
+      {/* Branding */}
+      <div className="dashboard-sidebar__brand px-6 py-6 border-b border-[#d8a15f]/10 bg-black/20">
         <div className="flex items-center gap-4">
           {!logoError ? (
             <img
               src="/logo.jpg"
               alt="Amaanitvam Foundation"
-              className="dashboard-sidebar__logo h-12 w-12 rounded bg-white object-contain p-1"
+              className="brand-logo h-12 w-12 rounded bg-white object-contain p-1"
               onError={() => setLogoError(true)}
             />
           ) : (
-            <div className="dashboard-sidebar__logo-fallback flex h-12 w-12 shrink-0 items-center justify-center rounded bg-white text-sm font-extrabold text-[#5d0f2d]">
+            <div className="dashboard-sidebar__logo-fallback flex h-12 w-12 shrink-0 items-center justify-center rounded bg-white text-sm font-extrabold text-[#56051a]">
               AF
             </div>
           )}
 
-          <div className="min-w-0">
-            <h1 className="brand-title text-2xl font-bold tracking-tight leading-none uppercase">
+          <div className="flex flex-col justify-center min-w-0">
+            <h1 className="brand-title text-2xl font-bold text-[#d8a15f] tracking-tight leading-none uppercase">
               Amaanitvam
             </h1>
-            <p className="brand-subtitle text-[11px] uppercase tracking-[0.25em] font-semibold mt-1 leading-none">
+            <p className="brand-subtitle text-[11px] text-white/70 uppercase tracking-[0.25em] font-semibold mt-1 leading-none">
               Foundation
             </p>
           </div>
         </div>
       </div>
 
-      <nav className="flex-1 overflow-y-auto py-6 px-4 space-y-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-        <p className="admin-panel-label px-1 pb-4">Dashboard Panel</p>
+      {/* Navigation */}
+      <nav className="flex-1 overflow-y-auto py-5 px-4 space-y-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+        <p className="text-[10px] text-white/50 uppercase tracking-[0.22em] font-bold px-1 pb-2">
+          Dashboard Panel
+        </p>
 
-        <p className="sidebar-section-title px-4 pt-2 mb-3">Overview</p>
+        <p className="sidebar-section-title px-4 pt-2 pb-1 text-xs font-bold text-[#d8a15f]/70 uppercase tracking-[0.18em]">
+          Overview
+        </p>
 
         <NavLink to="/dashboard" end className={navLinkClass}>
           <LayoutDashboard className="w-[18px] h-[18px]" />
           <span>Dashboard</span>
         </NavLink>
 
-        <p className="sidebar-section-title px-4 pt-6 mb-3">Team</p>
+        <p className="sidebar-section-title px-4 pt-6 pb-1 text-xs font-bold text-[#d8a15f]/70 uppercase tracking-[0.18em]">
+          Team
+        </p>
 
         <NavLink to="/meetings" className={navLinkClass}>
           <CalendarDays className="w-[18px] h-[18px]" />
@@ -120,21 +128,38 @@ export default function Sidebar() {
           <span>Departments</span>
         </NavLink>
 
-        <p className="sidebar-section-title px-4 pt-6 mb-3">My Workspace</p>
+        <p className="sidebar-section-title px-4 pt-6 pb-1 text-xs font-bold text-[#d8a15f]/70 uppercase tracking-[0.18em]">
+          My Workspace
+        </p>
 
-        {isAdmin && (
-          <NavLink to="/member-reports" className={navLinkClass}>
-            <BarChart3 className="w-[18px] h-[18px]" />
-            <span>Reports</span>
-          </NavLink>
+        {/* Dynamic Workspace based on Role */}
+        {isAdmin ? (
+          <>
+            <NavLink to="/member-reports" className={navLinkClass}>
+              <BarChart3 className="w-[18px] h-[18px]" />
+              <span>Team Reports</span>
+            </NavLink>
+            <NavLink to="/attendance" className={navLinkClass}>
+              <CalendarCheck className="w-[18px] h-[18px]" />
+              <span>Attendance</span>
+            </NavLink>
+          </>
+        ) : (
+          <>
+            <NavLink to="/attendance" className={navLinkClass}>
+              <CalendarCheck className="w-[18px] h-[18px]" />
+              <span>Attendance</span>
+            </NavLink>
+            <NavLink to="/reports" className={navLinkClass}>
+              <BarChart3 className="w-[18px] h-[18px]" />
+              <span>Reports</span>
+            </NavLink>
+          </>
         )}
 
-        <NavLink to="/attendance" className={navLinkClass}>
-          <CalendarCheck className="w-[18px] h-[18px]" />
-          <span>Attendance</span>
-        </NavLink>
-
-        <p className="sidebar-section-title px-4 pt-6 mb-3">Account</p>
+        <p className="sidebar-section-title px-4 pt-6 pb-1 text-xs font-bold text-[#d8a15f]/70 uppercase tracking-[0.18em]">
+          Account
+        </p>
 
         <NavLink to="/profile" className={navLinkClass}>
           <UserCircle className="w-[18px] h-[18px]" />
@@ -142,9 +167,10 @@ export default function Sidebar() {
         </NavLink>
       </nav>
 
+      {/* Footer / User Profile */}
       <div className="border-t border-white/10 px-4 py-4">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#d8a15f] text-sm font-bold text-[#5d0f2d]">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#d8a15f] text-sm font-bold text-[#56051a]">
             {initials}
           </div>
 
@@ -159,7 +185,7 @@ export default function Sidebar() {
               </p>
             )}
 
-            <span className="mt-1 inline-block rounded bg-[#d8a15f] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-[#5d0f2d]">
+            <span className="mt-1 inline-block rounded bg-[#d8a15f] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-[#56051a]">
               {displayRole}
             </span>
           </div>

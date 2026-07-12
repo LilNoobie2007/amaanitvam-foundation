@@ -179,19 +179,32 @@ export default function Candidates() {
                     
                     {/* NEW CV COLUMN */}
                     <td className="px-6 py-4 text-sm">
-                      {candidate.resumeUrl ? (
-                        <a 
-                          href={candidate.resumeUrl} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="text-[#56051a] hover:text-[#7a1e3a] transition-colors flex items-center justify-center w-8 h-8 rounded-full hover:bg-[#56051a]/10"
-                          title="View Resume"
-                        >
-                          <Eye className="w-5 h-5" />
-                        </a>
-                      ) : (
-                        <span className="text-slate-400 text-xs">No CV</span>
-                      )}
+                      {(() => {
+                        let cvLink = candidate.resumeUrl || candidate.resume || candidate.cv_link || candidate.cv || candidate.documentUrl;
+                        
+                        if (cvLink) {
+                          // Force the link to look at your local backend where the file actually is
+                          if (cvLink.includes('amaanitvam-foundation.onrender.com')) {
+                            cvLink = cvLink.replace('https://amaanitvam-foundation.onrender.com', 'http://localhost:5000');
+                          } else if (!cvLink.startsWith('http')) {
+                            cvLink = `http://localhost:5000${cvLink.startsWith('/') ? '' : '/'}${cvLink}`;
+                          }
+                        }
+
+                        return cvLink ? (
+                          <a 
+                            href={cvLink} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="text-[#56051a] hover:text-[#7a1e3a] transition-colors flex items-center justify-center w-8 h-8 rounded-full hover:bg-[#56051a]/10"
+                            title="View Resume"
+                          >
+                            <Eye className="w-5 h-5" />
+                          </a>
+                        ) : (
+                          <span className="text-slate-400 text-xs font-medium">No CV</span>
+                        );
+                      })()}
                     </td>
 
                     <td className="px-6 py-4 text-sm text-slate-600">

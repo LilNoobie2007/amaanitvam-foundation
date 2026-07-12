@@ -1,16 +1,14 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 
-console.log("API KEY:", import.meta.env.VITE_FIREBASE_API_KEY);
-console.log("PROJECT ID:", import.meta.env.VITE_FIREBASE_PROJECT_ID);
-
-export const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || 'PLACEHOLDER',
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || 'PLACEHOLDER',
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || 'PLACEHOLDER',
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || 'PLACEHOLDER',
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || 'PLACEHOLDER',
-  appId: import.meta.env.VITE_FIREBASE_APP_ID || 'PLACEHOLDER'
+const firebaseConfig = {
+  apiKey: "AIzaSyCpjgB4YQB95OTqARnvoVUt2Xq27eoBATc",
+  authDomain: "amaanitvam-admin-portal.firebaseapp.com",
+  projectId: "amaanitvam-admin-portal",
+  storageBucket: "amaanitvam-admin-portal.firebasestorage.app",
+  messagingSenderId: "365203992524",
+  appId: "1:365203992524:web:63f5f8e5b226d52d31f769",
+  measurementId: "G-Q449TR3H4R"
 };
 
 const app = initializeApp(firebaseConfig);

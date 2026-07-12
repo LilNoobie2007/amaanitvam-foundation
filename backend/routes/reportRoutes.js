@@ -8,27 +8,34 @@ import Meeting from "../models/meeting.js";
 import Project from "../models/project.js";
 import Certificate from "../models/certificate.js";
 
-// GET: Unified Member Aggregation Pipeline (Full Logic Preserved)
+// GET: Unified Member Aggregation Pipeline
 router.get("/member/:userId", async (req, res) => {
   try {
     const { userId } = req.params;
 
-    // 1. Fetch Core Member Profile
-    const member = await User.findById(userId).select("-firebaseUid");
+    // 1. Fetch Core Member Profile (Safely handles BOTH Firebase UID and Mongo ID)
+    const isValidMongoId = userId.length === 24;
+    const member = await User.findOne({ 
+      $or: [
+        { _id: isValidMongoId ? userId : null }, 
+        { firebaseUid: userId }
+      ] 
+    }).select("-firebaseUid");
+
     if (!member) {
       return res.status(404).json({ success: false, message: "Member record not found." });
     }
 
-    // 2. Fetch parallel database subsets concurrently (Preserved original + added new criteria)
+    // 2. Fetch parallel database subsets using the TRUE Mongo ID (member._id)
     const [attendanceRecords, taskRecords, meetings, projects, certificates] = await Promise.all([
-      Attendance.find({ user: userId }).sort({ date: 1 }),
-      taskModel.find({ assignedTo: userId }).sort({ createdAt: 1 }),
-      Meeting.find({ attendees: userId }),
-      Project.find({ team: userId }),
-      Certificate.find({ user: userId })
+      Attendance.find({ user: member._id }).sort({ date: 1 }),
+      taskModel.find({ assignedTo: member._id }).sort({ createdAt: 1 }),
+      Meeting.find({ attendees: member._id }),
+      Project.find({ team: member._id }),
+      Certificate.find({ user: member._id })
     ]);
 
-    // 3. Compute Attendance Breakdown Records (Original Logic Preserved)
+    // 3. Compute Attendance Breakdown Records
     const attendanceBreakdown = {
       totalLogs: attendanceRecords.length,
       present: attendanceRecords.filter((a) => a.status === "present").length,
@@ -44,7 +51,7 @@ router.get("/member/:userId", async (req, res) => {
       attendanceRate = (activeDays / attendanceBreakdown.totalLogs) * 100;
     }
 
-    // 4. Compute Task Metrics (Original Logic Preserved)
+    // 4. Compute Task Metrics
     const taskBreakdown = {
       totalAssigned: taskRecords.length,
       completed: taskRecords.filter((t) => t.status === "completed").length,
@@ -58,7 +65,7 @@ router.get("/member/:userId", async (req, res) => {
       ? (taskBreakdown.completed / taskBreakdown.totalAssigned) * 100
       : 100;
 
-    // 5. Generate Timeline (Original Logic Preserved)
+    // 5. Generate Timeline
     const timeline = [];
     timeline.push({
       date: member.joinedAt || member.createdAt,
@@ -85,7 +92,7 @@ router.get("/member/:userId", async (req, res) => {
     });
     timeline.sort((a, b) => new Date(a.date) - new Date(b.date));
 
-    // 6. Return Structured Unified JSON Payload (Original + New Appraisal Fields)
+    // 6. Return Structured Unified JSON Payload
     return res.status(200).json({
       success: true,
       data: {
@@ -105,20 +112,20 @@ router.get("/member/:userId", async (req, res) => {
           attendanceBreakdown,
           taskBreakdown
         },
-        // NEW: Manager's Appraisal Criteria
         appraisalSummary: {
           meetingsAttended: meetings.length,
           projectsWorkedOn: projects.length,
           certificatesEarned: certificates.length,
-          workUpdatesCount: taskRecords.length // Example mapping
+          workUpdatesCount: taskRecords.length
         },
         timeline
       }
     });
 
   } catch (error) {
+    // THIS LINE NOW SENDS THE EXACT REASON TO YOUR BROWSER IF IT FAILS
     console.error("Aggregation engine error:", error);
-    return res.status(500).json({ success: false, message: "Internal server error." });
+    return res.status(500).json({ success: false, message: error.message, stack: error.stack });
   }
 });
 
