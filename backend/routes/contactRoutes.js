@@ -1,13 +1,13 @@
 import express from "express";
-import { createContact, getContacts } from "../controllers/contactController.js";
-import { validateContactSubmission } from "../middleware/validateContact.js";
+import { createContact, getContactMessages } from "../controllers/contactController.js";
 
 const router = express.Router();
 
-// POST new message from public website
-router.post("/", validateContactSubmission, createContact);
+// Public website form submission route
+router.post('/', createContact);
 
-// GET all messages for Admin Portal
-router.get("/", getContacts); 
+// Admin Portal fetch routes (We add '/all' to bypass the trailing slash bug)
+router.get('/', getContactMessages);
+router.get('/all', getContactMessages);
 
 export default router;

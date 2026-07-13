@@ -1,21 +1,41 @@
 import LearningHub from "../models/LearningHub.js";
 
-// Handle POST request from the public website
+// This catches the POST request from the frontend and saves it
 export const registerForEvent = async (req, res) => {
-  try {
-    const { name, email, phone, type, event, organization, message } = req.body;
-    
-    const newRegistration = new LearningHub({
-      name, email, phone, type, event, organization, message
-    });
+    try {
+        // Extract data from the request body
+        const { name, email, phone, type, event, organization, message } = req.body;
 
-    await newRegistration.save();
-    res.status(201).json({ success: true, message: "Registration successful!" });
-  } catch (error) {
-    console.error("Learning Hub registration error:", error);
-    res.status(500).json({ success: false, message: "Failed to process registration." });
-  }
+        // Create a new database entry
+        const newRegistration = new LearningHub({
+            name,
+            email,
+            phone,
+            type,
+            event,
+            organization,
+            message
+        });
+
+        // Save to MongoDB
+        await newRegistration.save();
+
+        res.status(201).json({ 
+            success: true, 
+            message: "Registration saved successfully!" 
+        });
+
+    } catch (error) {
+        console.error("Registration Error:", error);
+        res.status(500).json({ 
+            success: false, 
+            message: "Server error during registration.", 
+            errorDetails: error.message 
+        });
+    }
 };
+
+// ... your getRegistrations function goes down here ...
 
 // Handle GET request for the Admin Portal
 export const getRegistrations = async (req, res) => {

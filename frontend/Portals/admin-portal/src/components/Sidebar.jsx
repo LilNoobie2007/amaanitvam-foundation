@@ -9,7 +9,8 @@ import {
   Image,
   Settings as SettingsIcon,
   User,
-  BookOpen
+  BookOpen,
+  MessageSquare // <-- Added the new icon here
 } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
@@ -124,6 +125,12 @@ export default function Sidebar() {
             <NavLink to="/learning-hub" className={navLinkClass}>
               <BookOpen className="w-[18px] h-[18px]" />
               <span>Learning Hub</span>
+            </NavLink>
+
+            {/* ---> NEW CONTACT MESSAGES LINK ADDED HERE <--- */}
+            <NavLink to="/contact-messages" className={navLinkClass}>
+              <MessageSquare className="w-[18px] h-[18px]" />
+              <span>Contact Inquiries</span>
             </NavLink>
 
             <p className="sidebar-section-title px-4 pt-6 mb-3">Tools</p>

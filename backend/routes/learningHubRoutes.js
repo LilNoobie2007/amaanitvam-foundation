@@ -3,10 +3,12 @@ import { registerForEvent, getRegistrations } from "../controllers/learningHubCo
 
 const router = express.Router();
 
-// POST new registration (Used by main.js on the public site)
-router.post("/register", registerForEvent);
+// We are adding multiple path variations here so Express CANNOT miss it, 
+// whether the frontend sends a trailing slash or not.
+router.get('/', getRegistrations);
+router.get('/all', getRegistrations); 
 
-// GET all registrations (Used by the Admin portal)
-router.get("/", getRegistrations);
+// Your public form submission route
+router.post('/register', registerForEvent);
 
 export default router;

@@ -13,7 +13,7 @@ import Settings from './pages/Settings';
 import CMS from './pages/CMS';
 import Profile from './pages/Profile';
 import LearningHub from './pages/LearningHub';
-
+import ContactMessages from './pages/ContactMessages'; // <-- Added import
 
 export default function App() {
   return (
@@ -77,6 +77,17 @@ export default function App() {
           </ProtectedRoute>
         }
       />
+      {/* ---> NEW CONTACT MESSAGES ROUTE ADDED HERE <--- */}
+      <Route
+        path="/contact-messages"
+        element={
+          <ProtectedRoute>
+            <AdminLayout>
+              <ContactMessages />
+            </AdminLayout>
+          </ProtectedRoute>
+        }
+      />
       <Route
         path="/content"
         element={
@@ -116,7 +127,6 @@ export default function App() {
             </AdminLayout>
           </ProtectedRoute>
         }
-
       />
       <Route
         path="/cms"

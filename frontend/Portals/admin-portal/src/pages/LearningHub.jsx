@@ -10,8 +10,7 @@ export default function LearningHub() {
   useEffect(() => {
     const fetchRegistrations = async () => {
       try {
-        // Fetching from the new backend route we just built!
-        const { data } = await api.get('/learning-hub');
+        const { data } = await api.get('http://localhost:5000/api/learning-hub');
         if (data.success) {
           setRegistrations(data.data);
         }
@@ -79,7 +78,7 @@ export default function LearningHub() {
                       </div>
                     </td>
 
-                    {/* Event Info (With dynamic badges) */}
+                    {/* Event Info */}
                     <td className="px-6 py-4">
                       <span className={`inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider mb-1 ${
                         reg.type === 'Webinar' 
