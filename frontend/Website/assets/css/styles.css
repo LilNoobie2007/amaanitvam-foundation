@@ -3413,6 +3413,18 @@ body[data-page="collaborations"] .partnership-box p {
   padding: 2rem;
   border-radius: 16px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+@media (max-width: 600px) {
+  .moved-inline-style-112 {
+    padding: 1.25rem;
+  }
+}
+
+.moved-inline-style-112 .form-label {
+  text-align: center;
 }
 
 .moved-inline-style-113 {
@@ -3531,6 +3543,18 @@ body[data-page="collaborations"] .partnership-box p {
 .moved-inline-style-136 {
   flex: 1;
   min-width: 200px;
+}
+
+.verify-input-row {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+@media (max-width: 600px) {
+  .verify-input-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
 }
 
 .moved-inline-style-137 {
@@ -3676,6 +3700,19 @@ body[data-page="gallery"] .section-title {
 
 body[data-page="gallery"] .gallery-grid {
   gap: 1.35rem !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+}
+
+@media (max-width: 900px) {
+  body[data-page="gallery"] .gallery-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 600px) {
+  body[data-page="gallery"] .gallery-grid {
+    grid-template-columns: 1fr !important;
+  }
 }
 
 body[data-page="gallery"] .gallery-item {
@@ -3696,6 +3733,25 @@ body[data-page="internship"] .hero-actions {
   display: flex !important;
   justify-content: center !important;
   margin-top: 3rem !important;
+}
+
+body[data-page="internship"] .grid-3,
+body[data-page="verify"] .grid-3 {
+  grid-template-columns: repeat(3, 1fr) !important;
+}
+
+@media (max-width: 992px) {
+  body[data-page="internship"] .grid-3,
+  body[data-page="verify"] .grid-3 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 600px) {
+  body[data-page="internship"] .grid-3,
+  body[data-page="verify"] .grid-3 {
+    grid-template-columns: 1fr !important;
+  }
 }
 
 body[data-page="contact"] .contact-hero {
