@@ -128,7 +128,16 @@ app.get(/(.*)/, (req, res, next) => {
   res.sendFile(path.join(dashboardBuildPath, "index.html"));
 });
 // 404 API Handler
-app.use((req, res) => res.status(404).json({ success: false, message: "Route not found" }));
+// Global Error Handler (Prevents HTML crashes!)
+app.use((err, req, res, next) => {
+  console.error("🔥 MIDDLEWARE CRASH REPORT:");
+  console.error(err); // This will reveal what [object Object] actually is
+  res.status(500).json({ 
+    success: false, 
+    message: "A middleware error occurred", 
+    errorDetails: err.message 
+  });
+});
 
 // Start Database and Server
 const startServer = async () => {
