@@ -157,7 +157,7 @@ export default function GlobalSearch() {
       </div>
 
       {showDropdown && query.trim().length >= 2 && (
-        <div className="absolute top-full left-0 w-full mt-2 bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden z-50 max-h-[400px] flex flex-col">
+        <div className="absolute top-full left-0 w-full mt-2 bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden z-50 max-h-100 flex flex-col">
           {loading && !results ? (
             <div className="p-6 text-center">
               <Loader2 className="w-6 h-6 text-[#56051a] animate-spin mx-auto" />

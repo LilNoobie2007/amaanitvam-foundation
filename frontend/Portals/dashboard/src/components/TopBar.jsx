@@ -76,20 +76,57 @@ export default function TopBar() {
 
       <div className="relative">
         <button
-          onClick={() => setShowDropdown(!showDropdown)}
-          className="relative h-11 w-11 flex items-center justify-center rounded-xl bg-surface border border-border-custom hover:border-gold transition-all shadow-sm"
-        >
-          <Bell className="w-5 h-5 text-primary" />
-
-          {unreadCount > 0 && (
-            <span className="absolute -top-1 -right-1 h-5 min-w-[20px] px-1 rounded-full bg-gold text-primary-dark text-[10px] font-bold flex items-center justify-center border-2 border-surface">
-              {unreadCount}
-            </span>
-          )}
-        </button>
+  onClick={() => setShowDropdown(!showDropdown)}
+  className="
+    relative
+    flex
+    items-center
+    justify-center
+    w-12
+    h-12
+    rounded-2xl
+    bg-white
+    border
+    border-slate-200
+    shadow-sm
+    transition-all
+    duration-300
+    hover:shadow-md
+    hover:border-[#d8a15f]
+    hover:-translate-y-0.5
+  "
+>
+  <Bell className="w-5 h-5 text-[#5d0f2d]" />
+  
+  {unreadCount > 0 && (
+    <span
+      className="
+        absolute
+        top-1
+        right-1
+        flex
+        items-center
+        justify-center
+              min-w-4.5
+        h-4.5
+        px-1
+        rounded-full
+        bg-[#d8a15f]
+        text-[#5d0f2d]
+        text-[10px]
+        font-bold
+        border-2
+        border-white
+        leading-none
+      "
+    >
+      {unreadCount}
+    </span>
+  )}
+</button>
 
         {showDropdown && (
-          <div className="absolute right-0 mt-3 w-[360px] rounded-2xl overflow-hidden bg-surface border border-border-custom shadow-2xl z-50">
+          <div className="absolute right-0 mt-3 w-90 rounded-2xl overflow-hidden bg-surface border border-border-custom shadow-2xl z-50">
 
             <div className="px-5 py-4 border-b border-border-custom bg-background flex items-center justify-between">
               <h3 className="font-heading text-xl text-primary">
@@ -103,7 +140,7 @@ export default function TopBar() {
               )}
             </div>
 
-            <div className="max-h-[360px] overflow-y-auto">
+            <div className="max-h-90 overflow-y-auto">
               {notifications.length === 0 ? (
                 <div className="py-10 text-center text-text-muted">
                   No notifications available.
