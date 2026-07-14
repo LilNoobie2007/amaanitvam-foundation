@@ -412,23 +412,31 @@ function getViewportSize() {
   }
 
   // Load common footer on all pages
-  document.addEventListener("DOMContentLoaded", function () {
-    const footer = document.getElementById("footer");
+  const footer = document.getElementById("footer");
 
-    if (footer) {
-      fetch("components/footer.html")
-        .then(function (response) {
-          return response.text();
-        })
-        .then(function (data) {
-          footer.innerHTML = data;
-        })
-        .catch(function (error) {
-          console.error("Footer load error:", error);
-        });
-    }
-  });
+  if (footer) {
 
+    const isPdfPage =
+      window.location.pathname.includes("/assets/pdfs/");
+
+    const footerPath = isPdfPage
+      ? "../../components/footer.html"
+      : "components/footer.html";
+
+    fetch(footerPath)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Footer not found");
+        }
+        return response.text();
+      })
+      .then((data) => {
+        footer.innerHTML = data;
+      })
+      .catch((err) => {
+        console.error("Footer load error:", err);
+      });
+  }
 
   /* ===== Campaign Donations + Funds Fix: single safe block ===== */
   (function () {
