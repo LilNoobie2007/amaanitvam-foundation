@@ -3550,6 +3550,7 @@ body[data-page="collaborations"] .partnership-box p {
   gap: 1rem;
   align-items: center;
 }
+
 @media (max-width: 600px) {
   .verify-input-row {
     flex-direction: column;
@@ -3741,6 +3742,7 @@ body[data-page="verify"] .grid-3 {
 }
 
 @media (max-width: 992px) {
+
   body[data-page="internship"] .grid-3,
   body[data-page="verify"] .grid-3 {
     grid-template-columns: repeat(2, 1fr) !important;
@@ -3748,6 +3750,7 @@ body[data-page="verify"] .grid-3 {
 }
 
 @media (max-width: 600px) {
+
   body[data-page="internship"] .grid-3,
   body[data-page="verify"] .grid-3 {
     grid-template-columns: 1fr !important;
@@ -7890,5 +7893,61 @@ html {
   img {
     max-width: 100%;
     page-break-inside: avoid;
+  }
+}
+
+/* ================================
+   MOBILE FLOATING SOCIAL BAR FIX
+================================ */
+
+@media (max-width: 768px) {
+
+  .floating-socials,
+  .social-sidebar {
+    display: flex !important;
+    position: fixed !important;
+
+    left: 8px !important;
+    right: auto !important;
+    top: 50% !important;
+    bottom: auto !important;
+
+    transform: translateY(-50%) !important;
+
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    width: 42px !important;
+    padding: 5px 0 !important;
+
+    background: #111 !important;
+    border-radius: 10px !important;
+    overflow: hidden !important;
+
+    z-index: 9998 !important;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25) !important;
+  }
+
+  .floating-socials a,
+  .social-sidebar a {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    width: 42px !important;
+    height: 42px !important;
+
+    font-size: 18px !important;
+    color: #ffffff !important;
+    background: transparent !important;
+  }
+
+  .floating-socials a:hover,
+  .floating-socials a:active,
+  .social-sidebar a:hover,
+  .social-sidebar a:active {
+    background: #5d0f2d !important;
+    color: #ffffff !important;
   }
 }
