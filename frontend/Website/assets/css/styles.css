@@ -7896,35 +7896,29 @@ html {
   }
 }
 
-/* ================================
-   MOBILE FLOATING SOCIAL BAR FIX
-================================ */
-
+/* =========================================================
+   MOBILE FLOATING SOCIAL BAR
+   Keeps the common social bar visible and compact on phones.
+========================================================= */
 @media (max-width: 768px) {
 
   .floating-socials,
   .social-sidebar {
     display: flex !important;
     position: fixed !important;
-
-    left: 8px !important;
+    left: 6px !important;
     right: auto !important;
     top: 50% !important;
     bottom: auto !important;
-
     transform: translateY(-50%) !important;
-
     flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
-
     width: 42px !important;
-    padding: 5px 0 !important;
-
+    padding: 4px 0 !important;
     background: #111 !important;
-    border-radius: 10px !important;
+    border-radius: 0 10px 10px 0 !important;
     overflow: hidden !important;
-
     z-index: 9998 !important;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25) !important;
   }
@@ -7934,12 +7928,10 @@ html {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-
     width: 42px !important;
     height: 42px !important;
-
     font-size: 18px !important;
-    color: #ffffff !important;
+    color: #fff !important;
     background: transparent !important;
   }
 
@@ -7948,6 +7940,6 @@ html {
   .social-sidebar a:hover,
   .social-sidebar a:active {
     background: #5d0f2d !important;
-    color: #ffffff !important;
+    color: #fff !important;
   }
 }

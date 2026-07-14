@@ -389,19 +389,19 @@ function getViewportSize() {
 
   const socialBar = `
 <div class="floating-socials">
-    <a href="https://www.facebook.com/people/Amaanitvam-Foundation/61583427622759/" target="_blank">
+    <a href="https://www.facebook.com/people/Amaanitvam-Foundation/61583427622759/" target="_blank" rel="noopener noreferrer">
         <i class="fa-brands fa-facebook-f"></i>
     </a>
 
-    <a href="https://www.instagram.com/amaanitvamfoundation" target="_blank">
+    <a href="https://www.instagram.com/amaanitvamfoundation" target="_blank" rel="noopener noreferrer">
         <i class="fa-brands fa-instagram"></i>
     </a>
 
-    <a href="https://x.com/AmaanitvamOrg" target="_blank">
+    <a href="https://x.com/AmaanitvamOrg" target="_blank" rel="noopener noreferrer">
         <i class="fa-brands fa-x-twitter"></i>
     </a>
 
-    <a href="https://www.linkedin.com/company/amaanitvam-foundation/" target="_blank">
+    <a href="https://www.linkedin.com/company/amaanitvam-foundation/" target="_blank" rel="noopener noreferrer">
         <i class="fa-brands fa-linkedin-in"></i>
     </a>
 </div>
@@ -416,12 +416,14 @@ function getViewportSize() {
 
   if (footer) {
 
-    const isPdfPage =
+    const isNestedLegalPage =
       window.location.pathname.includes("/assets/pdfs/");
 
-    const footerPath = isPdfPage
-      ? "../../components/footer.html"
-      : "components/footer.html";
+    const footerPath = window.location.protocol === "file:"
+      ? (isNestedLegalPage
+        ? "../../components/footer.html"
+        : "components/footer.html")
+      : "/components/footer.html";
 
     fetch(footerPath)
       .then((response) => {
@@ -1760,7 +1762,16 @@ document.addEventListener("DOMContentLoaded", function () {
     return;
   }
 
-  fetch("components/navbar.html")
+  const isNestedLegalPage =
+    window.location.pathname.includes("/assets/pdfs/");
+
+  const navbarPath = window.location.protocol === "file:"
+    ? (isNestedLegalPage
+      ? "../../components/navbar.html"
+      : "components/navbar.html")
+    : "/components/navbar.html";
+
+  fetch(navbarPath)
     .then(function (response) {
       if (!response.ok) {
         throw new Error("Failed to load navbar");
