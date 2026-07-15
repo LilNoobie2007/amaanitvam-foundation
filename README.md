@@ -1,152 +1,269 @@
-# Amaanitvam Platform
+🌿 Amaanitvam Platform
 
-The official repository for the **Amaanitvam Foundation** platform, consisting of the NGO website, admin portal, dashboard, and backend services.
+Amaanitvam Platform is the official digital ecosystem of **Amaanitvam Foundation**, designed to manage the organization's public website, administrative operations, team dashboard, certificates, donations, digital library, learning management system, reports, and future expansion modules.
 
----
+The project follows a scalable **Monorepo Architecture**, allowing independent development and deployment of multiple applications while sharing common utilities and configurations.
 
-## 📁 Project Structure
 
-```text
+🏗 Project Structure
+
 amaanitvam-platform/
+
+├── apps/
+│   ├── website/
+│   ├── admin-portal/
+│   └── dashboard/
 │
-├── backend/                 # Express.js Backend API
-│   ├── config/
-│   ├── controllers/
-│   ├── middleware/
-│   ├── models/
-│   ├── routes/
-│   ├── services/
-│   ├── utils/
-│   ├── package.json
-│   └── .env
+├── server/
 │
-├── frontend/
-│   ├── Website/             # Public NGO Website
-│   │   ├── assets/
-│   │   │   ├── css/
-│   │   │   ├── js/
-│   │   │   └── images/
-│   │   ├── index.html
-│   │   └── ...
-│   │
-│   └── Portals/
-│       ├── admin-portal/    # React/Vite Admin Portal
-│       └── dashboard/       # Dashboard Components
+├── packages/
+│   ├── ui/
+│   ├── shared-utils/
+│   └── shared-config/
 │
-├── .gitignore
-└── README.md
-```
+├── docs/
+├── .github/
+├── README.md
+├── LICENSE
+└── package.json
 
----
 
-## 🚀 Tech Stack
+🚀 Applications
 
-### Frontend
+🌐 Website
 
-* HTML5
-* CSS3
-* JavaScript
-* React (Admin Portal)
-* Vite
+Public NGO website.
 
-### Backend
+Features
 
-* Node.js
-* Express.js
-* MongoDB
-* Mongoose
-* Firebase Authentication
-* Razorpay Integration
-* Nodemailer
+- Home
+- About
+- Programs
+- Gallery
+- Impact
+- Volunteer
+- Internship
+- Contact
+- Collaborations
+- Certificate Verification
+- Digital Library
+- Courses
+- Webinars & Competitions
+- FAQs
+- Donation
 
----
+🛠 Admin Portal
 
-## ⚙️ Installation
+Management portal for administrators.
 
-### 1. Clone Repository
+Modules
+
+- Dashboard
+- Candidates
+- Members
+- Departments
+- Tasks
+- Meetings
+- Announcements
+- Donations
+- Certificates
+- Gallery
+- CMS
+- Reports
+- Digital Library
+- Courses
+- Settings
+
+👥 Team Dashboard
+
+Portal for coordinators, interns and team members.
+
+Modules
+
+- Home
+- Profile
+- Tasks
+- Projects
+- Meetings
+- Announcements
+- Departments
+- Reports
+- Attendance
+
+⚙ Backend API
+
+Central API powering all applications.
+
+Modules
+
+- Authentication
+- Users
+- Candidates
+- Members
+- Departments
+- Tasks
+- Meetings
+- Announcements
+- Donations
+- Certificates
+- Gallery
+- CMS
+- Digital Library
+- Courses
+- Volunteers
+- Internships
+- Reports
+- Notifications
+
+💻 Tech Stack
+
+Frontend
+
+- HTML5
+- CSS3
+- JavaScript
+- React
+- Vite
+
+Backend
+
+- Node.js
+- Express.js
+
+Database
+
+- MongoDB
+
+Authentication
+
+- Firebase Authentication
+
+Cloud Storage
+
+- Cloudinary
+
+Payments
+
+- Razorpay
+
+🔒 Security
+
+- Firebase Authentication
+- JWT Verification
+- Role-Based Access Control (RBAC)
+- Request Validation
+- Rate Limiting
+- Environment Variables
+- Centralized Error Handling
+
+📦 Installation
+
+Install all dependencies
 
 ```bash
-git clone <repository-url>
-cd amaanitvam-platform
-```
-
----
-
-### 2. Backend Setup
-
-```bash
-cd backend
 npm install
-npm run dev
 ```
 
-Backend runs on:
+▶ Development
 
-```
-http://localhost:5000
-```
-
----
-
-### 3. Admin Portal
+Website
 
 ```bash
-cd frontend/Portals/admin-portal
-npm install
-npm run dev
+npm run dev:website
 ```
 
-Admin Portal runs on:
+Admin Portal
 
+```bash
+npm run dev:admin
 ```
-http://localhost:5173
+
+Dashboard
+
+```bash
+npm run dev:dashboard
+```
+
+Backend
+
+```bash
+npm run dev:server
 ```
 
 ---
 
-### 4. Website
+🧪 Build
 
-Open
-
-```
-frontend/Website/index.html
+```bash
+npm run build
 ```
 
-or serve it using Live Server.
+📁 Environment Variables
+
+Each application contains its own
+
+```
+.env.example
+```
+
+Copy it into
+
+```
+.env
+```
+
+and configure the required variables.
 
 ---
 
-## 🌐 Features
+👥 Roles
 
-* NGO Website
-* Admin Portal
-* Team Dashboard
-* Candidate Management
-* Volunteer Management
-* Internship Management
-* Donation System
-* Gallery Management
-* Contact Forms
-* Authentication
-* Role-Based Authorization
-* Reports & Analytics
+- Super Admin
+- Admin
+- Coordinator
+- Faculty
+- Team Member
+- Intern
+- Content Editor
+- Viewer
 
----
+📚 Documentation
 
-## 🔐 Environment Variables
+Documentation is available inside
 
-Create a `.env` file inside the `backend` directory and configure:
+```
+docs/
+```
 
-* MongoDB URI
-* SMTP Credentials
-* Firebase Keys
-* JWT Secret
-* Razorpay Keys
+including
 
----
+- Architecture
+- Deployment Guide
+- API Documentation
+- Database Design
+- Contribution Guide
 
-## 📄 License
+📈 Roadmap
 
-This project is developed for **Amaanitvam Foundation**.
+- Learning Management System
+- Faculty Portal
+- Student Portal
+- Mobile Application
+- Analytics Dashboard
+- Audit Logs
+- Notification Center
+- Multi-language Support
 
-All rights reserved.
+🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push the branch
+5. Open a Pull Request
+
+❤️ Developed For
+
+**Amaanitvam Foundation**
+
+Empowering Communities Through Technology & Education.
