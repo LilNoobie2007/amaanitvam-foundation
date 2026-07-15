@@ -1,0 +1,210 @@
+body[data-page="about"] .page-hero.has-image {
+    padding: 4.5rem 0 !important;
+    min-height: 380px !important;
+}
+
+body[data-page="about"] .page-hero .section-label {
+    font-size: 1.4rem !important;
+    letter-spacing: 0.45em !important;
+    color: var(--gold) !important;
+}
+
+body[data-page="about"] main#main-content>section.section {
+    padding: 3.25rem 0 !important;
+}
+
+body[data-page="about"] .section-header {
+    margin-bottom: 1.75rem !important;
+}
+
+body[data-page="about"] .grid-2-col {
+    gap: 2.25rem !important;
+}
+
+.team-row-1 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+}
+
+.team-row-2 {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+body[data-page="about"] .origins-img,
+body[data-page="about"] .heart-img {
+    align-self: stretch;
+}
+
+body[data-page="about"] .origins-img img,
+body[data-page="about"] .heart-img img {
+    height: 360px;
+}
+
+body[data-page="about"] .achievement-feature {
+    min-height: 240px !important;
+}
+
+body[data-page="about"] .section-title {
+    font-size: clamp(2.25rem, 3.6vw, 3.65rem) !important;
+}
+
+body[data-page="about"] .section-label {
+    font-size: .9rem !important;
+    letter-spacing: .2em !important;
+}
+
+body[data-page="about"] .grid-2-col,
+body[data-page="about"] .grid-2 {
+    gap: 2.25rem !important;
+}
+
+body:has(.app-shell) .team-pill {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 44px;
+    padding: 6px 10px 6px 6px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface);
+}
+
+body:has(.app-shell) .team-pill span {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: var(--primary-dark);
+    font-weight: 800;
+}
+
+@media (min-width: 768px) {
+    .origins-img {
+        order: 1 !important;
+    }
+
+    .origins-text {
+        order: 2 !important;
+    }
+}
+
+@media (max-width: 640px) {
+    body:has(.app-shell) .team-pill strong {
+        display: none;
+    }
+}
+
+body.dashboard-page .team-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    justify-self: end;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+}
+
+body.dashboard-page .team-pill span {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: #fff;
+    font-weight: 800;
+}
+
+@media (max-width:620px) {
+    body.dashboard-page .team-pill {
+        display: none;
+    }
+}
+
+.page-hero.has-image,
+.about-hero,
+.impact-hero,
+.programs-hero,
+.gallery-hero,
+.resources-hero,
+.faq-hero,
+.verify-hero,
+.volunteer-hero,
+.internship-hero,
+.privacy-hero,
+.terms-hero,
+.refund-hero,
+.collab-hero,
+.contact-hero,
+body[data-page="about"] .page-hero.has-image,
+body[data-page="impact"] .page-hero.has-image,
+body[data-page="programs"] .page-hero.has-image,
+body[data-page="gallery"] .page-hero.has-image,
+body[data-page="resources"] .page-hero.has-image,
+body[data-page="faq"] .page-hero.has-image,
+body[data-page="verify"] .page-hero.has-image,
+body[data-page="volunteer"] .page-hero.has-image,
+body[data-page="internship"] .page-hero.has-image,
+body[data-page="collaborations"] .page-hero.has-image,
+body[data-page="contact"] .page-hero.has-image,
+body[data-page="contact"] .contact-hero,
+.moved-inline-style-final-029 {
+    position: relative !important;
+    overflow: hidden !important;
+    background-color: var(--primary) !important;
+    background-image: linear-gradient(135deg, rgba(86, 5, 26, 0.84), rgba(86, 5, 26, 0.62)),
+        url("../../../public/images/heroo.png") !important;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    color: #ffffff !important;
+}
+
+.team-row {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+}
+
+.team-row-1 .card {
+    flex: 0 1 260px;
+}
+
+.team-row-2 .card,
+.team-row-3 .card {
+    flex: 0 1 280px;
+}
+
+@media (max-width: 900px) {
+
+    .team-row-1,
+    .moved-inline-style-042,
+    .moved-inline-style-085,
+    .moved-inline-style-139 {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .team-row-1,
+    .moved-inline-style-042,
+    .moved-inline-style-085,
+    .moved-inline-style-139 {
+        grid-template-columns: 1fr !important;
+    }
+
+    .team-row-2 {
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+}

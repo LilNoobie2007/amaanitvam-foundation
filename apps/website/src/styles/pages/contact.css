@@ -1,0 +1,431 @@
+.partnership-box h2 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    color: #fff !important;
+}
+
+.social-section h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    color: var(--maroon);
+    margin-bottom: 40px;
+    font-family: Georgia, serif;
+}
+
+.contact-hero {
+    padding: 140px 0 70px !important;
+    text-align: center !important;
+    background: linear-gradient(135deg, #5d0f2d, #7a1d44) !important;
+}
+
+.contact-hero .container {
+    max-width: 1000px !important;
+    margin: 0 auto !important;
+    text-align: center !important;
+}
+
+.contact-hero .section-label,
+.contact-hero .section-title,
+.contact-hero .section-desc {
+    color: #fff !important;
+    text-align: center !important;
+    opacity: 1 !important;
+}
+
+.contact-hero .section-label {
+    color: #d8a15f !important;
+}
+
+body[data-page="contact"] .floating-donate {
+    right: 25px !important;
+    bottom: 25px !important;
+}
+
+body[data-page="contact"] .section {
+    overflow: visible !important;
+}
+
+body[data-page="contact"] section[aria-labelledby="partnerships-heading"] .section-header {
+    margin-bottom: 28px !important;
+}
+
+body[data-page="contact"] section[aria-labelledby="partnerships-heading"] .grid-4 {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 24px !important;
+    align-items: stretch !important;
+}
+
+body[data-page="contact"] section[aria-labelledby="partnerships-heading"] .card {
+    height: auto !important;
+    min-height: 260px !important;
+    padding: 30px 28px !important;
+    background: var(--surface) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 22px !important;
+}
+
+body[data-page="contact"] main {
+    background: var(--bg) !important;
+}
+
+body[data-page="contact"] section[aria-labelledby="partnerships-heading"] {
+    padding: 52px 0 34px !important;
+    margin: 0 !important;
+    background: var(--bg) !important;
+}
+
+.contact-card {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 60px;
+    border-radius: 30px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, .12), rgba(255, 255, 255, .05));
+    border: 1px solid rgba(255, 255, 255, .2);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, .2);
+}
+
+.partnership-box {
+    max-width: 1100px;
+    margin: 0 auto 100px;
+    padding: 60px 50px;
+    background: linear-gradient(135deg, #6f1235, #9b5a78);
+    border-radius: 30px;
+    text-align: center;
+    color: #fff;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, .15);
+}
+
+.partnership-box p {
+    max-width: 750px;
+    margin: 0 auto;
+    line-height: 1.9;
+    color: rgba(255, 255, 255, .9) !important;
+    font-size: 1.1rem;
+}
+
+.contact-grid {
+    max-width: 1200px;
+    margin: 80px auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+}
+
+body[data-page="collaborations"] .contact-card {
+    background: #fff;
+    border-radius: 24px;
+    padding: 35px !important;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, .08);
+    transition: .3s;
+}
+
+body[data-page="collaborations"] .contact-card:hover {
+    transform: translateY(-6px);
+}
+
+.contact-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 18px;
+    background: rgba(216, 161, 90, .15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+body[data-page="collaborations"] .contact-card h3 {
+    color: var(--maroon);
+    margin-bottom: 15px;
+    font-size: 1.7rem;
+}
+
+body[data-page="collaborations"] .contact-card p {
+    color: #666;
+    line-height: 1.8;
+}
+
+.contact-link {
+    display: inline-block;
+    margin-top: 20px;
+    text-decoration: none;
+    background: var(--maroon);
+    color: #fff;
+    padding: 12px 22px;
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+.contact-link:hover {
+    background: #531026;
+}
+
+.social-section {
+    max-width: 1100px;
+    margin: 0 auto 80px;
+    padding: 0 20px;
+}
+
+body[data-page="collaborations"] .partnership-box {
+    max-width: 1100px;
+    margin: 0 auto 100px;
+    padding: 50px;
+    background: linear-gradient(135deg, rgba(86, 5, 26, 0.97) 0%, rgba(58, 10, 35, 0.92) 50%, rgba(26, 34, 56, 0.95) 100%);
+    color: white;
+    border-radius: 30px;
+    text-align: center;
+}
+
+body[data-page="collaborations"] .partnership-box .cta-label {
+    display: block;
+    color: var(--gold);
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    font-size: .9rem;
+    margin-bottom: 1rem;
+}
+
+body[data-page="collaborations"] .partnership-box h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+body[data-page="collaborations"] .partnership-box p {
+    max-width: 700px;
+    margin: auto;
+    line-height: 1.8;
+    opacity: .9;
+}
+
+body[data-page="contact"] .contact-hero {
+    padding: 140px 0 70px !important;
+}
+
+body[data-page="contact"] .section-title {
+    font-size: clamp(2.1rem, 3.4vw, 3.3rem) !important;
+}
+
+body[data-page="collaborations"] .section-title,
+body[data-page="collaborations"] .partnership-box h2 {
+    font-size: clamp(2.2rem, 3.8vw, 3.4rem) !important;
+}
+
+@media (max-width:1100px) {
+    body[data-page="contact"] section[aria-labelledby="partnerships-heading"] .grid-4 {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+@media (max-width:768px) {
+
+    .contact-card,
+    .partnership-box {
+        padding: 35px 24px;
+    }
+
+    body[data-page="contact"] section[aria-labelledby="partnerships-heading"] .grid-4 {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+.page-hero.has-image .container,
+.contact-hero .container,
+.collab-hero .container,
+.moved-inline-style-final-029 .container {
+    position: relative !important;
+    z-index: 2 !important;
+}
+
+.page-hero.has-image .section-label,
+.page-hero.has-image .section-title,
+.page-hero.has-image .section-desc,
+.page-hero.has-image h1,
+.page-hero.has-image p,
+.contact-hero .section-label,
+.contact-hero .section-title,
+.contact-hero .section-desc,
+.collab-hero .hero-label,
+.collab-hero h1,
+.collab-hero p,
+.moved-inline-style-final-029 .section-label,
+.moved-inline-style-final-029 .section-title,
+.moved-inline-style-final-029 .section-desc,
+.moved-inline-style-final-029 h1,
+.moved-inline-style-final-029 p {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    opacity: 1 !important;
+    text-shadow: 0 3px 14px rgba(0, 0, 0, 0.35) !important;
+}
+
+.page-hero.has-image .section-label,
+.contact-hero .section-label,
+.collab-hero .hero-label,
+.moved-inline-style-final-029 .section-label {
+    color: var(--gold) !important;
+    -webkit-text-fill-color: var(--gold) !important;
+}
+
+@media (max-width: 380px) {
+
+    .contact-card,
+    .partnership-box {
+        padding: 24px 16px !important;
+    }
+}
+
+@media (min-width: 1600px) {
+
+    .donation-card p,
+    .partnership-box p,
+    .contact-hero .section-desc {
+        max-width: 900px !important;
+    }
+}
+
+.contact-layout {
+    display: flex;
+    gap: 2.5rem;
+    align-items: stretch;
+}
+
+.contact-left {
+    flex: 1.2;
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-right {
+    flex: 0.8;
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-section-header {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.contact-title-reset {
+    margin-left: 0;
+}
+
+.contact-form-card {
+    margin: 0;
+    padding: 2.5rem;
+    flex: 1;
+}
+
+.contact-textarea {
+    resize: none;
+}
+
+.contact-submit-btn {
+    width: 100%;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.contact-status {
+    margin-top: 1rem;
+}
+
+.contact-spacer {
+    visibility: hidden;
+    pointer-events: none;
+    margin-bottom: 1.5rem;
+}
+
+.contact-info-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    margin: 0;
+    flex: 1;
+}
+
+.contact-info-card {
+    margin: 0;
+    padding: 1.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex: 1;
+}
+
+.contact-info-icon {
+    margin-bottom: 0.75rem;
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contact-icon-symbol {
+    font-size: 20px;
+}
+
+.contact-info-title {
+    margin-bottom: 0.2rem;
+    font-size: 1.1rem;
+}
+
+.contact-info-text {
+    margin-bottom: 0.2rem;
+    font-size: 0.85rem;
+}
+
+.contact-info-link {
+    font-size: 0.95rem;
+}
+
+@media (max-width: 900px) {
+    .contact-layout {
+        flex-direction: column;
+    }
+
+    .contact-spacer {
+        display: none;
+    }
+
+    .contact-form-card {
+        padding: 2rem;
+    }
+}
+
+@media (max-width: 520px) {
+
+    .contact-form-card,
+    .contact-info-card {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .page-hero,
+    .contact-hero,
+    .collab-hero {
+        padding: calc(var(--nav-h) + 42px) 18px 52px !important;
+        min-height: auto !important;
+    }
+
+    .partnership-box h2 {
+        font-size: clamp(2rem, 10vw, 2.75rem);
+    }
+
+    .card,
+    .contact-form-card,
+    .contact-info-card,
+    .course-content {
+        padding: 1.35rem !important;
+    }
+}

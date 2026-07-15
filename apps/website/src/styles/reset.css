@@ -1,33 +1,28 @@
-*,
-*::before,
-*::after {
+* {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
 html {
-    width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
     scroll-behavior: smooth;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    width: 100%;
+    overflow-x: hidden;
 }
 
 body {
     width: 100%;
-    max-width: 100%;
     overflow-x: hidden;
+    font-family: var(--font-body);
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
 }
 
-img,
-picture,
-svg,
-video {
-    display: block;
+img {
     max-width: 100%;
-    height: auto;
+    display: block;
 }
 
 a {
@@ -35,21 +30,26 @@ a {
     text-decoration: none;
 }
 
-button,
-input,
-textarea,
-select {
-    font: inherit;
+html,
+body {
+    max-width: 100%;
 }
 
-h1,
-h2,
-h3,
-h4,
-p,
-a,
-span,
-strong,
-small {
-    overflow-wrap: anywhere;
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    content-visibility: auto;
+}
+
+html,
+body {
+    overflow-x: hidden;
+    max-width: 100%;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
