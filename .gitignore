@@ -1,31 +1,60 @@
 node_modules/
-**/node_modules/
+/node_modules/
 
 dist/
-**/dist/
 build/
-**/build/
-
-.vite/
-**/.vite/
+coverage/
+/dist/
+/build/
+/coverage/
 
 .env
-**/.env
-*.local
+.env.
+/.env
+/.env.
+
+.env.example
+/.env.example
+
+uploads/
+server/uploads/
 
 logs/
-*.log
-npm-debug.log*
-yarn-debug.log*
-pnpm-debug.log*
+.log
+npm-debug.log
+yarn-debug.log
+pnpm-debug.log
 
-.DS_Store
+tmp/
+temp/
+.cache/
+.tmp
+
 .vscode/
+!.vscode/extensions.json
+
 .idea/
 
-# Optional
-coverage/
-**/coverage/
+.suo
+.ntvs
+.njsproj
+.sln
 
-*.tmp
-*.code-workspace
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+.vite/
+
+.pnpm-store/
+.npm/
+.yarn/
+
+firebase-debug.log
+
+playwright-report/
+test-results/
+
+.pid
+.seed
+.pid.lock
