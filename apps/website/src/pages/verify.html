@@ -200,6 +200,91 @@
 
 
   <script type="module" src="../scripts/app.js"></script>
+  <style>
+  /* Root Container Layout Override */
+  #verify-section .card, 
+  body .contact-form-card,
+  body .card {
+    max-width: 680px !important;
+    margin: 3rem auto !important;
+    padding: 3rem 2.5rem !important;
+    border-radius: 16px !important;
+    background: #FFFDFC !important;
+    border: 1px solid #EAE2D8 !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
+  }
+
+  /* Form Layout Group Alignment */
+  body .verify-input-row,
+  body .form-group {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 12px !important;
+    align-items: stretch !important;
+    width: 100% !important;
+  }
+
+  /* Input Field Resets & Styling */
+  body .form-input,
+  body input[type="text"].form-control,
+  body .verify-input-row input {
+    flex: 1 !important;
+    height: 52px !important;
+    padding: 0 1.25rem !important;
+    border: 1.5px solid #EAE2D8 !important;
+    border-radius: 12px !important;
+    font-size: 1rem !important;
+    background: #FFFDFC !important;
+    outline: none !important;
+    box-shadow: none !important;
+    transition: all 0.25s ease !important;
+  }
+
+  body .form-input:focus,
+  body input[type="text"].form-control:focus {
+    border-color: #5D0F2D !important; /* Elegant Wine Red */
+    box-shadow: 0 0 0 3px rgba(93, 15, 45, 0.12) !important;
+  }
+
+  /* Verify Button Styling Override */
+  body .btn-primary,
+  body button[type="submit"],
+  body .verify-input-row button {
+    height: 52px !important;
+    padding: 0 2rem !important;
+    border-radius: 12px !important;
+    font-weight: 700 !important;
+    background: #5D0F2D !important; /* Accent Wine Red */
+    color: #FFFDFC !important;
+    border: 2px solid #D8A15F !important; /* Gold Border */
+    cursor: pointer !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 4px 12px rgba(93, 15, 45, 0.15) !important;
+    transition: all 0.25s ease !important;
+  }
+
+  body .btn-primary:hover,
+  body button[type="submit"]:hover {
+    background: #731A3D !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 6px 16px rgba(216, 161, 95, 0.2) !important;
+  }
+
+  /* Responsive Breakdown for Smaller Devices */
+  @media (max-width: 576px) {
+    body .verify-input-row,
+    body .form-group {
+      flex-direction: column !important;
+      gap: 12px !important;
+    }
+    body .form-input,
+    body .btn-primary {
+      width: 100% !important;
+    }
+  }
+</style>
 </body>
 
 </html>
