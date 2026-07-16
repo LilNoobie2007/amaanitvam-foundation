@@ -242,85 +242,40 @@ if (verifyForm) {
     }
 
     function renderCampaignSelector() {
-    const container = document.getElementById('campaignDonationSelector');
-    if (!container) return;
+        const container = document.getElementById('campaignDonationSelector');
+        if (!container) return;
 
-    const requested = new URLSearchParams(window.location.search).get('campaign');
+        const requested = new URLSearchParams(window.location.search).get('campaign');
+        if (requested && activeCampaigns.some((c) => String(c._id || c.id) === String(requested))) {
+            selectedCampaignId = requested;
+        }
 
-    if (
-        requested &&
-        activeCampaigns.some(c => String(c._id || c.id) === String(requested))
-    ) {
-        selectedCampaignId = requested;
-    }
+        const campaignCards = activeCampaigns.map((campaign) => {
+            const id = campaign._id || campaign.id;
+            const checked = String(selectedCampaignId) === String(id) ? 'checked' : '';
+            const selected = checked ? ' is-selected' : '';
+            const pct = progress(campaign);
+            return `
+      <label class="campaign-option${selected}">
+        <input type="radio" name="donationTarget" value="${escapeHtml(id)}" ${checked}>
+        <span class="campaign-option-title">${escapeHtml(campaign.title)}</span>
+        <p class="campaign-option-desc">${escapeHtml(campaign.description || 'Support this active campaign.')}</p>
+        <div class="campaign-progress"><span style="width:${pct}%"></span></div>
+        <div class="campaign-meta">${rupees(campaign.raisedAmount)} raised / ${rupees(campaign.goalAmount)} goal</div>
+      </label>`;
+        }).join('');
 
-    const campaignCards = activeCampaigns.map(campaign => {
-
-        const id = campaign._id || campaign.id;
-
-        const checked =
-            String(selectedCampaignId) === String(id)
-                ? "checked"
-                : "";
-
-        const selected =
-            checked
-                ? "is-selected"
-                : "";
-
-        return `
-            <label class="campaign-option compact ${selected}">
-
-                <input
-                    type="radio"
-                    name="donationTarget"
-                    value="${escapeHtml(id)}"
-                    ${checked}
-                >
-
-                <div class="campaign-content">
-
-                    <span class="campaign-option-title">
-                        ${escapeHtml(campaign.title)}
-                    </span>
-                    <span class="campaign-option-desc">
-                        ${escapeHtml(
-                            campaign.description ||
-                            "Support this campaign."
-                        )}
-                    </span>
-                </div>
-            </label>
-        `;
-    }).join("");
-    container.innerHTML = `
-        <div class="campaign-selector-title">
-            Choose Donation Purpose
-        </div>
-        <div class="campaign-options">
-            <label class="campaign-option compact ${selectedCampaignId === "organization"
-                ? "is-selected"
-                : ""}">
-                <input
-                    type="radio"
-                    name="donationTarget"
-                    value="organization"
-                    ${selectedCampaignId === "organization"
-                ? "checked"
-                : ""}
-                >
-                <div class="campaign-content">
-                    <span class="campaign-option-title">
-                        General Donation
-                    </span>
-                    <span class="campaign-option-desc">
-                        Support all Amaanitvam Foundation initiatives.
-                    </span>
-                </div>
-            </label>
-            ${campaignCards}
-        </div>
-    `;
+        container.innerHTML = `
+    <div class="campaign-selector-title">Choose where your donation should go</div>
+    <p class="campaign-selector-subtitle">Donate directly to the organization or select an active campaign.</p>
+    <div class="campaign-options">
+      <label class="campaign-option ${selectedCampaignId === 'organization' ? 'is-selected' : ''}">
+        <input type="radio" name="donationTarget" value="organization" ${selectedCampaignId === 'organization' ? 'checked' : ''}>
+        <span class="campaign-option-title">Amaanitvam Foundation</span>
+        <p class="campaign-option-desc">Direct donation to the organization for general foundation work.</p>
+      </label>
+      ${campaignCards || '<div class="campaign-option"><span class="campaign-option-title">No active campaigns right now</span><p class="campaign-option-desc">Direct organization donation is available.</p></div>'}
+    </div>`;
 
         container.querySelectorAll('input[name="donationTarget"]').forEach((input) => {
             input.addEventListener('change', () => {
@@ -893,6 +848,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
 
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initFaq, { once: true });
