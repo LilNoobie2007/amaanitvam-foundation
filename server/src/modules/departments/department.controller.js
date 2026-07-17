@@ -1,5 +1,5 @@
-import Department from "../models/department.js";
-import User from "../models/user.js";
+import Department from "./department.model.js";
+import User from "../users/user.model.js";
 
 const requireAdminUser = (req, res) => {
   if (req.user?.role !== "admin" && req.user?.role !== "super_admin") {

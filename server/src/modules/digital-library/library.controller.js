@@ -1,4 +1,4 @@
-import LearningHub from "../models/LearningHub.js";
+import LearningHub from "./library.model.js";
 
 // This catches the POST request from the frontend and saves it
 export const registerForEvent = async (req, res) => {
