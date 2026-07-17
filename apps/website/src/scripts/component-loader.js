@@ -1,52 +1,52 @@
 function getComponentPath(filename) {
-    return `/src/components/${filename}`;
+  return `/src/components/${filename}`;
 }
 
 async function loadHtml(targetId, filename) {
-    const target = document.getElementById(targetId);
+  const target = document.getElementById(targetId);
 
-    if (!target) {
-        console.warn(`Target not found: #${targetId}`);
-        return;
+  if (!target) {
+    console.warn(`Target not found: #${targetId}`);
+    return;
+  }
+
+  const componentUrl = getComponentPath(filename);
+
+  try {
+    const response = await fetch(componentUrl, {
+      cache: "no-cache",
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        `${filename} load failed: ${response.status} ${response.statusText}`
+      );
     }
 
-    const componentUrl = getComponentPath(filename);
+    const html = await response.text();
+    target.innerHTML = html;
+  } catch (error) {
+    console.error(`Unable to load ${componentUrl}:`, error);
 
-    try {
-        const response = await fetch(componentUrl, {
-            cache: "no-cache",
-        });
-
-        if (!response.ok) {
-            throw new Error(
-                `${filename} load failed: ${response.status} ${response.statusText}`
-            );
-        }
-
-        const html = await response.text();
-        target.innerHTML = html;
-    } catch (error) {
-        console.error(`Unable to load ${componentUrl}:`, error);
-
-        target.innerHTML = `
+    target.innerHTML = `
       <p style="padding: 12px; color: red;">
         Unable to load ${filename}
       </p>
     `;
-    }
+  }
 }
 
 function insertSocialBar() {
-    if (
-        !document.body ||
-        document.querySelector(".floating-socials")
-    ) {
-        return;
-    }
+  if (
+    !document.body ||
+    document.querySelector(".floating-socials")
+  ) {
+    return;
+  }
 
-    document.body.insertAdjacentHTML(
-        "beforeend",
-        `
+  document.body.insertAdjacentHTML(
+    "beforeend",
+    `
       <div class="floating-socials" aria-label="Social media links">
         <a
           href="https://www.facebook.com/people/Amaanitvam-Foundation/61583427622759/"
@@ -85,14 +85,14 @@ function insertSocialBar() {
         </a>
       </div>
     `
-    );
+  );
 }
 
 export async function loadSharedComponents() {
-    await Promise.all([
-        loadHtml("navbar-placeholder", "navbar.html"),
-        loadHtml("footer", "footer.html"),
-    ]);
+  await Promise.all([
+    loadHtml("navbar-placeholder", "navbar.html"),
+    loadHtml("footer", "footer.html"),
+  ]);
 
-    insertSocialBar();
+  insertSocialBar();
 }
