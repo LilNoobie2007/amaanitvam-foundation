@@ -3974,3 +3974,79 @@ input[type="submit"] {
     user-select: none;
     -webkit-touch-callout: none;
 }
+
+
+/* =========================================================
+   FOOTER BRANDING — Logo + Amaanitvam Foundation name
+   ========================================================= */
+.footer-logo-row {
+    display: flex !important;
+    align-items: center !important;
+    gap: 14px !important;
+    margin-bottom: 14px !important;
+}
+
+.footer-logo-row img,
+.brand-logo-footer {
+    width: 68px !important;
+    height: 68px !important;
+    flex-shrink: 0;
+    object-fit: contain !important;
+    background: #fff;
+    padding: 0;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.footer-brand-name {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+    line-height: 1;
+}
+
+.footer-brand-name span {
+    font-family: var(--font-heading, "Cormorant Garamond", serif);
+    font-size: 1.65rem;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0.12em;
+    color: #fff !important;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.footer-brand-name small {
+    margin-top: 7px;
+    font-family: var(--font-ui, "Montserrat", sans-serif);
+    font-size: 0.68rem;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0.35em;
+    color: var(--gold, #d8a15f) !important;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+    .footer-logo-row {
+        gap: 10px !important;
+    }
+
+    .footer-logo-row img,
+    .brand-logo-footer {
+        width: 56px !important;
+        height: 56px !important;
+    }
+
+    .footer-brand-name span {
+        font-size: 1.3rem;
+        letter-spacing: 0.09em;
+    }
+
+    .footer-brand-name small {
+        font-size: 0.56rem;
+        letter-spacing: 0.28em;
+    }
+}
