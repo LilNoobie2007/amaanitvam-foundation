@@ -1,40 +1,23 @@
-import multer from 'multer';
-import path from 'path';
-import fs from 'fs';
+import multer from "multer";
+import path from "path";
 
-// Safety check: Ensure the uploads directory exists
-const uploadDir = path.join(process.cwd(), 'uploads');
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true });
-}
+// Memory storage for direct cloudinary upload
+const storage = multer.memoryStorage();
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/');
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
-  }
-});
-
-const fileFilter = (req, file, cb) => {
-  const allowedExtensions = ['.pdf', '.doc', '.docx'];
-  const ext = path.extname(file.originalname).toLowerCase();
-  
-  if (allowedExtensions.includes(ext)) {
-    cb(null, true);
-  } else {
-    cb(new Error('Only PDF, DOC, and DOCX files are allowed!'), false);
-  }
-};
-
-const upload = multer({
-  storage: storage,
-  fileFilter: fileFilter,
+export const upload = multer({
+  storage,
   limits: {
-    fileSize: 10 * 1024 * 1024 // 10MB limit
-  }
-});
+    fileSize: 5 * 1024 * 1024, // 5MB limit
+  },
+  fileFilter: (req, file, cb) => {
+    const fileTypes = /jpeg|jpg|png|gif|pdf|doc|docx/;
+    const extName = fileTypes.test(path.extname(file.originalname).toLowerCase());
+    const mimeType = fileTypes.test(file.mimetype);
 
-export default upload;
+    if (extName && mimeType) {
+      return cb(null, true);
+    } else {
+      cb(new Error("Only images and documents are allowed!"));
+    }
+  },
+});

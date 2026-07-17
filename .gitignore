@@ -1,60 +1,34 @@
+# Dependencies
 node_modules/
-/node_modules/
-
+**/node_modules/
+# Builds
 dist/
 build/
-coverage/
-/dist/
-/build/
-/coverage/
-
+**/dist/
+**/build/
+# Environment files
 .env
-.env.
-/.env
-/.env.
-
-.env.example
-/.env.example
-
+.env.*
+**/.env
+**/.env.*
+!.env.example
+!**/.env.example
+# Runtime
 uploads/
 server/uploads/
-
+# Logs
+*.log
 logs/
-.log
-npm-debug.log
-yarn-debug.log
-pnpm-debug.log
-
-tmp/
-temp/
-.cache/
-.tmp
-
-.vscode/
-!.vscode/extensions.json
-
-.idea/
-
-.suo
-.ntvs
-.njsproj
-.sln
-
+# Test
+coverage/
+**/coverage/
+# OS and editors
 .DS_Store
 Thumbs.db
-Desktop.ini
-
-.vite/
-
-.pnpm-store/
-.npm/
-.yarn/
-
-firebase-debug.log
-
-playwright-report/
-test-results/
-
-.pid
-.seed
-.pid.lock
+.vscode/*
+!.vscode/extensions.json
+.idea/
+# Temporary files
+tmp/
+temp/
+*.tmp

@@ -1,0 +1,17 @@
+{
+  "name": "amaanitvam-platform",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "server",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:website": "npm run dev --workspace apps/website",
+    "dev:admin": "npm run dev --workspace apps/admin-portal",
+    "dev:dashboard": "npm run dev --workspace apps/dashboard",
+    "dev:server": "npm run dev --workspace server",
+    "build": "npm run build --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present"
+  }
+}

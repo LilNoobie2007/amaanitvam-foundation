@@ -2,22 +2,17 @@ import Razorpay from "razorpay";
 
 let razorpayInstance = null;
 
-export const getRazorpayInstance = () => {
-    if (!razorpayInstance) {
-        const keyId = process.env.RAZORPAY_KEY_ID;
-        const keySecret = process.env.RAZORPAY_KEY_SECRET;
+try {
+  if (process.env.RAZORPAY_KEY_ID && process.env.RAZORPAY_KEY_SECRET) {
+    razorpayInstance = new Razorpay({
+      key_id: process.env.RAZORPAY_KEY_ID,
+      key_secret: process.env.RAZORPAY_KEY_SECRET,
+    });
+  } else {
+    console.warn("Razorpay initialization skipped: missing credentials in env.");
+  }
+} catch (error) {
+  console.warn("Error initializing Razorpay:", error.message);
+}
 
-        if (!keyId || !keySecret) {
-            throw new Error("Razorpay credentials (RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET) must be set in .env");
-        }
-
-        razorpayInstance = new Razorpay({
-            key_id: keyId,
-            key_secret: keySecret
-        });
-    }
-
-    return razorpayInstance;
-};
-
-export const getRazorpayKeyId = () => process.env.RAZORPAY_KEY_ID;
+export default razorpayInstance;
