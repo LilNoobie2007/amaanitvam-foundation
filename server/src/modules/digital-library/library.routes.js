@@ -1,5 +1,5 @@
 import express from "express";
-import { registerForEvent, getRegistrations } from "../controllers/learningHubController.js";
+import { registerForEvent, getRegistrations } from "./library.controller.js";
 
 const router = express.Router();
 

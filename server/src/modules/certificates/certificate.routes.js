@@ -1,7 +1,7 @@
 import express from 'express';
-import Certificate from '../models/certificate.js';
-import { getCertificates, downloadCertificate } from '../controllers/adminController.js';
-import { verifyFirebaseToken } from '../middleware/verifyFirebaseToken.js';
+import Certificate from './certificate.model.js';
+import { getCertificates, downloadCertificate } from './certificate.controller.js';
+import { authenticate as verifyFirebaseToken } from '../../middleware/authenticate.js';
 
 const router = express.Router();
 

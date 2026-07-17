@@ -1,6 +1,6 @@
 import express from 'express';
 import rateLimit from 'express-rate-limit';
-import User from '../models/user.js';
+import User from '../users/user.model.js';
 
 const router = express.Router();
 

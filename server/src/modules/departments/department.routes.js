@@ -1,5 +1,6 @@
 import express from "express";
-import { verifyFirebaseToken, requireAdmin } from '../middleware/verifyFirebaseToken.js';
+import { authenticate as verifyFirebaseToken } from '../../middleware/authenticate.js';
+import { authorize as requireAdmin } from '../../middleware/authorize.js';
 
 import {
   createDepartment,
@@ -10,7 +11,7 @@ import {
   getDepartmentReport,
   getDepartments,
   getDepartmentById,
-} from "../controllers/departmentController.js";
+} from "./department.controller.js";
 
 const router = express.Router();
 
