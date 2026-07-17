@@ -1,19 +1,19 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
 import AdminLayout from './layouts/AdminLayout';
-import Login from './pages/Login';
-import Candidates from './pages/Candidates';
-import Members from './pages/Members';
-import Donations from './pages/Donations';
-import Certificates from './pages/Certificates';
-import Content from './pages/Content';
-import Gallery from './pages/Gallery';
-import Tasks from './pages/Tasks';
-import Settings from './pages/Settings';
-import CMS from './pages/CMS';
-import Profile from './pages/Profile';
-import LearningHub from './pages/LearningHub';
-import ContactMessages from './pages/ContactMessages'; // <-- Added import
+import Login from './features/auth/pages/Login';
+import Candidates from './features/candidates/pages/Candidates';
+import Members from './features/members/pages/Members';
+import Donations from './features/donations/pages/Donations';
+import Certificates from './features/certificates/pages/Certificates';
+import Content from './features/cms/pages/Content';
+import Gallery from './features/gallery/pages/Gallery';
+import Tasks from './features/tasks/pages/Tasks';
+import Settings from './features/settings/pages/Settings';
+import CMS from './features/cms/pages/CMS';
+import Profile from './features/profile/pages/Profile';
+import LearningHub from './features/digital-library/pages/LearningHub';
+import ContactMessages from './features/contact/pages/ContactMessages'; // <-- Added import
 
 export default function App() {
   return (
