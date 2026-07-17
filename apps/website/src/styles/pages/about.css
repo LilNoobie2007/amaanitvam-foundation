@@ -369,3 +369,11 @@ body[data-page="about"] section[aria-labelledby="achievements-title"] .achieveme
         min-height: 220px !important;
     }
 }
+
+body[data-page="about"] section[aria-labelledby="leadership-title"] {
+    padding-top: 5.5rem !important;
+}
+
+body[data-page="about"] section[aria-labelledby="leadership-title"] .section-header {
+    margin-bottom: 2.5rem !important;
+}
