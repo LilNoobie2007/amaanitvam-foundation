@@ -538,3 +538,19 @@ body[data-page="programs"] .project-btn-group {
         line-height: 1.75 !important;
     }
 }
+
+body[data-page="impact"] .project-content,
+body[data-page="programs"] .project-content {
+    scrollbar-width: none !important;
+    /* Firefox */
+    -ms-overflow-style: none !important;
+    /* Old Edge */
+}
+
+body[data-page="impact"] .project-content::-webkit-scrollbar,
+body[data-page="programs"] .project-content::-webkit-scrollbar {
+    display: none !important;
+    /* Chrome, Safari, Edge */
+    width: 0 !important;
+    height: 0 !important;
+}
