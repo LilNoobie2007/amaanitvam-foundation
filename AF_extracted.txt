@@ -1,0 +1,555 @@
+1. Final Structure
+amaanitvam-platform/
+|
+|-- apps/
+| |-- website/
+| | |-- public/
+| | | |-- images/
+| | | |-- documents/
+| | | |-- icons/
+| | | `-- favicon.ico
+| | |
+| | |-- src/
+| | | |-- components/
+| | | |-- pages/
+| | | |-- styles/
+| | | |-- scripts/
+| | | `-- config/
+| | |
+| | |-- package.json
+| | |-- vite.config.js
+| | `-- .env.example
+| |
+| |-- admin-portal/
+| | |-- public/
+| | |-- src/
+| | | |-- assets/
+| | | |-- components/
+| | | |-- features/
+| | | |-- layouts/
+| | | |-- routes/
+| | | |-- services/
+| | | |-- contexts/
+| | | |-- hooks/
+| | | |-- utils/
+| | | |-- styles/
+| | | |-- App.jsx
+| | | `-- main.jsx
+
+Amaanitvam Platform Architecture
+
+| | |-- package.json
+| | |-- vite.config.js
+| | `-- .env.example
+| |
+| `-- dashboard/
+| |-- public/
+| |-- src/
+| | |-- assets/
+| | |-- components/
+| | |-- features/
+| | |-- layouts/
+| | |-- routes/
+| | |-- services/
+| | |-- contexts/
+| | |-- hooks/
+| | |-- utils/
+| | |-- styles/
+| | |-- App.jsx
+| | `-- main.jsx
+| |-- package.json
+| |-- vite.config.js
+| `-- .env.example
+|
+|-- server/
+| |-- src/
+| | |-- config/
+| | |-- modules/
+| | |-- middleware/
+| | |-- shared/
+| | |-- services/
+| | |-- jobs/
+| | |-- app.js
+| | `-- server.js
+| |-- scripts/
+| |-- tests/
+| |-- package.json
+| `-- .env.example
+|
+|-- packages/
+| |-- ui/
+Amaanitvam Platform Architecture
+
+| |-- shared-utils/
+| `-- shared-config/
+|
+|-- docs/
+|-- .github/
+|-- .editorconfig
+|-- .gitignore
+|-- package.json
+|-- README.md
+`-- LICENSE
+
+Amaanitvam Platform Architecture
+
+2. Public Website Structure
+apps/website/
+|-- public/
+| |-- images/
+| | |-- common/
+| | |-- programs/
+| | |-- gallery/
+| | |-- webinars/
+| | `-- team/
+| |-- documents/
+| | |-- annual-reports/
+| | |-- policies/
+| | `-- certificates/
+| `-- icons/
+|
+`-- src/
+|-- components/
+| |-- navbar.html
+| |-- footer.html
+| |-- social-bar.html
+| `-- donation-cta.html
+|-- pages/
+| |-- index.html
+| |-- about.html
+| |-- impact.html
+| |-- programs.html
+| |-- gallery.html
+| |-- volunteer.html
+| |-- internship.html
+| |-- contact.html
+| |-- collaborations.html
+| |-- faq.html
+| |-- certificate-verification.html
+| |-- digital-library.html
+| |-- courses.html
+| `-- webinars-competitions.html
+|-- styles/
+| |-- variables.css
+| |-- reset.css
+Amaanitvam Platform Architecture
+
+| |-- base.css
+| |-- layout.css
+| |-- components.css
+| |-- responsive.css
+| `-- pages/
+`-- scripts/
+|-- app.js
+|-- api-client.js
+|-- component-loader.js
+|-- navbar.js
+|-- gallery.js
+|-- forms.js
+|-- library.js
+`-- courses.js
+
+Amaanitvam Platform Architecture
+
+3. Admin Portal Structure
+apps/admin-portal/src/
+|-- assets/
+|-- components/
+| |-- common/
+| |-- navigation/
+| |-- forms/
+| |-- tables/
+| |-- modals/
+| |-- feedback/
+| `-- guards/
+|-- features/
+| |-- auth/
+| |-- dashboard/
+| |-- candidates/
+| |-- members/
+| |-- departments/
+| |-- tasks/
+| |-- meetings/
+| |-- announcements/
+| |-- donations/
+| |-- certificates/
+| |-- gallery/
+| |-- cms/
+| |-- digital-library/
+| |-- courses/
+| |-- reports/
+| `-- settings/
+|-- layouts/
+|-- routes/
+|-- services/
+|-- contexts/
+|-- hooks/
+|-- utils/
+|-- styles/
+|-- App.jsx
+`-- main.jsx
+
+Amaanitvam Platform Architecture
+
+4. Team Dashboard Structure
+apps/dashboard/src/
+|-- assets/
+|-- components/
+| |-- common/
+| |-- navigation/
+| |-- tables/
+| |-- forms/
+| `-- guards/
+|-- features/
+| |-- auth/
+| |-- home/
+| |-- profile/
+| |-- tasks/
+| |-- projects/
+| |-- meetings/
+| |-- announcements/
+| |-- departments/
+| |-- reports/
+| `-- attendance/
+|-- layouts/
+|-- routes/
+|-- services/
+|-- contexts/
+|-- hooks/
+|-- utils/
+|-- styles/
+|-- App.jsx
+`-- main.jsx
+
+Amaanitvam Platform Architecture
+
+5. Backend Architecture
+server/src/
+|-- config/
+| |-- database.js
+| |-- firebase.js
+| |-- cloudinary.js
+| |-- razorpay.js
+| |-- mailer.js
+| `-- env.js
+|
+|-- modules/
+| |-- auth/
+| |-- users/
+| |-- candidates/
+| |-- members/
+| |-- departments/
+| |-- tasks/
+| |-- meetings/
+| |-- announcements/
+| |-- projects/
+| |-- donations/
+| |-- certificates/
+| |-- gallery/
+| |-- cms/
+| |-- digital-library/
+| |-- courses/
+| |-- volunteers/
+| |-- internships/
+| |-- reports/
+| `-- notifications/
+|
+|-- middleware/
+| |-- authenticate.js
+| |-- authorize.js
+| |-- validate.js
+| |-- upload.js
+| |-- rateLimiter.js
+| |-- errorHandler.js
+| `-- notFound.js
+Amaanitvam Platform Architecture
+
+|
+|-- shared/
+| |-- constants/
+| |-- errors/
+| |-- logger/
+| |-- response/
+| `-- utils/
+|
+|-- services/
+| |-- email.service.js
+| |-- sms.service.js
+| |-- storage.service.js
+| `-- activity.service.js
+|
+|-- jobs/
+|-- app.js
+`-- server.js
+
+Amaanitvam Platform Architecture
+
+6. Standard Backend Module Pattern
+modules/certificates/
+|-- certificate.model.js
+|-- certificate.controller.js
+|-- certificate.service.js
+|-- certificate.routes.js
+|-- certificate.validation.js
+|-- certificate.repository.js
+`-- certificate.utils.js
+File
+Model
+Controller
+Service
+Routes
+validation
+repository
+utils
+
+Responsibility
+Database schema and indexes
+HTTP request and response handling
+Business logic
+Endpoint definitions and middleware chain
+Request payload validation
+Database queries
+Feature-specific helper functions
+
+Amaanitvam Platform Architecture
+
+7. Standard React Feature Pattern
+features/certificates/
+|-- pages/
+| `-- CertificatesPage.jsx
+|-- components/
+| |-- CertificateTable.jsx
+| |-- CertificateForm.jsx
+| `-- CertificateDetailsModal.jsx
+|-- services/
+| `-- certificateService.js
+|-- hooks/
+| `-- useCertificates.js
+|-- utils/
+| `-- certificateHelpers.js
+`-- index.js
+
+Amaanitvam Platform Architecture
+
+8. Digital Library Module
+server/src/modules/digital-library/
+|-- libraryItem.model.js
+|-- libraryCategory.model.js
+|-- library.controller.js
+|-- library.service.js
+|-- library.repository.js
+|-- library.routes.js
+|-- library.validation.js
+`-- library.constants.js
+apps/admin-portal/src/features/digital-library/
+|-- pages/DigitalLibraryPage.jsx
+|-- components/LibraryTable.jsx
+|-- components/LibraryItemForm.jsx
+|-- components/CategoryManager.jsx
+|-- components/PublishToggle.jsx
+|-- services/libraryService.js
+`-- hooks/useLibraryItems.js
+apps/website/src/pages/digital-library.html
+apps/website/src/scripts/library.js
+apps/website/src/styles/pages/library.css
+
+Amaanitvam Platform Architecture
+
+9. Courses Module
+server/src/modules/courses/
+|-- course.model.js
+|-- lesson.model.js
+|-- enrollment.model.js
+|-- course.controller.js
+|-- course.service.js
+|-- course.repository.js
+|-- course.routes.js
+`-- course.validation.js
+apps/admin-portal/src/features/courses/
+|-- pages/CoursesPage.jsx
+|-- components/CourseForm.jsx
+|-- components/CourseTable.jsx
+|-- components/LessonBuilder.jsx
+|-- components/PublishSettings.jsx
+`-- services/courseService.js
+
+Amaanitvam Platform Architecture
+
+10. Root Workspace Configuration
+{
+"name":
+
+"amaanitvam-
+
+platform", "private": true,
+"workspac
+es":
+
+[
+
+"apps/*",
+"server",
+"packages
+/*"
+],
+"scripts": {
+"dev:website": "npm run dev --workspace
+apps/website", "dev:admin": "npm run dev -workspace
+
+apps/admin-portal",
+
+"dev:dashboard": "npm run dev --workspace
+apps/dashboard", "dev:server": "npm run dev -workspace server",
+"build": "npm run build --workspaces
+--if-present", "test": "npm run test -workspaces --if-present"
+}
+}
+
+Amaanitvam Platform Architecture
+
+11. Final .gitignore
+#
+Dependenc
+ies
+node_modu
+les/
+**/node_modules/
+#
+Builds
+dist/
+build/
+**/dist/
+**/build/
+# Environment files
+.env
+.env.*
+**/.env
+**/.env.*
+!.env.example
+!**/.env.example
+#
+
+Runtime
+
+uploads
+uploads/
+server/uploads/
+# Logs
+*.l
+og
+log
+s/
+#
+
+Test
+
+coverage
+coverage/
+**/coverage/
+Amaanitvam Platform Architecture
+
+# OS and editors
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea/
+#
+
+Temporary
+
+files tmp/
+temp/
+*.tmp
+
+12. Naming Conventions
+Type
+Folders
+React components
+Hooks
+
+Convention
+kebab-case
+PascalCase.jsx
+useSomething.js
+
+Amaanitvam Platform Architecture
+
+Backend files
+Variables/functions
+Constants
+
+feature.type.js
+camelCase
+UPPER_SNAKE_CASE
+
+Amaanitvam Platform Architecture
+
+13. Roles and Access Control
+•
+
+super_admin
+• admin
+• coordinator
+• faculty
+• team_member
+• intern
+• content_editor
+• viewer
+Frontend visibility is not security. Every protected backend endpoint must authenticate the user and
+verify the required role or permission.
+router.po
+st( "/",
+authenticate,
+authorize("super_admin",
+
+"admin",
+
+"content_editor"),
+validate(createCourseSchema),
+createCourse
+);
+
+14. Safe Migration Plan
+Phase 1 - Cleanup
+• Create a stable Git tag before restructuring.
+• Fix the root .gitignore.
+• Add .env.example files.
+• Remove node_modules and dist from Git tracking.
+• Standardise filenames and remove duplicate assets.
+Phase 2 - Create New Top-Level Folders
+• Create apps, server, packages, and docs.
+• Copy code first; do not immediately delete working files.
+Phase 3 - Move Frontends
+• Move Website to apps/website.
+• Move admin portal to apps/admin-portal.
+• Move dashboard to apps/dashboard.
+• Run and build each application separately.
+
+Amaanitvam Platform Architecture
+
+Phase 4 - Move Backend
+• Move backend to server.
+• First preserve the existing structure inside server/src.
+• Migrate modules gradually.
+• Start with gallery, certificates, digital library, and courses.
+• Move authentication last because both portals depend on it.
+Phase 5 - Testing
+• Website loading and navigation
+• Admin and dashboard login
+• Firebase token verification
+• API calls and CORS
+• Certificate verification and download
+• Donation flow
+• Gallery upload
+• Forms and mobile navigation
+• Production builds
+Phase 6 - Deployment Roots
+• Website: apps/website
+• Admin: apps/admin-portal
+• Dashboard: apps/dashboard
+• Backend: server
+
+Amaanitvam Platform Architecture
+
+
