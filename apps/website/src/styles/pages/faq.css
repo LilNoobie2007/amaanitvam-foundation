@@ -14,20 +14,22 @@ body[data-page="faq"] .page-hero.has-image .section-desc {
     border-bottom: 1px solid var(--border);
 }
 
-.faq-question {
+body[data-page="faq"] .faq-question {
     width: 100%;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 1.25rem 0;
-    background: none;
-    border: 0;
-    font-family: var(--font-ui);
-    font-weight: 700;
-    font-size: 1rem;
-    color: var(--primary);
+    justify-content: space-between;
+
+    padding: 22px 0;
+    border: none;
+    background: transparent;
     cursor: pointer;
+
     text-align: left;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--primary);
+    gap: 16px;
 }
 
 .faq-answer {
@@ -171,4 +173,72 @@ body[data-page="faq"] .faq-icon {
 
 body[data-page="faq"] .faq-item.is-open .faq-icon {
     transform: rotate(180deg) !important;
+}
+
+body[data-page="faq"] .faq-list {
+    max-width: 860px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+body[data-page="faq"] .faq-item {
+    border-bottom: 1px solid rgba(93, 15, 45, .15);
+    padding: 0;
+}
+
+body[data-page="faq"] .faq-question {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+    padding: 26px 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+body[data-page="faq"] .faq-question > :first-child {
+    flex: 1;
+}
+
+body[data-page="faq"] .faq-text {
+    flex: 1;
+}
+
+body[data-page="faq"] .faq-icon {
+    width: 24px;
+    min-width: 24px;
+    margin-left: 20px;
+    flex-shrink: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 24px;
+    transition: transform .3s ease;
+}
+
+body[data-page="faq"] .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 48px 0 0;
+    color: var(--muted);
+    line-height: 1.8;
+    font-size: 0.98rem;
+    transition: max-height .35s ease, padding .35s ease;
+}
+
+body[data-page="faq"] .faq-item.is-open .faq-answer {
+    max-height: 300px;
+    padding: 0 48px 26px 0;
+}
+
+body[data-page="faq"] .faq-item.is-open .faq-icon {
+    transform: rotate(180deg);
 }

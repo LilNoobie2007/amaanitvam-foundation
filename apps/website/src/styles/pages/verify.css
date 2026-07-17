@@ -15,8 +15,8 @@ body[data-page="verify"] .card {
 
 body[data-page="verify"] .card .section-header {
     position: relative;
-    text-align: left !important;
-    margin-left: 0 !important;
+    text-align: center !important;
+    margin: 0 auto 2rem !important;
 }
 
 body[data-page="verify"] .card .section-header .section-label {
@@ -58,8 +58,8 @@ body[data-page="verify"] .section-title {
 
 body[data-page="verify"] .card .section-title,
 body[data-page="verify"] .card .section-desc {
-    text-align: left !important;
-    margin-left: 0 !important;
+    text-align: center !important;
+    margin: 0 auto !important;
 }
 
 body:has(.app-shell) .certificate-strip {
@@ -122,4 +122,8 @@ body.dashboard-page .report-item p,
 body.dashboard-page .certificate-item p {
     color: var(--muted);
     margin: 8px 0 14px;
+}
+
+#verify-result[hidden] {
+    display: none !important;
 }

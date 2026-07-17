@@ -30,9 +30,26 @@ if (verifyForm) {
         e.preventDefault();
 
         const id = document.getElementById("cert-id").value.trim().toUpperCase();
-        const result = document.getElementById("verify-result");
+const result = document.getElementById("verify-result");
 
-        if (!id) return;
+if (!id) {
+    result.hidden = false;
+    result.className = "mt-6 p-6 rounded-xl border border-yellow-200 bg-yellow-50";
+    result.innerHTML = `
+        <div class="flex items-start gap-3">
+            <span class="material-symbols-outlined text-yellow-600">
+                warning
+            </span>
+            <div>
+                <p class="font-semibold text-yellow-800">
+                    Certificate ID Required
+                </p>
+                <p>Please enter a Certificate ID to continue.</p>
+            </div>
+        </div>
+    `;
+    return;
+}
 
         result.hidden = false;
         result.innerHTML = "Verifying...";
@@ -530,7 +547,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (submitBtn) {
             submitBtn.disabled = true; //[cite: 5]
-            submitBtn.textContent = "Submitting..."; //[cite: 5]
+            submitBtn.innerHTML =
+'<i class="fa-solid fa-spinner fa-spin"></i> Registering...'; //[cite: 5]
         }
 
         // NATIVE FORMDATA - Crucial for catching the PDF file!
@@ -556,6 +574,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     status.style.color = "green"; //[cite: 5]
                 }
                 this.reset(); //[cite: 5]
+                setTimeout(() => {
+                statusDiv.textContent = "";
+                }, 5000);
             } else {
                 throw new Error(result.message || "Failed to submit application."); //[cite: 5]
             }
@@ -570,7 +591,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Restore button
             if (submitBtn) {
                 submitBtn.disabled = false; //[cite: 5]
-                submitBtn.textContent = originalText; //[cite: 5]
+                submitBtn.innerHTML = originalText;//[cite: 5]
             }
         }
     });
@@ -599,6 +620,31 @@ document.addEventListener('DOMContentLoaded', () => {
         // 2. Gather Data & Convert to JSON
         const formData = new FormData(this);
         const data = Object.fromEntries(formData.entries());
+        const phoneRegex = /^[6-9]\d{9}$/;
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+data.name = data.name.trim();
+data.email = data.email.trim().toLowerCase();
+data.phone = data.phone.trim();
+data.event = data.event.trim();
+data.organization = (data.organization || "").trim();
+data.message = (data.message || "").trim();
+
+if (data.name.length < 3) {
+    throw new Error("Please enter a valid name.");
+}
+
+if (!emailRegex.test(data.email)) {
+    throw new Error("Please enter a valid email address.");
+}
+
+if (!phoneRegex.test(data.phone)) {
+    throw new Error("Please enter a valid 10-digit mobile number.");
+}
+
+if (data.event.length < 3) {
+    throw new Error("Please enter the event name.");
+}
 
         try {
             // 3. Dynamic API URL

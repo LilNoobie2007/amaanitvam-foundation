@@ -40,7 +40,7 @@
     </header>
     <section aria-labelledby="verify-form-heading" class="section section-white">
       <div class="container moved-inline-style-131">
-        <div class="card contact-form-card">
+        <div class="card">
           <div class="section-header moved-inline-style-133">
             <span class="section-label">Verification</span>
             <h2 class="section-title moved-inline-style-134" id="verify-form-heading">
@@ -59,7 +59,15 @@
               </button>
             </div>
           </form>
-          <div aria-live="polite" hidden="" id="verify-result" role="status"></div>
+          <div id="verify-result" class="certificate-box" hidden aria-live="polite" role="status">
+    <div class="certificate-preview">
+        <!-- Certificate image or preview goes here -->
+    </div>
+
+    <div class="certificate-info">
+        <!-- Certificate details will appear here -->
+    </div>
+</div>
         </div>
       </div>
     </section>
@@ -176,6 +184,7 @@
         </div>
       </div>
     </section>
+  
   </main>
   <!-- Floating Donate CTA -->
   <div id="footer"></div>
