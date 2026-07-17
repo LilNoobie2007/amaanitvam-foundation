@@ -26,12 +26,82 @@ export function initNavbar() {
     nav.dataset.initialized = 'true';
 
     // 1. Highlight active links
+    // 1. Highlight active page + parent navbar section
+    const navGroups = {
+        home: ['home'],
+
+        about: [
+            'about',
+            'impact',
+            'programs',
+            'gallery'
+        ],
+
+        involved: [
+            'volunteer',
+            'internship',
+            'contact'
+        ],
+
+        learning: [
+            'digital-library',
+            'courses',
+            'webinars',
+            'webinars-competitions'
+        ],
+
+        resources: [
+            'verify',
+            'certificate-verification',
+            'collaborations',
+            'faq'
+        ],
+
+        portal: [
+            'portal',
+            'dashboard',
+            'admin'
+        ]
+    };
+
+    // Remove old active states
+    document.querySelectorAll('[data-nav]').forEach(function (link) {
+        link.classList.remove('is-active');
+        link.removeAttribute('aria-current');
+    });
+
+    // Find parent group of current page
+    let activeGroup = '';
+
+    Object.entries(navGroups).some(function ([group, pages]) {
+        if (pages.includes(currentPage)) {
+            activeGroup = group;
+            return true;
+        }
+
+        return false;
+    });
+
+    // Highlight exact current page link
     document.querySelectorAll('[data-nav]').forEach(function (link) {
         if (link.dataset.nav === currentPage) {
             link.classList.add('is-active');
             link.setAttribute('aria-current', 'page');
         }
     });
+
+    // Highlight parent navbar item
+    if (activeGroup) {
+        document
+            .querySelectorAll(`[data-nav="${activeGroup}"]`)
+            .forEach(function (link) {
+                link.classList.add('is-active');
+
+                if (activeGroup === currentPage) {
+                    link.setAttribute('aria-current', 'page');
+                }
+            });
+    }
 
     // 2. Navbar transparency scroll effect
     function updateNav() {
