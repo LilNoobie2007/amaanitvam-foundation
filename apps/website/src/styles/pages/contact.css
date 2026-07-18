@@ -626,3 +626,132 @@ body[data-page="contact"] #donate .pay-button {
         grid-template-columns: repeat(2, 1fr) !important;
     }
 }
+
+/* =========================================================
+   CONTACT PAGE — PARTNERSHIP SECTION REMOVED + DONATION FIX
+   Keep this block at the very end of contact.css
+   ========================================================= */
+
+/* FAQ should connect cleanly with donation after partnership removal */
+body[data-page="contact"] #faq {
+    padding-bottom: 48px !important;
+}
+
+body[data-page="contact"] #donate {
+    margin-top: 0 !important;
+    padding-top: 56px !important;
+}
+
+/* Balanced donation columns */
+body[data-page="contact"] #donate .split-2 {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1.18fr) minmax(340px, 0.82fr) !important;
+    gap: 28px !important;
+    align-items: stretch !important;
+}
+
+body[data-page="contact"] #donate .donation-form-card,
+body[data-page="contact"] #donate .donation-info {
+    height: 100% !important;
+}
+
+body[data-page="contact"] #donate .donation-info {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    grid-template-rows: auto auto auto minmax(130px, 1fr) !important;
+    gap: 16px !important;
+    align-content: stretch !important;
+}
+
+body[data-page="contact"] #donate .impact-card,
+body[data-page="contact"] #donate .tax-card,
+body[data-page="contact"] #donate .secure-card,
+body[data-page="contact"] #donate .transparency-card {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    position: static !important;
+    transform: none !important;
+}
+
+/* New fourth information card */
+body[data-page="contact"] #donate .transparency-card {
+    padding: 24px !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 20px !important;
+    background: var(--surface) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    text-align: center !important;
+    box-shadow: 0 10px 24px rgba(93, 15, 45, 0.06) !important;
+}
+
+body[data-page="contact"] #donate .transparency-card h3 {
+    margin: 0 0 10px !important;
+    color: var(--maroon) !important;
+    font-family: "Cormorant Garamond", serif !important;
+    font-size: 1.35rem !important;
+}
+
+body[data-page="contact"] #donate .transparency-card p {
+    margin: 0 !important;
+    color: var(--text-muted, #6b5b55) !important;
+    line-height: 1.65 !important;
+    font-size: 0.95rem !important;
+}
+
+/* Keep form controls neat */
+body[data-page="contact"] #donate .amount-buttons {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+}
+
+body[data-page="contact"] #donate .amount-btn {
+    min-width: 0 !important;
+    white-space: nowrap !important;
+}
+
+@media (max-width: 900px) {
+    body[data-page="contact"] #donate .split-2 {
+        grid-template-columns: 1fr !important;
+        align-items: start !important;
+    }
+
+    body[data-page="contact"] #donate .donation-info {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        grid-template-rows: auto !important;
+    }
+
+    body[data-page="contact"] #donate .impact-card,
+    body[data-page="contact"] #donate .tax-card,
+    body[data-page="contact"] #donate .secure-card,
+    body[data-page="contact"] #donate .transparency-card {
+        height: 100% !important;
+    }
+}
+
+@media (max-width: 600px) {
+    body[data-page="contact"] #faq {
+        padding-bottom: 30px !important;
+    }
+
+    body[data-page="contact"] #donate {
+        padding-top: 36px !important;
+    }
+
+    body[data-page="contact"] #donate .donation-info {
+        grid-template-columns: 1fr !important;
+        gap: 14px !important;
+    }
+
+    body[data-page="contact"] #donate .amount-buttons {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    body[data-page="contact"] #donate .transparency-card {
+        padding: 20px !important;
+    }
+}
