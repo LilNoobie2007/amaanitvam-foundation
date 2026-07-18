@@ -554,3 +554,113 @@ body[data-page="programs"] .project-content::-webkit-scrollbar {
     width: 0 !important;
     height: 0 !important;
 }
+
+/* =========================================================
+   PROGRAM IMPACT SECTION FIX
+   ========================================================= */
+
+body[data-page="impact"] .section-navy {
+    background: linear-gradient(135deg, #5d0f2d 0%, #861744 100%) !important;
+    padding: 4.5rem 0 !important;
+}
+
+body[data-page="impact"] .section-navy .section-header {
+    text-align: center !important;
+    margin-bottom: 3rem !important;
+}
+
+body[data-page="impact"] .section-navy .section-label {
+    color: #d8a15f !important;
+}
+
+body[data-page="impact"] .section-navy .section-title {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+}
+
+body[data-page="impact"] .section-navy .section-desc {
+    color: rgba(255, 255, 255, 0.88) !important;
+}
+
+/* Metrics grid */
+body[data-page="impact"] .moved-inline-style-final-025 {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 1.5rem !important;
+    align-items: stretch !important;
+}
+
+/* Individual metric */
+body[data-page="impact"] .moved-inline-style-final-025>div {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    min-height: 190px !important;
+    padding: 1.75rem 1rem !important;
+    border-radius: 20px !important;
+    background: rgba(255, 255, 255, 0.07) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    transition: transform 0.25s ease, background 0.25s ease !important;
+}
+
+body[data-page="impact"] .moved-inline-style-final-025>div:hover {
+    transform: translateY(-5px) !important;
+    background: rgba(255, 255, 255, 0.11) !important;
+}
+
+/* Icons */
+body[data-page="impact"] .moved-inline-style-final-026 {
+    color: #d8a15f !important;
+    font-size: 2.6rem !important;
+    margin-bottom: 0.8rem !important;
+}
+
+/* Numbers */
+body[data-page="impact"] .section-navy .stat-value {
+    display: block !important;
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    font-family: "Cormorant Garamond", serif !important;
+    font-size: clamp(2.5rem, 4vw, 3.6rem) !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    margin: 0 0 0.65rem !important;
+    text-shadow: none !important;
+}
+
+/* Labels */
+body[data-page="impact"] .section-navy .stat-label {
+    color: rgba(255, 255, 255, 0.95) !important;
+    font-family: "Montserrat", sans-serif !important;
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    line-height: 1.5 !important;
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+    body[data-page="impact"] .moved-inline-style-final-025 {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+/* Mobile */
+@media (max-width: 560px) {
+    body[data-page="impact"] .section-navy {
+        padding: 3.5rem 0 !important;
+    }
+
+    body[data-page="impact"] .moved-inline-style-final-025 {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+    }
+
+    body[data-page="impact"] .moved-inline-style-final-025>div {
+        min-height: 160px !important;
+        padding: 1.5rem 1rem !important;
+    }
+}
