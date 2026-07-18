@@ -2642,7 +2642,8 @@ body:has(.app-shell) .feature-detail p {
 }
 
 body:has(.app-shell) .feature-detail .primary-btn {
-    white-space: nowrap;
+    white-space: normal;
+    overflow-wrap: anywhere;
 }
 
 body:has(.app-shell) .module-workspace {
@@ -2893,17 +2894,6 @@ body:has(.app-shell) .status.alert {
 
     100% {
         box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
-    }
-}
-
-@keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(0);
-    }
-
-    to {
-        opacity: 1;
     }
 }
 
@@ -4049,4 +4039,202 @@ input[type="submit"] {
         font-size: 0.56rem;
         letter-spacing: 0.28em;
     }
+}
+
+/* FAQ*/
+
+.faq-question {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    padding: 1rem 1.25rem;
+
+    background: #fff;
+    border: none;
+    cursor: pointer;
+
+    text-align: left;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.faq-text {
+    flex: 1;
+    text-align: left;
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+.faq-icon {
+    flex-shrink: 0;
+    margin-left: auto;
+    transition: transform .3s ease;
+}
+
+.faq-question[aria-expanded="true"] .faq-icon {
+    transform: rotate(180deg);
+}
+
+.faq-answer {
+    display: none;
+    padding: 1rem 1.25rem;
+    text-align: left;
+    line-height: 1.7;
+}
+
+
+/* Verification Card */
+
+body[data-page="verify"] .section-white .container {
+    display: flex;
+    justify-content: center;
+}
+
+body[data-page="verify"] .card {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    z-index: 2;
+    width: 550px;
+    min-height: 550px;
+    max-width: 95%;
+    margin: 40px auto;
+    padding: 50px 40px;
+    background: #fff;
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+body[data-page="verify"] .card * {
+    box-sizing: border-box;
+}
+
+body[data-page="verify"] .card .section-header {
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto 35px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+body[data-page="verify"] .card .section-label {
+    display: block;
+    margin-bottom: 14px;
+
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+body[data-page="verify"] .card .section-title {
+    width: 100%;
+    margin-bottom: 18px;
+
+    font-size: 3rem;
+    line-height: 1.15;
+    text-align: center;
+}
+
+body[data-page="verify"] .card .section-desc {
+    max-width: 340px;
+
+    margin: 0 auto;
+    line-height: 1.7;
+    text-align: center;
+}
+
+body[data-page="verify"] #verify-form {
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+body[data-page="verify"] .form-label {
+    width: 100%;
+    text-align: center;
+    font-weight: 600;
+}
+
+body[data-page="verify"] .verify-input-row {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+body[data-page="verify"] .verify-input-row input {
+    width: 100%;
+    padding: 0 16px;
+    text-align: center;
+}
+
+body[data-page="verify"] .verify-input-row .btn,
+body[data-page="verify"] .verify-input-row button {
+    width: 180px;
+    margin: 0 auto;
+}
+
+#verify-result[hidden] {
+    display: none !important;
+}
+
+.verify-content {
+    width: 100%;
+    max-width: 420px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+body[data-page="verify"] .form-label {
+    margin-bottom: 14px;
+}
+
+body[data-page="verify"] .verify-input-row {
+    gap: 20px;
+}
+
+body[data-page="verify"] .card .section-label {
+    margin-bottom: 14px;
+}
+
+body[data-page="verify"] .card .section-title {
+    /* Keep the original size */
+    margin-bottom: 18px;
+    line-height: 1.15;
+}
+
+body[data-page="verify"] .card .section-desc {
+    margin-bottom: 24px;
+    line-height: 1.7;
+    max-width: 340px;
+}
+
+.faq-answer {
+    display: none;
+}
+
+.faq-answer.active {
+    display: block;
+    margin-top: 12px;
+}
+
+.faq-question {
+    width: 100%;
+    cursor: pointer;
 }

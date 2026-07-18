@@ -15,8 +15,8 @@ body[data-page="verify"] .card {
 
 body[data-page="verify"] .card .section-header {
     position: relative;
-    text-align: left !important;
-    margin-left: 0 !important;
+    text-align: center !important;
+    margin: 0 auto 2rem !important;
 }
 
 body[data-page="verify"] .card .section-header .section-label {
@@ -45,21 +45,38 @@ body[data-page="verify"] .card .section-header .section-label::after {
     align-items: center;
 }
 
+body[data-page="verify"] #verify-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+}
+
+body[data-page="verify"] .form-label {
+    margin: 0;
+    text-align: center;
+}
+
+body[data-page="verify"] .verify-input-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+body[data-page="verify"] .verify-input-row .form-input {
+    width: 100%;
+    padding: 12px 16px;
+    text-align: center;
+}
+body[data-page="verify"] .verify-input-row .btn {
+    min-width: 180px;
+}
+
 @media (max-width: 600px) {
     .verify-input-row {
         flex-direction: column;
         align-items: stretch;
     }
-}
-
-body[data-page="verify"] .section-title {
-    font-size: clamp(2.1rem, 3.2vw, 3.2rem) !important;
-}
-
-body[data-page="verify"] .card .section-title,
-body[data-page="verify"] .card .section-desc {
-    text-align: left !important;
-    margin-left: 0 !important;
 }
 
 body:has(.app-shell) .certificate-strip {
@@ -122,4 +139,52 @@ body.dashboard-page .report-item p,
 body.dashboard-page .certificate-item p {
     color: var(--muted);
     margin: 8px 0 14px;
+}
+
+#verify-result[hidden] {
+    display: none !important;
+}
+
+body[data-page="verify"] .card .section-header {
+    position: relative;
+    text-align: center !important;
+    margin: 0 auto 2rem !important;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.9rem;   /* controls spacing between each line */
+}
+
+body[data-page="verify"] .card .section-label {
+    margin: 0 0 12px 0;
+}
+
+body[data-page="verify"] .card .section-title {
+    text-align: center !important;
+    margin: 0 0 18px 0;
+    line-height: 1.2;
+}
+
+body[data-page="verify"] .card .section-desc {
+    text-align: center !important;
+    margin: 0 0 24px 0;
+    line-height: 1.7;
+    max-width: 320px;
+}
+
+/* Trust Indicators - Center the grid */
+body[data-page="verify"] .grid-3 {
+    justify-content: center !important;
+    justify-items: center !important;
+}
+
+/* Keep each card the same size */
+body[data-page="verify"] .grid-3 .card {
+    width: 400px; /* or whatever width you're currently using */
+}
+
+body[data-page="verify"] .grid-3 {
+    grid-template-columns: repeat(3, 400px);
+    justify-content: center !important;
 }
