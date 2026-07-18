@@ -30,12 +30,13 @@ if (verifyForm) {
         e.preventDefault();
 
         const id = document.getElementById("cert-id").value.trim().toUpperCase();
-const result = document.getElementById("verify-result");
+        const result = document.getElementById("verify-result");
+        if (!result) return;
 
-if (!id) {
-    result.hidden = false;
-    result.className = "mt-6 p-6 rounded-xl border border-yellow-200 bg-yellow-50";
-    result.innerHTML = `
+        if (!id) {
+            result.hidden = false;
+            result.className = "mt-6 p-6 rounded-xl border border-yellow-200 bg-yellow-50";
+            result.innerHTML = `
         <div class="flex items-start gap-3">
             <span class="material-symbols-outlined text-yellow-600">
                 warning
@@ -48,8 +49,8 @@ if (!id) {
             </div>
         </div>
     `;
-    return;
-}
+            return;
+        }
 
         result.hidden = false;
         result.innerHTML = "Verifying...";
@@ -105,10 +106,6 @@ if (!id) {
     let activeCampaigns = [];
     let selectedCampaignId = 'organization';
     let workingApiBase = null;
-
-    function isLocalHost() {
-        return ['localhost', '127.0.0.1', ''].includes(window.location.hostname) || window.location.protocol === 'file:';
-    }
 
     function apiCandidates() {
         const configured =
@@ -169,14 +166,6 @@ if (!id) {
         throw lastError || new Error('Backend API is not reachable.');
     }
 
-    function escapeHtml(value) {
-        return String(value ?? '')
-            .replaceAll('&', '&amp;')
-            .replaceAll('<', '&lt;')
-            .replaceAll('>', '&gt;')
-            .replaceAll('"', '&quot;')
-            .replaceAll("'", '&#039;');
-    }
 
     function rupees(value) {
         return `₹${Number(value || 0).toLocaleString('en-IN')}`;
@@ -490,9 +479,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             // Dynamic URL for fetching departments (Port 5500 will ask Port 5000)
-            const DEPT_API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-                ? 'http://localhost:5000/api/public/departments' // Replace with your exact GET route if different
-                : 'https://amaanitvam-foundation.onrender.com/api/public/departments';
+            const DEPT_API_URL = `${API_BASE_URL}/public/departments`;
 
             const response = await fetch(DEPT_API_URL);
             const result = await response.json();
@@ -529,69 +516,67 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. FORM SUBMISSION LOGIC (YOUR EXACT CODE)
     // ==========================================
     const form = document.getElementById('volunteerForm');
-    if (!form) return; //[cite: 5]
+    if (!form) return;
 
     form.addEventListener('submit', async function (e) {
-        e.preventDefault(); //[cite: 5]
+        e.preventDefault();
 
-        const status = document.getElementById('vol-status'); //[cite: 5]
-        const submitBtn = this.querySelector('button[type="submit"]'); //[cite: 5]
-        const originalText = submitBtn ? submitBtn.textContent : 'Submit Application'; //[cite: 5]
+        const status = document.getElementById('vol-status');
+        const submitBtn = this.querySelector('button[type="submit"]');
+        const originalText = submitBtn ? submitBtn.textContent : 'Submit Application';
 
         // Loading State
         if (status) {
-            status.textContent = "Submitting application..."; //[cite: 5]
-            status.style.color = "var(--navy)"; //[cite: 5]
-            status.style.display = 'block'; //[cite: 5]
+            status.textContent = "Submitting application...";
+            status.style.color = "var(--navy)";
+            status.style.display = 'block';
         }
 
         if (submitBtn) {
-            submitBtn.disabled = true; //[cite: 5]
+            submitBtn.disabled = true;
             submitBtn.innerHTML =
-'<i class="fa-solid fa-spinner fa-spin"></i> Registering...'; //[cite: 5]
+                '<i class="fa-solid fa-spinner fa-spin"></i> Registering...';
         }
 
         // NATIVE FORMDATA - Crucial for catching the PDF file!
-        const formData = new FormData(this); //[cite: 5]
+        const formData = new FormData(this);
 
         try {
-            const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-                ? 'http://localhost:5000/api/volunteer/apply'  //[cite: 5]
-                : 'https://amaanitvam-foundation.onrender.com/api/volunteer/apply'; //[cite: 5]
+            const API_URL = `${API_BASE_URL}/volunteer/apply`;
 
             const response = await fetch(API_URL, {
-                method: 'POST', //[cite: 5]
-                body: formData //[cite: 5]
+                method: 'POST',
+                body: formData
             });
 
-            const result = await response.json(); //[cite: 5]
+            const result = await response.json();
 
-            if (response.ok) { //[cite: 5]
+            if (response.ok) {
                 // Success State
-                alert("Success! Your volunteer application has been submitted successfully. We will review your application and get back to you soon!"); //[cite: 5]
+                alert("Success! Your volunteer application has been submitted successfully. We will review your application and get back to you soon!");
                 if (status) {
-                    status.textContent = result.message || "Application submitted successfully!"; //[cite: 5]
-                    status.style.color = "green"; //[cite: 5]
+                    status.textContent = result.message || "Application submitted successfully!";
+                    status.style.color = "green";
                 }
-                this.reset(); //[cite: 5]
+                this.reset();
                 setTimeout(() => {
-                statusDiv.textContent = "";
+                    if (status) status.textContent = "";
                 }, 5000);
             } else {
-                throw new Error(result.message || "Failed to submit application."); //[cite: 5]
+                throw new Error(result.message || "Failed to submit application.");
             }
         } catch (err) {
             // Error State
-            alert("Error: " + err.message); //[cite: 5]
+            alert("Error: " + err.message);
             if (status) {
-                status.textContent = err.message || "Failed to connect to the server."; //[cite: 5]
-                status.style.color = "red"; //[cite: 5]
+                status.textContent = err.message || "Failed to connect to the server.";
+                status.style.color = "red";
             }
         } finally {
             // Restore button
             if (submitBtn) {
-                submitBtn.disabled = false; //[cite: 5]
-                submitBtn.innerHTML = originalText;//[cite: 5]
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
             }
         }
     });
@@ -621,36 +606,34 @@ document.addEventListener('DOMContentLoaded', () => {
         const formData = new FormData(this);
         const data = Object.fromEntries(formData.entries());
         const phoneRegex = /^[6-9]\d{9}$/;
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-data.name = data.name.trim();
-data.email = data.email.trim().toLowerCase();
-data.phone = data.phone.trim();
-data.event = data.event.trim();
-data.organization = (data.organization || "").trim();
-data.message = (data.message || "").trim();
-
-if (data.name.length < 3) {
-    throw new Error("Please enter a valid name.");
-}
-
-if (!emailRegex.test(data.email)) {
-    throw new Error("Please enter a valid email address.");
-}
-
-if (!phoneRegex.test(data.phone)) {
-    throw new Error("Please enter a valid 10-digit mobile number.");
-}
-
-if (data.event.length < 3) {
-    throw new Error("Please enter the event name.");
-}
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         try {
+            data.name = String(data.name || "").trim();
+            data.email = String(data.email || "").trim().toLowerCase();
+            data.phone = String(data.phone || "").trim();
+            data.event = String(data.event || "").trim();
+            data.organization = String(data.organization || "").trim();
+            data.message = String(data.message || "").trim();
+
+            if (data.name.length < 3) {
+                throw new Error("Please enter a valid name.");
+            }
+
+            if (!emailRegex.test(data.email)) {
+                throw new Error("Please enter a valid email address.");
+            }
+
+            if (!phoneRegex.test(data.phone)) {
+                throw new Error("Please enter a valid 10-digit mobile number.");
+            }
+
+            if (data.event.length < 3) {
+                throw new Error("Please enter the event name.");
+            }
+
             // 3. Dynamic API URL
-            const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-                ? 'http://localhost:5000/api/learning-hub/register'
-                : 'https://amaanitvam-foundation.onrender.com/api/learning-hub/register';
+            const API_URL = `${API_BASE_URL}/learning-hub/register`;
 
             // 4. Send the Request
             const response = await fetch(API_URL, {
@@ -702,9 +685,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             // Dynamic URL for fetching departments (Port 5500 will ask Port 5000)
-            const DEPT_API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-                ? 'http://localhost:5000/api/public/departments'
-                : 'https://amaanitvam-foundation.onrender.com/api/public/departments';
+            const DEPT_API_URL = `${API_BASE_URL}/public/departments`;
 
             const response = await fetch(DEPT_API_URL);
             const result = await response.json();
@@ -773,9 +754,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const formData = new FormData(this);
 
         try {
-            const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-                ? 'http://localhost:5000/api/internship/apply'
-                : 'https://amaanitvam-foundation.onrender.com/api/internship/apply';
+            const API_URL = `${API_BASE_URL}/internship/apply`;
 
             const response = await fetch(API_URL, {
                 method: 'POST',

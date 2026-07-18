@@ -97,8 +97,7 @@ export function initNavbar() {
     window.addEventListener('scroll', updateNav, { passive: true });
     updateNav();
 
-    // 3. Mobile Menu Logic with enhanced close behavior
-    // 3. Mobile Menu Logic
+    // 3. Mobile menu logic with enhanced close behavior
     function closeMenu() {
         mobileMenu.classList.remove('is-open');
         mobileMenu.setAttribute('aria-hidden', 'true');
