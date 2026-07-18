@@ -172,3 +172,19 @@ body[data-page="verify"] .card .section-desc {
     line-height: 1.7;
     max-width: 320px;
 }
+
+/* Trust Indicators - Center the grid */
+body[data-page="verify"] .grid-3 {
+    justify-content: center !important;
+    justify-items: center !important;
+}
+
+/* Keep each card the same size */
+body[data-page="verify"] .grid-3 .card {
+    width: 400px; /* or whatever width you're currently using */
+}
+
+body[data-page="verify"] .grid-3 {
+    grid-template-columns: repeat(3, 400px);
+    justify-content: center !important;
+}

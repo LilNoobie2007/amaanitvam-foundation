@@ -4250,3 +4250,17 @@ body[data-page="verify"] .card .section-desc {
     line-height: 1.7;
     max-width: 340px;
 }
+
+.faq-answer {
+    display: none;
+}
+
+.faq-answer.active {
+    display: block;
+    margin-top: 12px;
+}
+
+.faq-question {
+    width: 100%;
+    cursor: pointer;
+}

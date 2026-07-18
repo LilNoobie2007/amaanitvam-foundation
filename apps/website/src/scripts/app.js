@@ -131,3 +131,20 @@ document.addEventListener("DOMContentLoaded", () => {
         statusDiv.style.color = color;
     }
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const faqButtons = document.querySelectorAll(".faq-question");
+
+    faqButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+            const answer = button.nextElementSibling;
+            const expanded = button.getAttribute("aria-expanded") === "true";
+
+            button.setAttribute("aria-expanded", !expanded);
+
+            if (answer) {
+                answer.classList.toggle("active");
+            }
+        });
+    });
+});
