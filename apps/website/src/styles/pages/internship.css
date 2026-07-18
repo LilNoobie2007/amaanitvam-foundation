@@ -18,3 +18,178 @@ body[data-page="verify"] .grid-3 {
         grid-template-columns: 1fr !important;
     }
 }
+
+/* =========================================================
+   INTERNSHIP TRACKS SECTION FIX
+   ========================================================= */
+
+body[data-page="internship"] section[aria-labelledby="tracks-heading"] {
+    padding: 5rem 0 !important;
+    background: #fffaf3 !important;
+}
+
+body[data-page="internship"] section[aria-labelledby="tracks-heading"] .container {
+    max-width: 1120px !important;
+}
+
+body[data-page="internship"] section[aria-labelledby="tracks-heading"] .section-header {
+    max-width: 760px !important;
+    margin: 0 auto 3rem !important;
+    text-align: center !important;
+}
+
+body[data-page="internship"] #tracks-heading {
+    color: var(--primary) !important;
+    font-size: clamp(2.7rem, 4vw, 4rem) !important;
+    margin-bottom: 0.75rem !important;
+}
+
+body[data-page="internship"] section[aria-labelledby="tracks-heading"] .section-desc {
+    max-width: 680px !important;
+    margin: 0 auto !important;
+    line-height: 1.7 !important;
+}
+
+/* Tracks grid */
+body[data-page="internship"] .moved-inline-style-102 {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 1.75rem !important;
+    max-width: 980px !important;
+    margin: 0 auto !important;
+}
+
+/* Individual track card */
+body[data-page="internship"] .moved-inline-style-102>.card {
+    display: grid !important;
+    grid-template-columns: 64px minmax(0, 1fr) !important;
+    column-gap: 1.25rem !important;
+    row-gap: 0.65rem !important;
+    align-items: start !important;
+
+    min-height: 270px !important;
+    padding: 2rem !important;
+    border: 1px solid rgba(93, 15, 45, 0.16) !important;
+    border-radius: 22px !important;
+    background: #ffffff !important;
+    box-shadow: 0 14px 35px rgba(93, 15, 45, 0.07) !important;
+
+    text-align: left !important;
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease !important;
+}
+
+body[data-page="internship"] .moved-inline-style-102>.card:hover {
+    transform: translateY(-5px) !important;
+    border-color: rgba(216, 161, 95, 0.7) !important;
+    box-shadow: 0 20px 45px rgba(93, 15, 45, 0.12) !important;
+}
+
+/* Icon */
+body[data-page="internship"] .moved-inline-style-102 .card-icon {
+    grid-column: 1 !important;
+    grid-row: 1 / span 3 !important;
+
+    width: 58px !important;
+    height: 58px !important;
+    margin: 0 !important;
+    border-radius: 16px !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+body[data-page="internship"] .moved-inline-style-102 .card-icon .material-symbols-outlined {
+    font-size: 1.75rem !important;
+}
+
+/* Card heading */
+body[data-page="internship"] .moved-inline-style-102 .moved-inline-style-103 {
+    grid-column: 2 !important;
+    margin: 0 !important;
+
+    color: var(--primary) !important;
+    font-family: "Cormorant Garamond", serif !important;
+    font-size: 1.9rem !important;
+    font-weight: 600 !important;
+    line-height: 1.08 !important;
+}
+
+/* Description */
+body[data-page="internship"] .moved-inline-style-102 .moved-inline-style-104 {
+    grid-column: 2 !important;
+    margin: 0 !important;
+
+    color: var(--muted) !important;
+    font-size: 0.98rem !important;
+    line-height: 1.7 !important;
+    text-align: left !important;
+}
+
+/* List */
+body[data-page="internship"] .moved-inline-style-102 .moved-inline-style-105 {
+    grid-column: 2 !important;
+    margin: 0.35rem 0 0 !important;
+    padding-left: 1.2rem !important;
+
+    color: var(--muted) !important;
+    font-size: 0.88rem !important;
+    line-height: 1.75 !important;
+    text-align: left !important;
+}
+
+body[data-page="internship"] .moved-inline-style-102 .moved-inline-style-105 li {
+    padding-left: 0.2rem !important;
+}
+
+body[data-page="internship"] .moved-inline-style-102 .moved-inline-style-105 li::marker {
+    color: var(--gold-dark) !important;
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+    body[data-page="internship"] .moved-inline-style-102 {
+        grid-template-columns: 1fr !important;
+        max-width: 680px !important;
+    }
+
+    body[data-page="internship"] .moved-inline-style-102>.card {
+        min-height: 0 !important;
+    }
+}
+
+/* Mobile */
+@media (max-width: 560px) {
+    body[data-page="internship"] section[aria-labelledby="tracks-heading"] {
+        padding: 3.5rem 0 !important;
+    }
+
+    body[data-page="internship"] section[aria-labelledby="tracks-heading"] .section-header {
+        margin-bottom: 2rem !important;
+    }
+
+    body[data-page="internship"] .moved-inline-style-102>.card {
+        display: flex !important;
+        flex-direction: column !important;
+        padding: 1.5rem !important;
+        border-radius: 18px !important;
+    }
+
+    body[data-page="internship"] .moved-inline-style-102 .card-icon {
+        width: 52px !important;
+        height: 52px !important;
+        margin-bottom: 0.35rem !important;
+    }
+
+    body[data-page="internship"] .moved-inline-style-102 .moved-inline-style-103 {
+        font-size: 1.7rem !important;
+    }
+
+    body[data-page="internship"] .moved-inline-style-102 .moved-inline-style-104,
+    body[data-page="internship"] .moved-inline-style-102 .moved-inline-style-105 {
+        width: 100% !important;
+    }
+}
