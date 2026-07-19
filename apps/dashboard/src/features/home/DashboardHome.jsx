@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import {
   Users,
   UserCheck,
@@ -36,7 +36,7 @@ export default function DashboardHome() {
     fetchDashboardData();
   }, []);
 
-  const fetchDashboardData = async () => {
+  const fetchDashboardData = useCallback(async () => {
     try {
       const statsReq = (userProfile?.role === 'admin' || userProfile?.role === 'super_admin')
         ? api.get('/admin/stats')
@@ -86,7 +86,7 @@ export default function DashboardHome() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [userProfile?.role]);
 
   if (loading) {
     return (
