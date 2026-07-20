@@ -177,7 +177,7 @@ body[data-page="contact"] #faq .faq-answer {
     padding: 0 18px 18px;
 }
 
-/* Donation section — centered and balanced */
+/* Donation section — fully centered and balanced */
 body[data-page="contact"] #donate {
     width: 100% !important;
     margin: 0 !important;
@@ -186,21 +186,22 @@ body[data-page="contact"] #donate {
 }
 
 body[data-page="contact"] #donate>.container {
-    width: min(1080px, calc(100% - 40px)) !important;
-    max-width: 1080px !important;
-    margin: 0 auto !important;
+    width: min(1320px, calc(100% - 40px)) !important;
+    max-width: 1320px !important;
+    margin-inline: auto !important;
     padding: 0 !important;
 }
 
 body[data-page="contact"] #donate .donation-layout {
     width: 100% !important;
-    max-width: none !important;
-    margin: 0 auto !important;
+    max-width: 1180px !important;
+    margin-inline: auto !important;
     padding: 36px !important;
     display: grid !important;
-    grid-template-columns: minmax(0, 1.18fr) minmax(320px, .82fr) !important;
-    gap: 24px !important;
+    grid-template-columns: minmax(0, 1.35fr) minmax(340px, .85fr) !important;
+    justify-content: center !important;
     align-items: start !important;
+    gap: 28px !important;
     box-sizing: border-box !important;
     background: rgba(255, 250, 243, .72) !important;
     border-radius: 26px !important;
@@ -271,6 +272,7 @@ body[data-page="contact"] #donate .amount-buttons {
 }
 
 body[data-page="contact"] #donate .amount-btn {
+    width: 100% !important;
     min-width: 0 !important;
 }
 
