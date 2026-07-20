@@ -3,7 +3,18 @@ import axios from 'axios';
 import { auth } from './firebase.js';
 
 const productionApi = 'https://amaanitvam-foundation.onrender.com/api';
-const baseURL = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? '/api' : productionApi);
+const configuredApi = String(import.meta.env.VITE_API_URL || '')
+  .trim()
+  .replace(/\/+$/, '');
+
+// Local Vite development may use /api and its proxy. A production build must
+// always call the Render backend directly; a relative /api value would point
+// at admin.amaanitvam.org and return the static site's 404 response.
+export const apiBaseURL = import.meta.env.DEV
+  ? (configuredApi || '/api')
+  : productionApi;
+
+const baseURL = apiBaseURL;
 
 const api = axios.create({
   baseURL,
