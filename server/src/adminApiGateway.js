@@ -113,6 +113,7 @@ function initializeFirebaseAdmin() {
   if (getApps().length) return;
 
   const candidates = [
+    process.env.FIREBASE_SERVICE_ACCOUNT_KEY_PATH,
     process.env.FIREBASE_SERVICE_ACCOUNT_PATH,
     path.join(serverRoot, "serviceAccountKey.json"),
     path.join(process.cwd(), "server", "serviceAccountKey.json"),
@@ -121,8 +122,18 @@ function initializeFirebaseAdmin() {
   const serviceAccountPath = candidates.find((candidatePath) => fs.existsSync(candidatePath));
 
   if (serviceAccountPath) {
+    const rawServiceAccount = fs.readFileSync(serviceAccountPath, "utf8").replace(/^\uFEFF/, "");
+    const serviceAccount = JSON.parse(rawServiceAccount);
+    if (typeof serviceAccount.private_key === "string") {
+      serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, "\n");
+    }
+    const authProjectId =
+      process.env.FIREBASE_AUTH_PROJECT_ID ||
+      process.env.FIREBASE_PROJECT_ID ||
+      serviceAccount.project_id;
     initializeApp({
-      credential: cert(JSON.parse(fs.readFileSync(serviceAccountPath, "utf8"))),
+      credential: cert(serviceAccount),
+      projectId: authProjectId,
     });
     console.log(`[admin-gateway] Firebase Admin initialized using ${serviceAccountPath}`);
     return;
@@ -501,8 +512,12 @@ async function optionalAdministrator(req, _res, next) {
       req.adminProfileResult = profileResult;
       req.isAdministrator = isAdministrator(decodedToken, profileResult);
     }
-  } catch (_error) {
+  } catch (error) {
+    req.authError = error;
     req.isAdministrator = false;
+    if (process.env.NODE_ENV !== "production") {
+      console.error("[admin-gateway] Firebase token verification failed:", error?.code || error?.message || error);
+    }
   }
 
   next();
