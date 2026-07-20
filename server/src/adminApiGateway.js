@@ -1129,6 +1129,498 @@ app.get("/api/public/departments", departmentsHandler);
 app.get("/api/departments", departmentsHandler);
 app.get("/api/admin/departments", requireAdministrator, departmentsHandler);
 
+// FINAL_CERTIFICATE_DOWNLOAD_LOCAL_PARITY_START
+// This route is intentionally registered before the generic certificate routes.
+// It restores local parity with the deployed certificate download behavior.
+
+function localCertSafeFilename(value, fallback = "certificate.pdf") {
+  const cleaned = clean(value || fallback)
+    .replace(/[\r\n"]/g, "_")
+    .replace(/[\\/]/g, "_");
+  return cleaned || fallback;
+}
+
+function localCertAsBuffer(value) {
+  if (!value) return null;
+
+  if (Buffer.isBuffer(value)) {
+    return value.length ? value : null;
+  }
+
+  if (typeof value === "string") {
+    const text = value.trim();
+
+    if (text.startsWith("data:application/pdf;base64,")) {
+      try {
+        const decoded = Buffer.from(text.split(",", 2)[1], "base64");
+        return decoded.length ? decoded : null;
+      } catch {
+        return null;
+      }
+    }
+
+    if (text.startsWith("%PDF-")) {
+      return Buffer.from(text, "binary");
+    }
+
+    if (text.length > 100) {
+      try {
+        const decoded = Buffer.from(text, "base64");
+        if (decoded.subarray(0, 5).toString() === "%PDF-") {
+          return decoded;
+        }
+      } catch {
+        return null;
+      }
+    }
+
+    return null;
+  }
+
+  if (value.type === "Buffer" && Array.isArray(value.data)) {
+    const decoded = Buffer.from(value.data);
+    return decoded.length ? decoded : null;
+  }
+
+  if (value._bsontype === "Binary") {
+    try {
+      if (typeof value.value === "function") {
+        const raw = value.value(true);
+        if (raw) {
+          const decoded = Buffer.from(raw);
+          if (decoded.length) return decoded;
+        }
+      }
+    } catch {
+      // Continue with the BSON buffer property.
+    }
+
+    if (value.buffer) {
+      const decoded = Buffer.from(value.buffer);
+      return decoded.length ? decoded : null;
+    }
+  }
+
+  if (ArrayBuffer.isView(value)) {
+    const decoded = Buffer.from(
+      value.buffer,
+      value.byteOffset,
+      value.byteLength
+    );
+    return decoded.length ? decoded : null;
+  }
+
+  if (value instanceof ArrayBuffer) {
+    const decoded = Buffer.from(value);
+    return decoded.length ? decoded : null;
+  }
+
+  if (
+    value.buffer &&
+    (Buffer.isBuffer(value.buffer) || ArrayBuffer.isView(value.buffer))
+  ) {
+    const decoded = Buffer.from(value.buffer);
+    return decoded.length ? decoded : null;
+  }
+
+  return null;
+}
+
+function localCertFindPdfBuffer(source, depth = 0, visited = new Set()) {
+  if (!source || depth > 5) return null;
+
+  const direct = localCertAsBuffer(source);
+  if (direct) return direct;
+
+  if (typeof source !== "object") return null;
+  if (visited.has(source)) return null;
+  visited.add(source);
+
+  const preferredKeys = [
+    "pdfBuffer",
+    "certificateBuffer",
+    "certificatePdf",
+    "certificatePDF",
+    "pdfData",
+    "certificateData",
+    "fileBuffer",
+    "documentBuffer",
+    "attachmentBuffer",
+    "pdf",
+    "certificate",
+    "certificateFile",
+    "file",
+    "document",
+    "attachment",
+    "uploadedFile",
+    "storage",
+  ];
+
+  for (const key of preferredKeys) {
+    if (!Object.prototype.hasOwnProperty.call(source, key)) continue;
+    const result = localCertFindPdfBuffer(
+      source[key],
+      depth + 1,
+      visited
+    );
+    if (result) return result;
+  }
+
+  for (const [key, value] of Object.entries(source)) {
+    if (!/(pdf|certificate|file|document|attachment|buffer|data)/i.test(key)) {
+      continue;
+    }
+    const result = localCertFindPdfBuffer(
+      value,
+      depth + 1,
+      visited
+    );
+    if (result) return result;
+  }
+
+  return null;
+}
+
+function localCertCollectObjectIds(source, depth = 0, results = new Map()) {
+  if (!source || depth > 5) return [...results.values()];
+
+  const add = (value) => {
+    const id = objectId(value);
+    if (id) results.set(String(id), id);
+  };
+
+  if (typeof source !== "object") {
+    add(source);
+    return [...results.values()];
+  }
+
+  for (const [key, value] of Object.entries(source)) {
+    if (
+      /(pdf|certificate|file|document|attachment|upload|storage|gridfs).*id$/i.test(
+        key
+      ) ||
+      /^(pdfFileId|certificateFileId|fileId|gridFsId|gridfsId)$/i.test(key)
+    ) {
+      if (Array.isArray(value)) {
+        value.forEach(add);
+      } else if (value && typeof value === "object") {
+        add(value._id);
+        add(value.id);
+        add(value.value);
+      } else {
+        add(value);
+      }
+    }
+
+    if (value && typeof value === "object") {
+      localCertCollectObjectIds(value, depth + 1, results);
+    }
+  }
+
+  return [...results.values()];
+}
+
+function localCertFindUrl(source, depth = 0, visited = new Set()) {
+  if (!source || depth > 5 || typeof source !== "object") return "";
+
+  if (visited.has(source)) return "";
+  visited.add(source);
+
+  const preferredKeys = [
+    "pdfUrl",
+    "certificateUrl",
+    "downloadUrl",
+    "fileUrl",
+    "secure_url",
+    "secureUrl",
+    "url",
+  ];
+
+  for (const key of preferredKeys) {
+    const value = source[key];
+    if (
+      typeof value === "string" &&
+      /^https?:\/\//i.test(value.trim())
+    ) {
+      return value.trim();
+    }
+  }
+
+  for (const [key, value] of Object.entries(source)) {
+    if (
+      /(pdf|certificate|file|document|attachment|url)/i.test(key) &&
+      typeof value === "string" &&
+      /^https?:\/\//i.test(value.trim())
+    ) {
+      return value.trim();
+    }
+
+    if (value && typeof value === "object") {
+      const nested = localCertFindUrl(value, depth + 1, visited);
+      if (nested) return nested;
+    }
+  }
+
+  return "";
+}
+
+async function localCertFindRecord(rawId) {
+  const names = (await collectionNames()).filter(
+    (name) =>
+      finalCollectionIsReadable(name) &&
+      !/\.files$/i.test(name) &&
+      (
+        /^certificates?$/i.test(name) ||
+        /certificate/i.test(name)
+      )
+  );
+
+  const objectIdValue = objectId(rawId);
+  const upper = clean(rawId).toUpperCase();
+
+  const queries = [
+    ...(objectIdValue ? [{ _id: objectIdValue }] : []),
+    { _id: rawId },
+    { id: rawId },
+    { certificateId: rawId },
+    { certificateId: upper },
+    { certId: rawId },
+    { certificateNumber: rawId },
+  ];
+
+  for (const name of names) {
+    const collection = mongoose.connection.db.collection(name);
+
+    for (const query of queries) {
+      const record = await collection.findOne(query);
+      if (record) {
+        return {
+          record: finalPlainRecord(record, name),
+          collectionName: name,
+        };
+      }
+    }
+  }
+
+  return null;
+}
+
+async function localCertFindGridFsFile(record, rawId) {
+  const names = await collectionNames();
+  const filesCollections = names.filter(
+    (name) =>
+      /\.files$/i.test(name) &&
+      !/^system\./i.test(name)
+  );
+
+  const candidateIds = new Map();
+  const addId = (value) => {
+    const id = objectId(value);
+    if (id) candidateIds.set(String(id), id);
+  };
+
+  addId(rawId);
+  addId(record?._id);
+  localCertCollectObjectIds(record).forEach(addId);
+
+  const certificateId = clean(
+    record?.certificateId ||
+      record?.certId ||
+      record?.certificateNumber ||
+      rawId
+  );
+  const recordId = objectId(record?._id || rawId);
+  const filenames = [
+    record?.pdfOriginalName,
+    record?.originalName,
+    record?.filename,
+    record?.fileName,
+    record?.certificateFileName,
+  ]
+    .map(clean)
+    .filter(Boolean);
+
+  for (const filesCollection of filesCollections) {
+    const collection = mongoose.connection.db.collection(filesCollection);
+    const queries = [
+      ...[...candidateIds.values()].map((id) => ({ _id: id })),
+      ...(recordId
+        ? [
+            { "metadata.certificateId": recordId },
+            { "metadata.certificateRecordId": recordId },
+            { "metadata.recordId": recordId },
+            { "metadata.sourceId": recordId },
+          ]
+        : []),
+      ...(certificateId
+        ? [
+            { "metadata.certificateId": certificateId },
+            { "metadata.certificateNumber": certificateId },
+            { "metadata.certId": certificateId },
+          ]
+        : []),
+      ...filenames.map((filename) => ({ filename })),
+    ];
+
+    for (const query of queries) {
+      const file = await collection.findOne(query);
+      if (file) {
+        return {
+          bucketName: filesCollection.replace(/\.files$/i, ""),
+          file,
+        };
+      }
+    }
+  }
+
+  return null;
+}
+
+function localCertSendBuffer(res, buffer, record, rawId) {
+  const filename = localCertSafeFilename(
+    record?.pdfOriginalName ||
+      record?.certificateFileName ||
+      record?.filename ||
+      `${clean(record?.certificateId || rawId) || "certificate"}.pdf`
+  );
+
+  const contentType = clean(
+    record?.pdfContentType ||
+      record?.contentType ||
+      record?.mimeType ||
+      "application/pdf"
+  );
+
+  res.setHeader("Content-Type", contentType);
+  res.setHeader(
+    "Content-Disposition",
+    `attachment; filename="${filename}"`
+  );
+  res.setHeader("Content-Length", String(buffer.length));
+  res.setHeader("Cache-Control", "private, no-store");
+  return res.end(buffer);
+}
+
+function localCertStreamGridFs(res, next, bucketName, file, record, rawId) {
+  const GridFSBucket = mongoose.mongo?.GridFSBucket;
+
+  if (!GridFSBucket) {
+    return res.status(500).json({
+      success: false,
+      message: "GridFS driver is unavailable",
+    });
+  }
+
+  const filename = localCertSafeFilename(
+    record?.pdfOriginalName ||
+      file?.filename ||
+      file?.metadata?.originalName ||
+      `${clean(record?.certificateId || rawId) || "certificate"}.pdf`
+  );
+
+  const contentType = clean(
+    record?.pdfContentType ||
+      file?.contentType ||
+      file?.metadata?.contentType ||
+      file?.metadata?.mimeType ||
+      "application/pdf"
+  );
+
+  res.setHeader("Content-Type", contentType);
+  res.setHeader(
+    "Content-Disposition",
+    `attachment; filename="${filename}"`
+  );
+  res.setHeader("Cache-Control", "private, no-store");
+
+  if (Number.isFinite(Number(file?.length))) {
+    res.setHeader("Content-Length", String(file.length));
+  }
+
+  const stream = new GridFSBucket(mongoose.connection.db, {
+    bucketName,
+  }).openDownloadStream(file._id);
+
+  stream.on("error", (error) => {
+    if (res.headersSent) {
+      res.destroy(error);
+    } else {
+      next(error);
+    }
+  });
+
+  return stream.pipe(res);
+}
+
+async function localCertificateDownloadParityHandler(req, res, next) {
+  try {
+    const rawId = clean(req.params.id);
+    const located = await localCertFindRecord(rawId);
+
+    if (!located) {
+      console.warn(
+        `[admin-gateway] certificate download: record not found for ${rawId}`
+      );
+      return res.status(404).json({
+        success: false,
+        message: "Certificate record was not found",
+      });
+    }
+
+    const { record, collectionName } = located;
+    const pdfBuffer = localCertFindPdfBuffer(record);
+
+    if (pdfBuffer) {
+      console.log(
+        `[admin-gateway] certificate download: embedded PDF from ${collectionName} (${pdfBuffer.length} bytes)`
+      );
+      return localCertSendBuffer(res, pdfBuffer, record, rawId);
+    }
+
+    const gridFs = await localCertFindGridFsFile(record, rawId);
+    if (gridFs) {
+      console.log(
+        `[admin-gateway] certificate download: GridFS ${gridFs.bucketName}.files`
+      );
+      return localCertStreamGridFs(
+        res,
+        next,
+        gridFs.bucketName,
+        gridFs.file,
+        record,
+        rawId
+      );
+    }
+
+    const remoteUrl = localCertFindUrl(record);
+    if (remoteUrl) {
+      console.log(
+        `[admin-gateway] certificate download: redirecting to stored URL`
+      );
+      return res.redirect(302, remoteUrl);
+    }
+
+    console.warn(
+      `[admin-gateway] certificate download: PDF storage missing for ${record.certificateId || rawId}; collection=${collectionName}; keys=${Object.keys(record).join(",")}`
+    );
+
+    return res.status(404).json({
+      success: false,
+      message:
+        "The certificate record exists, but its uploaded PDF could not be found in local storage",
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+app.get(
+  "/api/admin/certificates/:id/download",
+  requireAdministrator,
+  localCertificateDownloadParityHandler
+);
+// FINAL_CERTIFICATE_DOWNLOAD_LOCAL_PARITY_END
+
 // FINAL_ADMIN_DATA_RECOVERY_START
 // Targeted compatibility layer for certificate and gallery reads.
 // It deliberately does not replace any Management-section routes.
