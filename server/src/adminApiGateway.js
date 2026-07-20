@@ -1129,6 +1129,642 @@ app.get("/api/public/departments", departmentsHandler);
 app.get("/api/departments", departmentsHandler);
 app.get("/api/admin/departments", requireAdministrator, departmentsHandler);
 
+// FINAL_ADMIN_DATA_RECOVERY_START
+// Targeted compatibility layer for certificate and gallery reads.
+// It deliberately does not replace any Management-section routes.
+
+const FINAL_LIST_PROJECTION = {
+  pdfBuffer: 0,
+  certificateData: 0,
+  certificateBase64: 0,
+  imageData: 0,
+  imageBase64: 0,
+  fileData: 0,
+  fileBase64: 0,
+  videoData: 0,
+  buffer: 0,
+  data: 0,
+  "file.data": 0,
+  "image.data": 0,
+  "media.data": 0,
+  "metadata.data": 0,
+  "metadata.buffer": 0,
+};
+
+function finalPlainRecord(document, sourceCollection = "") {
+  const plain = asPlain(document) || {};
+  const metadata =
+    plain.metadata && typeof plain.metadata === "object" && !Array.isArray(plain.metadata)
+      ? plain.metadata
+      : {};
+  const merged = { ...metadata, ...plain };
+  const id = clean(merged._id || merged.id);
+  return {
+    ...merged,
+    metadata,
+    id,
+    _id: id || merged._id,
+    _sourceCollection: sourceCollection || merged._sourceCollection,
+  };
+}
+
+function finalCollectionIsReadable(name) {
+  return Boolean(name) && !/^system\./i.test(name) && !/\.chunks$/i.test(name);
+}
+
+async function finalReadCollection(collectionName, query = {}, limit = 5000) {
+  if (!finalCollectionIsReadable(collectionName)) return [];
+  const rows = await mongoose.connection.db
+    .collection(collectionName)
+    .find(query, { projection: FINAL_LIST_PROJECTION })
+    .sort({ _id: -1 })
+    .limit(limit)
+    .toArray();
+  return rows.map((row) => finalPlainRecord(row, collectionName));
+}
+
+function finalDistinctRows(rows, keyBuilder) {
+  const seen = new Set();
+  return rows.filter((row) => {
+    const key = keyBuilder(row);
+    if (!key || seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+function finalFirstValue(...values) {
+  for (const value of values) {
+    if (value !== undefined && value !== null && clean(value)) return value;
+  }
+  return "";
+}
+
+function finalCertificateLooksValid(row) {
+  if (/^certificates?$/i.test(clean(row._sourceCollection))) return true;
+  return Boolean(
+    clean(row.certificateId || row.certificate_id || row.certId) ||
+      clean(row.issuedTo || row.recipientName || row.internName) ||
+      (
+        clean(row.email) &&
+        clean(row.type || row.domain || row.duration || row.tenure || row.issueDate)
+      )
+  );
+}
+
+function finalNormalizeCertificate(row) {
+  const issuedTo = clean(
+    finalFirstValue(
+      row.issuedTo,
+      row.recipientName,
+      row.recipient,
+      row.internName,
+      row.candidateName,
+      row.memberName,
+      row.name
+    )
+  );
+  const certificateId = clean(
+    finalFirstValue(
+      row.certificateId,
+      row.certificate_id,
+      row.certId,
+      row.certificateNumber,
+      row.number
+    )
+  );
+  const status = clean(finalFirstValue(row.status, row.certificateStatus));
+  const isValid =
+    typeof row.isValid === "boolean"
+      ? row.isValid
+      : !/revoked|invalid|cancelled/i.test(status);
+
+  return {
+    ...row,
+    certificateId,
+    issuedTo,
+    type: clean(finalFirstValue(row.type, row.certificateType, row.category)),
+    domain: clean(finalFirstValue(row.domain, row.department, row.specialization)),
+    duration: clean(finalFirstValue(row.duration, row.tenure, row.period)),
+    issueDate: finalFirstValue(
+      row.issueDate,
+      row.issuedAt,
+      row.dateIssued,
+      row.createdAt
+    ),
+    isValid,
+    status: status || (isValid ? "Valid" : "Revoked"),
+  };
+}
+
+async function finalCertificateRows() {
+  const names = (await collectionNames()).filter(
+    (name) =>
+      finalCollectionIsReadable(name) &&
+      (/^certificates?$/i.test(name) || /certificate/i.test(name))
+  );
+
+  const rows = [];
+  for (const name of names) {
+    const records = await finalReadCollection(name);
+    rows.push(...records.filter(finalCertificateLooksValid));
+  }
+
+  return finalDistinctRows(
+    rows.map(finalNormalizeCertificate),
+    (row) =>
+      clean(row.certificateId).toLowerCase() ||
+      `${clean(row._sourceCollection)}:${clean(row._id)}`
+  );
+}
+
+async function finalCertificatesHandler(_req, res, next) {
+  try {
+    const certificates = await finalCertificateRows();
+    console.log(
+      `[admin-gateway] certificates: ${certificates.length} record(s) loaded`
+    );
+    res.json({
+      success: true,
+      certificates,
+      data: certificates,
+      count: certificates.length,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+function finalGalleryFolderCollection(name) {
+  return (
+    finalCollectionIsReadable(name) &&
+    !/\.files$/i.test(name) &&
+    (
+      /^galleryfolders?$/i.test(name) ||
+      /gallery.*folder/i.test(name) ||
+      /albums?/i.test(name)
+    )
+  );
+}
+
+function finalGalleryMediaCollection(name) {
+  return (
+    finalCollectionIsReadable(name) &&
+    !/folder/i.test(name) &&
+    !/album/i.test(name) &&
+    (
+      /^galleries$/i.test(name) ||
+      /^gallery$/i.test(name) ||
+      /gallery.*media/i.test(name) ||
+      /media/i.test(name) ||
+      /images?/i.test(name)
+    )
+  );
+}
+
+function finalNormalizeGalleryMedia(row) {
+  const sourceCollection = clean(row._sourceCollection);
+  const isGridFsFile = /\.files$/i.test(sourceCollection);
+  const bucketName = isGridFsFile
+    ? sourceCollection.replace(/\.files$/i, "")
+    : "";
+  const id = clean(row._id || row.id);
+  const contentType = clean(
+    finalFirstValue(
+      row.contentType,
+      row.mimeType,
+      row.mimetype,
+      row.fileType,
+      row.type
+    )
+  );
+
+  const existingUrl = clean(
+    finalFirstValue(
+      row.imageUrl,
+      row.secure_url,
+      row.secureUrl,
+      row.mediaUrl,
+      row.fileUrl,
+      row.cloudinaryUrl,
+      row.url,
+      row.path,
+      row.image?.url,
+      row.file?.url,
+      row.media?.url
+    )
+  );
+
+  const imageUrl =
+    isGridFsFile && bucketName && id
+      ? `/api/admin/gallery/gridfs/${encodeURIComponent(bucketName)}/${encodeURIComponent(id)}`
+      : existingUrl;
+
+  const filename = clean(
+    finalFirstValue(
+      row.originalName,
+      row.filename,
+      row.fileName,
+      row.name,
+      row.title
+    )
+  );
+
+  return {
+    ...row,
+    id,
+    _id: id || row._id,
+    title: clean(finalFirstValue(row.title, row.caption, filename, "Gallery media")),
+    originalName: filename,
+    contentType,
+    mediaType:
+      clean(row.mediaType) ||
+      (contentType.startsWith("video/") ? "video" : "image"),
+    size: Number(finalFirstValue(row.size, row.length, row.fileSize, 0)) || 0,
+    imageUrl,
+    _gridFsBucket: bucketName,
+  };
+}
+
+async function finalGalleryRows() {
+  const names = (await collectionNames()).filter(finalGalleryMediaCollection);
+  const rows = [];
+  for (const name of names) {
+    rows.push(...(await finalReadCollection(name)));
+  }
+
+  return finalDistinctRows(
+    rows.map(finalNormalizeGalleryMedia),
+    (row) =>
+      clean(row.imageUrl) ||
+      clean(row.fileId) ||
+      `${clean(row._sourceCollection)}:${clean(row._id)}`
+  );
+}
+
+async function finalGalleryFolderRows() {
+  const names = (await collectionNames()).filter(finalGalleryFolderCollection);
+  const rows = [];
+  for (const name of names) {
+    rows.push(...(await finalReadCollection(name)));
+  }
+
+  return finalDistinctRows(
+    rows.map((row) => ({
+      ...row,
+      id: clean(row._id || row.id),
+      _id: clean(row._id || row.id),
+      name: clean(finalFirstValue(row.name, row.title, row.folderName, row.albumName)),
+      description: clean(finalFirstValue(row.description, row.details)),
+    })),
+    (row) =>
+      clean(row._id) ||
+      clean(row.slug).toLowerCase() ||
+      clean(row.name).toLowerCase()
+  );
+}
+
+function finalAddToken(set, value) {
+  if (value === undefined || value === null) return;
+
+  if (Array.isArray(value)) {
+    for (const item of value) finalAddToken(set, item);
+    return;
+  }
+
+  if (typeof value === "object") {
+    for (const key of [
+      "_id",
+      "id",
+      "value",
+      "name",
+      "title",
+      "slug",
+      "folderId",
+      "folder_id",
+      "albumId",
+      "galleryFolderId",
+      "parentFolderId",
+      "projectFolderId",
+      "categoryId",
+    ]) {
+      if (Object.prototype.hasOwnProperty.call(value, key)) {
+        finalAddToken(set, value[key]);
+      }
+    }
+    return;
+  }
+
+  const token = clean(value).toLowerCase();
+  if (token) set.add(token);
+}
+
+function finalFolderTokens(folder) {
+  const tokens = new Set();
+  for (const value of [
+    folder?._id,
+    folder?.id,
+    folder?.name,
+    folder?.title,
+    folder?.slug,
+    folder?.folder,
+    folder?.album,
+  ]) {
+    finalAddToken(tokens, value);
+  }
+  return tokens;
+}
+
+function finalMediaFolderTokens(media) {
+  const tokens = new Set();
+  const metadata =
+    media?.metadata && typeof media.metadata === "object"
+      ? media.metadata
+      : {};
+
+  for (const value of [
+    media?.folderId,
+    media?.folder_id,
+    media?.galleryFolderId,
+    media?.galleryFolder,
+    media?.parentFolderId,
+    media?.projectFolderId,
+    media?.projectFolder,
+    media?.albumId,
+    media?.album_id,
+    media?.categoryId,
+    media?.folder,
+    media?.folderName,
+    media?.album,
+    media?.albumName,
+    media?.category,
+    media?.project,
+    media?.projectId,
+    metadata.folderId,
+    metadata.folder_id,
+    metadata.galleryFolderId,
+    metadata.galleryFolder,
+    metadata.parentFolderId,
+    metadata.projectFolderId,
+    metadata.projectFolder,
+    metadata.albumId,
+    metadata.album_id,
+    metadata.categoryId,
+    metadata.folder,
+    metadata.folderName,
+    metadata.album,
+    metadata.albumName,
+    metadata.category,
+    metadata.project,
+    metadata.projectId,
+  ]) {
+    finalAddToken(tokens, value);
+  }
+  return tokens;
+}
+
+function finalMediaBelongsToFolder(media, folder) {
+  const folderTokens = finalFolderTokens(folder);
+  const mediaTokens = finalMediaFolderTokens(media);
+  if (!folderTokens.size || !mediaTokens.size) return false;
+  for (const token of folderTokens) {
+    if (mediaTokens.has(token)) return true;
+  }
+  return false;
+}
+
+function finalDisplayRelation(media) {
+  for (const value of [
+    media.folderName,
+    media.albumName,
+    media.category,
+    media.galleryFolder,
+    media.projectFolder,
+    media.folder,
+    media.album,
+    media.folderId,
+    media.galleryFolderId,
+    media.projectFolderId,
+    media.albumId,
+  ]) {
+    if (value && typeof value === "object") {
+      const nested = clean(value.name || value.title || value.slug || value._id || value.id);
+      if (nested) return nested;
+    } else {
+      const text = clean(value);
+      if (text) return text;
+    }
+  }
+  return "";
+}
+
+function finalDecorateFolders(folders, mediaRows) {
+  return folders.map((folder) => {
+    const matches = mediaRows.filter((media) =>
+      finalMediaBelongsToFolder(media, folder)
+    );
+    const coverId = clean(folder.coverMediaId || folder.coverId);
+    const coverMedia =
+      (coverId &&
+        matches.find(
+          (media) => clean(media._id || media.id || media.fileId) === coverId
+        )) ||
+      matches[0] ||
+      null;
+
+    return {
+      ...folder,
+      mediaCount: matches.length,
+      count: matches.length,
+      coverMedia,
+    };
+  });
+}
+
+function finalDerivedFolders(mediaRows) {
+  const byName = new Map();
+  for (const media of mediaRows) {
+    const name = finalDisplayRelation(media);
+    if (!name) continue;
+    const key = name.toLowerCase();
+    if (!byName.has(key)) {
+      byName.set(key, {
+        id: name,
+        _id: name,
+        name,
+        title: name,
+        description: "",
+      });
+    }
+  }
+  return [...byName.values()];
+}
+
+async function finalGallerySnapshot() {
+  const [rawFolders, mediaRows] = await Promise.all([
+    finalGalleryFolderRows(),
+    finalGalleryRows(),
+  ]);
+  const folders = finalDecorateFolders(
+    rawFolders.length ? rawFolders : finalDerivedFolders(mediaRows),
+    mediaRows
+  );
+  return { folders, mediaRows };
+}
+
+async function finalGalleryFoldersReadHandler(_req, res, next) {
+  try {
+    const { folders, mediaRows } = await finalGallerySnapshot();
+    console.log(
+      `[admin-gateway] gallery: ${folders.length} folder(s), ${mediaRows.length} media record(s)`
+    );
+    res.json({
+      success: true,
+      folders,
+      data: folders,
+      count: folders.length,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function finalGalleryFolderMediaReadHandler(req, res, next) {
+  try {
+    const { folders, mediaRows } = await finalGallerySnapshot();
+    const requestedId = clean(req.params.folderId);
+    const requestedToken = requestedId.toLowerCase();
+    const folder =
+      folders.find((item) => finalFolderTokens(item).has(requestedToken)) || {
+        id: requestedId,
+        _id: requestedId,
+        name: requestedId,
+        title: requestedId,
+      };
+
+    const images = mediaRows.filter((media) =>
+      finalMediaBelongsToFolder(media, folder)
+    );
+    const folderWithCount = {
+      ...folder,
+      mediaCount: images.length,
+      count: images.length,
+      coverMedia: folder.coverMedia || images[0] || null,
+    };
+
+    res.json({
+      success: true,
+      folder: folderWithCount,
+      images,
+      media: images,
+      data: images,
+      count: images.length,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function finalGalleryGridFsHandler(req, res, next) {
+  try {
+    const bucketName = clean(req.params.bucket);
+    const fileId = objectId(req.params.id);
+
+    if (
+      !fileId ||
+      !/^[A-Za-z0-9_.-]+$/.test(bucketName) ||
+      !/(gallery|media|image)/i.test(bucketName) ||
+      /\.files$|\.chunks$/i.test(bucketName)
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid gallery file reference",
+      });
+    }
+
+    const filesCollection = `${bucketName}.files`;
+    const available = await collectionNames();
+    if (!available.includes(filesCollection)) {
+      return res.status(404).json({
+        success: false,
+        message: "Gallery file bucket was not found",
+      });
+    }
+
+    const file = await mongoose.connection.db
+      .collection(filesCollection)
+      .findOne({ _id: fileId });
+
+    if (!file) {
+      return res.status(404).json({
+        success: false,
+        message: "Gallery file was not found",
+      });
+    }
+
+    const contentType = clean(
+      file.contentType ||
+        file.metadata?.contentType ||
+        file.metadata?.mimeType ||
+        "application/octet-stream"
+    );
+    const filename = clean(
+      file.filename || file.metadata?.originalName || "gallery-file"
+    ).replace(/[\r\n"]/g, "_");
+
+    res.setHeader("Content-Type", contentType);
+    res.setHeader("Content-Disposition", `inline; filename="${filename}"`);
+    res.setHeader("Cache-Control", "public, max-age=3600");
+    if (Number.isFinite(Number(file.length))) {
+      res.setHeader("Content-Length", String(file.length));
+    }
+
+    const GridFSBucket = mongoose.mongo?.GridFSBucket;
+    if (!GridFSBucket) {
+      return res.status(500).json({
+        success: false,
+        message: "GridFS driver is unavailable",
+      });
+    }
+
+    const stream = new GridFSBucket(mongoose.connection.db, {
+      bucketName,
+    }).openDownloadStream(fileId);
+
+    stream.on("error", (error) => {
+      if (res.headersSent) {
+        res.destroy(error);
+      } else {
+        next(error);
+      }
+    });
+    stream.pipe(res);
+  } catch (error) {
+    next(error);
+  }
+}
+
+app.get(
+  "/api/admin/certificates",
+  requireAdministrator,
+  finalCertificatesHandler
+);
+app.get(
+  "/api/admin/gallery/folders",
+  requireAdministrator,
+  finalGalleryFoldersReadHandler
+);
+app.get(
+  "/api/admin/gallery/folders/:folderId/media",
+  requireAdministrator,
+  finalGalleryFolderMediaReadHandler
+);
+app.get(
+  "/api/admin/gallery/gridfs/:bucket/:id",
+  finalGalleryGridFsHandler
+);
+// FINAL_ADMIN_DATA_RECOVERY_END
+
 registerCrud("candidates", ["/api/admin/candidates"]);
 registerCrud("members", ["/api/admin/members", "/api/members"]);
 registerCrud("campaigns", ["/api/admin/campaigns", "/api/campaigns"]);
